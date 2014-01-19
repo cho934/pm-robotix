@@ -18,7 +18,7 @@ Reprenons la maxime de Lavoisier « *Rien ne se perd, rien ne se crée, tout se 
  * DevEnvDocumentation - Documentation du code, How To...
  * DevEnvFormatting - Formatage du code
 
-'''Les 3 bin générés à la compilation sont :'''
+*Les 3 bin générés à la compilation sont :*
  * DEV_TEST (répertoire de classes '''dev_test''')  
  * PMX_TEST (répertoire de classes '''robot_test''') utilisant le fichier de configuration '''robot_pmxtest.conf'''
  * PMX (répertoire de classes '''robot''') utilisant le fichier de configuration '''robot_pmx.conf'''
