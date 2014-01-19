@@ -1,0 +1,430 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="3300px" height="4400px">
+<g transform="translate(200,2200)">
+<line x1="-200" y1="2200" x2="3100" y2="2200" stroke="#eeeeee" />
+<text x="0" y="2200" dx="5" dy="-5" fill="#eeeeee" font-size="12">-2200</text>
+<line x1="-200" y1="2100" x2="3100" y2="2100" stroke="#eeeeee" />
+<text x="0" y="2100" dx="5" dy="-5" fill="#eeeeee" font-size="12">-2100</text>
+<line x1="-200" y1="2000" x2="3100" y2="2000" stroke="#eeeeee" />
+<text x="0" y="2000" dx="5" dy="-5" fill="#eeeeee" font-size="12">-2000</text>
+<line x1="-200" y1="1900" x2="3100" y2="1900" stroke="#eeeeee" />
+<text x="0" y="1900" dx="5" dy="-5" fill="#eeeeee" font-size="12">-1900</text>
+<line x1="-200" y1="1800" x2="3100" y2="1800" stroke="#eeeeee" />
+<text x="0" y="1800" dx="5" dy="-5" fill="#eeeeee" font-size="12">-1800</text>
+<line x1="-200" y1="1700" x2="3100" y2="1700" stroke="#eeeeee" />
+<text x="0" y="1700" dx="5" dy="-5" fill="#eeeeee" font-size="12">-1700</text>
+<line x1="-200" y1="1600" x2="3100" y2="1600" stroke="#eeeeee" />
+<text x="0" y="1600" dx="5" dy="-5" fill="#eeeeee" font-size="12">-1600</text>
+<line x1="-200" y1="1500" x2="3100" y2="1500" stroke="#eeeeee" />
+<text x="0" y="1500" dx="5" dy="-5" fill="#eeeeee" font-size="12">-1500</text>
+<line x1="-200" y1="1400" x2="3100" y2="1400" stroke="#eeeeee" />
+<text x="0" y="1400" dx="5" dy="-5" fill="#eeeeee" font-size="12">-1400</text>
+<line x1="-200" y1="1300" x2="3100" y2="1300" stroke="#eeeeee" />
+<text x="0" y="1300" dx="5" dy="-5" fill="#eeeeee" font-size="12">-1300</text>
+<line x1="-200" y1="1200" x2="3100" y2="1200" stroke="#eeeeee" />
+<text x="0" y="1200" dx="5" dy="-5" fill="#eeeeee" font-size="12">-1200</text>
+<line x1="-200" y1="1100" x2="3100" y2="1100" stroke="#eeeeee" />
+<text x="0" y="1100" dx="5" dy="-5" fill="#eeeeee" font-size="12">-1100</text>
+<line x1="-200" y1="1000" x2="3100" y2="1000" stroke="#eeeeee" />
+<text x="0" y="1000" dx="5" dy="-5" fill="#eeeeee" font-size="12">-1000</text>
+<line x1="-200" y1="900" x2="3100" y2="900" stroke="#eeeeee" />
+<text x="0" y="900" dx="5" dy="-5" fill="#eeeeee" font-size="12">-900</text>
+<line x1="-200" y1="800" x2="3100" y2="800" stroke="#eeeeee" />
+<text x="0" y="800" dx="5" dy="-5" fill="#eeeeee" font-size="12">-800</text>
+<line x1="-200" y1="700" x2="3100" y2="700" stroke="#eeeeee" />
+<text x="0" y="700" dx="5" dy="-5" fill="#eeeeee" font-size="12">-700</text>
+<line x1="-200" y1="600" x2="3100" y2="600" stroke="#eeeeee" />
+<text x="0" y="600" dx="5" dy="-5" fill="#eeeeee" font-size="12">-600</text>
+<line x1="-200" y1="500" x2="3100" y2="500" stroke="#eeeeee" />
+<text x="0" y="500" dx="5" dy="-5" fill="#eeeeee" font-size="12">-500</text>
+<line x1="-200" y1="400" x2="3100" y2="400" stroke="#eeeeee" />
+<text x="0" y="400" dx="5" dy="-5" fill="#eeeeee" font-size="12">-400</text>
+<line x1="-200" y1="300" x2="3100" y2="300" stroke="#eeeeee" />
+<text x="0" y="300" dx="5" dy="-5" fill="#eeeeee" font-size="12">-300</text>
+<line x1="-200" y1="200" x2="3100" y2="200" stroke="#eeeeee" />
+<text x="0" y="200" dx="5" dy="-5" fill="#eeeeee" font-size="12">-200</text>
+<line x1="-200" y1="100" x2="3100" y2="100" stroke="#eeeeee" />
+<text x="0" y="100" dx="5" dy="-5" fill="#eeeeee" font-size="12">-100</text>
+<line x1="-200" y1="0" x2="3100" y2="0" stroke="#eeeeee" />
+<text x="0" y="0" dx="5" dy="-5" fill="#eeeeee" font-size="12">0</text>
+<line x1="-200" y1="-100" x2="3100" y2="-100" stroke="#eeeeee" />
+<text x="0" y="-100" dx="5" dy="-5" fill="#eeeeee" font-size="12">100</text>
+<line x1="-200" y1="-200" x2="3100" y2="-200" stroke="#eeeeee" />
+<text x="0" y="-200" dx="5" dy="-5" fill="#eeeeee" font-size="12">200</text>
+<line x1="-200" y1="-300" x2="3100" y2="-300" stroke="#eeeeee" />
+<text x="0" y="-300" dx="5" dy="-5" fill="#eeeeee" font-size="12">300</text>
+<line x1="-200" y1="-400" x2="3100" y2="-400" stroke="#eeeeee" />
+<text x="0" y="-400" dx="5" dy="-5" fill="#eeeeee" font-size="12">400</text>
+<line x1="-200" y1="-500" x2="3100" y2="-500" stroke="#eeeeee" />
+<text x="0" y="-500" dx="5" dy="-5" fill="#eeeeee" font-size="12">500</text>
+<line x1="-200" y1="-600" x2="3100" y2="-600" stroke="#eeeeee" />
+<text x="0" y="-600" dx="5" dy="-5" fill="#eeeeee" font-size="12">600</text>
+<line x1="-200" y1="-700" x2="3100" y2="-700" stroke="#eeeeee" />
+<text x="0" y="-700" dx="5" dy="-5" fill="#eeeeee" font-size="12">700</text>
+<line x1="-200" y1="-800" x2="3100" y2="-800" stroke="#eeeeee" />
+<text x="0" y="-800" dx="5" dy="-5" fill="#eeeeee" font-size="12">800</text>
+<line x1="-200" y1="-900" x2="3100" y2="-900" stroke="#eeeeee" />
+<text x="0" y="-900" dx="5" dy="-5" fill="#eeeeee" font-size="12">900</text>
+<line x1="-200" y1="-1000" x2="3100" y2="-1000" stroke="#eeeeee" />
+<text x="0" y="-1000" dx="5" dy="-5" fill="#eeeeee" font-size="12">1000</text>
+<line x1="-200" y1="-1100" x2="3100" y2="-1100" stroke="#eeeeee" />
+<text x="0" y="-1100" dx="5" dy="-5" fill="#eeeeee" font-size="12">1100</text>
+<line x1="-200" y1="-1200" x2="3100" y2="-1200" stroke="#eeeeee" />
+<text x="0" y="-1200" dx="5" dy="-5" fill="#eeeeee" font-size="12">1200</text>
+<line x1="-200" y1="-1300" x2="3100" y2="-1300" stroke="#eeeeee" />
+<text x="0" y="-1300" dx="5" dy="-5" fill="#eeeeee" font-size="12">1300</text>
+<line x1="-200" y1="-1400" x2="3100" y2="-1400" stroke="#eeeeee" />
+<text x="0" y="-1400" dx="5" dy="-5" fill="#eeeeee" font-size="12">1400</text>
+<line x1="-200" y1="-1500" x2="3100" y2="-1500" stroke="#eeeeee" />
+<text x="0" y="-1500" dx="5" dy="-5" fill="#eeeeee" font-size="12">1500</text>
+<line x1="-200" y1="-1600" x2="3100" y2="-1600" stroke="#eeeeee" />
+<text x="0" y="-1600" dx="5" dy="-5" fill="#eeeeee" font-size="12">1600</text>
+<line x1="-200" y1="-1700" x2="3100" y2="-1700" stroke="#eeeeee" />
+<text x="0" y="-1700" dx="5" dy="-5" fill="#eeeeee" font-size="12">1700</text>
+<line x1="-200" y1="-1800" x2="3100" y2="-1800" stroke="#eeeeee" />
+<text x="0" y="-1800" dx="5" dy="-5" fill="#eeeeee" font-size="12">1800</text>
+<line x1="-200" y1="-1900" x2="3100" y2="-1900" stroke="#eeeeee" />
+<text x="0" y="-1900" dx="5" dy="-5" fill="#eeeeee" font-size="12">1900</text>
+<line x1="-200" y1="-2000" x2="3100" y2="-2000" stroke="#eeeeee" />
+<text x="0" y="-2000" dx="5" dy="-5" fill="#eeeeee" font-size="12">2000</text>
+<line x1="-200" y1="-2100" x2="3100" y2="-2100" stroke="#eeeeee" />
+<text x="0" y="-2100" dx="5" dy="-5" fill="#eeeeee" font-size="12">2100</text>
+<line x1="-200" y1="-2200" x2="3100" y2="-2200" stroke="#eeeeee" />
+<text x="0" y="-2200" dx="5" dy="-5" fill="#eeeeee" font-size="12">2200</text>
+<line x1="-200" y1="-2200" x2="-200" y2="2200" stroke="#eeeeee" />
+<text x="-200" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">-200</text>
+<line x1="-100" y1="-2200" x2="-100" y2="2200" stroke="#eeeeee" />
+<text x="-100" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">-100</text>
+<line x1="0" y1="-2200" x2="0" y2="2200" stroke="#eeeeee" />
+<text x="0" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">0</text>
+<line x1="100" y1="-2200" x2="100" y2="2200" stroke="#eeeeee" />
+<text x="100" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">100</text>
+<line x1="200" y1="-2200" x2="200" y2="2200" stroke="#eeeeee" />
+<text x="200" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">200</text>
+<line x1="300" y1="-2200" x2="300" y2="2200" stroke="#eeeeee" />
+<text x="300" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">300</text>
+<line x1="400" y1="-2200" x2="400" y2="2200" stroke="#eeeeee" />
+<text x="400" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">400</text>
+<line x1="500" y1="-2200" x2="500" y2="2200" stroke="#eeeeee" />
+<text x="500" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">500</text>
+<line x1="600" y1="-2200" x2="600" y2="2200" stroke="#eeeeee" />
+<text x="600" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">600</text>
+<line x1="700" y1="-2200" x2="700" y2="2200" stroke="#eeeeee" />
+<text x="700" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">700</text>
+<line x1="800" y1="-2200" x2="800" y2="2200" stroke="#eeeeee" />
+<text x="800" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">800</text>
+<line x1="900" y1="-2200" x2="900" y2="2200" stroke="#eeeeee" />
+<text x="900" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">900</text>
+<line x1="1000" y1="-2200" x2="1000" y2="2200" stroke="#eeeeee" />
+<text x="1000" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">1000</text>
+<line x1="1100" y1="-2200" x2="1100" y2="2200" stroke="#eeeeee" />
+<text x="1100" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">1100</text>
+<line x1="1200" y1="-2200" x2="1200" y2="2200" stroke="#eeeeee" />
+<text x="1200" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">1200</text>
+<line x1="1300" y1="-2200" x2="1300" y2="2200" stroke="#eeeeee" />
+<text x="1300" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">1300</text>
+<line x1="1400" y1="-2200" x2="1400" y2="2200" stroke="#eeeeee" />
+<text x="1400" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">1400</text>
+<line x1="1500" y1="-2200" x2="1500" y2="2200" stroke="#eeeeee" />
+<text x="1500" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">1500</text>
+<line x1="1600" y1="-2200" x2="1600" y2="2200" stroke="#eeeeee" />
+<text x="1600" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">1600</text>
+<line x1="1700" y1="-2200" x2="1700" y2="2200" stroke="#eeeeee" />
+<text x="1700" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">1700</text>
+<line x1="1800" y1="-2200" x2="1800" y2="2200" stroke="#eeeeee" />
+<text x="1800" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">1800</text>
+<line x1="1900" y1="-2200" x2="1900" y2="2200" stroke="#eeeeee" />
+<text x="1900" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">1900</text>
+<line x1="2000" y1="-2200" x2="2000" y2="2200" stroke="#eeeeee" />
+<text x="2000" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">2000</text>
+<line x1="2100" y1="-2200" x2="2100" y2="2200" stroke="#eeeeee" />
+<text x="2100" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">2100</text>
+<line x1="2200" y1="-2200" x2="2200" y2="2200" stroke="#eeeeee" />
+<text x="2200" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">2200</text>
+<line x1="2300" y1="-2200" x2="2300" y2="2200" stroke="#eeeeee" />
+<text x="2300" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">2300</text>
+<line x1="2400" y1="-2200" x2="2400" y2="2200" stroke="#eeeeee" />
+<text x="2400" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">2400</text>
+<line x1="2500" y1="-2200" x2="2500" y2="2200" stroke="#eeeeee" />
+<text x="2500" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">2500</text>
+<line x1="2600" y1="-2200" x2="2600" y2="2200" stroke="#eeeeee" />
+<text x="2600" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">2600</text>
+<line x1="2700" y1="-2200" x2="2700" y2="2200" stroke="#eeeeee" />
+<text x="2700" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">2700</text>
+<line x1="2800" y1="-2200" x2="2800" y2="2200" stroke="#eeeeee" />
+<text x="2800" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">2800</text>
+<line x1="2900" y1="-2200" x2="2900" y2="2200" stroke="#eeeeee" />
+<text x="2900" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">2900</text>
+<line x1="3000" y1="-2200" x2="3000" y2="2200" stroke="#eeeeee" />
+<text x="3000" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">3000</text>
+<line x1="3100" y1="-2200" x2="3100" y2="2200" stroke="#eeeeee" />
+<text x="3100" y="0" dx="5" dy="17" fill="#eeeeee" font-size="12">3100</text>
+</g>
+<g transform="translate(200,2200)">
+<circle cx='200' cy='-200' r='160' stroke='blue' fill='none' />
+<circle cx='200' cy='200' r='160' stroke='red' fill='none' />
+<rect x='0' y='-2100' width='3000' height='2100' stroke='blue' fill='none' />
+<rect x='0' y='0' width='3000' height='2100' stroke='red' fill='none' />
+<rect x='400' y='-2100' width='50' height='2100' stroke='blue' fill='none'/>
+<rect x='400' y='0' width='50' height='2100' stroke='red' fill='none'/>
+<rect x='2550' y='-2100' width='50' height='2100' stroke='blue' fill='none'/>
+<rect x='2550' y='0' width='50' height='2100' stroke='red' fill='none'/>
+<rect x='0' y='-422' width='400' height='22' stroke='black' fill='blue'/>
+<rect x='0' y='400' width='400' height='22' stroke='black' fill='red'/>
+<rect x='2600' y='-422' width='400' height='22' stroke='black' fill='blue'/>
+<rect x='2600' y='400' width='400' height='22' stroke='black' fill='red'/>
+<line x1='800' y1='0' x2='800' y2='-2100' stroke='black' />
+<line x1='1150' y1='0' x2='1150' y2='-2100' stroke='black' />
+<line x1='1500' y1='0' x2='1500' y2='-2100' stroke='black' />
+<line x1='1850' y1='0' x2='1850' y2='-2100' stroke='black' />
+<line x1='2200' y1='0' x2='2200' y2='-2100' stroke='black' />
+<line x1='800' y1='0' x2='800' y2='2100' stroke='black' />
+<line x1='1150' y1='0' x2='1150' y2='2100' stroke='black' />
+<line x1='1500' y1='0' x2='1500' y2='2100' stroke='black' />
+<line x1='1850' y1='0' x2='1850' y2='2100' stroke='black' />
+<line x1='2200' y1='0' x2='2200' y2='2100' stroke='black' />
+<line x1='450' y1='-350' x2='2550' y2='-350' stroke='black' />
+<line x1='450' y1='-700' x2='2550' y2='-700' stroke='black' />
+<line x1='450' y1='-1050' x2='2550' y2='-1050' stroke='black' />
+<line x1='450' y1='-1400' x2='2550' y2='-1400' stroke='black' />
+<line x1='450' y1='-1750' x2='2550' y2='-1750' stroke='black' />
+<line x1='450' y1='350' x2='2550' y2='350' stroke='black' />
+<line x1='450' y1='700' x2='2550' y2='700' stroke='black' />
+<line x1='450' y1='1050' x2='2550' y2='1050' stroke='black' />
+<line x1='450' y1='1400' x2='2550' y2='1400' stroke='black' />
+<line x1='450' y1='1750' x2='2550' y2='1750' stroke='black' />
+<rect x='455' y='-345' width='340' height='340' stroke='red' fill='none'/>
+<rect x='805' y='-345' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='1155' y='-345' width='340' height='340' stroke='red' fill='none'/>
+<rect x='1505' y='-345' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='1855' y='-345' width='340' height='340' stroke='red' fill='none'/>
+<rect x='2205' y='-345' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='455' y='-1045' width='340' height='340' stroke='red' fill='none'/>
+<rect x='805' y='-1045' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='1155' y='-1045' width='340' height='340' stroke='red' fill='none'/>
+<rect x='1505' y='-1045' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='1855' y='-1045' width='340' height='340' stroke='red' fill='none'/>
+<rect x='2205' y='-1045' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='455' y='-1745' width='340' height='340' stroke='red' fill='none'/>
+<rect x='805' y='-1745' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='1155' y='-1745' width='340' height='340' stroke='red' fill='none'/>
+<rect x='1505' y='-1745' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='1855' y='-1745' width='340' height='340' stroke='red' fill='none'/>
+<rect x='2205' y='-1745' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='455' y='-695' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='805' y='-695' width='340' height='340' stroke='red' fill='none'/>
+<rect x='1155' y='-695' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='1505' y='-695' width='340' height='340' stroke='red' fill='none'/>
+<rect x='1855' y='-695' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='2205' y='-695' width='340' height='340' stroke='red' fill='none'/>
+<rect x='455' y='-1395' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='805' y='-1395' width='340' height='340' stroke='red' fill='none'/>
+<rect x='1155' y='-1395' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='1505' y='-1395' width='340' height='340' stroke='red' fill='none'/>
+<rect x='1855' y='-1395' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='2205' y='-1395' width='340' height='340' stroke='red' fill='none'/>
+<rect x='455' y='-2095' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='805' y='-2095' width='340' height='340' stroke='red' fill='none'/>
+<rect x='1155' y='-2095' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='1505' y='-2095' width='340' height='340' stroke='red' fill='none'/>
+<rect x='1855' y='-2095' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='2205' y='-2095' width='340' height='340' stroke='red' fill='none'/>
+<rect x='455' y='5' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='805' y='5' width='340' height='340' stroke='red' fill='none'/>
+<rect x='1155' y='5' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='1505' y='5' width='340' height='340' stroke='red' fill='none'/>
+<rect x='1855' y='5' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='2205' y='5' width='340' height='340' stroke='red' fill='none'/>
+<rect x='455' y='705' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='805' y='705' width='340' height='340' stroke='red' fill='none'/>
+<rect x='1155' y='705' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='1505' y='705' width='340' height='340' stroke='red' fill='none'/>
+<rect x='1855' y='705' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='2205' y='705' width='340' height='340' stroke='red' fill='none'/>
+<rect x='455' y='1405' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='805' y='1405' width='340' height='340' stroke='red' fill='none'/>
+<rect x='1155' y='1405' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='1505' y='1405' width='340' height='340' stroke='red' fill='none'/>
+<rect x='1855' y='1405' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='2205' y='1405' width='340' height='340' stroke='red' fill='none'/>
+<rect x='455' y='355' width='340' height='340' stroke='red' fill='none'/>
+<rect x='805' y='355' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='1155' y='355' width='340' height='340' stroke='red' fill='none'/>
+<rect x='1505' y='355' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='1855' y='355' width='340' height='340' stroke='red' fill='none'/>
+<rect x='2205' y='355' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='455' y='1055' width='340' height='340' stroke='red' fill='none'/>
+<rect x='805' y='1055' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='1155' y='1055' width='340' height='340' stroke='red' fill='none'/>
+<rect x='1505' y='1055' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='1855' y='1055' width='340' height='340' stroke='red' fill='none'/>
+<rect x='2205' y='1055' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='455' y='1755' width='340' height='340' stroke='red' fill='none'/>
+<rect x='805' y='1755' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='1155' y='1755' width='340' height='340' stroke='red' fill='none'/>
+<rect x='1505' y='1755' width='340' height='340' stroke='blue' fill='none'/>
+<rect x='1855' y='1755' width='340' height='340' stroke='red' fill='none'/>
+<rect x='2205' y='1755' width='340' height='340' stroke='blue' fill='none'/>
+/*cases bonus*/
+<circle cx='975' cy='-525' r='50' fill='none' stroke='black'/>
+<circle cx='975' cy='-1225' r='50' fill='none' stroke='black'/>
+<circle cx='2025' cy='-525' r='50' fill='none' stroke='black'/>
+<circle cx='2025' cy='-1225' r='50' fill='none' stroke='black'/>
+<circle cx='1325' cy='-1925' r='50' fill='none' stroke='black'/>
+<circle cx='1675' cy='-1925' r='50' fill='none' stroke='black'/>
+<circle cx='975' cy='525' r='50' fill='none' stroke='black'/>
+<circle cx='975' cy='1225' r='50' fill='none' stroke='black'/>
+<circle cx='2025' cy='525' r='50' fill='none' stroke='black'/>
+<circle cx='2025' cy='1225' r='50' fill='none' stroke='black'/>
+<circle cx='1325' cy='1925' r='50' fill='none' stroke='black'/>
+<circle cx='1675' cy='1925' r='50' fill='none' stroke='black'/>
+/*fond de terrain noir*/
+<rect x='450' y='-2100' width='700' height='120' fill='black'/>
+<rect x='1850' y='-2100' width='700' height='120' fill='black'/>
+<rect x='450' y='-1980' width='22' height='130' fill='black'/>
+<rect x='1850' y='-1980' width='22' height='130' fill='black'/>
+<rect x='1128' y='-1980' width='22' height='130' fill='black'/>
+<rect x='2528' y='-1980' width='22' height='130' fill='black'/>
+<rect x='450' y='1980' width='700' height='120' fill='black'/>
+<rect x='1850' y='1980' width='700' height='120' fill='black'/>
+<rect x='450' y='1850' width='22' height='130' fill='black'/>
+<rect x='1850' y='1850' width='22' height='130' fill='black'/>
+<rect x='1128' y='1850' width='22' height='130' fill='black'/>
+<rect x='2528' y='1850' width='22' height='130' fill='black'/>
+/*pions jaunes*/
+<circle cx='200' cy='-1810' r='100' fill='yellow' stroke='black'/>
+<circle cx='200' cy='-1530' r='100' fill='yellow' stroke='black'/>
+<circle cx='200' cy='-1250' r='100' fill='yellow' stroke='black'/>
+<circle cx='200' cy='-970' r='100' fill='yellow' stroke='black'/>
+<circle cx='200' cy='-690' r='100' fill='yellow' stroke='black'/>
+<circle cx='2800' cy='-1810' r='100' fill='yellow' stroke='black'/>
+<circle cx='2800' cy='-1530' r='100' fill='yellow' stroke='black'/>
+<circle cx='2800' cy='-1250' r='100' fill='yellow' stroke='black'/>
+<circle cx='2800' cy='-970' r='100' fill='yellow' stroke='black'/>
+<circle cx='2800' cy='-690' r='100' fill='yellow' stroke='black'/>
+<circle cx='200' cy='1810' r='100' fill='yellow' stroke='black'/>
+<circle cx='200' cy='1530' r='100' fill='yellow' stroke='black'/>
+<circle cx='200' cy='1250' r='100' fill='yellow' stroke='black'/>
+<circle cx='200' cy='970' r='100' fill='yellow' stroke='black'/>
+<circle cx='200' cy='690' r='100' fill='yellow' stroke='black'/>
+<circle cx='2800' cy='1810' r='100' fill='yellow' stroke='black'/>
+<circle cx='2800' cy='1530' r='100' fill='yellow' stroke='black'/>
+<circle cx='2800' cy='1250' r='100' fill='yellow' stroke='black'/>
+<circle cx='2800' cy='970' r='100' fill='yellow' stroke='black'/>
+<circle cx='2800' cy='690' r='100' fill='yellow' stroke='black'/>
+</g>
+<g transform="translate(200,2200)">
+<circle cx="0" cy="-0" r="1" fill="green" />
+<line x1="0" y1="-0" x2="25" y2="-0" stroke-width="0.5" stroke="grey"  />
+<circle cx="1.7286" cy="-0" r="1" fill="green" />
+<line x1="1.7286" y1="-0" x2="26.7286" y2="-0" stroke-width="0.5" stroke="grey"  />
+<circle cx="4.3215" cy="-0" r="1" fill="green" />
+<line x1="4.3215" y1="-0" x2="29.3215" y2="-0" stroke-width="0.5" stroke="grey"  />
+<circle cx="12.1002" cy="-0" r="1" fill="green" />
+<line x1="12.1002" y1="-0" x2="37.1002" y2="-0" stroke-width="0.5" stroke="grey"  />
+<circle cx="28.0897" cy="0.0539854" r="1" fill="green" />
+<line x1="28.0897" y1="0.0539854" x2="53.0895" y2="0.138393" stroke-width="0.5" stroke="grey"  />
+<circle cx="46.6721" cy="0.0539854" r="1" fill="green" />
+<line x1="46.6721" y1="0.0539854" x2="71.6721" y2="0.0539854" stroke-width="0.5" stroke="grey"  />
+<circle cx="64.3893" cy="0.233448" r="1" fill="green" />
+<line x1="64.3893" y1="0.233448" x2="89.3881" y2="0.486666" stroke-width="0.5" stroke="grey"  />
+<circle cx="85.5628" cy="0.519416" r="1" fill="green" />
+<line x1="85.5628" y1="0.519416" x2="110.56" y2="0.857036" stroke-width="0.5" stroke="grey"  />
+<circle cx="109.758" cy="1.00963" r="1" fill="green" />
+<line x1="109.758" y1="1.00963" x2="134.753" y2="1.51604" stroke-width="0.5" stroke="grey"  />
+<circle cx="143.465" cy="1.23724" r="1" fill="green" />
+<line x1="143.465" y1="1.23724" x2="168.465" y2="1.40606" stroke-width="0.5" stroke="grey"  />
+<circle cx="172.851" cy="1.23724" r="1" fill="green" />
+<line x1="172.851" y1="1.23724" x2="197.851" y2="1.23724" stroke-width="0.5" stroke="grey"  />
+<circle cx="210.881" cy="1.23724" r="1" fill="green" />
+<line x1="210.881" y1="1.23724" x2="235.881" y2="1.23724" stroke-width="0.5" stroke="grey"  />
+<circle cx="253.663" cy="1.38169" r="1" fill="green" />
+<line x1="253.663" y1="1.38169" x2="278.663" y2="1.4661" stroke-width="0.5" stroke="grey"  />
+<circle cx="294.285" cy="1.24454" r="1" fill="green" />
+<line x1="294.285" y1="1.24454" x2="319.285" y2="1.16013" stroke-width="0.5" stroke="grey"  />
+<circle cx="335.771" cy="1.38461" r="1" fill="green" />
+<line x1="335.771" y1="1.38461" x2="360.771" y2="1.46902" stroke-width="0.5" stroke="grey"  />
+<circle cx="390.222" cy="1.56845" r="1" fill="green" />
+<line x1="390.222" y1="1.56845" x2="415.222" y2="1.65286" stroke-width="0.5" stroke="grey"  />
+<circle cx="461.084" cy="2.76483" r="1" fill="green" />
+<line x1="461.084" y1="2.76483" x2="486.081" y2="3.18685" stroke-width="0.5" stroke="grey"  />
+<circle cx="521.152" cy="2.35921" r="1" fill="green" />
+<line x1="521.152" y1="2.35921" x2="546.151" y2="2.1904" stroke-width="0.5" stroke="grey"  />
+<circle cx="576.032" cy="1.80332" r="1" fill="green" />
+<line x1="576.032" y1="1.80332" x2="601.031" y2="1.5501" stroke-width="0.5" stroke="grey"  />
+<circle cx="625.297" cy="1.96965" r="1" fill="green" />
+<line x1="625.297" y1="1.96965" x2="650.297" y2="2.05406" stroke-width="0.5" stroke="grey"  />
+<circle cx="691.41" cy="2.86257" r="1" fill="green" />
+<line x1="691.41" y1="2.86257" x2="716.407" y2="3.20019" stroke-width="0.5" stroke="grey"  />
+<circle cx="751.909" cy="2.45404" r="1" fill="green" />
+<line x1="751.909" y1="2.45404" x2="776.909" y2="2.28522" stroke-width="0.5" stroke="grey"  />
+<circle cx="802.471" cy="2.28333" r="1" fill="green" />
+<line x1="802.471" y1="2.28333" x2="827.47" y2="2.19892" stroke-width="0.5" stroke="grey"  />
+<circle cx="862.539" cy="2.28333" r="1" fill="green" />
+<line x1="862.539" y1="2.28333" x2="887.539" y2="2.28333" stroke-width="0.5" stroke="grey"  />
+<circle cx="912.664" cy="1.60634" r="1" fill="green" />
+<line x1="912.664" y1="1.60634" x2="937.662" y2="1.26872" stroke-width="0.5" stroke="grey"  />
+<circle cx="970.56" cy="0.433328" r="1" fill="green" />
+<line x1="970.56" y1="0.433328" x2="995.555" y2="-0.0730824" stroke-width="0.5" stroke="grey"  />
+<circle cx="1018.1" cy="0.754321" r="1" fill="green" />
+<line x1="1018.1" y1="0.754321" x2="1043.1" y2="0.923134" stroke-width="0.5" stroke="grey"  />
+<circle cx="1069.52" cy="0.927949" r="1" fill="green" />
+<line x1="1069.52" y1="0.927949" x2="1094.52" y2="1.01236" stroke-width="0.5" stroke="grey"  />
+<circle cx="1136.93" cy="2.06597" r="1" fill="green" />
+<line x1="1136.93" y1="2.06597" x2="1161.92" y2="2.48799" stroke-width="0.5" stroke="grey"  />
+<circle cx="1193.97" cy="1.48819" r="1" fill="green" />
+<line x1="1193.97" y1="1.48819" x2="1218.97" y2="1.23497" stroke-width="0.5" stroke="grey"  />
+<circle cx="1248.85" cy="1.48819" r="1" fill="green" />
+<line x1="1248.85" y1="1.48819" x2="1273.85" y2="1.48819" stroke-width="0.5" stroke="grey"  />
+<circle cx="1302.87" cy="1.3058" r="1" fill="green" />
+<line x1="1302.87" y1="1.3058" x2="1327.87" y2="1.2214" stroke-width="0.5" stroke="grey"  />
+<circle cx="1370.72" cy="1.76395" r="1" fill="green" />
+<line x1="1370.72" y1="1.76395" x2="1395.72" y2="1.93276" stroke-width="0.5" stroke="grey"  />
+<circle cx="1421.71" cy="1.41961" r="1" fill="green" />
+<line x1="1421.71" y1="1.41961" x2="1446.71" y2="1.2508" stroke-width="0.5" stroke="grey"  />
+<circle cx="1480.91" cy="1.6195" r="1" fill="green" />
+<line x1="1480.91" y1="1.6195" x2="1505.91" y2="1.70391" stroke-width="0.5" stroke="grey"  />
+<circle cx="1540.12" cy="2.01928" r="1" fill="green" />
+<line x1="1540.12" y1="2.01928" x2="1565.12" y2="2.1881" stroke-width="0.5" stroke="grey"  />
+<circle cx="1604.94" cy="1.58157" r="1" fill="green" />
+<line x1="1604.94" y1="1.58157" x2="1629.94" y2="1.41275" stroke-width="0.5" stroke="grey"  />
+<circle cx="1656.79" cy="1.58157" r="1" fill="green" />
+<line x1="1656.79" y1="1.58157" x2="1681.79" y2="1.58157" stroke-width="0.5" stroke="grey"  />
+<circle cx="1709.08" cy="1.05193" r="1" fill="green" />
+<line x1="1709.08" y1="1.05193" x2="1734.08" y2="0.798716" stroke-width="0.5" stroke="grey"  />
+<circle cx="1752.72" cy="0.1678" r="1" fill="green" />
+<line x1="1752.72" y1="0.1678" x2="1777.72" y2="-0.338611" stroke-width="0.5" stroke="grey"  />
+<circle cx="1788.16" cy="-0.0714857" r="1" fill="green" />
+<line x1="1788.16" y1="-0.0714857" x2="1813.16" y2="-0.240299" stroke-width="0.5" stroke="grey"  />
+<circle cx="1822.73" cy="0.161963" r="1" fill="green" />
+<line x1="1822.73" y1="0.161963" x2="1847.73" y2="0.330777" stroke-width="0.5" stroke="grey"  />
+<circle cx="1854.71" cy="0.377904" r="1" fill="green" />
+<line x1="1854.71" y1="0.377904" x2="1879.7" y2="0.546718" stroke-width="0.5" stroke="grey"  />
+<circle cx="1878.47" cy="0.458152" r="1" fill="green" />
+<line x1="1878.47" y1="0.458152" x2="1903.47" y2="0.54256" stroke-width="0.5" stroke="grey"  />
+<circle cx="1897.49" cy="0.522351" r="1" fill="green" />
+<line x1="1897.49" y1="0.522351" x2="1922.49" y2="0.606759" stroke-width="0.5" stroke="grey"  />
+<circle cx="1916.07" cy="0.773303" r="1" fill="green" />
+<line x1="1916.07" y1="0.773303" x2="1941.07" y2="1.11092" stroke-width="0.5" stroke="grey"  />
+<circle cx="1930.33" cy="0.917749" r="1" fill="green" />
+<line x1="1930.33" y1="0.917749" x2="1955.33" y2="1.17097" stroke-width="0.5" stroke="grey"  />
+<circle cx="1944.16" cy="1.05782" r="1" fill="green" />
+<line x1="1944.16" y1="1.05782" x2="1969.16" y2="1.31103" stroke-width="0.5" stroke="grey"  />
+<circle cx="1955.39" cy="1.17162" r="1" fill="green" />
+<line x1="1955.39" y1="1.17162" x2="1980.39" y2="1.42484" stroke-width="0.5" stroke="grey"  />
+<circle cx="1967.06" cy="1.17162" r="1" fill="green" />
+<line x1="1967.06" y1="1.17162" x2="1992.06" y2="1.17162" stroke-width="0.5" stroke="grey"  />
+<circle cx="1975.7" cy="1.22998" r="1" fill="green" />
+<line x1="1975.7" y1="1.22998" x2="2000.7" y2="1.3988" stroke-width="0.5" stroke="grey"  />
+<circle cx="1981.75" cy="1.27084" r="1" fill="green" />
+<line x1="1981.75" y1="1.27084" x2="2006.75" y2="1.43965" stroke-width="0.5" stroke="grey"  />
+<circle cx="1989.53" cy="1.37589" r="1" fill="green" />
+<line x1="1989.53" y1="1.37589" x2="2014.53" y2="1.71351" stroke-width="0.5" stroke="grey"  />
+<circle cx="1997.31" cy="1.37589" r="1" fill="green" />
+<line x1="1997.31" y1="1.37589" x2="2022.31" y2="1.37589" stroke-width="0.5" stroke="grey"  />
+<circle cx="1997.31" cy="1.37589" r="2" stroke="black" fill="none"  />
+<text x='2007.31' y='-8.62411'>turnLeft: RIGHT 1.98785e-16</text>
+<circle cx="2001.2" cy="1.31023" r="1" fill="green" />
+<line x1="2001.2" y1="1.31023" x2="2026.2" y2="0.888215" stroke-width="0.5" stroke="grey"  />
+<circle cx="2001.2" cy="1.31023" r="2" stroke="black" fill="none"  />
+</g>
+</svg>

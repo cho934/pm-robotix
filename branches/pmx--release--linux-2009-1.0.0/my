@@ -1,0 +1,57 @@
+#! /bin/bash
+
+view_doc()
+{
+        firefox doc/html/index.html >/dev/null 2>&1 &
+}
+
+transfert()
+{
+	scp dist/* root@192.168.1.199:/opt/pmx/
+}
+
+recupcsvhost()
+{
+        #recup sur le PC fixe
+	scp root@192.168.1.199:/opt/pmx/*.* /mnt/hgfs/hote/rob_xls/
+	#scp root@192.168.1.199:/opt/pmx/*.svg /mnt/hgfs/hote/rob_xls/
+}
+recupcsv()
+{
+        scp root@192.168.1.199:/opt/pmx/*.* /home/pmx/recupcsv/
+	#scp root@192.168.1.199:/opt/pmx/*.svg /home/pmx/recupcsv/
+}
+
+connect()
+{
+	ssh root@192.168.1.199
+}
+
+case "$1" in
+	view-doc)
+		view_doc
+	;;
+
+	transfert)
+		transfert
+	;;
+
+	connect)
+		connect
+	;;
+        
+        recupcsv)
+		recupcsv
+	;;
+        
+        recupcsvhost)
+		recupcsvhost
+	;;
+
+	*)
+		echo "Usage: $0 {connect|transfert|view-doc|recupcsv|recupcsvhost}" >&2
+		exit 1
+	;;
+esac
+
+exit 0

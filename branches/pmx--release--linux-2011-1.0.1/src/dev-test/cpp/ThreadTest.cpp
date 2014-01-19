@@ -1,0 +1,158 @@
+/*!
+ * \file
+ * \brief Implémentation de la classe ThreadTest.
+ *
+ * Permet de lancer des threads chacun comptant pendant 5s, et de voir le nombre
+ * compté par chacun.
+ * \todo test sur APF : a deplacer dans robot-test
+ */
+
+#include "ThreadTest.hpp"
+#include <cstdlib>
+#include <iostream>
+
+void
+test::ThreadTest::suite()
+{
+    //compter pendant 5s with no thread
+    int j=0;
+    time_t start = time(NULL);
+    while(start + 5 > time(NULL))
+    {
+        j++;
+        //logger().info() << "j " << this->name_ << ":" << j << utils::end;
+    }
+    logger().info() << "End nothread:" << j << utils::end;
+    logger().info("");
+    usleep(200000);
+    testSimpleThread();
+    logger().info("");
+    usleep(200000);
+    testDoubleThread();
+    /*logger().info("");
+    usleep(200000);
+    testTripleThread();
+    logger().info("");
+    usleep(200000);
+    testQuadThread();
+    logger().info("");
+    usleep(200000);
+    testSimpleThread();*/
+}
+
+void
+test::ThreadTest::testSimpleThread()
+{
+    logger().info() << "testSimpleThread()" << utils::end;
+    TestThread t1("1t1");
+    
+    t1.start();
+    
+    while (!t1.finished())
+    {
+        usleep(1000);
+    }
+    logger().info() << "testSimpleThread End" << utils::end;
+}
+
+void
+test::ThreadTest::testDoubleThread()
+{
+    logger().info() << "testDoubleThread()" << utils::end;
+    TestThread t1("2td1");
+    TestThread t2("2td2");
+    
+    t1.start();
+    t2.start();
+    
+    while (!t1.finished() && !t2.finished())
+    {
+        usleep(1000);
+    }
+
+    logger().info() << "testDoubleThread() reGo" << utils::end;
+
+    t1.start();
+    t1.start();
+    t2.start();
+
+    while (!t1.finished() && !t2.finished())
+    {
+        usleep(1000);
+    }
+    usleep(100000);
+    logger().info() << "testDoubleThread End" << utils::end;
+}
+
+
+void
+test::ThreadTest::testTripleThread()
+{
+    logger().info() << "testTripleThread()" << utils::end;
+    TestThread t1("3td1");
+    TestThread t2("3td2");
+    TestThread t3("3td3");
+
+    t1.start();
+    t2.start();
+    t3.start();
+    
+    while (!t1.finished() && !t2.finished() && !t3.finished())
+    {
+        usleep(1000);
+    }
+    logger().info() << "testTripleThread End" << utils::end;
+}
+
+void
+test::ThreadTest::testQuadThread()
+{
+    logger().info() << "testNThread()" << utils::end;
+    TestThread t1("ntd1");
+    TestThread t2("ntd2");
+    TestThread t3("ntd3");
+    TestThread t4("ntd4");
+    TestThread t5("ntd5");
+    TestThread t6("ntd6");
+
+    logger().info() << "start" << utils::end;
+    t1.start();
+    t2.start();
+    t3.start();
+    t4.start();
+    t5.start();
+    t6.start();
+
+    while (!t1.finished() && !t2.finished() && !t3.finished() && !t4.finished() && !t5.finished() && !t6.finished())
+    {
+        usleep(1000);
+    }
+    logger().info() << "test N Threads End" << utils::end;
+}
+
+void
+test::TestThread::execute()
+{
+    
+    if(this->name_ == "3td2")
+    {
+        sleep(5); //test du sleep sur le 2ème thread.
+    }else
+    {
+        simpleCount(this->name_);
+    }
+}
+
+void
+test::TestThread::simpleCount(std::string name)
+{
+    //compter pendant 5s
+    int j=0;
+    time_t start = time(NULL); //! \todo supprimer time_t et utiliser chronometer
+    while(start + 5 > time(NULL))
+    {
+        j++;
+        //logger().info() << "j " << this->name_ << ":" << j << utils::end;
+    }
+    logger().info() << "End " << name << ":" << j << utils::end;
+}

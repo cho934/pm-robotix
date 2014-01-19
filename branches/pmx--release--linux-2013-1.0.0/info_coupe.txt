@@ -1,0 +1,20 @@
+
+
+
+
+//creer une swap
+
+
+
+dd if=/dev/zero of=/pmx/swap bs=1024 count=16384 
+16000+0 records in
+16000+0 records out
+# mkswap /pmx/swap 
+Setting up swapspace version 1, size = 16379904 bytes
+# swapon /pmx/swap 
+<6>Adding 15992k swap on /pmx/swap.  Priority:-1 extents:1 across:15992k SS
+# 
+
+
+(gdb) info threads
+
