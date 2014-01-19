@@ -1,4 +1,4 @@
-= '''Les principes PMX''' =
+= Les principes PMX =
 
  * Utiliser du bois
  * Utiliser des vieux MECANO
