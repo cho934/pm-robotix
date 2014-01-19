@@ -28,15 +28,13 @@ All non-public data members of classes should have their names terminated with a
 
 If a value passed to a function can never be NULL, use a reference instead of a pointer. I.e. 
 
-{{{
-#!cpp
+<code language="cpp">
 void myFunction(Object& obj);
-}}}
+</code>
 
 rather than 
 
 {{{
-#!cpp
 void myFunction(Object* obj);
 }}}
 
@@ -48,14 +46,12 @@ The 'const' feature of C++ allows interfaces to more clearly specify how they tr
 I.e. 
 
 {{{
-#!cpp
 void myFunction(const Object& obj);
 }}}
 
 demonstrates to the caller of myfunction() that obj will not be modified. If myfunction may modify obj, then use 
 
 {{{
-#!cpp
 void myFunction(Object& obj);
 }}}
 
@@ -67,7 +63,6 @@ Wesnoth code should be exception-safe, even if you do not use exceptions directl
 Code that uses a pattern like, 
 
 {{{
-#!cpp
  {
  Surface* image = imageLoad("image.bmp");
  ...some code, which uses 'image'...
@@ -80,7 +75,6 @@ is bad, because the code may throw an exception, and 'image' will never be freed
 For SDL_Surface objects, use the surface class. So you could rewrite the above code, 
 
 {{{
-#!cpp
  {
  Surface image(imageLoad("image.bmp"));
  ...some code, which uses 'image'...
@@ -97,7 +91,6 @@ Sprintf does not check whether or not it is writing past the end of the space al
 In the code, 
 
 {{{
-#!cpp
  for(int i = 0; i != 100; ++i) {...}
 }}}
 the variable 'i' is scoped within the for loop according to ISO/ANSI C++ and GNU G++. However it is scoped within the surrounding scope according to Visual C++ 6. 
@@ -105,7 +98,6 @@ the variable 'i' is scoped within the for loop according to ISO/ANSI C++ and GNU
 This means that the code, 
 
 {{{
-#!cpp
  for(int i = 0; i != 100; ++i) {}
  for(int i = 0; i != 100; ++i) {}
 }}}
@@ -114,14 +106,12 @@ is illegal on VC++6, because i is defined twice, although it is legal according 
 On VC++6, the legal way to write it would be, 
 
 {{{
-#!cpp
  for(int i = 0; i != 100; ++i) {}
  for(i = 0; i != 100; ++i) {}
 }}}
 But this is illegal according to the standard, because 'i' is not defined in the second loop. The correct way to write this code to conform to the standard and work on all platforms is to simply abandon declaring variables in the initialization statement of a for loop when the variable must be reused in the same scope, 
 
 {{{
-#!cpp
  int i;
  for(i = 0; i != 100; ++i) {}
  for(i = 0; i != 100; ++i) {}
@@ -141,7 +131,6 @@ C-style arrays are very efficient, but their interface is ugly. Use util::array 
 The following code, 
 
 {{{
-#!cpp
  if(i->second.side() == (size_t)player_number_) {
 }}}
 is considered bad practice in C++ since a C-style cast is overpowered -- if types change around it could end up casting away constness, or performing an implementation-defined data reinterpretation (basically a C-style cast is a compiler generated combination of static_cast, reinterpret_cast, and const_cast). 
@@ -149,7 +138,6 @@ is considered bad practice in C++ since a C-style cast is overpowered -- if type
 Good programming style is to use the least powerful tool available that does what you want. For example, 
 
 {{{
-#!cpp
  if(i->second.side() == static_cast<size_t>(player_number_)) {
 }}}
 Alternatively, a constructor call may be used for non-builtin types. 
