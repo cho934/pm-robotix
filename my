@@ -1,0 +1,110 @@
+#! /bin/bash
+
+view_doc()
+{
+        firefox doc/html/index.html >/dev/null 2>&1 &
+}
+
+all()
+{
+	scp dist/* root@192.168.7.253:/pmx/
+}
+
+conf()
+{
+	scp dist/*.conf root@192.168.7.253:/pmx/
+}
+
+tsh()
+{
+	scp sh/*.sh root@192.168.7.253:/pmx/sh/
+}
+
+pmxtest()
+{
+	scp dist/PMX_TEST root@192.168.7.253:/pmx/
+}
+
+pmx()
+{
+        ssh root@192.168.7.253 "killall pmx"
+	scp dist/PMX root@192.168.7.253:/pmx/
+}
+
+devtest()
+{
+	scp dist/DEV_TEST root@192.168.7.253:/pmx/
+}
+
+recupcsvhost()
+{
+        #recup sur le PC fixe
+	scp root@192.168.7.253:/pmx/*.* /mnt/hgfs/pmx_xls/
+}
+
+recupcsv()
+{
+        scp root@192.168.7.253:/pmx/*.* /home/pmx/recupcsv/.
+}
+
+recupsvg()
+{
+        scp root@192.168.7.253:/pmx/*.svg /home/pmx/recupcsv/.
+}
+
+connect()
+{
+	ssh root@192.168.7.253
+}
+
+case "$1" in
+	view-doc)
+		view_doc
+	;;
+
+	all)
+		all
+	;;
+
+	conf)
+		conf
+	;;
+
+	tsh)
+		tsh
+	;;
+
+	pmx)
+		pmx
+	;;
+        pmxtest)
+		pmxtest
+	;;
+
+	devtest)
+		devtest
+	;;
+
+	connect)
+		connect
+	;;
+        
+        recupcsv)
+		recupcsv
+	;;
+
+        recupsvg)
+		recupsvg
+	;;
+
+        recupcsvhost)
+		recupcsvhost
+	;;
+
+	*)
+		echo "Usage: $0 {connect|pmx|devtest|pmxtest|all|conf|tsh|view-doc|recupcsv|recupsvg|recupcsvhost}" >&2
+		exit 1
+	;;
+esac
+
+exit 0
