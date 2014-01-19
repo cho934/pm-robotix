@@ -1,0 +1,73 @@
+Cette page est le point d'entrée pour le développement du programme.
+
+Voici toutes les explications sur le "déjà fait". Tout ce qui a été créé doit être utile.
+
+Reprenons la maxime de Lavoisier « '''Rien ne se perd, rien ne se crée, tout se transforme''' ».
+
+= 1. Environnements de développement =
+== Généralités ==
+ * DevConfig - L'environnement de développement
+ * DevStandards - Les standards de codage
+ * DevHelp - L'aide sur les développements
+ * DevEnvDebug - Comment déboguer
+
+== en C++ pour Armadeus APF9328 ==
+ * DevEnvArmadeus - Environnement mis en place pour la carte APF9328
+ * DevEnvNetbeans - Netbeans / C++ / SVN
+ * [wiki:DevEnvNetbeans6 DevEnvDistributionLinux] - Liste des distributions et des environnements de développements utilisés 
+ * DevEnvDocumentation - Documentation du code, How To...
+ * DevEnvFormatting - Formatage du code
+
+'''Les 3 bin générés à la compilation sont :'''
+ * DEV_TEST (répertoire de classes '''dev_test''')  
+ * PMX_TEST (répertoire de classes '''robot_test''') utilisant le fichier de configuration '''robot_pmxtest.conf'''
+ * PMX (répertoire de classes '''robot''') utilisant le fichier de configuration '''robot_pmx.conf'''
+
+== en C pour Arduino ==
+ * ArduinoEnv
+
+== en C pour CMUCAM3 ==
+ * DevEnvEeepc - Environnement natif avec MINT8 utilisé pour la CMUCAM3
+
+
+= 2. Développement C++ pour linux =
+== Section principale ==
+ * DevArchitecture - La description générale de l'architecture
+ * DevArchLogger - La description de l'architecture du système de trace
+ * DevAutomate - Automate mis en place pour la gestion du robot (première intelligence du robot)
+ * DevArchInOut - Réflexion sur la communication entre les éléments du robot
+ * DevAsservissement - Asservissement en vitesse / PID / trajectoire en position
+ * DevChronometer - La description de l'utilisation d'un Timer et d'un Chronometer
+ * DevCppThread - Designing a Thread Class in C++
+
+== Section communication == 
+ * DevArmadeusGpio - Tests et bases de développement sur les GPIO de la carte APF9328
+ * [wiki:DevArmadeusI2C] - Bases sur la communication I2C de la carte AFF9328
+
+== Section détection == 
+ * DevCmucam
+ * DevIrRangeSensors - Bases de développement du capteur de distance GP2D12
+
+== Section motorisation == 
+ * DevServoMotor - Bases de développement d'un servomoteur
+ * DevStepperMotor - Bases de développement des moteurs pas à pas
+
+= 3. Développement Arduino =
+ * [wiki:ArduinoRotaryEncoderWithLs7366]
+ * ArduinoColorSensor
+ * [wiki:ArduinoDynamixelAx12]
+ * [wiki:ArduinoRotaryEncoderRe16]
+ * [wiki:ArduinoUltrasonSfr05]
+ * ArduinoStepperEasyDriver
+ * [wiki:ArduinoStepperEasyStep1000]
+ * SeeedstudioRainbowduinoLedmatrix
+
+= 4. Section IA =
+== IA ==
+ * DevArchIntelligence - Réflexion sur l'intelligence artificielle du robot
+ * DevEnvSimuJava - Environnement nécessaire pour la simulation du comportement du robot
+ * DevSimuIaConcept - Concept utilisé pour l'intelligence artificielle
+ * DevIaImplementation - Description de l'implémentation de l'IA dans le robot
+ * [wiki:2012 2012 - Scénario sur Treasure Island] - Scénario et configuration IA pour la coupe 2012
+ * [wiki:2011 2011 - Scénario sur Chess'Up] - Scénario et liste des états pour la coupe 2011
+ * [wiki:2009 2009 - Scénario sur les temples d'Atlantis] - Scénario principal pour l'année 2009 
