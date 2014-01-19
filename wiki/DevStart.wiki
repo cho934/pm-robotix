@@ -68,6 +68,6 @@ Reprenons la maxime de Lavoisier « '''Rien ne se perd, rien ne se crée, tout s
  * DevEnvSimuJava - Environnement nécessaire pour la simulation du comportement du robot
  * DevSimuIaConcept - Concept utilisé pour l'intelligence artificielle
  * DevIaImplementation - Description de l'implémentation de l'IA dans le robot
- * 2012 - Scénario sur Treasure Island]? - Scénario et configuration IA pour la coupe 2012
+ * wiki 2012 2012 - Scénario sur Treasure Island]? - Scénario et configuration IA pour la coupe 2012
  * 2011 - Scénario sur Chess'Up] - Scénario et liste des états pour la coupe 2011
  * 2009 - Scénario sur les temples d'Atlantis] - Scénario principal pour l'année 2009 
