@@ -7,52 +7,52 @@ Le schéma suivant décrit l'automate mis en place pour la gestion du robot.
 
 === !WaitForReboot ===
 Le robot attend un appui sur le bouton de reboot.
- '''ok'''::
+ *ok* :
   le bouton reboot est appuié et relaché.
 
 === Initialize ===
 Le robot s'initialise et vérifie son fonctionnement.[[BR]]
- '''ok'''::
+ *ok*::
   Le robot est correctement initialisé.
  '''error'''::
   Une erreur s'est produite ou a été détectée lors de l'initialisation.
 
 === !WaitForStart ===
 Le robot attend l'activation du controle de start (goupille).
- '''ok'''::
+ *ok*::
   le bouton start est actif (passage à 1).
- '''reboot'''::
+ *reboot*::
   le bouton reboot est appuié et relaché.
 
 === !DecisionMaker ===
 Le robot se déplace vers le distributeur.
- '''s1'''::
+ *s1*::
   La stratégie 1 est utilisée.
- '''s2'''::
+ *s2*::
   La stratégie 1 est utilisée.
- '''s3'''::
+ *s3*::
   La stratégie 1 est utilisée.
 
 === Strategie1 ===
 Exemple de stratégie simple.
- '''ok'''::
+  *ok* :
   La stratégie est terminée, une nouvelle décision doit être prise.
 
 === Strategie2 ===
 Exemple de stratégie complexe.
- '''ok'''::
+ *ok*::
   La stratégie est terminée, une nouvelle décision doit être prise.
- '''opponent'''::
+ *opponent*::
   Le robot adverse se trouve sur le chemin du robot.
 
 === Wait ===
 Le robot attend que le robot adverse ne soit plus devant lui.
- '''ok'''::
+ *ok*::
   Le robot adverse n'est plus détecté devant le robot.
 
 === Strategie3 ===
 Exemple de stratégie finale.
- '''ok'''::
+ *ok*::
   Le robot a fini ces taches.
 
 == Détail de l'implémentation ==
