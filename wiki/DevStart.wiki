@@ -14,7 +14,7 @@ Reprenons la maxime de Lavoisier « '''Rien ne se perd, rien ne se crée, tout s
 == en C++ pour Armadeus APF9328 ==
  * DevEnvArmadeus - Environnement mis en place pour la carte APF9328
  * DevEnvNetbeans - Netbeans / C++ / SVN
- * [wiki:DevEnvNetbeans6 DevEnvDistributionLinux] - Liste des distributions et des environnements de développements utilisés 
+ * DevEnvDistributionLinux] - Liste des distributions et des environnements de développements utilisés 
  * DevEnvDocumentation - Documentation du code, How To...
  * DevEnvFormatting - Formatage du code
 
