@@ -1,0 +1,17 @@
+Retour sur MecaStart
+
+== New motorisation ==
+
+Creates a new motorisation based on only one motor to suppress the errors due to the use of two different motors.
+
+[[Image(pmx - motorisation idea.png)]]
+
+== Ascenseur par servomoteur ==
+
+Merci à l'équipe XD !
+
+[[Image(Servo_ascenseur.jpg)]]
+
+A vos idées !
+
+Retour sur MecaStart
