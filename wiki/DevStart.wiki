@@ -1,3 +1,4 @@
+#labels Featured,Phase-Implementation
 Cette page est le point d'entrée pour le développement du programme.
 
 Voici toutes les explications sur le "déjà fait". Tout ce qui a été créé doit être utile.
