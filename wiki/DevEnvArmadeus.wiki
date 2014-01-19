@@ -1,0 +1,150 @@
+Retour sur DevStart
+
+= L'environnement logiciel APF9328 =
+
+== 1. La compilation ([http://www.armadeus.com/wiki/index.php?title=Armadeus_3 Armadeus:Armadeus 3.3]) et la configuration (réseau, logiciels, système d'exploitation) ==
+
+ * DevArmadeusInstallToolchain : Paramètres de compilation du noyau linux
+ * DevArmadeusBiosUpdate       : Paramètres de configuration du BIOS de la carte APF9328
+ * DevArmadeusSystemConf       : Paramètres de configuration du système APF9328
+
+
+== 2. Connexion par RS232 avec Kermit (voir [http://www.armadeus.com/wiki/index.php?title=Kermit Armadeus:Kermit]) ==
+
+'''USAGE :'''
+ * To launch it :
+{{{
+ $ kermit -c
+}}}
+ * To login :
+{{{
+ root / pmx
+}}}
+ * To switch from terminal mode to command mode: 
+{{{
+CTRL + \ then c (par défaut)
+CTRL + h then c (configuration sur mint8-PMX)
+}}}
+ * To switch from command mode to terminal mode: 
+{{{
+C-Kermit>c then ENTER
+}}}
+
+== 3. Connexion par RS232 avec Windows avec la machine Hote ==
+ * Utilisation d'un Hyperterminal alternatif : [http://ttssh2.sourceforge.jp/ TerraTerm]
+ * Configurer avec les paramètres suivants:
+{{{
+Configuration > Port série :
+le port COM utilisé : COM5
+Vitesse : 115200
+Données : 8bit
+Parité : none
+Stop : 1bit
+}}}
+
+== 4. Configuration TFTP server configuration (hôte) (voir [http://www.armadeus.com/wiki/index.php?title=Communicate Armadeus:Communicate]) ==
+ 
+ * Créer le répertoire /home/pmx/tftpboot
+ * Créer et/ou modifier le fichier /etc/xinetd.d/tftp
+{{{
+# default: off
+# description: The tftp server serves files using the trivial file transfer
+#       protocol.  The tftp protocol is often used to boot diskless
+#       workstations, download configuration files to network-aware printers,
+#       and to start the installation process for some operating systems.
+service tftp
+{
+       socket_type             = dgram
+       protocol                = udp
+       wait                    = yes
+       user                    = root
+       server                  = /usr/sbin/in.tftpd
+       server_args             = -s /home/pmx/tftpboot
+#       disable                 = yes
+}
+}}}
+ * Redémarrer xinetd service
+{{{
+$ sudo killall -HUP xinetd
+}}}
+
+ * Vérifier les droits
+{{{
+$ sudo chmod -R 777 /home/pmx/tftpboot
+$ sudo chown -R nobody /home/pmx/tftpboot
+}}}
+ * Récupérer un fichier de l'hôte à partir de la carte APF9328 
+{{{
+# tftp -g -r getfile.txt 192.168.7.14
+}}}
+ * Déposer un fichier sur l'hôte
+{{{
+# tftp -p -l putfile.txt 192.168.7.14
+}}}
+
+== 5. Connexion par SSH ==
+ * prérequis : avoir flasher le rootfs avec l'option dropbear (voir configuration)
+ * Pour tester : (il faut avoir mis auparavant un mot de passe avec la command "passwd")
+{{{
+$ ssh root@192.168.7.253
+}}}
+
+== 6. Montage additionel sur hôte ==
+
+ * accès à la partition de compilation armadeus (ancienne VM): 
+{{{
+$ mount -t ext3 /dev/sdb /armadeus
+}}}
+
+== 7. La machine virtuelle de développement ==
+
+=== Linux Mint 8 [http://www.linuxmint.com/index.php] ===
+ * La distribution linux utilisée [wiki:DevEnvNetbeans6 DevEnvDistributionLinux] : Based on Ubuntu 9.10 Karmic Koala, Linux 2.6.31, Gnome 2.28 and Xorg 7.4
+ * login/pass : root/pmx pmx/pmx
+ * les chemins à connaitre :
+   * /armadeus/compilation2/ : emplacement de compilation (attention 10Go d'espace libre sont nécessaires)
+   * /pmx : emplacement SDcard où se situe le programme.
+ * Installation de java version "1.6.0_15"
+ * Utilisation de Netbeans 6 : [wiki:DevEnvNetbeans]
+ * Installer les packages *doxygen* et *graphviz* pour permettre la génération de la documentation.
+
+=== Les bases du développement Armadeus : Compilation C++ ===
+ * Obtenir les variables d'environnement
+{{{
+$ make shell_env
+$ . armadeus_env.sh
+}}}
+ * The C++ cross compiler is installed in $ARMADEUS_TOOLCHAIN_PATH and is named arm-linux-g++
+{{{
+$ echo $ARMADEUS_TOOLCHAIN_PATH
+$ export PATH=$PATH:$ARMADEUS_TOOLCHAIN_PATH
+}}}
+ * Export to your PATH environment variable
+{{{
+$ export PATH=$PATH:$ARMADEUS_TOOLCHAIN_PATH
+}}}
+ * call directly $ARMADEUS_TOOLCHAIN_PATH/arm-linux-g++
+{{{
+$ $ARMADEUS_TOOLCHAIN_PATH/arm-linux-g++ -o hello hello.cpp
+}}}
+
+=== Exemples ===
+ * Exemple "Hello World" (voir [http://www.armadeus.com/wiki/index.php?title=Development Armadeus:Developement])
+ * Exemple "GPIO Driver " DevArmadeusGpio (voir [http://www.armadeus.com/wiki/index.php?title=GPIO_Driver#Examples Armadeus:GPIO_Driver])
+ * Exemple d'utilisation des DAC [http://www.armadeus.com/wiki/index.php?title=DAC Armadeus:DAC] : permet de gérer la motorisation sans passer par le multiplexage (pas de 1024 au lieu de 255).
+ * Exemple d'utilisation Timer pwm0 natif (voir [http://www.armadeus.com/wiki/index.php?title=PWM Armadeus:PWM]) (pas d'utilité pour le moment)
+
+== La "TODO list" d'installation ==
+
+[http://armadeus.svn.sourceforge.net/viewvc/armadeus/trunk/target/demos/real_time/interrupt/linux/ SVN:interrupt]
+ * [FAIT] intérêt de l'environnement temps réel [http://www.armadeus.com/wiki/index.php?title=Xenomai Armadeus:Xenomai ] ? gestion des GPIO par interruption [http://armadeus.git.sourceforge.net/git/gitweb.cgi?p=armadeus/armadeus;a=blob;f=target/demos/real_time/interrupt/xenomai/user_space/interrupt_xeno_userspace.c;h=670e328ac35775ca10ecb11c1cf3632adec67653;hb=HEAD] 
+ * [FAIT] le FPGA avec les servomoteurs [http://www.armadeus.com/wiki/index.php?title=MotionSystem Armadeus:MotionSystem]
+ * [FAIT] Utiliser l'[http://www.armadeus.com/wiki/index.php?title=Adc ADC] pour les détections par GP2 (en utilisant un multiplexeur devant ?) et pour surveiller les tensions des batteries (definir les alertes en conséquence) (a comparer avec ce [http://www.astrochinon.fr/index.php?option=com_content&view=article&id=62:un-detecteur-de-seuil&catid=37:nos-dossiers&Itemid=56 montage])
+
+ * [TODO] l'exemple complet FPGA avec led et button [http://www.armadeus.com/wiki/index.php?title=A_simple_design_with_Wishbone_bus voir Armadeus:A_simple_design_with_Wishbone_bus] et [http://armadeus.svn.sourceforge.net/viewvc/armadeus/trunk/target/linux/modules/fpga/wishbone_example/ sur le svn armadeus]
+ * [TODO] le vhdl [http://code.google.com/p/robotter/wiki/CodingRulesVhdl voir wiki autre équipe]
+
+ 
+
+
+Retour sur DevStart
