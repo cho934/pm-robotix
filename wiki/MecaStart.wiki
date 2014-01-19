@@ -1,0 +1,27 @@
+
+= '''Les principes PMX''' =
+
+ * Utiliser du bois
+ * Utiliser des vieux MECANO
+ * Utiliser des tiges et barres en aluminium
+ * Utiliser ce que l'on a sous la main : c'est la méthode "Apollo 13"
+ * Ses cellules grises : pour trouver des mécanismes toujours plus simples
+
+= '''Les caractéritiques''' =
+ * MecaDimGear - Les dimensions des engrenages roue-codeur-entraxe
+
+= '''Boite à idées pour la mécanique ''' =
+ * MecaIdeabox
+
+= '''Le robot en images''' =
+== Coupe de France de robotique 2009 ==
+
+[[Image(P1010008_robot_2009_mini.jpg)]] [[Image(P1010014_robot_2009_mini.jpg)]] [[Image(P1000717_stepper.jpg)]]
+
+== Coupe de France de robotique 2008 ==
+
+[[Image(robot2008_28042008271_mini.jpg)]] [[Image(robot2008_28042008272_mini.jpg)]] [[Image(robot2008_28042008273_mini.jpg)]]
+
+== Coupe de France de robotique 2007 ==
+
+[[Image(robot2007_elec.jpg)]] [[Image(robot2007_1.jpg)]]
