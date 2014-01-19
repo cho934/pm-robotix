@@ -1,0 +1,11 @@
+= Aides au développement =
+Cette page regroupe les différentes aides utilisées pour le développement.
+
+== C ==
+
+
+== C++ ==
+
+[DevCppThread Développement de classes encapsulant un thread (en)]
+
+[http://burks.brighton.ac.uk/burks/language/cpp/ Références sur C++ (ce site contient une copie de thinking in C++)]
