@@ -1,0 +1,89 @@
+pmx::SpeedManagerFusion DEBUG pidPositionEnabled
+pmx::SpeedManagerFusion INFO PIDPos - TimeElapsed: 1600 TickLEFT: -8 TickRIGHT: -8  errorLeftP: -6  errorRightP: -5  distanceTotalLeft: 135  distanceTotalRight: 134
+pmx::SpeedManagerFusion DEBUG test8
+pmx::SpeedManagerFusion INFO ARRET errorLeftP <= 1.0 & errorRightP <= 1.0
+pmx::SpeedManagerFusion DEBUG test9
+pmx::SpeedManagerFusion DEBUG test10
+pmx::SpeedManagerFusion DEBUG test11
+pmx::SpeedManagerFusion DEBUG test12
+pmx::SpeedManagerFusion DEBUG test13
+pmx::SpeedManagerFusion DEBUG test14
+pmx::Base DEBUG movexy:  After turnTeta x: 130.3 y: -250.283 deg: -52.2153
+pmx::Base DEBUG movexy:  moveD 
+pmx::Base INFO printPosition: x y angle : 130.3 -250.283 -52.2153 (moveD start)
+pmx::Base DEBUG reset xOffset:130.3 yOffset:-250.283 angleOffset:-0.91133
+pmx::Base DEBUG moveD: vd(tick):1636
+pmx::Base DEBUG movexy:  before while 
+pmx::Base DEBUG b48
+pmx::Base DEBUG b49
+pmx::SpeedManagerFusion DEBUG pidPositionEnabled
+pmx::SpeedManagerFusion INFO PIDPos - TimeElapsed: 1700 TickLEFT: 8 TickRIGHT: 8  errorLeftP: 1632  errorRightP: 1630  distanceTotalLeft: 4  distanceTotalRight: 6
+pmx::SpeedManagerFusion DEBUG test8
+pmx::SpeedManagerFusion DEBUG test9
+pmx::SpeedManagerFusion DEBUG test10
+pmx::SpeedManagerFusion DEBUG test11
+pmx::SpeedManagerFusion DEBUG test12
+pmx::SpeedManagerFusion DEBUG test13
+pmx::Base DEBUG b48
+pmx::Base DEBUG b49
+pmx::SpeedManagerFusion DEBUG test14
+pmx::Base DEBUG b48
+pmx::Base DEBUG b49
+pmx::SpeedManagerFusion DEBUG pidPositionEnabled
+pmx::SpeedManagerFusion INFO PIDPos - TimeElapsed: 1800 TickLEFT: 12 TickRIGHT: 12  errorLeftP: 1629  errorRightP: 1632  distanceTotalLeft: 7  distanceTotalRight: 4
+pmx::SpeedManagerFusion DEBUG test8
+pmx::SpeedManagerFusion DEBUG test9
+
+
+
+
+
+
+
+SpeedManagerFusion DEBUG test12
+pmx::SpeedManagerFusion DEBUG test13
+pmx::SpeedManagerFusion DEBUG test14
+pmx::Base DEBUG b48
+pmx::Base DEBUG b49
+pmx::SpeedManagerFusion DEBUG pidPositionEnabled
+pmx::SpeedManagerFusion INFO PIDPos - TimeElapsed: 5200 TickLEFT: -8 TickRIGHT: -8  errorLeftP: -18  errorRightP: -8  distanceTotalLeft: 1654  distanceTotalRight: 1644
+pmx::SpeedManagerFusion DEBUG test8
+pmx::SpeedManagerFusion INFO ARRET errorLeftP <= 1.0 & errorRightP <= 1.0
+pmx::SpeedManagerFusion DEBUG test9
+pmx::SpeedManagerFusion DEBUG test10
+pmx::SpeedManagerFusion DEBUG test11
+pmx::SpeedManagerFusion DEBUG test12
+pmx::SpeedManagerFusion DEBUG test13
+pmx::SpeedManagerFusion DEBUG test14
+pmx::Base DEBUG b50
+pmx::Base DEBUG movexy:  After moveD x: 936.485 y: -1423.78 deg: -54.1564
+pmx::Base DEBUG b51<4>error: missed conversion 1 
+pmx::Base DEBUG b52
+pmx::PushBottleStrategy INFO goTo(300.0,800.0)
+pmx::Base DEBUG movexy
+pmx::Base DEBUG movexy: xDest yDest : 300 -800
+pmx::Base DEBUG ComputeDestinationVector vx:-636.485 vy:623.78 vd:891.187 va:2.36628
+pmx::Base DEBUG movexy:  turnTeta 
+pmx::Base DEBUG ComputeAngleToGo diffAngle:189.734 anglePos:-54.1564 teta:135.578
+pmx::Base DEBUG turnTeta:-170.266
+pmx::Base INFO printPosition: x y angle : 936.485 -1423.78 -54.1564 (turn: start)
+pmx::Base DEBUG reset xOffset:936.485 yOffset:-1423.78 angleOffset:-0.945208
+pmx::Base DEBUG turnRIGHT: alpha:-2.9717 degré:-170.266 d(perimetre):438
+pmx::Base DEBUG turnTeta: BeforeTurnRight pos x: 937.96 y: -1425.91 deg: -55.3211
+pmx::SpeedManagerFusion DEBUG pidPositionEnabled
+pmx::SpeedManagerFusion INFO PIDPos - TimeElapsed: 5300 TickLEFT: 8 TickRIGHT: 8  errorLeftP: 426  errorRightP: 421  distanceTotalLeft: 12  distanceTotalRight: 17
+pmx::SpeedManagerFusion DEBUG test8
+pmx::SpeedManagerFusion DEBUG test9
+pmx::SpeedManagerFusion DEBUG test10
+pmx::SpeedManagerFusion DEBUG test11
+pmx::SpeedManagerFusion DEBUG test12
+pmx::SpeedManagerFusion DEBUG test13
+pmx::SpeedManagerFusion DEBUG test14
+
+
+
+
+
+
+
+
