@@ -1,0 +1,29 @@
+Retour sur DevStart
+
+= Environnement Arduino = 
+Pour ce test, nous utilisons une carte [http://arduino.cc/en/Main/arduinoBoardDuemilanove Arduino Duemilavove].
+
+Pour utiliser la librairie [https://sites.google.com/site/bingjeffdoublependulum/rotary-encoders/Encoder.zip?attredirects=0&d=1 Encoder.zip] (version 2) de Jeff, l'environnement de développement doit être la version [http://arduino.cc/en/Main/OldSoftwareReleases Arduino 0023] 
+
+= Encoder rotatif = 
+Nous avons choisi l'[http://www.robotshop.com/eu/fr/encodeur-incremental-cytron.html encodeur incrémental Cytron 500 P/R] qui possède 500 pas par tour.
+
+
+
+= Mode quadrature = 
+
+= Compteur LS7366R spécialisé en horloge de quadrature =
+
+
+
+= Programme = 
+
+
+
+
+= Références = 
+ * Merci à Jeff Bingham : https://sites.google.com/site/bingjeffdoublependulum/rotary-encoders#TOC-Software (English version)
+ * LSICSI : http://www.lsicsi.com/counters.htm
+ * Robotshop : http://www.robotshop.com/eu/fr/encodeur-incremental-cytron.html
+
+Retour sur DevStart
