@@ -1,0 +1,45 @@
+Retour sur ElecStart
+
+= Liste des Détecteurs IR et nombre = 
+ * (8) SHARP GP2D12 (ANALOG 10cm -> 80cm)
+ * (1) SHARP GP2D02 (DIGITAL 10cm -> 80cm)
+ * (2) SHARP 2YOA02 (ANALOG 20cm -> 150cm)
+
+= Pin d'alimentation =
+[[Image(GP2D12_pin.png)]]
+= Code couleur des cables utilisés = 
+{{{
+#!html
+<div>
+<span style="color: blue">bleu</span> <span style="color: red">rouge</span> <span style="color: white;background: grey;">blanc</span>
+<span style="color: blue">GND</span> <span style="color: red">VCC</span>   <span style="color: white;background: grey;">DATA</span> 
+</div>
+<div>
+<span style="color: black">noir</span> <span style="color: blue">bleu</span> <span style="color: white;background: grey;">blanc</span>
+<span style="color: black">GND</span> <span style="color: blue">VCC</span>   <span style="color: white;background: grey;">DATA</span> 
+</div>
+<div>
+<span style="color: black">noir</span> <span style="color: red">rouge</span> <span style="color: white;background: grey;">blanc</span>
+<span style="color: black">GND</span> <span style="color: red">VCC</span>   <span style="color: white;background: grey;">DATA</span> 
+</div>
+}}}
+
+bleu rouge blanc : GND VCC DATA 
+noir bleu  blanc : GND VCC DATA 
+noir rouge blanc : GND VCC DATA 
+
+= Fonctionnement =
+
+http://www.acroname.com/robotics/info/articles/sharp/sharp.html
+
+= Fonctionnement du GP2D12 =
+
+Voir les formules utilisées : DevIrRangeSensors
+
+[[Image(Gp2d12Chart.jpg)]]   [[Image(Gp2d12Chart2.jpg)]]
+
+= Fonctionnement du 2YOA02 =
+
+[[Image(Sharp-GP2Y0A02.png)]]
+
+Retour sur ElecStart
