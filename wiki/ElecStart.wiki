@@ -5,7 +5,7 @@ Voici les pages importantes dans l'ordre d'écriture :
 '''Section de la base roulante :'''
 
  * ElecMotor - Description des moteurs et de la carte de puissance
- * [wiki:ElecMotorUsingMd25] - Description de l'utilisation de la carte MD25 associé aux moteurs-codeurs EMG30
+ * ElecMotorUsingMd25 - Description de l'utilisation de la carte MD25 associé aux moteurs-codeurs EMG30
  * ElecEncoderWithStepperMotor - Description du fonctionnement des moteurs pas à pas utilisés en mode codeur
  * ElecBatteryUse - Utilisation des batteries et normes
 
@@ -38,4 +38,3 @@ Version depuis 2010:
 
 '''Section des docs et schémas:'''
  [http://tools.assembla.com/pmx/attachment/wiki/ElecStart/tableauvaleurrsistanceax2.jpg Calcul de la valeur des résistances]
-
