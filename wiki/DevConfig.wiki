@@ -23,8 +23,8 @@ Donc tout est possible et aucun fichier de configuration propre à un environnem
 
 Donc pour information, et uniquement pour information, voici ma configuration de développement :
 
- - Système d'exploitation : Ubuntu 7.10[[BR]]
+ - Système d'exploitation : Ubuntu 7.10
    choisi pour son côté "user-friendly".
- - Environnement de développement : [DevEnvNetbeans Netbeans 6.0][[BR]]
+ - Environnement de développement : [DevEnvNetbeans Netbeans 6.0
    Le plus simple et facile à utiliser d'autant qu'il integre Subversion.
  - Schéma des classes : [http://argouml.tigris.org/ Argo UML]
