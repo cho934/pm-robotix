@@ -1,0 +1,15 @@
+Retour sur ElecStart
+
+= Infos sur la CMUCAM3 =
+
+[http://www.cmucam.org/wiki/Documentation Toute la documentation]
+
+= Les branchements = 
+
+[[Image(connections.png)]]
+[http://www.cmucam.org/wiki/Hardware Documentation hardware]
+
+
+
+
+Retour sur ElecStart
