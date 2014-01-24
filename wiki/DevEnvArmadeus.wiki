@@ -11,7 +11,7 @@ Retour sur DevStart
 
 == 2. Connexion par RS232 avec Kermit (voir [http://www.armadeus.com/wiki/index.php?title=Kermit Armadeus:Kermit]) ==
 
-'''USAGE :'''
+*USAGE :*
  * To launch it :
 {{{
  $ kermit -c
