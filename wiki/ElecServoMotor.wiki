@@ -1,0 +1,15 @@
+Retour sur ElecStart
+
+= Définitions et explications =
+
+[http://fribotte.free.fr/bdtech/pic/pic_et_servo.html Sur le site de fribotte]
+
+= La configuration utilisée pour le robot =
+
+La configuration utilisée est celle du projet "motionSystem" sur le site Armadeus.
+
+Le schéma est le suivant : [http://www.armadeus.com/wiki/index.php?title=MotionSystem#Hardware_Interface_Board MotionSystem#Hardware_Interface_Board]
+
+[img http://www.armadeus.com/wiki/index.php?title=Image:Hardware-Interface-Board.png]
+
+Retour sur ElecStart
