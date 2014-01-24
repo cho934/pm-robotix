@@ -1,0 +1,52 @@
+Retour sur ElecStart
+
+= Codeur à l'aide de moteurs pas à pas =
+
+== Fonctionnement ==
+
+Les codeurs professionnels étant trop coûteux, nous avons essayé de trouver une solution plus adaptée. Après diverses tentatives d'utilisation de roues codeuses de souris sans trop de succès de fiabilité, nous avons étudié puis testé l'utilisation de vieux moteurs pas à pas. '''Ceux-ci ont été récupérés sur de vieux lecteurs de disquettes 5'1/4'''.
+
+Grâce à une petite électronique détectant les faibles impulsions parcourant les bobines lorsque le moteur pas-à-pas est entrainé par la roue motrice, un signal carré est envoyé sur des LEDs, puis vers le robot. Ils sont donc fiables, et totalement hermétiques à la poussière.
+
+Le moteur pas-à-pas étant bipolaire à 6 fils, 48 pas, nous avons même obtenu la quadrature de phase permettant de connaître le sens de rotation.
+
+== Le schéma ==
+
+[[Image(schema_capture_avec_valeurs.JPG)]]
+
+== Le résultat ==
+
+Sens anti-horaire :
+
+[[Image(sens_antihoraire2.jpg)]] 
+
+Sens horaire :
+
+[[Image(sens_horaire2.jpg)]]
+
+
+En revanche en vitesse mini, il s'avère que les signaux ne sont plus symétriques :
+
+[[Image(vitesse_mini.jpg)]]
+
+'''CONCLUSION : il faut uniquement utiliser un des fronts et non les deux.'''
+
+== Le typon ==
+
+[[Image(stepper_pulse_2008_layout.png)]][[Image(stepper_pulse_2008_layout_component.png)]]
+
+== Photo du mécanisme ==
+
+La roue en bois est solidaire de la roue motrice (roue de roller) et permet d'éviter les poussières amenées par la roue motrice. Un simple élastique maintient le stepper contre la roue en bois.
+
+[[Image(P1000717_stepper.jpg)]]
+
+== Les dimensions ==
+
+voir MecaDimGear
+
+== Références ==
+ * [http://www.pobot.org/Codeur-incremental.html]
+ * [http://www.4qdtec.com/stpen.html]
+
+Retour sur ElecStart
