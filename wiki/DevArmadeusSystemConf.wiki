@@ -7,7 +7,7 @@ Retour sur DevEnvArmadeus
 == a.Désactivation du framebuffer (LCD) ==
 
 Pour supprimer l'apparition des messages d'erreur incessant dans la console série RS232 : 
- * modifier le fichier '''/etc/inittab''' du rootfs (par connexion ssh, et pour initialiser le password de root, se connecter via la console série et utiliser la cmd passwd sans tenir compte des messages qui défilent) et commenter les 2 lignes ci-dessous :
+ * modifier le fichier */etc/inittab* du rootfs (par connexion ssh, et pour initialiser le password de root, se connecter via la console série et utiliser la cmd passwd sans tenir compte des messages qui défilent) et commenter les 2 lignes ci-dessous :
 Dans la partie :# Set up a couple of getty's
 {{{
 #tty1::respawn:/sbin/getty 38400 tty1
