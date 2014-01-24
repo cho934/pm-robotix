@@ -7,7 +7,7 @@ Tout un programme :)
 Mieux qu'un long discours, voici un exemple (un long exemple quand même).
 Cet exemple nous permettra de faire 2 constats :
  - Le wiki aime les tags qui commencent par un {{{\}}} et ça : c'est beau !
- - Les blocs de documentation commencent par '''{{{/*!}}}''' ce qui est aussi important.
+ - Les blocs de documentation commencent par *{{{/*!}}}* ce qui est aussi important.
 
 {{{
 #!cpp
@@ -110,7 +110,7 @@ Permet de définir le mot suivant comme un élément de 'code' devant être écr
 
 == Les 'Advanced Features' ==
 
-La documentation de Doxygen est, et reste, une référence '''à avoir lu''' pour connaitre toutes les possibilités de formattage (liste, tableau, liens, ...) et les tags existants.
+La documentation de Doxygen est, et reste, une référence *à avoir lu* pour connaitre toutes les possibilités de formattage (liste, tableau, liens, ...) et les tags existants.
 
 Bonne lecture.
 
