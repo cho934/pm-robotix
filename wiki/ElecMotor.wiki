@@ -56,7 +56,7 @@ Ces documents donne les caractéristiques techniques des composants, leurs utili
 
 ;o)
 
- * [TODO] Dimensionnement roues-motoreducteur-codeur
- * [TODO] Suppression de l'AD7302 pour utiliser l'ADC de la carte AFF9328
+ * (TODO) Dimensionnement roues-motoreducteur-codeur
+ * (TODO) Suppression de l'AD7302 pour utiliser l'ADC de la carte AFF9328
 
 Retour sur ElecStart
