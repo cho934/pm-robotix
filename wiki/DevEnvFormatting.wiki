@@ -18,7 +18,7 @@ La meilleure solution reste d'utiliser le formatage automatique de [DevEnvNetbea
 
 === GNU indent ===
 
-Version de référence : 2.2.9[[BR]]
+Version de référence : 2.2.9
 Site web : http://www.gnu.org/software/indent/
 
 Indent est un programme prévu pour le formatage de code C.
