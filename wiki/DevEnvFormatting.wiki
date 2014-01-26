@@ -28,7 +28,8 @@ Une tentative d'intégrer le formatage de code C++ a été faite mais au final, 
 
 === Artistic Style - astyle ===
 
-Version de référence : 1.18[[BR]]
+Version de référence : 1.18
+
 Site web : http://astyle.sourceforge.net/
 
 Astyle intègre l'indentation et/ou le formatage du code C++.
