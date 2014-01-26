@@ -2,14 +2,14 @@ Cette page présente les différents principes et montages électroniques.
 
 Voici les pages importantes dans l'ordre d'écriture :
 
-'''Section de la base roulante :'''
+*Section de la base roulante :*
 
  * ElecMotor - Description des moteurs et de la carte de puissance
  * ElecMotorUsingMd25 - Description de l'utilisation de la carte MD25 associé aux moteurs-codeurs EMG30
  * ElecEncoderWithStepperMotor - Description du fonctionnement des moteurs pas à pas utilisés en mode codeur
  * ElecBatteryUse - Utilisation des batteries et normes
 
-'''Section du cerveau du robot :'''
+*Section du cerveau du robot :*
 
 Version avant 2009:
  * ElecPortParallele - Description et utilisation du port parallèle
@@ -19,22 +19,22 @@ Version depuis 2010:
  * ElecPic - Description de l'utilisation des PICs
  * ElecArduino - Description de l'utilisation des Arduino (ATMEGA328)
 
-'''Section communication :'''
+*Section communication :*
 
  * ElecMultiDemultiplexage - Description du multiplexage / démultiplexage
  * ElecPinsConfiguration - Configuration de brochage des pins composants et mécanismes
 
-'''Section des modules de détection :'''
+*Section des modules de détection :*
 
  * [wiki:ElecCmucam3] - Description de l'utilisation de nos[http://www.cmucam.org/ CMUCAM 3]
  * ElecContacts - Description des éléments de contact
  * ElecIrRangeSensors - Description des détecteurs de distance GP2D12
  * ElecColor - Description de la carte de détection de couleur
 
-'''Section des éléments de motorisation:'''
+*Section des éléments de motorisation:*
 
  * ElecServoMotor - Fonctionnement des servomoteurs
  * ElecStepperMotor - Fonctionnement d'un moteur pas à pas
 
-'''Section des docs et schémas:'''
+*Section des docs et schémas:*
  [http://tools.assembla.com/pmx/attachment/wiki/ElecStart/tableauvaleurrsistanceax2.jpg Calcul de la valeur des résistances]
