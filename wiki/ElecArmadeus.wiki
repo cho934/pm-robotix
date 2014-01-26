@@ -5,19 +5,19 @@ Retour sur ElecStart
 
 = 1. La carte APF9328 de chez [http://www.armadeus.com Armadeus Systems] =
 
-||'''Processor'''||'''ADC'''||
+||*Processor*||*ADC*||
 ||    * MC9328L(i.MXL) ARM920T 200MHz (Freescale)|| * 8 channels 10bits 10MHz with internal fifo (can be removed on demand)||
-||'''RAM'''||'''FPGA'''||
+||*RAM*||*FPGA*||
 ||    * 8/16 Mo 32bits @ 100MHz||   * Xilinx Spartan3 with 200k gates (50k FPGA or 400k FPGA optional)||
-||'''Flash'''||'''Power supply'''||
+||*Flash*||*Power supply*||
 ||    * 4/8/16 Mo 16bits @ 100MHz||    *  +3.3V supply 5%. typical power consumption: 300mW (without the FPGA)||
-||'''Peripherals'''||    * Two power saving modes||
-||    * 1 x RS232 (RX/TX)||'''Environment'''||
+||*Peripherals*||    * Two power saving modes||
+||    * 1 x RS232 (RX/TX)||*Environment*||
 ||    * 1 x RS232 TTL levels (RX, TX, CTS, RTS)|| * Cooling : None for temperature below 60°C*.||
 ||    * 1 x I2C|| * Operating temperature range: 0..60°C * (without cooling)||
 ||    * 2 x SPI|| * Storage temperature range: -10..70°C ||
 ||    * 1 x SSI (High speed synchronous serial port)|| * Humidity 5-90%||
-||    * 1 x USB 1.1 slave only with level converter||'''Mechanical Overview'''||
+||    * 1 x USB 1.1 slave only with level converter||*Mechanical Overview*||
 ||    * 1 x Ethernet 10/100 Mbits (no RJ45 connector)||Dimensions: 71mm (2.8") x 39mm (1.55")||
 ||    * 1 x SD/MMC||
 ||    * 1 x RTC (no battery)||
@@ -28,9 +28,9 @@ Retour sur ElecStart
 ||    * CSI (CMOS sensor interface)||
 ||    * 97 total I/O pins multiplexed with most dedicated functions for pin efficiency (GPIO)||
 ||    * JTAG (Debug (ICE) and test)||
-||'''Ethernet'''||
+||*Ethernet*||
 ||    * 10/100Mbits (can be removed on demand)||
-||'''DAC'''||
+||*DAC*||
 ||    * 2 channels 10bits 400kHz (can be removed on demand)||
 
 L'association qui en découle [http://www.armadeus.org Armadeus Project Wiki]
@@ -74,44 +74,44 @@ Dernière version du kernel installé et configuration : voir DevArmadeusInstall
 
  * Connecteur associé sur devLightV2 :
 
-['''Numéro_schematic'''] [code_armadeus]  [code_multiplexage]  [Entrée/Sortie]
-|| ||'''30''' REV/SPI2/SCLK O||
-||'''27''' CONTRAST O   ||'''28''' SPL_SPR/SPI2_MOSI O||
-||'''25''' OE_ACD O      ||'''26''' PS/SPI2_MISO O||
-||'''23''' HSYNC O       ||'''24''' CLS_SPI2_SSN O||
-||'''21''' VSYNC O        ||'''22''' '''GND'''        ||
-||'''19''' '''GND'''          ||'''20''' LD0_B0 MA O||
-||'''17''' LD1_B1 MB O  ||'''18''' LD2_B2 MC O||
-||'''15''' LD3_B3 DE I  ||'''16''' LD4_B4 IMPD I||
-||'''13''' LD5_G0 @A O  ||'''14''' LD6_G1 @B O||
-||'''11''' LD7_G2 @C O  ||'''12''' LD8_G3 AD O||
-||'''9'''  LD9_G4 IMPG I||'''10''' LD10_G5 IMPGD I||
-||'''7'''  LD11_R0 IMPDD I||'''8''' LD12_R1 E1 O||
-||'''5'''  LD13_R2 E2 O ||'''6''' LD14_R3 Not connected||
-||'''3'''  '''GND'''          ||'''4''' LD15_R4 Not connected||
-||'''1'''  ''VCC(3,3V)''    ||'''2''' ''VCC(3,3V)''||
+[*Numéro_schematic*] [code_armadeus]  [code_multiplexage]  [Entrée/Sortie]
+|| ||*30* REV/SPI2/SCLK O||
+||*27* CONTRAST O   ||*28* SPL_SPR/SPI2_MOSI O||
+||*25* OE_ACD O      ||*26* PS/SPI2_MISO O||
+||*23* HSYNC O       ||*24* CLS_SPI2_SSN O||
+||*21* VSYNC O        ||*22* *GND*        ||
+||*19* *GND*          ||*20* LD0_B0 MA O||
+||*17* LD1_B1 MB O  ||*18* LD2_B2 MC O||
+||*15* LD3_B3 DE I  ||*16* LD4_B4 IMPD I||
+||*13* LD5_G0 @A O  ||*14* LD6_G1 @B O||
+||*11* LD7_G2 @C O  ||*12* LD8_G3 AD O||
+||*9*  LD9_G4 IMPG I||*10* LD10_G5 IMPGD I||
+||*7*  LD11_R0 IMPDD I||*8* LD12_R1 E1 O||
+||*5*  LD13_R2 E2 O ||*6* LD14_R3 Not connected||
+||*3*  *GND*          ||*4* LD15_R4 Not connected||
+||*1*  *VCC(3,3V)*    ||*2* ''VCC(3,3V)''||
 [<< sens / vue de dessus carte de connexion / vue de dessous devLightV2]
 
  * Connecteur vers la carte de multiplexage
 
-['''Numéro_schematic'''] [code_multiplexage]  [Entrée/Sortie]
-||'''1'''||Not connected||||'''2'''||MC||O||
-||'''3'''||IMPG||I||'''4'''||MB||O||
-||'''5'''||IMPD||I||'''6'''||MA||O||
-||'''7'''||GND||||'''8'''||AD||O||
-||'''9'''||IMPDD||I||'''10'''||@C||O||
-||'''11'''||IMPGD||I||'''12'''||@B||O||
-||'''13'''||DE||I||'''14'''||@A||O||
-||'''15'''||E2||O||'''16'''||E1||O||
+[*Numéro_schematic*] [code_multiplexage]  [Entrée/Sortie]
+||*1*||Not connected||||*2*||MC||O||
+||*3*||IMPG||I||*4*||MB||O||
+||*5*||IMPD||I||*6*||MA||O||
+||*7*||GND||||*8*||AD||O||
+||*9*||IMPDD||I||*10*||@C||O||
+||*11*||IMPGD||I||*12*||@B||O||
+||*13*||DE||I||*14*||@A||O||
+||*15*||E2||O||*16*||E1||O||
 [>> sens / vue de dessus carte de connexion]
 
 = La communication 5V <=> 3,3V =
 
- * Pour les entrées '''sens 5v => 3,3v'''
-Utilisation du composant [http://www.datasheetcatalog.org/datasheet2/1/03pe5pihyt1rj55dhsuxk1et037y.pdf TPS7333QP : Régulateur 3,3v, 0,5A]
+ * Pour les entrées *sens 5v => 3,3v*
+Utilisation du composant [http://www.datasheetcatalog.org/datasheet2/1/03pe5pihyt1rj55dhsuxk1et037y.pdf TPS7333QP : Régulateur 3,3v, 0,5A].
 
- * Pour les sorties '''sens 3,3v => 5v'''
-Utilisation du composant [http://www.datasheetcatalog.org/datasheet2/e/0lzrsr4j7opqkakja3teqcgjyhwy.pdf SN74AHC244N : Octal Buffer Driver]
+ * Pour les sorties *sens 3,3v => 5v*
+Utilisation du composant [http://www.datasheetcatalog.org/datasheet2/e/0lzrsr4j7opqkakja3teqcgjyhwy.pdf SN74AHC244N]: Octal Buffer Driver
  
 = Config Elec de la DevLightV2 =
  * Pour les DAC : DAC_REF: corresponds to REF (pin 6) on Max5821. It's the reference voltage (max value that will be achieved by outputs). This input should be connected to a voltage reference between 0 and 3,3V.
