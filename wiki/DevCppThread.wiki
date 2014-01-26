@@ -78,22 +78,22 @@ It is important to understand that we are wrapping a C++ object around a thread.
 
 Notice that we store the user argument in the class. This is necessary because we need a place to store it temporarily until the thread is started. The operating system thread call allows us to pass an argument but we have used it to pass the this pointer. So we store the real user argument in the class itself and when the execute function is called it can get access to the argument. 
 
-'''{{{Thread();}}}''' [[BR]]
+*{{{Thread();}}}*
 This is the constructor. 
 
-'''{{{int Start(void * arg);}}}''' [[BR]]
+*{{{int Start(void * arg);}}}*
 This function provides the means to create the thread and start it going. The argument arg provides a way for user data to be passed into the thread. Start() creates the thread by calling the operating system thread creation function. 
 
-'''{{{int Run(void * arg);}}}''' [[BR]]
+*{{{int Run(void * arg);}}}*
 This is a protected function that should never be tampered with. 
 
-'''{{{static void * EntryPoint(void * pthis);}}}''' [[BR]]
+*{{{static void * EntryPoint(void * pthis);}}}* 
 This function serves as the entry point to the thread. It simply casts pthis to Thread * and 
 
-'''{{{virtual void Setup();}}}''' [[BR]]
+*{{{virtual void Setup();}}}* 
 This function is called after the thread has been created but before Execute() is called. If you override this function, remember to call the parent class Execute(). 
 
-'''{{{virtual void Execute(void *);}}}''' [[BR]]
+*{{{virtual void Execute(void *);}}}* 
 You must override this function to provide your own functionality. 
 
 == Using The Thread Class ==
