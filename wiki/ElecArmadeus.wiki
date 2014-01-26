@@ -74,7 +74,8 @@ Dernière version du kernel installé et configuration : voir DevArmadeusInstall
 
  * Connecteur associé sur devLightV2 :
 
-[*Numéro_schematic*] [code_armadeus]  [code_multiplexage]  [Entrée/Sortie]
+[*Numéro_schematic*] [[code_armadeus]]  [[code_multiplexage]]  [Entrée/Sortie]
+
 || ||*30* REV/SPI2/SCLK O||
 ||*27* CONTRAST O   ||*28* SPL_SPR/SPI2_MOSI O||
 ||*25* OE_ACD O      ||*26* PS/SPI2_MISO O||
@@ -90,11 +91,12 @@ Dernière version du kernel installé et configuration : voir DevArmadeusInstall
 ||*5*  LD13_R2 E2 O ||*6* LD14_R3 Not connected||
 ||*3*  *GND*          ||*4* LD15_R4 Not connected||
 ||*1*  *VCC(3,3V)*    ||*2* ''VCC(3,3V)''||
+
 [<< sens / vue de dessus carte de connexion / vue de dessous devLightV2]
 
  * Connecteur vers la carte de multiplexage
 
-[*Numéro_schematic*] [code_multiplexage]  [Entrée/Sortie]
+[*Numéro_schematic*] [[code_multiplexage]]  [Entrée/Sortie]
 ||*1*||Not connected||||*2*||MC||O||
 ||*3*||IMPG||I||*4*||MB||O||
 ||*5*||IMPD||I||*6*||MA||O||
