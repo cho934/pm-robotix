@@ -13,7 +13,7 @@ Nous avons utilisés des moteurs courant continu GEARBOX 919D541/1 avec un rappo
 A partir d’un mot binaire de 8 bits, le convertisseur Numérique-Analogique (CNA ou DAC) transforme la valeur du mot binaire en tension. Cette tension est ensuite injectée dans le système d’amplification opérationnel (AOP). 
 Un comparateur à Hystérésis (signal carré) est intégré avec un autre AOP (LM324) pour obtenir un signal triangulaire constant. Ce dernier est ensuite comparé avec la tension variable de CNA (ou DAC) (c'est un AD7302BN qui est utilisé) pour obtenir un carré où la largeur d’impulsion varie. Ce signal est ensuite envoyé comme commande à un étage de puissance, constitué de transistors sur le principe de montage Darlington. Ce montage se compose d'un transistor 2N3904 puis d'un 2N3055E permettant un courant fort. Bien penser aux diodes de roues libres. Le signal de puissance est transmis au moteur à courant continu. Le changement de sens est opéré par 2 relais NO/NC qui permettent d'inverser le sens du courant dans le moteur via une commande TTL (via une commande par un ULN2003 intégrant des diodes de roues libres).
 
-CONCLUSION : '''la puissance du moteur varie donc par rapport au mot binaire appliqué.'''
+CONCLUSION : *la puissance du moteur varie donc par rapport au mot binaire appliqué.*
 
 == 3. Suppression des parasites ==
 
@@ -22,13 +22,13 @@ Pour les supprimer, voici ce que l'on peut faire :
  * Utiliser une fréquence de PWM > 20kHz si possible.
  * Isoler les câbles moteurs par un blindage à la masse.
  * Les câbles moteurs doivent être seuls dans le passage de câble, aucun autre fil ne doit les longer (sinon les parasites seront transmis).
- * Mettre des '''ferrites''' avec au moins une boucle sur chaque câble moteur.
+ * Mettre des *ferrites* avec au moins une boucle sur chaque câble moteur.
 
 == 4. Composants utilisés pour une carte moteur ==
 
 Les composants sont bons marchés et ne sont pas très nombreux :
 
-||'''Composant'''||'''Description'''||
+||*Composant*||*Description*||
 ||LM324N||Quad low power operational amplifiers||
 ||AD7302BN||Parallel Input Dual Voltage Output 8-bits DAC||
 ||ULN2003||High current Darlington transistor array||
@@ -38,7 +38,7 @@ Les composants sont bons marchés et ne sont pas très nombreux :
 
 == 5. Contrôle de la carte ==
 
-||'''Contrôle'''||'''Description'''||
+||*Contrôle*||*Description*||
 ||1 mot de 8bits D7-D0||AD7302 Parallel Data Inputs. Définit la force à appliquer sur le moteur.||
 ||WR| ||AD7302 Write Input. WR| est une entrée s’activant par niveau bas. Elle s’utilise en conjonction avec CS|. Elle permet d’écrire sur la sortie analogique choisie (sortie A ou B).||
 ||CS| ||AD7302 Chip Select. CS| est une entrée s’activant par niveau bas. ||
