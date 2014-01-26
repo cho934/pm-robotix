@@ -7,8 +7,8 @@
  * Utiliser ce que l'on a sous la main : c'est la méthode "Apollo 13"
  * Ses cellules grises : pour trouver des mécanismes toujours plus simples
 
-= '''Les caractéritiques''' =
+= *Les caractéritiques* =
  * MecaDimGear - Les dimensions des engrenages roue-codeur-entraxe
 
-= '''Boite à idées pour la mécanique ''' =
+= *Boite à idées pour la mécanique * =
  * MecaIdeabox
