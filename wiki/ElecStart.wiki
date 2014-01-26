@@ -26,7 +26,7 @@ Version depuis 2010:
 
 *Section des modules de détection :*
 
- * [wiki:ElecCmucam3] - Description de l'utilisation de nos[http://www.cmucam.org/ CMUCAM 3]
+ * ElecCmucam3 - Description de l'utilisation de nos[http://www.cmucam.org/ CMUCAM 3]
  * ElecContacts - Description des éléments de contact
  * ElecIrRangeSensors - Description des détecteurs de distance GP2D12
  * ElecColor - Description de la carte de détection de couleur
