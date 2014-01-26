@@ -29,7 +29,7 @@ Le choix du mode entrée/sortie se fait via 2 pins du port parallèle (E1 et E2)
 
 Les composants sont bons marchés et ne sont pas très nombreux :
 
-||'''Composant'''||'''Description'''||
+||*Composant*||*Description*||
 ||74HC04N||Hex Inverter||
 ||74HCT259E||High Speed CMOS Logic 8-Bit Addressable Latch||
 ||74HC151N||8-input multiplexer||
