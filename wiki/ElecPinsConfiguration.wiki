@@ -23,9 +23,9 @@ TODO
 
 
 
-= ''Ancienne configuration (version 2009)'' =
+= *Ancienne configuration (version 2009)* =
 
-== ''Brochage de la carte de démultiplexage (version 2009)'' ==
+== *Brochage de la carte de démultiplexage (version 2009)* ==
 
 Sorties : démultiplexage (DM0 à DM7)
 
