@@ -23,9 +23,9 @@ Voir le programme [http://armadeus.git.sourceforge.net/git/gitweb.cgi?p=armadeus
 *Le C++ :*
 
 Les programmes de tests mis en place :
- * /robot-test/ApfOutTest.cpp //Test de clignotement d'un pad GPIO sur DevLightV2.
+ * /robot-test/ApfOutTest.cpp//Test de clignotement d'un pad GPIO sur DevLightV2.
  * /robot-test/ApfOutTest.hpp
- * /robot-test/ApfInTest.cpp //Test d'interruption en lecture bloquante d'un pad GPIO sur DevLightV2.
+ * /robot-test/ApfInTest.cpp//Test d'interruption en lecture bloquante d'un pad GPIO sur DevLightV2.
  * /robot-test/ApfInTest.hpp
 
 == La config PMX ==
