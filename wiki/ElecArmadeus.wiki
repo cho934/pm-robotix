@@ -49,7 +49,7 @@ Dernière version du kernel installé et configuration : voir DevArmadeusInstall
 == 2.1. L'alimentation dans le bons sens ==
 
  * For devLight V2 : Use +5Vdc to +7Vdc input voltage, [http://www.armadeus.com/wiki/index.php?title=Development_boards_power_supply Pour ne pas se tromper...]
- * For all development boards: '''+ is in the middle of the connector, - on the side'''
+ * For all development boards: *+ is in the middle of the connector, - on the side*
 
 == 2.2. GPIO Pin configuration ==
 
@@ -125,10 +125,10 @@ Utilisation du composant [http://www.datasheetcatalog.org/datasheet2/e/0lzrsr4j7
 
 = La "TODO list" électronique =
 
- * [Fait] Utiliser les ADC pour les GP2 => a documenter
- * [Fait] Utiliser l'i2c pour commander les nouveaux moteurs => a documenter
- * [Fait] Utiliser le FPGA pour utiliser les servos moteurs => a documenter
- * [TODO] Programmer 2 compteurs dans le FPGA pour les codeurs indépendant
+ * [[Fait]] Utiliser les ADC pour les GP2 => a documenter
+ * [[Fait]] Utiliser l'i2c pour commander les nouveaux moteurs => a documenter
+ * [[Fait]] Utiliser le FPGA pour utiliser les servos moteurs => a documenter
+ * [[TODO]] Programmer 2 compteurs dans le FPGA pour les codeurs indépendant
 
 
 
