@@ -89,7 +89,7 @@ Schéma des modifiations :
  * Protection de la pin DE, via un optocoupleur 4N28.
  * Utilisation de la pin CONTROL C3 (du port //) en mode input (entrée) : 
 
-'''PRINCIPE de l'utilisation du port CONTROL en INPUT : '''
+*PRINCIPE de l'utilisation du port CONTROL en INPUT : *
 Le port CONTROL possède des sorties en "open collector", c'est-à-dire que 2 états sont possibles, haute impédance et GND. Si vous connectez votre entrée directement (par exemple la pin de déphasageD directement sur la pin C17 du port parallèle), un conflit va en résulter lorsque l'entrée est à 1 et que le port parallèle essaye de mettre à 0 la pin. C'est pourquoi il faut utiliser une inversion en "open collector" (via un 74LS04 par exemple).
 
 == 7. Les cartes en photo ==
