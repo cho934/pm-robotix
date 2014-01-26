@@ -115,7 +115,7 @@ Utilisation du composant [http://www.datasheetcatalog.org/datasheet2/1/03pe5pihy
  * Pour les sorties *sens 3,3v => 5v*
 Utilisation du composant [http://www.datasheetcatalog.org/datasheet2/e/0lzrsr4j7opqkakja3teqcgjyhwy.pdf SN74AHC244N]: Octal Buffer Driver
  
-= Config Elec de la DevLightV2 =
+= Config Elec de la DevLightV2
  * Pour les DAC : DAC_REF: corresponds to REF (pin 6) on Max5821. It's the reference voltage (max value that will be achieved by outputs). This input should be connected to a voltage reference between 0 and 3,3V.
    * Connect DAC_REF to 3,3V
 
@@ -125,10 +125,10 @@ Utilisation du composant [http://www.datasheetcatalog.org/datasheet2/e/0lzrsr4j7
 
 = La "TODO list" électronique =
 
- * [[Fait]] Utiliser les ADC pour les GP2 => a documenter
- * [[Fait]] Utiliser l'i2c pour commander les nouveaux moteurs => a documenter
- * [[Fait]] Utiliser le FPGA pour utiliser les servos moteurs => a documenter
- * [[TODO]] Programmer 2 compteurs dans le FPGA pour les codeurs indépendant
+ * (Fait) Utiliser les ADC pour les GP2 => a documenter
+ * (Fait) Utiliser l'i2c pour commander les nouveaux moteurs => a documenter
+ * (Fait) Utiliser le FPGA pour utiliser les servos moteurs => a documenter
+ * (TODO) Programmer 2 compteurs dans le FPGA pour les codeurs indépendant
 
 
 
