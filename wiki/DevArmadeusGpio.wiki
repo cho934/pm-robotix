@@ -77,7 +77,7 @@ Connexion carte de multiplexage (sur le port D, pin 28...15):
 ||*MODE*||O||O||I||I||I||O||O||O||O||I||I||O||O||O||
 Connexion aux leds d'information (sur le port D, pin 14...7):
 ||*GPIO*||PD14||PD13||PD12||PD11||PD10||PD9||PD8||PD7||
-||*Réf *||LED8||LED7||LED6||LED5||LED4||LED3||LED2||LED1||
+||*Réf*||LED8||LED7||LED6||LED5||LED4||LED3||LED2||LED1||
 ||*MODE*||O||O||O||O||O||O||O||O||
 
  * GPIORDMODE (1 = GPIO)
