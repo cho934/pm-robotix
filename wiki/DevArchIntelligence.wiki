@@ -24,7 +24,7 @@ On a donc besoin de trois éléments pour réfléchir :
 On y reviendra.
 
 Dans notre cas : nous n'avons pas une question mais un ordre 'Gagne !' ;) [[BR]]
-De façon plus général, il s'agit là de la plus grande difficulté : '''trouvé le déclencheur pour notre réflexion'''.
+De façon plus général, il s'agit là de la plus grande difficulté : *trouvé le déclencheur pour notre réflexion*.
 
 === Forte ou faible ===
 
@@ -62,7 +62,7 @@ Dans notre cas, le moteur de réflexion se basera certainement sur une logique d
 
 === Quelques réflexions pour le robot ===
 
-|| '''perception''' || '''action''' ||
+|| *perception* || *action* ||
 || temps >= 150 || arret ||
 || adversaire en face || contourner ||
 || stock = 3 balles || rapporter ||
