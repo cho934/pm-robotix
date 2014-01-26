@@ -41,7 +41,7 @@ Sorties : démultiplexage (DM0 à DM7)
 || DM0 pin1 || WR| GP2D12_n°2 ||
 || DM0 pin2 || WR| GP2D12_n°3 ||
 
-== ''Brochage de la carte de multiplexage (version 2009)'' ==
+== *Brochage de la carte de multiplexage (version 2009)* ==
 
 Entrées : multiplexage (M0 à M5)
 
@@ -57,12 +57,12 @@ Entrées : multiplexage (M0 à M5)
 || M3 pin6 || couleur bleu/rouge n°1 ||
 || M3 pin7 || couleur bleu/rouge n°2 ||
 
-== ''Brochage direct des entrées sur le port parallèle (version 2009)'' ==
+== *Brochage direct des entrées sur le port parallèle (version 2009)* ==
 
 || (Port //) pin10 || S3 STATUS || IMP2 = IMPD ||
 || (Port //) pin11 || S4 STATUS || IMP1 = IMPG || 
 
-== ''Brochage du port parallèle pour le démultiplexage/multiplexage (version 2009)'' ==
+== *Brochage du port parallèle pour le démultiplexage/multiplexage (version 2009)* ==
 
 voir la première section du document suivant (version 2009):
 http://www.assembla.com/spaces/pmx/documents/awbFTisWir3OBleJe5afGb/download/PMX_ST_v03_090510.doc
