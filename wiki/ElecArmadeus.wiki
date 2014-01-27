@@ -1,7 +1,7 @@
 Retour sur ElecStart
 
 = Image de la carte APF9328 avec la carte devLight V2.1 =
-[[Image(APF9328.jpg)]] 
+[https://sites.google.com/site/pmrobotix/home/wiki-img/ElecArmadeus_APF9328.jpg?attredirects=0] 
 
 = 1. La carte APF9328 de chez [http://www.armadeus.com Armadeus Systems] =
 
