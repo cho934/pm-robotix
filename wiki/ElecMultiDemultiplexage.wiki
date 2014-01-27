@@ -99,12 +99,12 @@ Le port CONTROL possède des sorties en "open collector", c'est-à-dire que 2 é
 
 == 8. Schéma électronique et typon ==
 
-[https://docs.google.com/viewer?a=v&pid=sites&srcid=ZGVmYXVsdGRvbWFpbnxwbXJvYm90aXh8Z3g6NmVlNzkxNmU3OWU3YTMxYw]
+[https://docs.google.com/viewer?a=v&pid=sites&srcid=ZGVmYXVsdGRvbWFpbnxwbXJvYm90aXh8Z3g6NmVlNzkxNmU3OWU3YTMxYw 1_annexe_schema_multi10.zip]
 
 
 == 9. Document de spécifications des composants utilisés (datasheets) ==
 
-[https://docs.google.com/viewer?a=v&pid=sites&srcid=ZGVmYXVsdGRvbWFpbnxwbXJvYm90aXh8Z3g6NTQ0MzVhNWJlMzQwODkwYQ]
+[https://docs.google.com/viewer?a=v&pid=sites&srcid=ZGVmYXVsdGRvbWFpbnxwbXJvYm90aXh8Z3g6NTQ0MzVhNWJlMzQwODkwYQ 1_annexe_schema_multi10_datasheets.zip]
 
 Ces documents donnent les caractéristiques techniques des composants, leurs utilisations, et la signification des états possibles des différents pins.
 
