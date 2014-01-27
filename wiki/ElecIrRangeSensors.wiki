@@ -6,10 +6,10 @@ Retour sur ElecStart
  * (2) SHARP 2YOA02 (ANALOG 20cm -> 150cm)
 
 = Pin d'alimentation =
-[[Image(GP2D12_pin.png)]]
+[https://sites.google.com/site/pmrobotix/home/wiki-img/ElecIrRangeSensors_GP2D12_pin.png?attredirects=0]
+
 = Code couleur des cables utilisés = 
-{{{
-#!html
+
 <div>
 <span style="color: blue">bleu</span> <span style="color: red">rouge</span> <span style="color: white;background: grey;">blanc</span>
 <span style="color: blue">GND</span> <span style="color: red">VCC</span>   <span style="color: white;background: grey;">DATA</span> 
@@ -22,7 +22,7 @@ Retour sur ElecStart
 <span style="color: black">noir</span> <span style="color: red">rouge</span> <span style="color: white;background: grey;">blanc</span>
 <span style="color: black">GND</span> <span style="color: red">VCC</span>   <span style="color: white;background: grey;">DATA</span> 
 </div>
-}}}
+
 
 bleu rouge blanc : GND VCC DATA 
 noir bleu  blanc : GND VCC DATA 
@@ -36,10 +36,10 @@ http://www.acroname.com/robotics/info/articles/sharp/sharp.html
 
 Voir les formules utilisées : DevIrRangeSensors
 
-[[Image(Gp2d12Chart.jpg)]]   [[Image(Gp2d12Chart2.jpg)]]
+[https://sites.google.com/site/pmrobotix/home/wiki-img/ElecIrRangeSensors_Gp2d12Chart.jpg?attredirects=0]   [https://sites.google.com/site/pmrobotix/home/wiki-img/ElecIrRangeSensors_Gp2d12Chart2.jpg?attredirects=0]
 
 = Fonctionnement du 2YOA02 =
 
-[[Image(Sharp-GP2Y0A02.png)]]
+[https://sites.google.com/site/pmrobotix/home/wiki-img/ElecIrRangeSensors_Sharp-GP2Y0A02.png?attredirects=0]
 
 Retour sur ElecStart
