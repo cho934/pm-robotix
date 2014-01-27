@@ -29,7 +29,7 @@ Le choix du mode entrée/sortie se fait via 2 pins du port parallèle (E1 et E2)
 
 Les composants sont bons marchés et ne sont pas très nombreux :
 
-||*Composant*||*Description*||
+|| *Composant* || *Description* ||
 ||74HC04N||Hex Inverter||
 ||74HCT259E||High Speed CMOS Logic 8-Bit Addressable Latch||
 ||74HC151N||8-input multiplexer||
@@ -58,7 +58,7 @@ Les composants sont bons marchés et ne sont pas très nombreux :
 
 === Connecteur côté port parallèle : ===
 
-[[Image(brochage_port_parallele.JPG)]] 
+[https://sites.google.com/site/pmrobotix/home/wiki-img/ElecMultiDemultiplexage_brochage_port_parallele.JPG?attredirects=0] 
 
 === Connecteur côté carte de multiplage : ===
 
@@ -80,30 +80,31 @@ Les composants sont bons marchés et ne sont pas très nombreux :
 
 Le typon modifié :
 
-[[Image(multi10_modifications2009.jpg)]] 
+[https://sites.google.com/site/pmrobotix/home/wiki-img/ElecMultiDemultiplexage_multi10_modifications2009.jpg?attredirects=0] 
 
 Schéma des modifiations :
 
-[[Image(multi10_ajout_schema2009.jpg)]] 
+[https://sites.google.com/site/pmrobotix/home/wiki-img/ElecMultiDemultiplexage_multi10_ajout_schema2009.jpg?attredirects=0] 
 
  * Protection de la pin DE, via un optocoupleur 4N28.
- * Utilisation de la pin CONTROL C3 (du port //) en mode input (entrée) : 
+ * Utilisation de la pin CONTROL C3 (du port //) en mode input (entrée): 
 
 *PRINCIPE de l'utilisation du port CONTROL en INPUT : *
 Le port CONTROL possède des sorties en "open collector", c'est-à-dire que 2 états sont possibles, haute impédance et GND. Si vous connectez votre entrée directement (par exemple la pin de déphasageD directement sur la pin C17 du port parallèle), un conflit va en résulter lorsque l'entrée est à 1 et que le port parallèle essaye de mettre à 0 la pin. C'est pourquoi il faut utiliser une inversion en "open collector" (via un 74LS04 par exemple).
 
 == 7. Les cartes en photo ==
 
-[[Image(multiplexage_29042008275.jpg)]]
+[https://sites.google.com/site/pmrobotix/home/wiki-img/ElecMultiDemultiplexage_multiplexage_29042008275.jpg?attredirects=0]
 
 
 == 8. Schéma électronique et typon ==
 
-http://www.assembla.com/spaces/pmx/documents/cgW7UCOqSr3jGOabIlDkbG/download?filename=1_annexe_schema_multi10.zip
+[https://docs.google.com/viewer?a=v&pid=sites&srcid=ZGVmYXVsdGRvbWFpbnxwbXJvYm90aXh8Z3g6NmVlNzkxNmU3OWU3YTMxYw]
+
 
 == 9. Document de spécifications des composants utilisés (datasheets) ==
 
-http://www.assembla.com/spaces/pmx/documents/dXpAi6OqSr3jAmabIlDkbG/download?filename=1_annexe_schema_multi10_datasheets.zip
+[https://docs.google.com/viewer?a=v&pid=sites&srcid=ZGVmYXVsdGRvbWFpbnxwbXJvYm90aXh8Z3g6NTQ0MzVhNWJlMzQwODkwYQ]
 
 Ces documents donnent les caractéristiques techniques des composants, leurs utilisations, et la signification des états possibles des différents pins.
 
