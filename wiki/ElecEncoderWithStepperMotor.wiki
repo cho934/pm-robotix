@@ -12,34 +12,34 @@ Le moteur pas-à-pas étant bipolaire à 6 fils, 48 pas, nous avons même obtenu
 
 == Le schéma ==
 
-[[Image(schema_capture_avec_valeurs.JPG)]]
+[https://sites.google.com/site/pmrobotix/home/wiki-img/ElecEncoderWithStepperMotor_schema_capture_avec_valeurs.JPG?attredirects=0]
 
 == Le résultat ==
 
 Sens anti-horaire :
 
-[[Image(sens_antihoraire2.jpg)]] 
+[https://sites.google.com/site/pmrobotix/home/wiki-img/ElecEncoderWithStepperMotor_sens_antihoraire2.jpg?attredirects=0] 
 
 Sens horaire :
 
-[[Image(sens_horaire2.jpg)]]
+[https://sites.google.com/site/pmrobotix/home/wiki-img/ElecEncoderWithStepperMotor_sens_horaire2.jpg?attredirects=0]
 
 
 En revanche en vitesse mini, il s'avère que les signaux ne sont plus symétriques :
 
-[[Image(vitesse_mini.jpg)]]
+[https://sites.google.com/site/pmrobotix/home/wiki-img/ElecEncoderWithStepperMotor_vitesse_mini.jpg?attredirects=0]
 
 '''CONCLUSION : il faut uniquement utiliser un des fronts et non les deux.'''
 
 == Le typon ==
 
-[[Image(stepper_pulse_2008_layout.png)]][[Image(stepper_pulse_2008_layout_component.png)]]
+[https://sites.google.com/site/pmrobotix/home/wiki-img/ElecEncoderWithStepperMotor_stepper_pulse_2008_layout.png?attredirects=0][https://sites.google.com/site/pmrobotix/home/wiki-img/ElecEncoderWithStepperMotor_stepper_pulse_2008_layout_component.png?attredirects=0]
 
 == Photo du mécanisme ==
 
 La roue en bois est solidaire de la roue motrice (roue de roller) et permet d'éviter les poussières amenées par la roue motrice. Un simple élastique maintient le stepper contre la roue en bois.
 
-[[Image(P1000717_stepper.jpg)]]
+[https://sites.google.com/site/pmrobotix/home/wiki-img/ElecEncoderWithStepperMotor_P1000717_stepper.jpg?attredirects=0]
 
 == Les dimensions ==
 
