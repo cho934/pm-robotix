@@ -5,33 +5,33 @@ Retour sur ElecStart
 
 = 1. La carte APF9328 de chez [http://www.armadeus.com Armadeus Systems] =
 
-||*Processor*||*ADC*||
-||    * MC9328L(i.MXL) ARM920T 200MHz (Freescale)|| * 8 channels 10bits 10MHz with internal fifo (can be removed on demand)||
-||*RAM*||*FPGA*||
-||    * 8/16 Mo 32bits @ 100MHz||   * Xilinx Spartan3 with 200k gates (50k FPGA or 400k FPGA optional)||
-||*Flash*||*Power supply*||
-||    * 4/8/16 Mo 16bits @ 100MHz||    *  +3.3V supply 5%. typical power consumption: 300mW (without the FPGA)||
-||*Peripherals*||    * Two power saving modes||
-||    * 1 x RS232 (RX/TX)||*Environment*||
-||    * 1 x RS232 TTL levels (RX, TX, CTS, RTS)|| * Cooling : None for temperature below 60°C*.||
-||    * 1 x I2C|| * Operating temperature range: 0..60°C * (without cooling)||
-||    * 2 x SPI|| * Storage temperature range: -10..70°C ||
-||    * 1 x SSI (High speed synchronous serial port)|| * Humidity 5-90%||
-||    * 1 x USB 1.1 slave only with level converter||*Mechanical Overview*||
-||    * 1 x Ethernet 10/100 Mbits (no RJ45 connector)||Dimensions: 71mm (2.8") x 39mm (1.55")||
-||    * 1 x SD/MMC||
-||    * 1 x RTC (no battery)||
-||    * 1 x PWM 16bits resolution||
-||    * 2 x Timer 32 bits with input capture/output compare||
-||    * 1 x Watchdog. Adjustable timeout between 0.5s and 64s (0.5s step)||
-||    * LCD controller up to 640x512 (64K colors)||
-||    * CSI (CMOS sensor interface)||
-||    * 97 total I/O pins multiplexed with most dedicated functions for pin efficiency (GPIO)||
-||    * JTAG (Debug (ICE) and test)||
-||*Ethernet*||
-||    * 10/100Mbits (can be removed on demand)||
-||*DAC*||
-||    * 2 channels 10bits 400kHz (can be removed on demand)||
+|| *Processor* || *ADC* ||
+||    MC9328L(i.MXL) ARM920T 200MHz (Freescale)|| 8 channels 10bits 10MHz with internal fifo (can be removed on demand)||
+|| *RAM* || *FPGA* ||
+||    8/16 Mo 32bits @ 100MHz||   Xilinx Spartan3 with 200k gates (50k FPGA or 400k FPGA optional)||
+|| *Flash* || *Power supply* ||
+||    4/8/16 Mo 16bits @ 100MHz|| +3.3V supply 5%. typical power consumption: 300mW (without the FPGA)||
+|| *Peripherals* ||    Two power saving modes||
+||    1 x RS232 (RX/TX)|| *Environment* ||
+||    1 x RS232 TTL levels (RX, TX, CTS, RTS)|| Cooling : None for temperature below 60°C*.||
+||    1 x I2C|| Operating temperature range: 0..60°C (without cooling)||
+||    2 x SPI|| Storage temperature range: -10..70°C ||
+||    1 x SSI (High speed synchronous serial port)|| Humidity 5-90%||
+||    1 x USB 1.1 slave only with level converter|| *Mechanical Overview* ||
+||    1 x Ethernet 10/100 Mbits (no RJ45 connector)|| Dimensions: 71mm (2.8") x 39mm (1.55")||
+||    1 x SD/MMC||
+||    1 x RTC (no battery)||
+||    1 x PWM 16bits resolution||
+||    2 x Timer 32 bits with input capture/output compare||
+||    1 x Watchdog. Adjustable timeout between 0.5s and 64s (0.5s step)||
+||    LCD controller up to 640x512 (64K colors)||
+||    CSI (CMOS sensor interface)||
+||    97 total I/O pins multiplexed with most dedicated functions for pin efficiency (GPIO)||
+||    JTAG (Debug (ICE) and test)||
+|| *Ethernet* ||
+||    10/100Mbits (can be removed on demand)||
+|| *DAC* ||
+||    2 channels 10bits 400kHz (can be removed on demand)||
 
 L'association qui en découle [http://www.armadeus.org Armadeus Project Wiki]
 
