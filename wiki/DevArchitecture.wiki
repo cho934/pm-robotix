@@ -1,7 +1,7 @@
 = Architecture =
 
 Le schéma suivant décrit les classes principales mises en oeuvre pour la gestion du Robot.
-[[Image(ClassesPrincipales.png)]]
+[https://sites.google.com/site/pmrobotix/home/wiki-img/DevArchitecture_ClassesPrincipales.png?attredirects=0]
 
 Les classes {{{ActionManager}}} et {{{SensorManager}}} correspondent à des threads.
 
