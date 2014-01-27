@@ -28,7 +28,7 @@ Retour sur DevStart
 
 == Connexions ==
 
-[[Image(md25connection.jpg)]]
+[https://sites.google.com/site/pmrobotix/home/wiki-img/DevAsservissement_md25connection.jpg?attredirects=0]
 
 
 = 3. Les programmes de test concernant l'asservissement =
