@@ -57,10 +57,10 @@ test::RobotMoveByIncrementTest INFO RIGHT:  a:8.33333 b:0
 }}}
 Exemple de graphique 
  * Avec les moteurs EMG30 (version 2012):
-[[Image(graph_ax+b(2012).png)]]
+[https://sites.google.com/site/pmrobotix/home/wiki-img/DevPmxRobotMoveByIncrementTest_graph_ax%2Bb%282012%29.png?attredirects=0]
 
  * Avec les moteurs Gearbox (version 2011):
-[[Image(graphe_ax+b.png)]]
+[https://sites.google.com/site/pmrobotix/home/wiki-img/DevPmxRobotMoveByIncrementTest_graphe_ax%2Bb.png?attredirects=0]
 
 
 
