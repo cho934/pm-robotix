@@ -6,7 +6,7 @@ Retour sur ElecStart
 
 = Les branchements = 
 
-[[Image(connections.png)]]
+[https://sites.google.com/site/pmrobotix/home/wiki-img/ElecCmucam3_connections.png?attredirects=0]
 [http://www.cmucam.org/wiki/Hardware Documentation hardware]
 
 
