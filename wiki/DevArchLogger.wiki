@@ -12,7 +12,7 @@ L'architecture du système repose sur 4 classes :
  * {{{Logger}}} - Qui permet de tracer l'information ;
  * {{{Level}}} - Définit les niveaux de trace existants.
 
-[[Image(ArchLoggerClasses.png)]]
+[https://sites.google.com/site/pmrobotix/home/wiki-img/DevArchLogger_ArchLoggerClasses.png?attredirects=0]
 
 == Les niveaux de trace ==
 
