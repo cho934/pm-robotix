@@ -1,3 +1,4 @@
+#labels Featured
 Cette page présente les différents principes et montages électroniques.
 
 Voici les pages importantes dans l'ordre d'écriture :
