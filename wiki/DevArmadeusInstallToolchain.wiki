@@ -1,6 +1,6 @@
 Retour sur DevEnvArmadeus
 
-= Compilation Armadeus en version GIT =
+= Compilation Armadeus version 3.4 =
 
 == Installation des packages nécessaires (sur l'hôte machine virtuelle) ==
 {{{
@@ -20,6 +20,9 @@ $ sudo apt-get install lrzsz
 {{{
 $ git clone git://git.code.sf.net/p/armadeus/code armadeus
 }}}
+
+== Download Armadeus 3.4 ==
+https://sourceforge.net/projects/armadeus/files/armadeus/armadeus-3.4/
 
 
 == Configuration du noyau ==
