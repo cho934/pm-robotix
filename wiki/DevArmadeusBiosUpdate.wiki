@@ -65,12 +65,16 @@ Il faut effectuer la commande "unlock registers access" pour changer le I2C IFDR
 
 Pour cela, dans le BIOS, taper :
 {{{
-BIOS> mw.l 0x00200008 0
-BIOS> mw.l 0x00210008 0
 BIOS> run unlock_regs
 BIOS> boot
 }}}
 Ensuite il sera possible d'utiliser imxregs.
+
+La commande unlock_regs effectue en fait les commandes suivantes (voir printenv unlock_regs dans le BIOS):
+{{{
+BIOS> mw.l 0x00200008 0
+BIOS> mw.l 0x00210008 0
+}}}
 
 Définition "IFDR clk divider":
 {{{
@@ -98,6 +102,13 @@ USAGE:
 {{{
  # imxregs IFDR 0x17 
 }}}
+
+Pour automatiser le changement dans le BIOS:
+{{{
+BIOS>setenv bootcmd run unlock_regs; run jffsboot
+BIOS>saveenv
+}}}
+
 
 '''TODO''' : then if you want something "clean" look at:     
 buildroot/output/build/linux-2.6.29.6/drivers/i2c/busses/i2c-imx.c
