@@ -2,7 +2,7 @@ Retour sur DevStart
 
 = L'environnement logiciel APF9328 =
 
-== 1. La compilation ([http://www.armadeus.com/wiki/index.php?title=Armadeus_3 Armadeus:Armadeus 3.3]) et la configuration (réseau, logiciels, système d'exploitation) ==
+== 1. La compilation ([http://www.armadeus.com/wiki/index.php?title=Armadeus_3 Armadeus:Armadeus 3.4]) et la configuration (réseau, logiciels, système d'exploitation) ==
 
  * DevArmadeusInstallToolchain : Paramètres de compilation du noyau linux
  * DevArmadeusBiosUpdate       : Paramètres de configuration du BIOS de la carte APF9328
