@@ -98,15 +98,19 @@ $ mount -t ext3 /dev/sdb /armadeus
 
 == 7. La machine virtuelle de développement ==
 
-=== Linux Mint 8 [http://www.linuxmint.com/index.php] ===
- * La distribution linux utilisée [wiki:DevEnvNetbeans6 DevEnvDistributionLinux] : Based on Ubuntu 9.10 Karmic Koala, Linux 2.6.31, Gnome 2.28 and Xorg 7.4
- * login/pass : root/pmx pmx/pmx
- * les chemins à connaitre :
-   * /armadeus/compilation2/ : emplacement de compilation (attention 10Go d'espace libre sont nécessaires)
+=== VirtualBox + lubuntu 10.04 ===
+ * La distribution linux utilisée [wiki:DevEnvNetbeans6 DevEnvDistributionLinux]
+ * les chemins à connaitre sur la VM:
+   * /media/Armadeus/armadeus-3.4/ : emplacement de compilation (attention 10Go d'espace libre sont nécessaires)
+   * /home/pmx/tftpboot/ : emplacement des fichiers compilés pouvant être uploadé dans la carte Armadeus
+
+ * les chemins à connaitre sur la carte linux Armadeus embarquée:
    * /pmx : emplacement SDcard où se situe le programme.
+
  * Installation de java version "1.6.0_15"
- * Utilisation de Netbeans 6 : [wiki:DevEnvNetbeans]
+ * Utilisation de Netbeans 7.4 : [wiki:DevEnvNetbeans]
  * Installer les packages *doxygen* et *graphviz* pour permettre la génération de la documentation.
+ * Installer *Nautilus*
 
 === Les bases du développement Armadeus : Compilation C++ ===
  * Obtenir les variables d'environnement
