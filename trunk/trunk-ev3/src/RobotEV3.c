@@ -346,6 +346,9 @@ void testButton2() {
 	close(file);
 }
 int main() {
+	#ifdef SIMULATED
+		printf("Simulation mode enabled\n");
+	#endif
 	//test();
 	testExternalCounters();
 	//test_motor_encoder();

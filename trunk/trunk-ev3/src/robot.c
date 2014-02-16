@@ -25,6 +25,7 @@ int analog_file;
 ANALOG *pAnalog;
 IIC *pIic;
 
+#ifndef SIMULATED
 void robot_init() {
 
 	//
@@ -140,18 +141,17 @@ void robot_startMotors() {
 	motor_command[0] = opOUTPUT_RESET;
 	motor_command[1] = MOTOR_PORT_RIGHT | MOTOR_PORT_LEFT;
 	int s = write(motor_file, motor_command, 2);
-		printf(
-				"robot_startMotors command : [%d, %d] written size: %d on file: %d\n",
-				motor_command[0], motor_command[1], s, motor_file);
+	printf(
+			"robot_startMotors command : [%d, %d] written size: %d on file: %d\n",
+			motor_command[0], motor_command[1], s, motor_file);
 	// Start the motor
 	motor_command[0] = opOUTPUT_START;
 	motor_command[1] = MOTOR_PORT_RIGHT | MOTOR_PORT_LEFT;
 
-	  s = write(motor_file, motor_command, 2);
+	s = write(motor_file, motor_command, 2);
 	printf(
 			"robot_startMotors command : [%d, %d] written size: %d on file: %d\n",
 			motor_command[0], motor_command[1], s, motor_file);
-
 
 	usleep(100 * 1000);
 }
@@ -231,15 +231,15 @@ long robot_getExternalCounter(int portCounter1) {
 	int d7 = respbuf[7];
 
 	//printf("E:%d\n", d1 + d6);
-	printf("EV3: port %d : %d %d %d %d %d %d %d %d    \n",portCounter1, d0, d1, d2, d3, d4, d5, d6,
-			d7);
+	printf("EV3: port %d : %d %d %d %d %d %d %d %d    \n", portCounter1, d0, d1,
+			d2, d3, d4, d5, d6, d7);
 	int angle = d2;
 	int nbTour = d3;
 	if (angle < 0) {
 		angle = (256 + angle);
 	}
 	long count = nbTour * 256 + angle;
-	printf("E: port %d : %ld\n",portCounter1, count);
+	printf("E: port %d : %ld\n", portCounter1, count);
 	return count;
 }
 
@@ -265,4 +265,92 @@ int robot_isButton1Pressed() {
 	}
 	return FALSE;
 }
+#else
+/**
+ *
+ * SIMULATION
+ *
+ **/
+#include <sys/time.h>
+long long timeOffset;
+long tLeft;
+int left; // wanted left power
+int currentLeftPower;// current left power
 
+long tRight;
+int right;
+int currentRightPower;
+
+long rightCounter;
+long leftCounter;
+
+long currentTimeInMillis() {
+	struct timeval te;
+	gettimeofday(&te, NULL); // get current time
+	long long milliseconds =( te.tv_sec*1000LL + te.tv_usec/1000);// caculate milliseconds
+	return (long)(milliseconds-timeOffset);
+}
+
+void robot_init() {
+	tLeft=0;
+	tRight=0;
+	left=0;
+	right=0;
+	currentLeftPower=0;
+	currentRightPower=0;
+	rightCounter=0;
+	leftCounter=0;
+	//
+	struct timeval te;
+	gettimeofday(&te, NULL);// get current time
+	timeOffset =( te.tv_sec*1000LL + te.tv_usec/1000);
+
+	printf("Init time %ld\n",currentTimeInMillis());
+}
+void robot_dispose() {
+}
+void robot_startMotorLeft() {
+}
+void robot_startMotors() {
+}
+
+void robot_stopMotorRight() {
+}
+void robot_stopMotorLeft() {
+}
+void computeCounterL() {
+	long deltaT= currentTimeInMillis()- tLeft;
+	leftCounter+= (deltaT*left );
+
+}
+void computeCounter() {
+	long deltaT= currentTimeInMillis()- tRight;
+	rightCounter+= (deltaT*right );
+}
+
+void robot_setMotorRightSpeed(int speed) {
+	computeCounter();
+	right=speed;
+	tRight=currentTimeInMillis();
+}
+
+void robot_setMotorLeftSpeed(int speed) {
+	computeCounterL();
+	left=speed;
+	tLeft=currentTimeInMillis();
+}
+
+long robot_getLeftExternalCounter() {
+	computeCounterL();
+	return -leftCounter;
+}
+long robot_getRightExternalCounter() {
+	computeCounter();
+	return -rightCounter;
+}
+
+int robot_isButton1Pressed() {
+	return 0;
+}
+
+#endif
