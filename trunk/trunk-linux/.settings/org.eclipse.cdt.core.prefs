@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+environment/project/cdt.managedbuild.config.gnu.cross.exe.debug.545711704.116638196/PATH/delimiter=\:
+environment/project/cdt.managedbuild.config.gnu.cross.exe.debug.545711704.116638196/PATH/operation=replace
+environment/project/cdt.managedbuild.config.gnu.cross.exe.debug.545711704.116638196/PATH/value=/media/Armadeus/armadeus-3.4/buildroot/build_armv4t/staging_dir/usr/bin\:/bin\:/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/usr/games
+environment/project/cdt.managedbuild.config.gnu.cross.exe.debug.545711704.116638196/append=true
+environment/project/cdt.managedbuild.config.gnu.cross.exe.debug.545711704.116638196/appendContributed=true

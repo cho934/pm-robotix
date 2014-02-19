@@ -14,5 +14,5 @@
  * \return Code de retour du programme.
  */
 int main(int argc, char** argv) {
-
+	std::cout << "main robot Start" << std::endl;
 }

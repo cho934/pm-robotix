@@ -14,11 +14,13 @@ ifeq ($(wildcard $(XENO)), )
     INCLUDE = /usr
     CXXFLAGS_EXTRA = -DSIMU -I$(DEVSIMU)/$(SOURCE)
     LDFLAGS_EXTRA = -lrt ../../build/dev-simu/*.o
+ 
 else
     CXX = arm-linux-uclibcgnueabi-g++
     INCLUDE = $(XENO)
     CXXFLAGS_EXTRA = -ggdb -I$(INCLUDE)/include/native -I$(INCLUDE)/include/rtdm
     LDFLAGS_EXTRA = -ggdb -lnative -lrtdm -las_devices -Xlinker $(INCLUDE)/lib/libnative.a $(INCLUDE)/lib/librtdm.a
+
 endif
 
 # Folder for intermediate files

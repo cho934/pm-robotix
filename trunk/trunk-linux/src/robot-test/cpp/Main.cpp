@@ -4,8 +4,13 @@
  * sur le robot.
  */
 
-//#include <cstdlib>
+//extern "C" {
+//#include "as_devices/as_i2c.h"
+//}
+
 #include <iostream>
+#include "RobotTestManager.hpp"
+
 
 
 /*!
@@ -19,6 +24,20 @@
  */
 int main(int argc, char** argv)
 {
-    std::cout << "main Start" << std::endl;
+    std::cout << "main robot-test Start" << std::endl;
+
+    pmx::RobotTestManager manager;
+
+
+
+
+    if (argc == 1)
+	{
+		manager.run();
+	}
+	else
+	{
+		manager.run(atoi(argv[1]), argc, argv);
+	}
 
 }
