@@ -157,10 +157,8 @@
 								<option id="gnu.c.compiler.option.debugging.level.633132998" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.include.paths.1142595628" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/target/packages/"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ARM/src/common/cpp}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ARM/src/robot-test/cpp}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ARM/src/robot/cpp}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ARM/src/dev-test/cpp}&quot;"/>
+									<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/buildroot/build_armv4t/staging_dir/usr/include"/>
+									<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/buildroot/build_armv4t/staging_dir/usr/lib/gcc/arm-linux-uclibcgnueabi/4.2.1/include"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1246466422" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
@@ -169,10 +167,8 @@
 								<option id="gnu.cpp.compiler.option.debugging.level.1811486704" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.1383158714" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/target/packages"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ARM/src/common/cpp}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ARM/src/robot-test/cpp}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ARM/src/robot/cpp}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ARM/src/dev-test/cpp}&quot;"/>
+									<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/buildroot/build_armv4t/staging_dir/usr/include"/>
+									<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/buildroot/build_armv4t/staging_dir/usr/lib/gcc/arm-linux-uclibcgnueabi/4.2.1/include"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1146268321" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
@@ -187,10 +183,8 @@
 							<tool id="cdt.managedbuild.tool.gnu.cross.assembler.586394412" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler">
 								<option id="gnu.both.asm.option.include.paths.1096693671" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/target/packages/"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ARM/src/common/cpp}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ARM/src/robot-test/cpp}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ARM/src/robot/cpp}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ARM/src/dev-test/cpp}&quot;"/>
+									<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/buildroot/build_armv4t/staging_dir/usr/include"/>
+									<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/buildroot/build_armv4t/staging_dir/usr/lib/gcc/arm-linux-uclibcgnueabi/4.2.1/include"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1333424524" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
@@ -226,6 +220,9 @@
 								<option id="gnu.cpp.compiler.option.optimization.level.1078362539" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.debugging.level.540160079" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.1709570559" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths"/>
+								<option id="gnu.cpp.compiler.option.preprocessor.def.1284859035" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="SIMULATED"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1557319724" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.compiler.base.1589632374" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.base">
@@ -237,7 +234,10 @@
 							<tool id="cdt.managedbuild.tool.gnu.c.linker.base.1285138070" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.base.1637916678" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.base">
 								<option id="gnu.cpp.link.option.paths.1697591357" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths"/>
-								<option id="gnu.cpp.link.option.libs.506261103" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs"/>
+								<option id="gnu.cpp.link.option.libs.506261103" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
+									<listOptionValue builtIn="false" value="pthread"/>
+									<listOptionValue builtIn="false" value="m"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.283746104" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -251,7 +251,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="robot-test/cpp/Main.cpp|robot/cpp/Main.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry excluding="robot/cpp/Main.cpp|unit-test|robot-test/cpp/Main.cpp|robot-test/cpp/UTGpioWithModeTest.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -350,4 +350,5 @@
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
 		</scannerConfigBuildInfo>
 	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 </cproject>
