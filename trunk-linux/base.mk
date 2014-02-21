@@ -100,11 +100,14 @@ clean:
 	@(cd $(DEVSIMU) && $(MAKE) $@)
 	@rm -f $(BUILD)/*.o
 	@rm -f $(BUILD)/*.d
+	@echo $(TARGET)
+	@rm -f $(TARGET)
 
 # Target to clean intermediate and distribution files
 all-clean: clean
 	@(cd $(COMMON) && $(MAKE) $@)
 	@(cd $(DEVSIMU) && $(MAKE) $@)
+	@echo $(TARGET)
 	@rm -f $(TARGET)
 
 else

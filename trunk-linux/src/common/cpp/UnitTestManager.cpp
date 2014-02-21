@@ -7,17 +7,17 @@
 #include <sstream>
 #include <stdio.h>
 #include <string.h>
-#include "RobotTestManager.hpp"
+#include "UnitTestManager.hpp"
 
-pmx::RobotTestManager::RobotTestManager() : tests_()
+pmx::UnitTestManager::UnitTestManager() : tests_()
 {}
 
-void pmx::RobotTestManager::add(pmx::RobotTest * test)
+void pmx::UnitTestManager::add(pmx::UnitTest * test)
 {
     this->tests_.push_back(test);
 }
 
-void pmx::RobotTestManager::run()
+void pmx::UnitTestManager::run()
 {
     for(data_type::size_type i = 0 ; i < tests_.size() ; i++)
     {
@@ -32,12 +32,12 @@ void pmx::RobotTestManager::run()
     executeTest(nTest);
 }
 
-void pmx::RobotTestManager::run(uint nTest, int argc, char *argv[])
+void pmx::UnitTestManager::run(uint nTest, int argc, char *argv[])
 {
     executeTest(nTest, argc, argv);
 }
 
-void pmx::RobotTestManager::executeTest(uint nTest, int argc, char *argv[])
+void pmx::UnitTestManager::executeTest(uint nTest, int argc, char *argv[])
 {
     if (nTest > 0 && nTest <= tests_.size())
     {
@@ -45,7 +45,7 @@ void pmx::RobotTestManager::executeTest(uint nTest, int argc, char *argv[])
     }
 }
 
-void pmx::RobotTestManager::executeTest(uint nTest)
+void pmx::UnitTestManager::executeTest(uint nTest)
 {
     char *argv[1];
     char st[2];

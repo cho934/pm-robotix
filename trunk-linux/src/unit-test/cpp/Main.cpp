@@ -24,7 +24,7 @@
  */
 int main(int argc, char** argv)
 {
-    std::cout << "main robot-test Start" << std::endl;
+    std::cout << "main unit-test Start" << std::endl;
 
     pmx::UnitTestManager manager;
 

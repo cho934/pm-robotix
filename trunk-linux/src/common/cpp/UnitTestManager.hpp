@@ -3,12 +3,12 @@
  * \brief Définition de la classe RobotTestManager.
  */
 
-#ifndef PMX_ROBOTTESTMANAGER_H
-#define	PMX_ROBOTTESTMANAGER_H
+#ifndef PMX_UNITTESTMANAGER_H
+#define	PMX_UNITTESTMANAGER_H
 
 #include <vector>
 #include <cstdlib>
-#include "RobotTest.hpp"
+#include "UnitTest.hpp"
 
 namespace pmx
 {
@@ -16,13 +16,13 @@ namespace pmx
      * \brief Classe de gestion de l'ensemble des tests de fonctionnement du
      * robot.
      */
-    class RobotTestManager
+    class UnitTestManager
     {
     public:
         /*!
          * \brief Type associé aux stockages des tests.
          */
-        typedef std::vector<pmx::RobotTest *> data_type;
+        typedef std::vector<pmx::UnitTest *> data_type;
         
     private:
         
@@ -36,12 +36,12 @@ namespace pmx
         /*!
          * \brief Constructeur de la classe.
          */
-        RobotTestManager();
+        UnitTestManager();
         
         /*!
          * \brief Destructeur de la classe.
          */
-        virtual inline ~ RobotTestManager()
+        virtual inline ~ UnitTestManager()
         {}
         
         /*!
@@ -49,7 +49,7 @@ namespace pmx
          * \param test
          *        Le nouveau test associé au gestionnaire.
          */
-        void add(pmx::RobotTest * test);
+        void add(pmx::UnitTest * test);
         
         /*!
          * \brief Affiche un menu de sélection des tests.
