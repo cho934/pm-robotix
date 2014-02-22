@@ -4,7 +4,7 @@
  */
 
 #ifndef UTILS_LOGGERFACTORY_H
-#define	UTILS_LOGGERFACTORY_H
+#define UTILS_LOGGERFACTORY_H
 
 #include "Logger.hpp"
 #include "Mutex.hpp"
@@ -86,7 +86,7 @@ namespace utils
          *
          * \todo Documenter l'initialisation en fonction des noms.
          */
-         virtual void initialize();
+         void initialize();
         
     protected:
         

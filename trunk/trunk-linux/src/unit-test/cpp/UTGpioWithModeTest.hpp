@@ -14,8 +14,8 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include "../../common/cpp/UnitTest.hpp"
-#include "LoggerFactoryConf.hpp"
+#include "../../common/cpp/ConsoleUnitTest.hpp"
+#include "../../common/cpp/LoggerFactory.hpp"
 #include "../../common/cpp/Chronometer.hpp"
 
 namespace test
@@ -23,7 +23,7 @@ namespace test
     /*!
      * \brief Effectue un test de clignotement de LED sur tous les pads de sorties de la carte DevLightV2.
      */
-    class UTGpioWithModeTest : public pmx::UnitTest
+    class UTGpioWithModeTest : public pmx::ConsoleUnitTest
     {
     private:
 
@@ -35,7 +35,7 @@ namespace test
          */
         static inline const utils::Logger & logger()
         {
-            static const utils::Logger & instance = utils::LoggerFactoryConf::logger("test::UTGpioWithModeTest");
+            static const utils::Logger & instance = utils::LoggerFactory::logger("test::UTGpioWithModeTest");
             return instance;
         }
 
@@ -44,7 +44,7 @@ namespace test
         /*!
          * \brief Constructeur de la classe.
          */
-        UTGpioWithModeTest() : pmx::UnitTest("APFIN  : ApfInModeTest : Test de differents modes de -Read- et -Blocking Read-.")
+        UTGpioWithModeTest() : pmx::ConsoleUnitTest("APFIN  : ApfInModeTest : Test de differents modes de -Read- et -Blocking Read-.")
         {
         }
 

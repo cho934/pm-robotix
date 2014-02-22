@@ -99,7 +99,6 @@ utils::LoggerFactory::add(const std::string & name, utils::Appender * appender)
 void
 utils::LoggerFactory::add(const Level & level, const std::string & loggerName, const std::string & appenderName)
 {
-  
     Appender * appender = this->appender(appenderName);
     if (appender == NULL)
     {
@@ -110,8 +109,5 @@ utils::LoggerFactory::add(const Level & level, const std::string & loggerName, c
        Logger *log= new Logger(level, loggerName, * appender);
         this->add(log);
     }
- 
 }
 
-void
-utils::LoggerFactory::initialize(){}

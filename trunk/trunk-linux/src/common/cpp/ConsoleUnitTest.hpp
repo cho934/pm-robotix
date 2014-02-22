@@ -1,10 +1,10 @@
 /*!
  * \file
- * \brief Définition de la classe UnitTest..
+ * \brief Définition de la classe ConsoleUnitTest.
  */
 
-#ifndef PMX_UNITTEST_H
-#define	PMX_UNITTEST_H
+#ifndef PMX_ROBOTTEST_H
+#define	PMX_ROBOTTEST_H
 
 #include <string>
 
@@ -12,9 +12,9 @@ namespace pmx
 {
     /*!
      * \brief Classe abstraite servant de base pour les tests de fonctionnement
-     * des tests unitaires..
+     * du robot.
      */
-    class UnitTest
+    class ConsoleUnitTest
     {
     private:
         
@@ -30,7 +30,7 @@ namespace pmx
          * \param name
          *        Nom du test.
          */
-        UnitTest(const std::string & name) : name_(name)
+        ConsoleUnitTest(const std::string & name) : name_(name)
         {}
         
     public:
@@ -38,7 +38,7 @@ namespace pmx
         /*!
          * Destructeur de la classe.
          */
-        virtual inline ~ UnitTest()
+        virtual inline ~ ConsoleUnitTest()
         {}
         
         /*!

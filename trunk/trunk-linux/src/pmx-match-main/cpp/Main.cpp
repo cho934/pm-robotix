@@ -13,6 +13,6 @@
  *
  * \return Code de retour du programme.
  */
-int main(int argc, char** argv) {
+int main(int , char** ) {
 	std::cout << "main robot Start" << std::endl;
 }
