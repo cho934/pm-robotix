@@ -9,8 +9,8 @@
 //}
 
 #include <iostream>
-#include "../../common/cpp/UnitTestManager.hpp"
-
+#include "../../common/cpp/ConsoleUnitTestManager.hpp"
+#include "../../common/cpp/LoggerFactory.hpp"
 
 
 /*!
@@ -25,8 +25,10 @@
 int main(int argc, char** argv)
 {
     std::cout << "main robot-test Start" << std::endl;
+    const utils::Logger& logger = utils::LoggerFactory::logger("main");
+    logger.info("Lancement des tests unitaires");
 
-    pmx::UnitTestManager manager;
+    pmx::ConsoleUnitTestManager manager;
 
 
 

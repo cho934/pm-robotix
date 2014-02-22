@@ -9,7 +9,7 @@
 //}
 
 #include <iostream>
-#include "../../common/cpp/UnitTestManager.hpp"
+#include "../../common/cpp/ConsoleUnitTestManager.hpp"
 
 
 
@@ -26,7 +26,7 @@ int main(int argc, char** argv)
 {
     std::cout << "main unit-test Start" << std::endl;
 
-    pmx::UnitTestManager manager;
+    pmx::ConsoleUnitTestManager manager;
 
 
 

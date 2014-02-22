@@ -1,23 +1,23 @@
 /*!
  * \file
- * \brief Implementation de la classe RobotTestManager.
+ * \brief Implementation de la classe ConsoleUnitTestManager.
  */
 
 #include <iostream>
 #include <sstream>
 #include <stdio.h>
 #include <string.h>
-#include "UnitTestManager.hpp"
+#include "ConsoleUnitTestManager.hpp"
 
-pmx::UnitTestManager::UnitTestManager() : tests_()
+pmx::ConsoleUnitTestManager::ConsoleUnitTestManager() : tests_()
 {}
 
-void pmx::UnitTestManager::add(pmx::UnitTest * test)
+void pmx::ConsoleUnitTestManager::add(pmx::ConsoleUnitTest * test)
 {
     this->tests_.push_back(test);
 }
 
-void pmx::UnitTestManager::run()
+void pmx::ConsoleUnitTestManager::run()
 {
     for(data_type::size_type i = 0 ; i < tests_.size() ; i++)
     {
@@ -32,12 +32,12 @@ void pmx::UnitTestManager::run()
     executeTest(nTest);
 }
 
-void pmx::UnitTestManager::run(uint nTest, int argc, char *argv[])
+void pmx::ConsoleUnitTestManager::run(uint nTest, int argc, char *argv[])
 {
     executeTest(nTest, argc, argv);
 }
 
-void pmx::UnitTestManager::executeTest(uint nTest, int argc, char *argv[])
+void pmx::ConsoleUnitTestManager::executeTest(uint nTest, int argc, char *argv[])
 {
     if (nTest > 0 && nTest <= tests_.size())
     {
@@ -45,7 +45,7 @@ void pmx::UnitTestManager::executeTest(uint nTest, int argc, char *argv[])
     }
 }
 
-void pmx::UnitTestManager::executeTest(uint nTest)
+void pmx::ConsoleUnitTestManager::executeTest(uint nTest)
 {
     char *argv[1];
     char st[2];
