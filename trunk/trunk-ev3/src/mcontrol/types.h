@@ -17,6 +17,11 @@
 #define BOOL int
 #define EXPORTED_FUNCTION
 #define NULL 0
+#define FALSE 0
+#define TRUE 1
+
+
+#define M_2PI 6.28318530718
 
 typedef struct RobotPosition {
 	float x;

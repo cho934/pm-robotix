@@ -30,7 +30,7 @@
 #include "global.h"
 
 #include <math.h>
-
+#include <stdlib.h>
 
 EXPORTED_FUNCTION void ComputePositionCommand(PositionCommand *out_cmd, int32 dist, int32 VMax, int32 Accel, int32 Decel)
 {
@@ -40,9 +40,9 @@ EXPORTED_FUNCTION void ComputePositionCommand(PositionCommand *out_cmd, int32 di
 	out_cmd->phase = TR_PRE_PHASE;
 	out_cmd->order3 = out_cmd->order0 + dist;
 
-	Accel = ABS(Accel);
-	Decel = ABS(Decel);
-	VMax = ABS(VMax);
+	Accel = abs(Accel);
+	Decel = abs(Decel);
+	VMax = abs(VMax);
 
 	//avoid erroneous case
 	if(dist == 0 || VMax == 0 || Accel == 0 || Decel == 0)

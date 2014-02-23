@@ -28,8 +28,8 @@
 
 #include "motion_calibration.h"
 
-#include "../log.h"
-#include "../types.h"
+#include "global.h"
+#include "types.h"
 #include <math.h>
 
 //every N period, we compute precise values for

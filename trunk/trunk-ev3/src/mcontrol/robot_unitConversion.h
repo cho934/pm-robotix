@@ -27,7 +27,7 @@
 #ifndef _ROBOT_UNIT_CONVERSION_H_
 #define _ROBOT_UNIT_CONVERSION_H_
 
-#include "../types.h"
+#include "types.h"
 
 // The following functions are helpers for convertion between units used
 // in the motion control program :
