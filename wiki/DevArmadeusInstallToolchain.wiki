@@ -14,6 +14,8 @@ $ sudo apt-get install uuid-dev
 $ sudo apt-get install ckermit
 $ sudo apt-get install tftpd xinetd
 $ sudo apt-get install lrzsz
+
+$ sudo apt-get install expect
 }}}
 
 == Dernier Snapshot GIT ==
