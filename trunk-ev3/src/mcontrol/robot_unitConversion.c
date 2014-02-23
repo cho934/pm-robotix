@@ -25,9 +25,9 @@
 /******************************************************************************/
 
 #include "robot_unitConversion.h"
-#include "../global.h"
+#include "global.h"
 #include "motion_calibration.h"
-
+#include <math.h>
 
 int32 convertDistTovTops(float dist)
 {

@@ -29,7 +29,6 @@
 #include "motion_priv.h"
 #include "motion_calibration.h"
 
-#include "mouse_sensor.h"
 #include "motor.h"
 #include "motor_PID.h"
 
@@ -39,14 +38,19 @@
 
 #include "path_manager.h"
 #include "encoder.h"
-#include "../log.h"
-#include "../types.h"
+#include "global.h"
+#include "types.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
 #include <semaphore.h>
 //tell the program if mouse sensor and/or motor encoder are available 
+#include <sys/time.h>
+#include <sys/signal.h>
+#include <errno.h>
+#include <string.h>
+#include "../robot.h"
 
 #define USE_ENCODER
 
@@ -75,7 +79,7 @@ void signalEndOfTraj(void);
 void path_Init(void);
 void path_TriggerWaypoint(TRAJ_STATE state);
 
-void OSTimeDly(int i){
+void OSTimeDly(int i) {
 	// useless :)
 }
 
@@ -93,10 +97,7 @@ void motion_Init() {
 		}
 	}
 
-	motion_CalibrationInit();
-
 	encoder_Init();
-	mouse_Init();
 
 	motion_FreeMotion();
 
@@ -211,16 +212,15 @@ void SendMotorErrors(int32 error0, int32 error1) {
 
 }
 
-#pragma INTERRUPT Motion_IT
-void Motion_IT(void) {
-	OSIntEnter();
-
+static __sighandler_t Motion_IT(void) {
+	//	OSIntEnter();
+	//printf("Motion_IT\n");
 	if (RobotMotionState != DISABLE_PID) {
 		//p13_5 = 1;	//period measurement
 		sem_post(&semMotionIT);
 	}
-
-	OSIntExit();
+	return 0;
+	//OSIntExit();
 }
 
 //Motion control main loop
@@ -240,10 +240,11 @@ void *motion_ITTask(void *p_arg) {
 	static BOOL fin0, fin1;
 	static int32 pwm0, pwm1;
 	static int32 pwm0b, pwm1b;
-
+	printf("motion_ITTask start\n");
 	for (;;) {
-		sem_wait(&semMotionIT);
 
+		sem_wait(&semMotionIT);
+		printf("motion.c : updating state..\n");
 		periodNb++;
 
 		encoder_ReadSensor(&dLeft, &dRight, &dAlpha, &dDelta);
@@ -251,9 +252,9 @@ void *motion_ITTask(void *p_arg) {
 		odo_Integration(2 * dAlpha / (float) distEncoder, (float) dDelta);
 
 		//send position
-		if ((periodNb & 0x3F) == 0) {
-			pos_SendPosition();
-		}
+		//	if ((periodNb & 0x3F) == 0) {
+//			pos_SendPosition();
+//		}
 
 		//update all motors 
 		updateMotor(&motors[LEFT_RIGHT][LEFT_MOTOR], dLeft);
@@ -346,6 +347,8 @@ void *motion_ITTask(void *p_arg) {
 
 		//p13_5 = 0;	//period measurement
 	}
+	printf("motion_ITTask end\n");
+	sleep(1);
 	return 0;
 }
 
@@ -353,7 +356,20 @@ void *motion_ITTask(void *p_arg) {
 //implemented as an IT handler armed on a timer to provide
 //a constant and precise period between computation
 void motion_InitTimer(int frequency) {
-	motion_SetSamplingFrequency(frequency);
+//	motion_SetSamplingFrequency(frequency);
+	printf("motion_InitTimer\n");
+	signal(SIGALRM, Motion_IT);
+	long delay = 900 * 1000;
+	struct itimerval tval = {
+	/* subsequent firings */.it_interval = { .tv_sec = 0, .tv_usec = delay },
+	/* first firing */.it_value = { .tv_sec = 0, .tv_usec = delay } };
+
+	int err = setitimer(ITIMER_REAL, &tval, (struct itimerval*) 0);
+	printf("motion_InitTimer %ld ms\n", delay / 1000, err);
+	if (err != 0) {
+		printf("Oh dear, something went wrong with setitimer()! %s\n",
+				strerror(errno));
+	}
 }
 
 void motion_StopTimer() {
@@ -366,5 +382,7 @@ void initPWM() {
 
 void setPWM(int16 pwmLeft, int16 pwmRight) {
 	printf("motion.c setPWM : left %d  right %d\n", pwmLeft, pwmRight);
+	robot_setMotorLeftSpeed(pwmLeft);
+	robot_setMotorRightSpeed(pwmRight);
 }
 

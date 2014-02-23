@@ -6,6 +6,7 @@
 #include "lms2012.h"
 #include "robot.h"
 #include "test.h"
+#include "mcontrol/motion.h"
 
 void a(char motorPort) {
 
@@ -274,21 +275,24 @@ void testExternalCounters() {
 
 	int speed = 0;
 	//PROCESS SENSOR DATA
-	long lStart=robot_getLeftExternalCounter();
-	long rStart=robot_getRightExternalCounter();
+	long lStart = robot_getLeftExternalCounter();
+	long rStart = robot_getRightExternalCounter();
 
 	// Boucle principale
 	int i;
-	for ( i = 0; i < 40; i++) {
+	for (i = 0; i < 40; i++) {
 		// Update la vitesse
 		robot_setMotorRightSpeed(speed);
 		robot_setMotorLeftSpeed(speed);
 		if (speed < 30 && i % 20) {
 			speed++;
 		}
-		printf("Speed: %d , counters: left: %ld right: %ld\n",speed, robot_getLeftExternalCounter(),
+		printf("Speed: %d , counters: left: %ld right: %ld\n", speed,
+				robot_getLeftExternalCounter(),
 				robot_getRightExternalCounter());
-		printf("left: %ld  right: %ld\n",lStart-robot_getLeftExternalCounter(),rStart-robot_getRightExternalCounter());
+		printf("left: %ld  right: %ld\n",
+				lStart - robot_getLeftExternalCounter(),
+				rStart - robot_getRightExternalCounter());
 		usleep(100 * 1000);
 	}
 
@@ -296,7 +300,8 @@ void testExternalCounters() {
 	robot_setMotorRightSpeed(0);
 	robot_setMotorLeftSpeed(0);
 	sleep(1);
-	printf("left: %ld right: %ld\n",lStart-robot_getLeftExternalCounter(),rStart-robot_getRightExternalCounter());
+	printf("left: %ld right: %ld\n", lStart - robot_getLeftExternalCounter(),
+			rStart - robot_getRightExternalCounter());
 	printf("STOP\n");
 //	robot_stopMotorLeft();
 //	robot_stopMotorRight();
@@ -345,13 +350,30 @@ void testButton2() {
 	printf("Closing device\n");
 	close(file);
 }
+
+void testMotion() {
+	motion_Init();
+
+	RobotCommand* cmd = malloc(sizeof(RobotCommand));
+	motion_Line(cmd, 1000.0f);
+	printf("loading line cmd\n");
+	motion_SetCurrentCommand(cmd);
+	int i = 0;
+	for ( i = 0; i < 10; i++) {
+		// loop because timer with kill
+		sleep(1);
+	}
+	printf("test motion end\n");
+}
+
 int main() {
-	#ifdef SIMULATED
-		printf("Simulation mode enabled\n");
-	#endif
+#ifdef SIMULATED
+	printf("Simulation mode enabled\n");
+#endif
 	//test();
-	testExternalCounters();
+	//testExternalCounters();
 	//test_motor_encoder();
-//calibrate();
+	//calibrate();
+	testMotion();
 	return 0;
 }

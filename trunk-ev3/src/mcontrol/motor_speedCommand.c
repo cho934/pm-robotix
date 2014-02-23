@@ -29,7 +29,8 @@
 #include "global.h"
 #include "types.h"
 #include <math.h>
-	
+#include <stdlib.h>
+
 EXPORTED_FUNCTION void ComputeSpeedCommand( SpeedCommand *out_cmd,
 											int32 V0,
 											int32 VGoal,
@@ -53,8 +54,8 @@ EXPORTED_FUNCTION void ComputeSpeedCommand( SpeedCommand *out_cmd,
 		out_cmd->phase = SP_END_PHASE;
 	}
 
-	Accel = ABS(Accel);
-	distMax = ABS(distMax);
+	Accel = abs(Accel);
+	distMax = abs(distMax);
 
 	out_cmd->V0 = V0;
 	out_cmd->VGoal = VGoal;
@@ -130,7 +131,7 @@ void ComputeSpeedCommandMaxTime( SpeedCommand *out_cmd,
 		out_cmd->phase = SP_END_PHASE;
 	}
 
-	Accel = ABS(Accel);
+	Accel = abs(Accel);
 	out_cmd->V0 = V0;
 	out_cmd->VGoal = VGoal;
 	
