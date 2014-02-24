@@ -30,17 +30,9 @@
 #include "motion_calibration.h"
 #include "types.h"
 #include "global.h"
+#include <stdio.h>
 
-#define MAX_D_PERIOD 			64	        //maximum number of period for derivation computation,
-#define MAX_PID_SYSTEM_NUMBER	6	        //maximum number of pid system, must be positive
-#define MAX_PWM_VALUE			0x00007EFF	//maximum value for pwm//must be between 1 and 255
-
-#if MAX_D_PERIOD <= 1
-#	pragma error Max_D_Period must be greater than 1
-#elif MAX_D_PERIOD > 255
-#	pragma error Max_D_Period must be lower than 255
-#endif
-
+#define MAX_D_PERIOD 			64	        //maximum number of period for derivation computation,
 typedef struct {
 	pidConfig conf;					//pid system configuration
 
@@ -65,9 +57,9 @@ EXPORTED_FUNCTION PID_SYSTEM pid_Create() {
 		return -1;
 
 	//init configuration variables
-	systemValues[pid_Nb].conf.kP = 0;
-	systemValues[pid_Nb].conf.kI = 0;
-	systemValues[pid_Nb].conf.kD = 0;
+	systemValues[pid_Nb].conf.kP = 50;
+	systemValues[pid_Nb].conf.kI = 5;
+	systemValues[pid_Nb].conf.kD = 40;
 	systemValues[pid_Nb].conf.dPeriod = 1;
 	systemValues[pid_Nb].conf.iMax = 128000;
 	systemValues[pid_Nb].curDiff = 0;
@@ -84,10 +76,12 @@ EXPORTED_FUNCTION PID_SYSTEM pid_Create() {
 void signalErrorOverflow(PID_SYSTEM system) {
 	if (getMotorSpeed(&(motors[ALPHA_DELTA][DELTA_MOTOR])) > 0) {
 		//collision_SignalShock(FRONT_SHOCK);
-		printf("PID Overflow'd front : %d", system);
+		printf("motor.c signalErrorOverflow PID Overflow'd front : %d\n",
+				system);
 	} else {
 		//collision_SignalShock(BACK_SHOCK);
-		printf("PID Overflow'd back : %d", system);
+		printf("motor.c signalErrorOverflow PID Overflow'd back : %d\n",
+				system);
 	}
 }
 
@@ -124,6 +118,7 @@ EXPORTED_FUNCTION int32 pid_Compute(PID_SYSTEM system, int32 error) {
 
 	error /= VTOPS_PER_TICKS;
 
+	printf("motor_PID.c pid_Compute %d, err:%d ",system,error);
 	val = &(systemValues[system]);
 
 	//stock last values of the error, so we can
@@ -140,11 +135,15 @@ EXPORTED_FUNCTION int32 pid_Compute(PID_SYSTEM system, int32 error) {
 
 	//bound integration values
 	if (val->errSum > val->conf.iMax) {
+		printf("motor_PID.c overflow:%d > %d \n", val->errSum, val->conf.iMax);
 		val->errSum = val->conf.iMax;
 		signalErrorOverflow(system);
+
 	} else if (val->errSum < -val->conf.iMax) {
+		printf("motor_PID.c overflow:%d < %d \n", val->errSum, -val->conf.iMax);
 		val->errSum = -val->conf.iMax;
 		signalErrorOverflow(system);
+
 	}
 
 	//fill the rotating buffer
@@ -161,14 +160,18 @@ EXPORTED_FUNCTION int32 pid_Compute(PID_SYSTEM system, int32 error) {
 	//differential of the error over the period
 	errDif = error - val->dValues[last];
 
+	printf("motor_PID.c pid_Compute pid error:%d val:%d \n",error,val->conf.kP);
+
 	P = error * val->conf.kP;
 	I = val->errSum * val->conf.kI;
 	D = errDif * val->conf.kD;
 
+
+
 	pwm = P + I + D;
 
 	pwm /= 256;
-
+	printf("motor_PID.c pid_Compute pid P:%d I:%d D:%d pwm:%d\n",P,I,D,pwm);
 	//bound the resulting pwm
 	if (pwm > MAX_PWM_VALUE) {
 		pwm = MAX_PWM_VALUE;
