@@ -27,9 +27,10 @@
 #include "motor.h"
 #include "motor_PID.h"
 #include "motion_calibration.h"
-
+#include <stdio.h>
 
 void initMotor(MOTOR *motor) {
+	printf("motor.c initMotor\n");
 	int i;
 	motor->PIDSys = pid_Create();
 	motor->lastPos = 0;
@@ -38,6 +39,7 @@ void initMotor(MOTOR *motor) {
 	for (i = 0; i < MOTOR_SPEED_PERIOD_NB; i++) {
 		motor->prevPos[i] = 0;
 	}
+	printf("motor.c initMotor PID id:%d\n",motor->PIDSys);
 }
 
 void motors_ConfigAllIMax(int32 imax) {

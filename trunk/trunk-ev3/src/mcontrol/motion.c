@@ -82,13 +82,35 @@ void path_TriggerWaypoint(TRAJ_STATE state);
 void OSTimeDly(int i) {
 	// useless :)
 }
+void configurePID() {
+	pid_ConfigKP(motors[ALPHA_DELTA][ALPHA_MOTOR].PIDSys, 800);
+	pid_ConfigKI(motors[ALPHA_DELTA][ALPHA_MOTOR].PIDSys, 0);
+	pid_ConfigKD(motors[ALPHA_DELTA][ALPHA_MOTOR].PIDSys, 400);
+	pid_ConfigDPeriod(motors[ALPHA_DELTA][ALPHA_MOTOR].PIDSys, 3);
+	pid_ConfigKP(motors[ALPHA_DELTA][DELTA_MOTOR].PIDSys, 600);
 
+	pid_ConfigKP(motors[ALPHA_DELTA][DELTA_MOTOR].PIDSys, 800);
+	pid_ConfigKI(motors[ALPHA_DELTA][DELTA_MOTOR].PIDSys, 0);
+	pid_ConfigKD(motors[ALPHA_DELTA][DELTA_MOTOR].PIDSys, 1200);
+	pid_ConfigDPeriod(motors[ALPHA_DELTA][DELTA_MOTOR].PIDSys, 3);
+
+	pid_ConfigKP(motors[LEFT_RIGHT][LEFT_MOTOR].PIDSys, 75);
+	pid_ConfigKI(motors[LEFT_RIGHT][LEFT_MOTOR].PIDSys, 0);
+	pid_ConfigKD(motors[LEFT_RIGHT][LEFT_MOTOR].PIDSys, 50);
+
+	pid_ConfigKP(motors[LEFT_RIGHT][RIGHT_MOTOR].PIDSys, 75);
+	pid_ConfigKI(motors[LEFT_RIGHT][RIGHT_MOTOR].PIDSys, 5);
+	pid_ConfigKD(motors[LEFT_RIGHT][RIGHT_MOTOR].PIDSys, 50);
+	motors_ConfigAllIMax(90000);
+
+}
 void motion_Init() {
 	int i, j;
 
 	periodNb = 0;
 
 	initPWM();
+
 	pid_Init();
 	//motor initialisation
 	for (i = 0; i < MAX_MOTION_CONTROL_TYPE_NUMBER; i++) {
@@ -96,7 +118,7 @@ void motion_Init() {
 			initMotor(&motors[i][j]);
 		}
 	}
-
+	configurePID();
 	encoder_Init();
 
 	motion_FreeMotion();
@@ -291,6 +313,8 @@ void *motion_ITTask(void *p_arg) {
 			}
 
 			//compute pwm for first motor
+			printf("motion.c motion_ITTask pid_Compute ord0:%d lastPos0:%d\n", ord0,
+					motors[motionCommand.mcType][0].lastPos);
 			pwm0 = pid_Compute(motors[motionCommand.mcType][0].PIDSys,
 					ord0 - motors[motionCommand.mcType][0].lastPos);
 

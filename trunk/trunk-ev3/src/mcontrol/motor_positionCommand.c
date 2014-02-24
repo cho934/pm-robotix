@@ -143,6 +143,7 @@ EXPORTED_FUNCTION BOOL GetPositionOrder(PositionCommand *posCommand, uint32 Tn, 
 	switch(posCommand->phase)
 	{
 	case TR_PRE_PHASE:
+		printf("GetPositionOrder TR_PRE_PHASE\n");
 		if(Tn >= posCommand->period0)
 		{
 			posCommand->phase = TR_ACCEL_PHASE;
@@ -155,6 +156,7 @@ EXPORTED_FUNCTION BOOL GetPositionOrder(PositionCommand *posCommand, uint32 Tn, 
 
 	//acceleration phase
 	case TR_ACCEL_PHASE:
+		printf("GetPositionOrder TR_ACCEL_PHASE\n");
 		Tn -= posCommand->period0;
 	
 		if(Tn >= posCommand->T01)
@@ -175,8 +177,9 @@ EXPORTED_FUNCTION BOOL GetPositionOrder(PositionCommand *posCommand, uint32 Tn, 
 
 	//constant speed phase
 	case TR_CONSTANT_PHASE:
+		printf("GetPositionOrder TR_CONSTANT_PHASE\n");
 		Tn -= posCommand->period0;
-	
+
 		if(Tn >= posCommand->T12)
 		{
 			Tn += posCommand->period0;
@@ -192,6 +195,7 @@ EXPORTED_FUNCTION BOOL GetPositionOrder(PositionCommand *posCommand, uint32 Tn, 
 
 	//deceleration phase
 	case TR_DECEL_PHASE:
+		printf("GetPositionOrder TR_DECEL_PHASE\n");
 		Tn -= posCommand->period0;
 	
 		if(Tn >= posCommand->T23)
