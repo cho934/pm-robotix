@@ -13,9 +13,10 @@ Reprenons la maxime de Lavoisier « *Rien ne se perd, rien ne se crée, tout se 
  * DevEnvDebug - Comment déboguer
 
 == en C++ pour Armadeus APF9328 ==
- * DevEnvArmadeus - Environnement mis en place pour la carte APF9328
- * DevEnvNetbeans - Netbeans / C++ / SVN
  * DevEnvDistributionLinux] - Liste des distributions et des environnements de développements utilisés 
+ * DevEnvEclipse - Eclipse / C++ / SVN
+ * DevEnvNetbeans - Netbeans / C++ / SVN
+ * DevEnvArmadeus - Environnement mis en place pour la carte APF9328
  * DevEnvDocumentation - Documentation du code, How To...
  * DevEnvFormatting - Formatage du code
 
