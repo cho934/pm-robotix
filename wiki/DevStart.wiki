@@ -20,10 +20,11 @@ Reprenons la maxime de Lavoisier « *Rien ne se perd, rien ne se crée, tout se 
  * DevEnvDocumentation - Documentation du code, How To...
  * DevEnvFormatting - Formatage du code
 
-*Les 3 bin générés à la compilation sont :*
- * DEV_TEST (répertoire de classes *dev_test*)  
- * PMX_TEST (répertoire de classes *robot_test*) utilisant le fichier de configuration *robot_pmxtest.conf*
- * PMX (répertoire de classes *robot*) utilisant le fichier de configuration *robot_pmx.conf*
+*Les 4 binaries générés à la compilation sont :*
+ * DEV_TEST : tests unitaires software non liés aux éléments du robot
+ * UNIT_TEST : tests unitaires des éléments du robot (utilise les fichiers de configuration *unit-test.conf.txt* et LoggerInitialize.cpp)
+ * ROBOT_TEST : tests unitaires des éléments du robot via les objets Robot.cpp (utilise les fichiers de configuration *robot-test.conf.txt* et LoggerInitialize.cpp)
+ * PMX : Programme principal pour l'homologation et les matches(utilise les fichiers de configuration *pmx.conf.txt* et LoggerInitialize.cpp)
 
 == en C pour Arduino ==
  * ArduinoEnv
