@@ -1,4 +1,4 @@
 # The output of the project
-TARGET = ../../PMXArmadeusBinaries/UNIT_TEST
+TARGET = ../../PMXArmadeusBinaries/APF_TEST
 
 include ../../base.mk

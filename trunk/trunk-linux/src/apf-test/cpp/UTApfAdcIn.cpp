@@ -55,9 +55,7 @@ void test::UTApfAdcIn::run(int argc, char *argv[])
     if (max1027_dev < 0)
     {
         std::cout << "Error, can't open max1027. Is max1027 modprobed ?" << std::endl;
-
     }
-
 
 /*
     ret = as_max1027_set_averaging(max1027_dev, 32);

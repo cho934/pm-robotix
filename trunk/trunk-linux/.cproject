@@ -123,7 +123,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="robot-test|pmx-match-main|robot/cpp/Main.cpp|unit-test|robot-test/cpp/Main.cpp|robot-test/cpp/UTGpioWithModeTest.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry excluding="robot-test|robot/cpp/Main.cpp|robot-test/cpp/Main.cpp|pmx-match-main|apf-test|robot-test/cpp/UTGpioWithModeTest.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

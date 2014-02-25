@@ -1,5 +1,5 @@
 # Define the default target that build everything
-all: init dev-test unit-test robot-test pmx 
+all: init dev-test apf-test robot-test pmx 
 
 # Define the targets that should not have dependency check
 .PHONY: all-clean clean doc
@@ -21,8 +21,8 @@ robot-test: build/robot-test
 	@(cd src/robot-test && make)
 	
 # Build the unit tests package
-unit-test: build/unit-test
-	@(cd src/unit-test && make)
+apf-test: build/apf-test
+	@(cd src/apf-test && make)
 
 # Build the unit tests package
 dev-test: build/dev-test
@@ -38,19 +38,19 @@ format:
 	@(cd src/common && make $@)
 	@(cd src/pmx-match-main && make $@)
 	@(cd src/robot-test && make $@)
-	@(cd src/unit-test && make $@)
+	@(cd src/apf-test && make $@)
 	@(cd src/dev-test && make $@)
 
 # Clean all the intermediate files of the sub-projects
 clean:
 	@(cd src/pmx-match-main && make $@)
 	@(cd src/robot-test && make $@)
-	@(cd src/unit-test && make $@)
+	@(cd src/apf-test && make $@)
 	@(cd src/dev-test && make $@)
 
 # Clean all the sub-projects even last successful build results
 all-clean:
 	@(cd src/pmx-match-main && make $@)
 	@(cd src/robot-test && make $@)
-	@(cd src/unit-test && make $@)
+	@(cd src/apf-test && make $@)
 	@(cd src/dev-test && make $@)
