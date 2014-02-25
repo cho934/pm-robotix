@@ -7,11 +7,9 @@
 //extern "C" {
 //#include "as_devices/as_i2c.h"
 //}
-
 #include <iostream>
 #include "../../common/cpp/ConsoleUnitTestManager.hpp"
 #include "../../common/cpp/LoggerFactory.hpp"
-
 
 /*!
  * \brief Méthode principale pour le lancement des tests sur le robot.
@@ -24,16 +22,13 @@
  */
 int main(int argc, char** argv)
 {
-    std::cout << "main robot-test Start" << std::endl;
-    const utils::Logger& logger = utils::LoggerFactory::logger("main");
-    logger.info("Lancement des tests unitaires");
+	std::cout << "main robot-test Start" << std::endl;
+	const utils::Logger& logger = utils::LoggerFactory::logger("main");
+	logger.info("Lancement des tests unitaires");
 
-    pmx::ConsoleUnitTestManager manager;
+	pmx::ConsoleUnitTestManager manager;
 
-
-
-
-    if (argc == 1)
+	if (argc == 1)
 	{
 		manager.run();
 	}

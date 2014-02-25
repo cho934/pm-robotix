@@ -21,18 +21,13 @@ test_setup_apf9328()
 	ADC_SPI_SYS="/sys/bus/spi/devices/spi1.0"
 }
 
-test_setup_apf27()
-{
-	ADC_SPI_SYS="/sys/bus/spi/devices/spi0.0"
-}
-
 test_ADC()
 {
 	show_test_banner "ADC"
 
 	modprobe max1027
 	if [ "$?" == 0 ]; then
-		execute_for_target test_setup_apf9328 test_setup_apf27
+		execute_for_target test_setup_apf9328 
 		# Slow mode
 		let set=0x62; echo $set > $ADC_SPI_SYS/setup
 		let conv=0xf9; echo $conv > $ADC_SPI_SYS/conversion

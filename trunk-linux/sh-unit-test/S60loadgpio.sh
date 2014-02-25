@@ -8,9 +8,11 @@ echo -n 02200111000010000000000000000000 > /proc/driver/gpio/portDirq
 #initialisation ADC pour GP2D12
 modprobe max1027
 export ADC_SPI="spi1.0"
+#use "Fast" interface > 10kHz (using blocking read)
+loadmax.sh
 
 #initialisation DAC pour controle motorisation
-/usr/bin/setDAC AB
+#/usr/bin/setDAC AB
 
 #initialisation FPGA motionSystem
 modprobe servo
@@ -20,9 +22,9 @@ modprobe servo
 #initialisation de la frequence de bus I2C à 100kHz
 imxregs IFDR 0x17
 
-sleep 3
+#sleep 3
 cd /pmx
 #prog d'homologation
-./pmx 1
+#./pmx 1
 #prog matches
 #./pmx 0

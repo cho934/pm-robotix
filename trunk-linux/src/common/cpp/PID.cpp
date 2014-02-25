@@ -7,7 +7,7 @@
 #include "PID.hpp"
 
 utils::PID::PID()
-: kP_(0), kI_(0), kD_(0)
+: kP_(0), kI_(0), kD_(0), lastError_(0), errSum_(0)
 {}
 
 utils::PID::PID(double kP, double kI, double kD)
