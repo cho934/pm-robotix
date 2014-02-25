@@ -7,17 +7,17 @@ view_doc()
 
 all()
 {
-	scp sh-unit-test/* SVG/index.html SVG/ground_2014.svg PMXArmadeusBinaries/* root@192.168.7.253:/pmx/
+	scp apf-test/sh/*.sh SVG/index.html SVG/ground_2014.svg PMXArmadeusBinaries/*.conf.txt root@192.168.7.253:/pmx/
 }
 
 conf()
 {
-	scp PMXArmadeusBinaries/*.conf root@192.168.7.253:/pmx/
+	scp PMXArmadeusBinaries/*.conf.txt root@192.168.7.253:/pmx/
 }
 
 tsh()
 {
-	scp sh-unit-test/*.sh root@192.168.7.253:/pmx/
+	scp apf-test/sh/*.sh root@192.168.7.253:/pmx/
 }
 
 robottest()
@@ -36,9 +36,9 @@ devtest()
 	scp PMXArmadeusBinaries/DEV_TEST root@192.168.7.253:/pmx/
 }
 
-unittest()
+apftest()
 {
-	scp PMXArmadeusBinaries/UNIT_TEST root@192.168.7.253:/pmx/
+	scp PMXArmadeusBinaries/APF_TEST root@192.168.7.253:/pmx/
 }
 
 recupcsvhost()
@@ -88,8 +88,8 @@ case "$1" in
 	;;
 
 	
-        unittest)
-		unittest
+        apftest)
+		apftest
 	;;
 
 	devtest)
@@ -113,7 +113,7 @@ case "$1" in
 	;;
 
 	*)
-		echo "Usage: $0 {connect|pmx|devtest|robottest|unittest|all|conf|tsh|view-doc|recupcsv|recupsvg|recupcsvhost}" >&2
+		echo "Usage: $0 {connect|pmx|devtest|robottest|apftest|all|conf|tsh|view-doc|recupcsv|recupsvg|recupcsvhost}" >&2
 		exit 1
 	;;
 esac
