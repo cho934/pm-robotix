@@ -3,8 +3,8 @@
  * \brief Définition de la classe ApfInModeTest.
  */
 
-#ifndef TEST_APFINMODETEST_HPP
-#define TEST_APFINMODETEST_HPP
+#ifndef TEST_UTAPFGPIOIN_HPP
+#define TEST_UTAPFGPIOIN_HPP
 
 #include <string>
 #include <cstdio>
@@ -16,14 +16,13 @@
 #include <sys/stat.h>
 #include "../../common/cpp/ConsoleUnitTest.hpp"
 #include "../../common/cpp/LoggerFactory.hpp"
-#include "../../common/cpp/Chronometer.hpp"
 
 namespace test
 {
     /*!
      * \brief Effectue un test de clignotement de LED sur tous les pads de sorties de la carte DevLightV2.
      */
-    class UTGpioWithModeTest : public pmx::ConsoleUnitTest
+    class UTApfGpioIn : public pmx::ConsoleUnitTest
     {
     private:
 
@@ -35,7 +34,7 @@ namespace test
          */
         static inline const utils::Logger & logger()
         {
-            static const utils::Logger & instance = utils::LoggerFactory::logger("test::UTGpioWithModeTest");
+            static const utils::Logger & instance = utils::LoggerFactory::logger("test::UTApfGpioIn");
             return instance;
         }
 
@@ -44,14 +43,14 @@ namespace test
         /*!
          * \brief Constructeur de la classe.
          */
-        UTGpioWithModeTest() : pmx::ConsoleUnitTest("APFIN  : ApfInModeTest : Test de differents modes de -Read- et -Blocking Read-.")
+        UTApfGpioIn() : pmx::ConsoleUnitTest("UTGpioInWithModeTest : Test de differents modes de -Read- et -Blocking Read-.")
         {
         }
 
         /*!
          * \brief Destructeur de la classe.
          */
-        virtual ~UTGpioWithModeTest()
+        virtual ~UTApfGpioIn()
         {
         }
 

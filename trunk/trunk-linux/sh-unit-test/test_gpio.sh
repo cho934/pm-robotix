@@ -18,12 +18,12 @@ source ./gpio_helpers.sh
 blink_led_apf9328()
 {
 	LED_NAME="a"
-	gpio_mode PD31 1
-	for i in `seq 0 5`; do
-		gpio_set_value PD31 1
-		usleep 500000
-		gpio_set_value PD31 0
-		usleep 500000
+	gpio_mode PA6 1
+	for i in `seq 0 10`; do
+		gpio_set_value PA6 1
+		usleep 800000
+		gpio_set_value PA6 0
+		usleep 800000
 	done
 }
 
@@ -47,7 +47,7 @@ test_led_gpio()
 		exit_failed
 	fi
 
-	execute_for_target check_button_apf9328 
+	execute_for_target 
 
 	rmmod gpio
 	echo_test_ok
