@@ -7,14 +7,14 @@
 #include <string>
 #include <cstdlib>
 #include <unistd.h>
-#include "UTApfDacOut.hpp"
+#include "ApfDacOut.hpp"
 
 
 #include <as_devices/as_max5821.h>
 #include <as_devices/as_dac.h>
 
 
-void test::UTApfDacOut::run(int, char*[])
+void test::ApfDacOut::run(int, char*[])
 {
 
     struct as_dac_device *max5821_dev;

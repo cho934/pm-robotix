@@ -15,10 +15,10 @@ void utils::LoggerFactory::initialize()
 
 	add(utils::Level::ERROR, "", "console");
 
-	add(utils::Level::INFO, "test::UTApfGpioOut", "console");
-	add(utils::Level::INFO, "test::UTApfGpioIn", "console");
-	add(utils::Level::INFO, "test::UTApfDacOut", "console");
-	add(utils::Level::INFO, "test::UTApfAdcIn", "console");
+	add(utils::Level::INFO, "test::ApfGpioOut", "console");
+	add(utils::Level::INFO, "test::ApfGpioIn", "console");
+	add(utils::Level::INFO, "test::ApfDacOut", "console");
+	add(utils::Level::INFO, "test::ApfAdcIn", "console");
 
 
 }

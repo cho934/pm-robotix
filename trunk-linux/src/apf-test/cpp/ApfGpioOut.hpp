@@ -3,8 +3,8 @@
  * \brief Définition de la classe UTApfGpioOut.
  */
 
-#ifndef TEST_UTAPFGPIOOUT_HPP
-#define TEST_UTAPFGPIOOUT_HPP
+#ifndef TEST_APFGPIOOUT_HPP
+#define TEST_APFGPIOOUT_HPP
 
 
 #include "../../common/cpp/ConsoleUnitTest.hpp"
@@ -24,7 +24,7 @@ namespace test
     /*!
      * \brief Effectue un test de clignotement de LED sur tous les pads de sorties de la carte DevLightV2.
      */
-    class UTApfGpioOut : public pmx::ConsoleUnitTest
+    class ApfGpioOut : public pmx::ConsoleUnitTest
     {
     private:
 
@@ -33,7 +33,7 @@ namespace test
          */
         static inline const utils::Logger & logger()
         {
-            static const utils::Logger & instance = utils::LoggerFactory::logger("test::UTApfGpioOut");
+            static const utils::Logger & instance = utils::LoggerFactory::logger("test::ApfGpioOut");
             return instance;
         }
 
@@ -42,14 +42,14 @@ namespace test
         /*!
          * \brief Constructeur de la classe.
          */
-        UTApfGpioOut() : pmx::ConsoleUnitTest("UTApfGpioOut : Blink GPIO out on devLightV2 (with ioctl)")
+        ApfGpioOut() : pmx::ConsoleUnitTest("ApfGpioOut : Blink GPIO out on devLightV2 (with ioctl)")
         {
         }
 
         /*!
          * \brief Destructeur de la classe.
          */
-        virtual ~UTApfGpioOut()
+        virtual ~ApfGpioOut()
         {
         }
         

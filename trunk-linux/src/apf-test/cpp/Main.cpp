@@ -8,8 +8,12 @@
 #include "../../common/cpp/ConsoleUnitTestManager.hpp"
 
 
-#include "UTApfGpioIn.hpp"
-#include "UTApfGpioOut.hpp"
+#include "ApfGpioIn.hpp"
+#include "ApfGpioOut.hpp"
+#include "ApfAdcIn.hpp"
+#include "ApfDacOut.hpp"
+#include "ApfDacOut.hpp"
+#include "ApfFpgaServo.hpp"
 
 /*!
  * \brief Méthode principale pour le lancement des tests sur le robot.
@@ -22,12 +26,15 @@
  */
 int main(int argc, char** argv)
 {
-    std::cout << "main unit-test Start" << std::endl;
+    std::cout << "apf-test Start" << std::endl;
 
     pmx::ConsoleUnitTestManager manager;
 
-    manager.add(new test::UTApfGpioIn());
-    manager.add(new test::UTApfGpioOut());
+    manager.add(new test::ApfGpioIn());
+    manager.add(new test::ApfGpioOut());
+    manager.add(new test::ApfAdcIn());
+    manager.add(new test::ApfDacOut());
+    manager.add(new test::ApfFpgaServo());
 
 
     if (argc == 1)

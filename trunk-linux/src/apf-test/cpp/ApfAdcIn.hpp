@@ -1,23 +1,23 @@
 /*!
  * \file
- * \brief Définition de la classe UTApfAdcIn.
+ * \brief Définition de la classe ApfAdcIn.
  */
 
-#ifndef TEST_APFINADCTEST_HPP
-#define TEST_APFINADCTEST_HPP
+#ifndef TEST_APFADCINTEST_HPP
+#define TEST_APFADCINTEST_HPP
 
 //MAX1027_SPI_NUM on APF9328
 //#define MAX1027_SPI_NUM (1)
 
 #include "../../common/cpp/ConsoleUnitTest.hpp"
-#include "LoggerFactory.hpp"
+#include "../../common/cpp/LoggerFactory.hpp"
 
 namespace test
 {
     /*!
      * \brief Effectue un test des ADC MAX1027 via le module as_devices de la carte DevLightV2.
      */
-    class UTApfAdcIn : public pmx::ConsoleUnitTest
+    class ApfAdcIn : public pmx::ConsoleUnitTest
     {
     private:
 
@@ -26,7 +26,7 @@ namespace test
          */
         static inline const utils::Logger & logger()
         {
-            static const utils::Logger & instance = utils::LoggerFactory::logger("test::UTApfAdcIn");
+            static const utils::Logger & instance = utils::LoggerFactory::logger("test::ApfAdcIn");
             return instance;
         }
 
@@ -35,14 +35,14 @@ namespace test
         /*!
          * \brief Constructeur de la classe.
          */
-        UTApfAdcIn() : pmx::ConsoleUnitTest("UTApfAdcIn : Use AdC Input on devLightV2 (as_devices)")
+        ApfAdcIn() : pmx::ConsoleUnitTest("ApfAdcIn : Use AdC Input on devLightV2 (as_devices)")
         {
         }
 
         /*!
          * \brief Destructeur de la classe.
          */
-        virtual ~UTApfAdcIn()
+        virtual ~ApfAdcIn()
         {
         }
         
