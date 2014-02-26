@@ -17,11 +17,20 @@
 #define FRONT_SHOCK 0
 #define BACK_SHOCK 1
 #define isSendErrorsEnabled 0
-#define valueSample 1
+
 
 #define MAX_PWM_VALUE 100
 
 #define MAX_PID_SYSTEM_NUMBER	6
+
+
+#define VTOPS_PER_TICKS 100
+
+// Attention ces valeurs sont couplées
+#define DEFAULT_SAMPLING_FREQ 100
+#define valueSample 0.01f //(1f/DEFAULT_SAMPLING_FREQ)
+
+
 //#define DEFAULT_SAMPLING_FREQ 100
 
 //some values goes in pair :

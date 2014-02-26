@@ -320,12 +320,12 @@ void robot_stopMotorLeft() {
 }
 void computeCounterL() {
 	long deltaT= currentTimeInMillis()- tLeft;
-	leftCounter+= (deltaT*left )/200;
+	leftCounter+= (deltaT*left )/100;
 
 }
 void computeCounter() {
 	long deltaT= currentTimeInMillis()- tRight;
-	rightCounter+= (deltaT*right )/200;
+	rightCounter+= (deltaT*right )/100;
 }
 
 void robot_setMotorRightSpeed(int speed) {

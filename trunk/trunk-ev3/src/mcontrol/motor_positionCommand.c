@@ -31,7 +31,7 @@
 
 #include <math.h>
 #include <stdlib.h>
-
+#include <stdio.h>
 EXPORTED_FUNCTION void ComputePositionCommand(PositionCommand *out_cmd, int32 dist, int32 VMax, int32 Accel, int32 Decel)
 {
 	out_cmd->period0 = 0;
@@ -43,7 +43,7 @@ EXPORTED_FUNCTION void ComputePositionCommand(PositionCommand *out_cmd, int32 di
 	Accel = abs(Accel);
 	Decel = abs(Decel);
 	VMax = abs(VMax);
-
+	printf("motor_positionCommand ComputePositionCommand dist %d , VMax %d, Accel %d, Decel %d\n",dist,VMax, Accel, Decel);
 	//avoid erroneous case
 	if(dist == 0 || VMax == 0 || Accel == 0 || Decel == 0)
 	{
@@ -51,7 +51,6 @@ EXPORTED_FUNCTION void ComputePositionCommand(PositionCommand *out_cmd, int32 di
 		out_cmd->T12 = 0;
 		out_cmd->T23 = 0;
 		out_cmd->phase = TR_END_PHASE;
-			
 		return;
 	}
 
@@ -117,6 +116,8 @@ EXPORTED_FUNCTION void ComputePositionCommand(PositionCommand *out_cmd, int32 di
 				out_cmd->T23 = abs((-out_cmd->VMax - sqrtf(delta))/out_cmd->Deceleration);
 		}
 	}
+	printf("PositionCommand tAcc:%d tConstant:%d tDesc:%d (period)\n",out_cmd->T01,out_cmd->T12,out_cmd->T23);
+
 }
 
 

@@ -27,7 +27,6 @@
 #include "robot_trajectory.h"
 
 #include "motion.h"
-#include "motion_calibration.h"
 
 #include "robot_unitConversion.h"
 
@@ -52,8 +51,7 @@ static RobotCommand nextCommand;
 
 //static void motion_commandTraj_handler(const CANMessage_uart *msg);
 
-void traj_Init()
-{
+void traj_Init() {
 //	REGISTER_LOG_CLIENT("MOTION");
 //	protocol_SetHandler(M32_COMMAND_TRAJ, motion_commandTraj_handler);
 }
@@ -160,14 +158,15 @@ void traj_Init()
 //
 //}
 
+// en m/s (d'apres Cho)
 float motion_GetDefaultSpeed() {
-	return 80;
+	return 0.3f;
 }
 float motion_GetDefaultAccel() {
-	return 10;
+	return 0.03f;
 }
 float motion_GetDefaultDecel() {
-	return 10;
+	return 0.03f;
 }
 
 void motion_Line(RobotCommand *out_cmd, float dist) {
@@ -186,7 +185,7 @@ void motion_LineSpeedAcc(RobotCommand *out_cmd, float dist, float VMax,
 	out_cmd->mcType = ALPHA_DELTA;
 
 	//ALPHA
-	ComputePositionCommand(&(out_cmd->cmd.posCmd[ALPHA_MOTOR]), 0, 0, 0, 0);//no move on alpha
+	ComputePositionCommand(&(out_cmd->cmd.posCmd[ALPHA_MOTOR]), 0, 0, 0, 0); //no move on alpha
 
 	//DELTA
 	ComputePositionCommand(&(out_cmd->cmd.posCmd[DELTA_MOTOR]),
@@ -218,7 +217,7 @@ void motion_RotateSpeedAcc(RobotCommand *out_cmd, float angle, float VMax,
 			convertAccelTovTopsPerPeriodSqd(Decel));
 
 	//DELTA
-	ComputePositionCommand(&(out_cmd->cmd.posCmd[DELTA_MOTOR]), 0, 0, 0, 0);//no move on delta
+	ComputePositionCommand(&(out_cmd->cmd.posCmd[DELTA_MOTOR]), 0, 0, 0, 0); //no move on delta
 }
 
 void motion_ArcRotate(RobotCommand *out_cmd, float angle, float radius) {

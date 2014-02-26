@@ -26,7 +26,7 @@
 
 #include "robot_slippage.h"
 #include "motor.h"
-#include "motion_calibration.h"
+
 #include "global.h"
 
 #define MAX_PERIOD		128
