@@ -1,10 +1,10 @@
 /*!
  * \file
- * \brief Définition de la classe ApfInModeTest.
+ * \brief Définition de la classe ApfGpioIn.
  */
 
-#ifndef TEST_UTAPFGPIOIN_HPP
-#define TEST_UTAPFGPIOIN_HPP
+#ifndef TEST_APFGPIOIN_HPP
+#define TEST_APFGPIOIN_HPP
 
 #include <string>
 #include <cstdio>
@@ -22,7 +22,7 @@ namespace test
     /*!
      * \brief Effectue un test de clignotement de LED sur tous les pads de sorties de la carte DevLightV2.
      */
-    class UTApfGpioIn : public pmx::ConsoleUnitTest
+    class ApfGpioIn : public pmx::ConsoleUnitTest
     {
     private:
 
@@ -43,14 +43,14 @@ namespace test
         /*!
          * \brief Constructeur de la classe.
          */
-        UTApfGpioIn() : pmx::ConsoleUnitTest("UTGpioInWithModeTest : Test de differents modes de -Read- et -Blocking Read-.")
+        ApfGpioIn() : pmx::ConsoleUnitTest("ApfGpioIn : Test de differents modes de -Read- et -Blocking Read-.")
         {
         }
 
         /*!
          * \brief Destructeur de la classe.
          */
-        virtual ~UTApfGpioIn()
+        virtual ~ApfGpioIn()
         {
         }
 

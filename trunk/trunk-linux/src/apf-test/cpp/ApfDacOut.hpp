@@ -3,18 +3,18 @@
  * \brief Définition de la classe ApfOutDacTest.
  */
 
-#ifndef TEST_APFOUTDACTEST_HPP
-#define TEST_APFOUTDACTEST_HPP
+#ifndef TEST_APFDACOUTTEST_HPP
+#define TEST_APFDACOUTTEST_HPP
 
 #include "../../common/cpp/ConsoleUnitTest.hpp"
-#include "LoggerFactory.hpp"
+#include "../../common/cpp/LoggerFactory.hpp"
 
 namespace test
 {
     /*!
      * \brief Effectue un test du DAC MAX5821 via le module as_devices de la carte DevLightV2.
      */
-    class UTApfDacOut : public pmx::ConsoleUnitTest
+    class ApfDacOut : public pmx::ConsoleUnitTest
     {
     private:
 
@@ -23,7 +23,7 @@ namespace test
          */
         static inline const utils::Logger & logger()
         {
-            static const utils::Logger & instance = utils::LoggerFactory::logger("test::UTApfDacOut");
+            static const utils::Logger & instance = utils::LoggerFactory::logger("test::ApfDacOut");
             return instance;
         }
 
@@ -32,14 +32,14 @@ namespace test
         /*!
          * \brief Constructeur de la classe.
          */
-        UTApfDacOut() : pmx::ConsoleUnitTest("UTApfDacOut : Increment DAC [A] & [B] Output on devLightV2 (as_devices)")
+        ApfDacOut() : pmx::ConsoleUnitTest("ApfDacOut : Increment DAC [A] & [B] Output on devLightV2 (as_devices)")
         {
         }
 
         /*!
          * \brief Destructeur de la classe.
          */
-        virtual ~UTApfDacOut()
+        virtual ~ApfDacOut()
         {
         }
         

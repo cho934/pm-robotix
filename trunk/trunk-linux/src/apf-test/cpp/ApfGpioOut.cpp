@@ -1,6 +1,6 @@
 /*!
  * \file
- * \brief Implémentation de la classe UTApfGpioOut, Clignotement d'une sortie (ou pad) de la carte DevLightV2.
+ * \brief Implémentation de la classe ApfGpioOut, Clignotement d'une sortie (ou pad) de la carte DevLightV2.
  */
 
 #include <iostream>
@@ -11,9 +11,9 @@
 #include <sys/ioctl.h>
 #include <linux/ppdev.h>
 
-#include "UTApfGpioOut.hpp"
+#include "ApfGpioOut.hpp"
 
-void test::UTApfGpioOut::run(int argc, char *argv[])
+void test::ApfGpioOut::run(int argc, char *argv[])
 {
     using std::string;
     char *ledGpioPort;
@@ -29,7 +29,7 @@ void test::UTApfGpioOut::run(int argc, char *argv[])
 
     if(argc < 3)
     {
-        std::cout << "USAGE: UNIT_TEST " << argv[1] <<" [GPIO_PORT:A B C D] [GPIO_PIN:0...31] [count:4 times (default)] [delay:100000us (default)]" << std::endl;
+        std::cout << "USAGE: APF_TEST " << argv[1] <<" [GPIO_PORT:A B C D] [GPIO_PIN:0...31] [count:4 times (default)] [delay:100000us (default)]" << std::endl;
     }
     if(argc > 2)
     {

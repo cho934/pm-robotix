@@ -1,11 +1,11 @@
 /*!
  * \file
- * \brief Implémentation de la classe ApfInModeTest, Test d'une entrée par interruption "blocking read" de la carte DevLightV2.
+ * \brief Implémentation de la classe ApfGpioIn, Test d'une entrée par interruption "blocking read" de la carte DevLightV2.
  *
  */
 
 #include <cstring>
-#include "UTApfGpioIn.hpp"
+#include "ApfGpioIn.hpp"
 
 //pour la partie V1
 #include <iostream>
@@ -32,11 +32,11 @@ extern "C"
 #define GPIORDMODE	_IOR(PP_IOCTL, 0xF4, int)
 #define GPIOWRMODE	_IOW(PP_IOCTL, 0xF5, int)
 
-std::string test::UTApfGpioIn::INPUT_PORT_PATH_DEV = "/dev/gpio/P"; // écriture (write) et lecture (read) blocante sur pin
-std::string test::UTApfGpioIn::INPUT_PORT_PATH_PROC =
+std::string test::ApfGpioIn::INPUT_PORT_PATH_DEV = "/dev/gpio/P"; // écriture (write) et lecture (read) blocante sur pin
+std::string test::ApfGpioIn::INPUT_PORT_PATH_PROC =
 		"/proc/driver/gpio/port"; //lecture port/dir/irq : cat /proc/driver/gpio/portD
 
-void test::UTApfGpioIn::run(int argc, char *argv[])
+void test::ApfGpioIn::run(int argc, char *argv[])
 {
 
 	// The gpio port (A, B, C or D)
@@ -50,7 +50,7 @@ void test::UTApfGpioIn::run(int argc, char *argv[])
 
 	if (argc < 4)
 	{
-		std::cout << "USAGE: UNIT_TEST " << argv[1]
+		std::cout << "USAGE: APF_TEST " << argv[1]
 				<< " [GPIO_PORT:A B C D] [GPIO_PIN:0...31] [V1...4]"
 				<< std::endl;
 	}
@@ -126,7 +126,7 @@ void test::UTApfGpioIn::run(int argc, char *argv[])
  * ->le système moins chargé que la v3  car 800 tests sont possibles entre 2 fronts.
  *
  */
-void test::UTApfGpioIn::in_V4_ioctl_for_port(std::string, std::string)
+void test::ApfGpioIn::in_V4_ioctl_for_port(std::string, std::string)
 {
 
 	logger().info() << "V4 - compte les fronts (sans blocking-read) par ioctl "
@@ -216,7 +216,7 @@ void test::UTApfGpioIn::in_V4_ioctl_for_port(std::string, std::string)
  * ->le système est chargé car uniquement 260 tests sont possibles entre 2 fronts.
  */
 
-void test::UTApfGpioIn::in_V3_ioctl_for_pin(std::string inGpioPort,
+void test::ApfGpioIn::in_V3_ioctl_for_pin(std::string inGpioPort,
 		std::string inPin)
 {
 	//code basé sur le target/demos/gpio/blink_led.c
@@ -372,7 +372,7 @@ void test::UTApfGpioIn::in_V3_ioctl_for_pin(std::string inGpioPort,
  test::ApfInTest2 INFO Read:699 ;time-us:3000815 ;diff-time-us:4223 ;pin=0
  * 
  */
-void test::UTApfGpioIn::in_V2_blockingread(std::string inGpioPort,
+void test::ApfGpioIn::in_V2_blockingread(std::string inGpioPort,
 		std::string inPin)
 {
 	logger().info()
@@ -451,7 +451,7 @@ void test::UTApfGpioIn::in_V2_blockingread(std::string inGpioPort,
  test::ApfInTest2 INFO /dev/gpio/PD19 : 63 time: 14573 1
  * 
  */
-void test::UTApfGpioIn::in_V1_blockingReadFstream(std::string inGpioPort,
+void test::ApfGpioIn::in_V1_blockingReadFstream(std::string inGpioPort,
 		std::string inPin)
 {
 	int fd_input, retval = 0, iomask = 0x00;
