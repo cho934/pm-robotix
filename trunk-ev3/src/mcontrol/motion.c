@@ -27,7 +27,6 @@
 #include "motion.h"
 
 #include "motion_priv.h"
-#include "motion_calibration.h"
 
 #include "motor.h"
 #include "motor_PID.h"
@@ -51,8 +50,6 @@
 #include <errno.h>
 #include <string.h>
 #include "../robot.h"
-
-#define USE_ENCODER
 
 MOTION_STATE RobotMotionState;
 
@@ -83,15 +80,14 @@ void OSTimeDly(int i) {
 	// useless :)
 }
 void configurePID() {
-	pid_ConfigKP(motors[ALPHA_DELTA][ALPHA_MOTOR].PIDSys, 800);
+	pid_ConfigKP(motors[ALPHA_DELTA][ALPHA_MOTOR].PIDSys, 40);
 	pid_ConfigKI(motors[ALPHA_DELTA][ALPHA_MOTOR].PIDSys, 0);
-	pid_ConfigKD(motors[ALPHA_DELTA][ALPHA_MOTOR].PIDSys, 400);
+	pid_ConfigKD(motors[ALPHA_DELTA][ALPHA_MOTOR].PIDSys, 20);
 	pid_ConfigDPeriod(motors[ALPHA_DELTA][ALPHA_MOTOR].PIDSys, 3);
-	pid_ConfigKP(motors[ALPHA_DELTA][DELTA_MOTOR].PIDSys, 600);
 
-	pid_ConfigKP(motors[ALPHA_DELTA][DELTA_MOTOR].PIDSys, 800);
+	pid_ConfigKP(motors[ALPHA_DELTA][DELTA_MOTOR].PIDSys, 1020);
 	pid_ConfigKI(motors[ALPHA_DELTA][DELTA_MOTOR].PIDSys, 0);
-	pid_ConfigKD(motors[ALPHA_DELTA][DELTA_MOTOR].PIDSys, 1200);
+	pid_ConfigKD(motors[ALPHA_DELTA][DELTA_MOTOR].PIDSys, 00);
 	pid_ConfigDPeriod(motors[ALPHA_DELTA][DELTA_MOTOR].PIDSys, 3);
 
 	pid_ConfigKP(motors[LEFT_RIGHT][LEFT_MOTOR].PIDSys, 75);
@@ -142,7 +138,9 @@ void motion_Init() {
 	//path manager initialisation
 	path_Init();
 }
+void motion_Destroy() {
 
+}
 void signalEndOfTraj() {
 	if (motionCommand.cmdType == POSITION_COMMAND) {
 		motion_FreeMotion();
@@ -263,10 +261,12 @@ void *motion_ITTask(void *p_arg) {
 	static int32 pwm0, pwm1;
 	static int32 pwm0b, pwm1b;
 	printf("motion_ITTask start\n");
-	for (;;) {
+	int stop = 0;
+	while (!stop) {
 
 		sem_wait(&semMotionIT);
-		printf("motion.c : updating state..\n");
+		printf("motion.c : ------  updating state ---- time : %ld ms [%d]\n",
+				currentTimeInMillis(), RobotMotionState);
 		periodNb++;
 
 		encoder_ReadSensor(&dLeft, &dRight, &dAlpha, &dDelta);
@@ -293,13 +293,19 @@ void *motion_ITTask(void *p_arg) {
 			//choose the right function to compute new order value
 			switch (motionCommand.cmdType) {
 			case POSITION_COMMAND:
+				printf("motion.c :  POSITION_COMMAND\n");
 				fin0 = GetPositionOrder(&motionCommand.cmd.posCmd[0], periodNb,
 						&ord0);
 				fin1 = GetPositionOrder(&motionCommand.cmd.posCmd[1], periodNb,
 						&ord1);
+				printf(
+						"motion.c :  POSITION_COMMAND posCmd1:%d %d periodNb:%d fin1:%d\n",
+						&motionCommand.cmd.posCmd[1].order0,
+						&motionCommand.cmd.posCmd[1].order3, periodNb, fin1);
 				break;
 
 			case SPEED_COMMAND:
+				printf("motion.c :  SPEED_COMMAND\n");
 				fin0 = GetSpeedOrder(&motionCommand.cmd.speedCmd[0], periodNb,
 						&ord0);
 				fin1 = GetSpeedOrder(&motionCommand.cmd.speedCmd[1], periodNb,
@@ -307,25 +313,30 @@ void *motion_ITTask(void *p_arg) {
 				break;
 
 			case STEP_COMMAND:
+				printf("motion.c :  STEP_COMMAND\n");
 				fin0 = GetStepOrder(&motionCommand.cmd.stepCmd[0], &ord0);
 				fin1 = GetStepOrder(&motionCommand.cmd.stepCmd[1], &ord1);
 				break;
 			}
 
 			//compute pwm for first motor
-			printf("motion.c motion_ITTask pid_Compute ord0:%d lastPos0:%d\n", ord0,
-					motors[motionCommand.mcType][0].lastPos);
+			printf("motion.c motion_ITTask pid_Compute ord0:%d lastPos0:%d\n",
+					ord0, motors[motionCommand.mcType][0].lastPos);
 			pwm0 = pid_Compute(motors[motionCommand.mcType][0].PIDSys,
 					ord0 - motors[motionCommand.mcType][0].lastPos);
-
+			printf(
+					"motion.c motion_ITTask pid_Compute : order pos:%d last pos:%d\n",
+					ord1, motors[motionCommand.mcType][1].lastPos);
 			//compute pwm for second motor
 			pwm1 = pid_Compute(motors[motionCommand.mcType][1].PIDSys,
 					ord1 - motors[motionCommand.mcType][1].lastPos);
 
 			//output pwm to motors
 			if (motionCommand.mcType == LEFT_RIGHT) {
+				printf("motion.c :  LEFT_RIGHT\n");
 				setPWM(pwm0, pwm1);
 			} else if (motionCommand.mcType == ALPHA_DELTA) {
+				printf("motion.c :  ALPHA_DELTA\n");
 				pwm0b = pwm1 - pwm0;
 				BOUND_INT(pwm0b, 0x7EFF);
 
@@ -363,16 +374,25 @@ void *motion_ITTask(void *p_arg) {
 		}
 			break;
 
-		case DISABLE_PID:
-		case FREE_MOTION:
+		case DISABLE_PID: {
+			printf("motion_ITTask DISABLE_PID end exit \n");
+			stop = 1;
+			break;
+		}
+		case FREE_MOTION: {
+			printf("motion_ITTask FREE_MOTION end exit \n");
+			stop = 1;
+			break;
+		}
 		default:
 			break;
 		};
 
 		//p13_5 = 0;	//period measurement
 	}
-	printf("motion_ITTask end\n");
+	printf("motion_ITTask end exit()\n");
 	sleep(1);
+	//exit(2);
 	return 0;
 }
 
@@ -383,7 +403,7 @@ void motion_InitTimer(int frequency) {
 //	motion_SetSamplingFrequency(frequency);
 	printf("motion_InitTimer\n");
 	signal(SIGALRM, Motion_IT);
-	long delay = 900 * 1000;
+	long delay = 10 * 1000;
 	struct itimerval tval = {
 	/* subsequent firings */.it_interval = { .tv_sec = 0, .tv_usec = delay },
 	/* first firing */.it_value = { .tv_sec = 0, .tv_usec = delay } };

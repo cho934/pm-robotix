@@ -7,6 +7,7 @@
 #include "robot.h"
 #include "test.h"
 #include "mcontrol/motion.h"
+#include "mcontrol/encoder.h"
 
 void a(char motorPort) {
 
@@ -352,17 +353,24 @@ void testButton2() {
 }
 
 void testMotion() {
+	robot_init();
+
+	encoder_SetDist(1.0f);
+	encoder_SetResolution(4200,4200);
+
 	motion_Init();
 
 	RobotCommand* cmd = malloc(sizeof(RobotCommand));
-	motion_Line(cmd, 1000.0f);
+	motion_Line(cmd, .10f);
 	printf("loading line cmd\n");
 	motion_SetCurrentCommand(cmd);
 	int i = 0;
-	for ( i = 0; i < 10; i++) {
+	int nbSec=10;
+	for ( i = 0; i < 100*nbSec; i++) {
 		// loop because timer with kill
 		sleep(1);
 	}
+	free( cmd);
 	printf("test motion end\n");
 }
 

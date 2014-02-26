@@ -26,7 +26,6 @@
 
 #include "encoder.h"
 
-#include "motion_calibration.h"
 #include "global.h"
 #include "../robot.h"
 
@@ -40,6 +39,7 @@ void encoder_SetDist(float dist) {
 }
 
 void encoder_SetResolution(uint32 leftTicksPerM, uint32 rightTicksPerM) {
+	printf("encoder_SetResolution   %d , %d \n", leftTicksPerM, rightTicksPerM);
 	if (leftTicksPerM > rightTicksPerM) {
 		leftEncoderRatio = VTOPS_PER_TICKS;
 		rightEncoderRatio = VTOPS_PER_TICKS * rightTicksPerM
@@ -51,7 +51,9 @@ void encoder_SetResolution(uint32 leftTicksPerM, uint32 rightTicksPerM) {
 		rightEncoderRatio = VTOPS_PER_TICKS;
 		valueVTops = 1 / (float) (VTOPS_PER_TICKS * rightTicksPerM);
 	}
-
+	printf("valueVTops %f = 1 / %f = 1 / %d x %d \n", valueVTops,
+			(float) (VTOPS_PER_TICKS * rightTicksPerM), VTOPS_PER_TICKS,
+			rightTicksPerM);
 	//recompute values involving vTops
 	encoder_SetDist(distEncoderMeter);
 }
@@ -67,9 +69,9 @@ int32 *dDelta) {
 	//read encoder
 //	left = -lm629_ReadRealPosition(LWHEEL);
 	//right = lm629_ReadRealPosition(RWHEEL);
-	left=robot_getLeftExternalCounter();
-	right=robot_getRightExternalCounter();
-
+	left = robot_getLeftExternalCounter();
+	right = robot_getRightExternalCounter();
+	printf("encoder.c encoder_ReadSensor l:%d r:%d\n", left, right);
 	//convert units and save position
 	left *= leftEncoderRatio;
 	right *= rightEncoderRatio;
@@ -89,5 +91,9 @@ int32 *dDelta) {
 	//compute alpha and delta displacement
 	*dAlpha = (*dRight - *dLeft) / 2;
 	*dDelta = (*dRight + *dLeft) / 2;
+
+	printf("encoder.c encoder_ReadSensor l:%d r:%d alpha:%d delta:%d\n", *dLeft,
+			*dRight, *dAlpha, *dDelta);
+
 }
 
