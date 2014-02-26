@@ -320,12 +320,12 @@ void robot_stopMotorLeft() {
 }
 void computeCounterL() {
 	long deltaT= currentTimeInMillis()- tLeft;
-	leftCounter+= (deltaT*left );
+	leftCounter+= (deltaT*left )/200;
 
 }
 void computeCounter() {
 	long deltaT= currentTimeInMillis()- tRight;
-	rightCounter+= (deltaT*right );
+	rightCounter+= (deltaT*right )/200;
 }
 
 void robot_setMotorRightSpeed(int speed) {
@@ -342,11 +342,11 @@ void robot_setMotorLeftSpeed(int speed) {
 
 long robot_getLeftExternalCounter() {
 	computeCounterL();
-	return -leftCounter;
+	return leftCounter;
 }
 long robot_getRightExternalCounter() {
 	computeCounter();
-	return -rightCounter;
+	return rightCounter;
 }
 
 int robot_isButton1Pressed() {
