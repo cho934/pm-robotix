@@ -1,23 +1,13 @@
 /*!
  * \file
- * \brief Définition de la classe UTApfGpioOut.
+ * \brief Définition de la classe ApfGpioOut.
  */
 
 #ifndef TEST_APFGPIOOUT_HPP
 #define TEST_APFGPIOOUT_HPP
 
-
 #include "../../common/cpp/ConsoleUnitTest.hpp"
 #include "../../common/cpp/LoggerFactory.hpp"
-
-#define LED_GPIO_PORT_PATH   "/dev/gpio/port"
-
-#define GPIORDDIRECTION	_IOR(PP_IOCTL, 0xF0, int)
-#define GPIOWRDIRECTION	_IOW(PP_IOCTL, 0xF1, int)
-#define GPIORDDATA	_IOR(PP_IOCTL, 0xF2, int)
-#define GPIOWRDATA	_IOW(PP_IOCTL, 0xF3, int)
-#define GPIORDMODE	_IOR(PP_IOCTL, 0xF4, int)
-#define GPIOWRMODE	_IOW(PP_IOCTL, 0xF5, int)
 
 namespace test
 {

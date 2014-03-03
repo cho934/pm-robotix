@@ -8,6 +8,9 @@
 
 #include "../../common/cpp/ConsoleUnitTest.hpp"
 #include "../../common/cpp/LoggerFactory.hpp"
+#include <as_devices/as_spi.h>
+
+
 
 namespace test
 {

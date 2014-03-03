@@ -7,7 +7,7 @@
 #define TEST_APFADCINTEST_HPP
 
 //MAX1027_SPI_NUM on APF9328
-//#define MAX1027_SPI_NUM (1)
+#define MAX1027_SPI_NUM (1)
 
 #include "../../common/cpp/ConsoleUnitTest.hpp"
 #include "../../common/cpp/LoggerFactory.hpp"
@@ -50,6 +50,12 @@ namespace test
          * \brief Execute le test.
          */
         virtual void run(int argc, char *argv[]);
+
+       // int32_t my_as_adc_close(struct as_adc_device *aDev);
+
+        int iRConvert2cm (int value, int model);
+
+
     };
 };
 
