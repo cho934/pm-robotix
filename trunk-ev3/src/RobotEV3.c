@@ -1,13 +1,15 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include  <sys/mman.h>
+#include <sys/mman.h>
 #include <sys/ioctl.h>
 #include "lms2012.h"
 #include "robot.h"
 #include "test.h"
 #include "mcontrol/motion.h"
 #include "mcontrol/encoder.h"
+#include "log.h"
 
 void a(char motorPort) {
 
@@ -352,25 +354,32 @@ void testButton2() {
 	close(file);
 }
 
-void testMotion() {
+void init(int lResolution, int rResolution, float dist) {
 	robot_init();
-
-	encoder_SetDist(1.0f);
-	encoder_SetResolution(4200,4200);
-
+	encoder_SetDist(dist);
+	encoder_SetResolution(lResolution, rResolution);
+	initLog(lResolution, rResolution, dist);
+	printf("Encoders resolution: %d %d , distance: %f\n", lResolution,
+			rResolution, dist);
 	motion_Init();
+}
+void testMotion() {
+
+	init(4200, 4200, 0.25f);
 
 	RobotCommand* cmd = malloc(sizeof(RobotCommand));
-	motion_Line(cmd, .10f);
+	// 90 cms
+	motion_Line(cmd, .90f);
 	printf("loading line cmd\n");
 	motion_SetCurrentCommand(cmd);
 	int i = 0;
-	int nbSec=10;
-	for ( i = 0; i < 100*nbSec; i++) {
+	int nbSec = 10;
+	for (i = 0; i < 200 * nbSec; i++) {
 		// loop because timer with kill
 		sleep(1);
 	}
-	free( cmd);
+	free(cmd);
+	closeLog();
 	printf("test motion end\n");
 }
 

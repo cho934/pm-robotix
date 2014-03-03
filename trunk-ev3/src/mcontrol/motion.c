@@ -50,7 +50,7 @@
 #include <errno.h>
 #include <string.h>
 #include "../robot.h"
-
+#include "../log.h"
 MOTION_STATE RobotMotionState;
 
 //nb of period since the beginning
@@ -76,9 +76,6 @@ void signalEndOfTraj(void);
 void path_Init(void);
 void path_TriggerWaypoint(TRAJ_STATE state);
 
-void OSTimeDly(int i) {
-	// useless :)
-}
 void configurePID() {
 	pid_ConfigKP(motors[ALPHA_DELTA][ALPHA_MOTOR].PIDSys, 40);
 	pid_ConfigKI(motors[ALPHA_DELTA][ALPHA_MOTOR].PIDSys, 0);
@@ -162,12 +159,7 @@ void motion_FreeMotion() {
 	resetAllPIDErrors();
 	RobotMotionState = FREE_MOTION;
 	setPWM(0, 0);
-	OSTimeDly(1);
-	RobotMotionState = FREE_MOTION;
-	setPWM(0, 0);
-	OSTimeDly(1);
-	RobotMotionState = FREE_MOTION;
-	setPWM(0, 0);
+
 	resetAllPIDErrors();
 }
 
@@ -179,9 +171,8 @@ void motion_DisablePID() {
 	motion_FreeMotion();
 	RobotMotionState = DISABLE_PID;
 	setPWM(0, 0);
-	OSTimeDly(1);
-	RobotMotionState = DISABLE_PID;
-	setPWM(0, 0);
+
+
 	resetAllPIDErrors();
 }
 
@@ -211,6 +202,9 @@ void loadCommand(RobotCommand *cmd) {
 			LoadSpeedCommand(&cmd->cmd.speedCmd[1],
 					motors[cmd->mcType][1].lastPos, periodNb);
 		}
+		break;
+
+	default:
 		break;
 	};
 }
@@ -267,11 +261,17 @@ void *motion_ITTask(void *p_arg) {
 		sem_wait(&semMotionIT);
 		printf("motion.c : ------  updating state ---- time : %ld ms [%d]\n",
 				currentTimeInMillis(), RobotMotionState);
+
 		periodNb++;
 
 		encoder_ReadSensor(&dLeft, &dRight, &dAlpha, &dDelta);
 
 		odo_Integration(2 * dAlpha / (float) distEncoder, (float) dDelta);
+
+		RobotPosition p = odo_GetPosition();
+		log_status(currentTimeInMillis(), robot_getLeftExternalCounter(),
+				robot_getRightExternalCounter(), robot_getLeftPower(),
+				robot_getRightPower(), p.x, p.y, p.theta);
 
 		//send position
 		//	if ((periodNb & 0x3F) == 0) {
@@ -387,7 +387,6 @@ void *motion_ITTask(void *p_arg) {
 		default:
 			break;
 		};
-
 		//p13_5 = 0;	//period measurement
 	}
 	printf("motion_ITTask end exit()\n");
@@ -409,7 +408,7 @@ void motion_InitTimer(int frequency) {
 	/* first firing */.it_value = { .tv_sec = 0, .tv_usec = delay } };
 
 	int err = setitimer(ITIMER_REAL, &tval, (struct itimerval*) 0);
-	printf("motion_InitTimer %ld ms\n", delay / 1000, err);
+	printf("motion_InitTimer %ld ms [%d]\n", delay / 1000, err);
 	if (err != 0) {
 		printf("Oh dear, something went wrong with setitimer()! %s\n",
 				strerror(errno));
