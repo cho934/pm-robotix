@@ -12,7 +12,7 @@
 #
 
 source ./test_helpers.sh
-source ./test_env.sh
+#source ./test_env.sh
 
 
 test_setup_apf9328()
@@ -40,6 +40,20 @@ test_ADC()
 		else
 			exit_failed
 		fi
+		AIN1=`cat $ADC_SPI_SYS/in1_input`
+		if [ "$temp" != "0" ] && [ "$AIN1" != "0" ]; then
+			echo "Temp: $temp m°C"
+			echo "AIN1: $AIN1"
+		else
+			exit_failed
+		fi
+		AIN4=`cat $ADC_SPI_SYS/in4_input`
+		if [ "$temp" != "0" ] && [ "$AIN4" != "0" ]; then
+			echo "Temp: $temp m°C"
+			echo "AIN4: $AIN4"
+		else
+			exit_failed
+		fi
 		# Fast mode
 		loadmax.sh
 		let set=0xb1; echo $set > $ADC_SPI_SYS/conversion
@@ -47,7 +61,13 @@ test_ADC()
 		let set=0x48; echo $set > $ADC_SPI_SYS/setup
 		let set=0x20; echo $set > $ADC_SPI_SYS/averaging
 		echo "Reading in fast mode:"
-		dd if=/dev/max1027/AIN0 bs=2 count=10 | hexdump
+		sleep 1
+		echo "AIN0"
+		dd if=/dev/max1027/AIN0 bs=2 count=7 | hexdump
+		echo "AIN1"
+		dd if=/dev/max1027/AIN1 bs=2 count=7 | hexdump
+		echo "AIN4"
+		dd if=/dev/max1027/AIN4 bs=2 count=7 | hexdump
 		if [ "$?" == 0 ]; then
 			echo_test_ok	
 		else

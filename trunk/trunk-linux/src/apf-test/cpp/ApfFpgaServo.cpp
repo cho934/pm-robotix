@@ -19,33 +19,33 @@ void test::ApfFpgaServo::run(int argc, char *argv[])
 	int num;
 	int initpos;
 
-	logger().info() << "USAGE: APF_TEST " << argv[1]
-			<< "[NumServo:0-31] [PositionValue:0-4096] " << utils::end;
+	std::cout << "USAGE: APF_TEST " << argv[1]
+			<< "[NumServo:0-31] [PositionValue:0-4096] " << std::endl;
 
 	if (argc > 2)
 	{
 		num = atoi(argv[2]);
-		logger().info() << "numero servo: " << atoi(argv[2]) << utils::end;
+		std::cout << "numero servo: " << atoi(argv[2]) << std::endl;
 	}
 	else
 	{
-		logger().info() << "numero servo: " << utils::end;
+		std::cout << "numero servo: " << std::endl;
 		std::cin >> num;
 	}
 	if (argc > 3)
 	{
 		initpos = atoi(argv[3]);
-		logger().info() << "position value: " << atoi(argv[3]) << utils::end;
+		std::cout << "position value: " << atoi(argv[3]) << std::endl;
 	}
 	else
 	{
-		logger().info() << "position value: " << utils::end;
+		std::cout << "position value: " << std::endl;
 		std::cin >> initpos;
 	}
 
 	if (initpos > 4096 || initpos < 0)
 	{
-		logger().error() << "position overflow " << utils::end;
+		std::cout << "position overflow " << std::endl;
 		exit(1);
 	}
 
@@ -59,12 +59,12 @@ void test::ApfFpgaServo::run(int argc, char *argv[])
 		usleep(1000);
 	}
 
-	logger().info() << "Servo" << num << ": current:" << currentPos
-			<< " to desired position: " << initpos << utils::end;
+	std::cout << "Servo" << num << ": current:" << currentPos
+			<< " to desired position: " << initpos << std::endl;
 
-	logger().info()
+	std::cout
 			<< "REGLAGE POSITION : choose UP ('p') or DOWN('m') or Quit ('q')"
-			<< utils::end;
+			<< std::endl;
 
 	int pos = initpos;
 	char c;
@@ -75,27 +75,27 @@ void test::ApfFpgaServo::run(int argc, char *argv[])
 		if (c == 'p')
 		{
 			pos = pos + 50;
-			logger().info() << "Servo" << num << ": START: adjusted position="
+			std::cout << "Servo" << num << ": START: adjusted position="
 					<< pos << " getServoCurrentPosition="
-					<< getServoCurrentPosition(num) << utils::end;
+					<< getServoCurrentPosition(num) << std::endl;
 
 			setServoPosition(num, pos);
-			logger().debug() << "Servo" << num << ": END  : adjusted position="
+			std::cout << "Servo" << num << ": END  : adjusted position="
 					<< pos << " getServoCurrentPosition="
-					<< getServoCurrentPosition(num) << utils::end;
+					<< getServoCurrentPosition(num) << std::endl;
 
 		}
 		else if (c == 'm')
 		{
 			pos = pos - 50;
-			logger().info() << "Servo" << num << ": START: adjusted position="
+			std::cout << "Servo" << num << ": START: adjusted position="
 					<< pos << " getServoCurrentPosition="
-					<< getServoCurrentPosition(num) << utils::end;
+					<< getServoCurrentPosition(num) << std::endl;
 
 			setServoPosition(num, pos);
-			logger().debug() << "Servo" << num << ": END  :adjusted position="
+			std::cout << "Servo" << num << ": END  :adjusted position="
 					<< pos << " getServoCurrentPosition="
-					<< getServoCurrentPosition(num) << utils::end;
+					<< getServoCurrentPosition(num) << std::endl;
 
 		}
 		usleep(1000);
@@ -103,7 +103,7 @@ void test::ApfFpgaServo::run(int argc, char *argv[])
 
 	setServoEnable(num, 0);
 
-	logger().info() << "End Of APF-TEST" << utils::end;
+	std::cout << "End Of APF-TEST" << std::endl;
 }
 
 char* getFilename(int servoId, std::string type)
@@ -119,12 +119,12 @@ void test::ApfFpgaServo::setServoEnable(int servoID, int value)
 {
 	if (servoID < 0)
 	{
-		logger().error() << "ERROR servoID<0 " << servoID << utils::end;
+		std::cout<< "ERROR servoID<0 " << servoID << std::endl;
 	}
 	else if (servoID >= NbMaxServo)
 	{
-		logger().error() << "ERROR servoID>NbMaxServo " << servoID << ">"
-				<< NbMaxServo << utils::end;
+		std::cout << "ERROR servoID>NbMaxServo " << servoID << ">"
+				<< NbMaxServo << std::endl;
 	}
 	else
 	{
@@ -133,14 +133,14 @@ void test::ApfFpgaServo::setServoEnable(int servoID, int value)
 		SERVO_DRIVER_SERVO_ENABLE_FILE);
 		char data[16];
 
-		logger().info() << "setServoEnable  servoID=" << " value=" << value
-				<< " operationFileName=" << operationFileName << utils::end;
+		std::cout << "setServoEnable  servoID=" << servoID << " value=" << value
+				<< " operationFileName=" << operationFileName << std::endl;
 
 		int file = open(operationFileName, O_WRONLY);
 		if (file == -1)
 		{
-			logger().error() << "MotionServer setServoEnable: failed to open  "
-					<< operationFileName << utils::end;
+			std::cout << "MotionServer setServoEnable: failed to open  "
+					<< operationFileName << std::endl;
 		}
 		/* Keep the value */
 		servoEnableBuffer[servoID] = value; //todo configuration file parser
@@ -148,9 +148,11 @@ void test::ApfFpgaServo::setServoEnable(int servoID, int value)
 		int ret = write(file, data, strlen(data));
 		if (ret == -1)
 		{
-			logger().error()
+			std::cout
 					<< "MotionServer setServoEnable: failed to write in  "
-					<< operationFileName << utils::end;
+					<< operationFileName << std::endl;
+			printf("Error can't open servo %c\nHave you run modprobe servo ?\n", servoID);
+						exit(1);
 		}
 		close(file);
 		delete operationFileName;
@@ -162,12 +164,12 @@ void test::ApfFpgaServo::setServoOffset(int servoID, int value)
 {
 	if (servoID < 0)
 	{
-		logger().error() << "ERROR servoID<0 " << servoID << utils::end;
+		std::cout << "ERROR servoID<0 " << servoID << std::endl;
 	}
 	else if (servoID >= NbMaxServo)
 	{
-		logger().error() << "ERROR servoID>NbMaxServo " << servoID << ">"
-				<< NbMaxServo << utils::end;
+		std::cout << "ERROR servoID>NbMaxServo " << servoID << ">"
+				<< NbMaxServo << std::endl;
 	}
 	else
 	{
@@ -179,8 +181,8 @@ void test::ApfFpgaServo::setServoOffset(int servoID, int value)
 		int file = open(operationFileName, O_WRONLY);
 		if (file == -1)
 		{
-			logger().error() << "MotionServer setServoOffset: failed to open  "
-					<< operationFileName << utils::end;
+			std::cout << "MotionServer setServoOffset: failed to open  "
+					<< operationFileName << std::endl;
 		}
 		/* Keep the value */
 		servoOffsetBuffer[servoID] = value;
@@ -188,9 +190,9 @@ void test::ApfFpgaServo::setServoOffset(int servoID, int value)
 		int ret = write(file, data, strlen(data));
 		if (ret == -1)
 		{
-			logger().error()
+			std::cout
 					<< "MotionServer setServoOffset: failed to write in "
-					<< operationFileName << utils::end;
+					<< operationFileName << std::endl;
 		}
 		close(file);
 		delete operationFileName;
@@ -202,12 +204,12 @@ void test::ApfFpgaServo::setServoPosition(int servoID, int value)
 {
 	if (servoID < 0)
 	{
-		logger().error() << "ERROR servoID<0 " << servoID << utils::end;
+		std::cout << "ERROR servoID<0 " << servoID << std::endl;
 	}
 	else if (servoID >= NbMaxServo)
 	{
-		logger().error() << "ERROR servoID>NbMaxServo " << servoID << ">"
-				<< NbMaxServo << utils::end;
+		std::cout << "ERROR servoID>NbMaxServo " << servoID << ">"
+				<< NbMaxServo << std::endl;
 	}
 	else
 	{
@@ -221,8 +223,8 @@ void test::ApfFpgaServo::setServoPosition(int servoID, int value)
 		file = open(operationFileName, O_WRONLY);
 		if (file == -1)
 		{
-			logger().error() << "MotionServer setServoPosition: failed to open "
-					<< operationFileName << utils::end;
+			std::cout << "MotionServer setServoPosition: failed to open "
+					<< operationFileName << std::endl;
 		}
 		else
 		{
@@ -233,9 +235,9 @@ void test::ApfFpgaServo::setServoPosition(int servoID, int value)
 			ret = write(file, data, strlen(data));
 			if (ret == -1)
 			{
-				logger().error()
+				std::cout
 						<< "MotionServer setServoPosition: failed to write in "
-						<< operationFileName << utils::end;
+						<< operationFileName << std::endl;
 			}
 			close(file);
 		}
@@ -249,12 +251,12 @@ int test::ApfFpgaServo::getServoId(int servoID)
 	int result = -1;
 	if (servoID < 0)
 	{
-		logger().error() << "ERROR servoID<0 " << servoID << utils::end;
+		std::cout << "ERROR servoID<0 " << servoID << std::endl;
 	}
 	else if (servoID >= NbMaxServo)
 	{
-		logger().error() << "ERROR servoID>NbMaxServo " << servoID << ">"
-				<< NbMaxServo << utils::end;
+		std::cout << "ERROR servoID>NbMaxServo " << servoID << ">"
+				<< NbMaxServo << std::endl;
 	}
 	else
 	{
@@ -269,12 +271,12 @@ int test::ApfFpgaServo::getServoCurrentPosition(int servoID)
 	int result = -1;
 	if (servoID < 0)
 	{
-		logger().error() << "ERROR servoID<0 " << servoID << utils::end;
+		std::cout  << "ERROR servoID<0 " << servoID << std::endl;
 	}
 	else if (servoID >= NbMaxServo)
 	{
-		logger().error() << "ERROR servoID>NbMaxServo " << servoID << ">"
-				<< NbMaxServo << utils::end;
+		std::cout  << "ERROR servoID>NbMaxServo " << servoID << ">"
+				<< NbMaxServo << std::endl;
 	}
 	else
 	{
@@ -291,22 +293,21 @@ int test::ApfFpgaServo::getServoCurrentPosition(int servoID)
 				std::string line;
 				std::getline(file, line);
 				intValue = atoi(line.c_str());
-				logger().debug() << "OK getServoCurrentPosition : ok "
-						<< utils::end;
+
 			}
 			else
 			{
-				logger().error()
+				std::cout
 						<< "ERROR getServoCurrentPosition : file not good "
-						<< utils::end;
+						<< std::endl;
 			}
 			file.close();
 
 		}
 		else
 		{
-			logger().error() << "ERROR getServoCurrentPosition : No file found "
-					<< utils::end;
+			std::cout  << "ERROR getServoCurrentPosition : No file found "
+					<< std::endl;
 		}
 		delete operationFileName;
 		this->unlock();

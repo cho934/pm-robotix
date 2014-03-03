@@ -84,7 +84,7 @@ $(BUILD)/%.d: $(SOURCE)/%.cpp
 	@mkdir -p $(BUILD)
 	@$(CXX) -MM -MT '$(@:.d=.o) $@' -o $@ $< -I$(COMMON)/$(SOURCE)
 
-# Target to format the source code
+# Target to format the source code (deprecated)
 format:
 	indent -sc -pmt $(SOURCE)/*.cpp $(SOURCE)/*.hpp
 	rm -f $(SOURCE)/*.cpp~

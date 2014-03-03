@@ -7,7 +7,7 @@ view_doc()
 
 all()
 {
-	scp apf-test/sh/*.sh SVG/index.html SVG/ground_2014.svg PMXArmadeusBinaries/*.conf.txt root@192.168.7.253:/pmx/
+	scp src/apf-test/sh/*.sh SVG/index.html SVG/ground_2014.svg PMXArmadeusBinaries/*.conf.txt root@192.168.7.253:/pmx/
 }
 
 conf()
@@ -17,7 +17,7 @@ conf()
 
 tsh()
 {
-	scp apf-test/sh/*.sh root@192.168.7.253:/pmx/
+	scp src/apf-test/sh/*.sh root@192.168.7.253:/pmx/
 }
 
 robottest()
