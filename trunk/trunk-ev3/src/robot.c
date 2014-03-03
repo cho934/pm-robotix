@@ -25,6 +25,16 @@ int analog_file;
 ANALOG *pAnalog;
 IIC *pIic;
 
+int lPower;
+int rPower;
+
+int robot_getLeftPower(){
+	return lPower;
+}
+int robot_getRightPower(){
+	return rPower;
+}
+
 #ifndef SIMULATED
 void robot_init() {
 
@@ -166,7 +176,7 @@ void robot_stopMotorRight() {
 	printf(
 			"robot_stopMotorRight command : [%d, %d] written size: %d on file: %d\n",
 			motor_command[0], motor_command[1], s, motor_file);
-
+	rPower=0;
 }
 void robot_stopMotorLeft() {
 	printf("robot_stopMotorLeft\n");
@@ -178,7 +188,7 @@ void robot_stopMotorLeft() {
 	printf(
 			"robot_stopMotorLeft command : [%d, %d] written size: %d on file: %d\n",
 			motor_command[0], motor_command[1], s, motor_file);
-
+	lPower=0;
 }
 void robot_setMotorRightSpeed(char speed) {
 	printf("robot_setMotorRightSpeed %d\n", speed);
@@ -197,6 +207,7 @@ void robot_setMotorRightSpeed(char speed) {
 //			"robot_setMotorRightSpeed command : [%d, %d, %d] written size: %d on file: %d\n",
 //			motor_command[0], motor_command[1], motor_command[2], s,
 //			motor_file);
+	rPower=speed;
 }
 void robot_setMotorLeftSpeed(char speed) {
 	printf("robot_setMotorLeftSpeed %d\n", speed);
@@ -215,6 +226,7 @@ void robot_setMotorLeftSpeed(char speed) {
 //			"robot_setMotorLeftSpeed command : [%d, %d, %d] written size: %d on file: %d\n",
 //			motor_command[0], motor_command[1], motor_command[2], s,
 //			motor_file);
+	lPower=speed;
 }
 
 long robot_getExternalCounter(int portCounter1) {
@@ -274,12 +286,11 @@ int robot_isButton1Pressed() {
 #include <sys/time.h>
 long long timeOffset;
 long tLeft;
-int left; // wanted left power
-int currentLeftPower;// current left power
+
+
 
 long tRight;
-int right;
-int currentRightPower;
+
 
 long rightCounter;
 long leftCounter;
@@ -294,10 +305,9 @@ long currentTimeInMillis() {
 void robot_init() {
 	tLeft=0;
 	tRight=0;
-	left=0;
-	right=0;
-	currentLeftPower=0;
-	currentRightPower=0;
+	lPower=0;
+	rPower=0;
+
 	rightCounter=0;
 	leftCounter=0;
 	//
@@ -320,23 +330,23 @@ void robot_stopMotorLeft() {
 }
 void computeCounterL() {
 	long deltaT= currentTimeInMillis()- tLeft;
-	leftCounter+= (deltaT*left )/100;
+	leftCounter+= (deltaT*lPower )/100;
 
 }
 void computeCounter() {
 	long deltaT= currentTimeInMillis()- tRight;
-	rightCounter+= (deltaT*right )/100;
+	rightCounter+= (deltaT*rPower )/100;
 }
 
 void robot_setMotorRightSpeed(int speed) {
 	computeCounter();
-	right=speed;
+	rPower=speed;
 	tRight=currentTimeInMillis();
 }
 
 void robot_setMotorLeftSpeed(int speed) {
 	computeCounterL();
-	left=speed;
+	lPower=speed;
 	tLeft=currentTimeInMillis();
 }
 
