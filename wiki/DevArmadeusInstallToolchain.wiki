@@ -114,7 +114,8 @@ $ make
 
 
 == Xenomai ==
- * Suivre le tuto [http://www.armadeus.com/wiki/index.php?title=Xenomai&oldid=9846 Armadeus:Xenomai (version for apf9328)]
+Suivre le tuto [http://www.armadeus.com/wiki/index.php?title=Xenomai&oldid=9846 Armadeus:Xenomai (version for apf9328)]
+ * Selecting Xenomai package
 {{{
 $ make menuconfig
 }}}
@@ -122,6 +123,22 @@ Puis
 {{{
  [*] Hardware handling / blockdevices and filesystem maintenance  --->  
     [*]   Xenomai  
+}}}
+
+ * Configuration if you use xeno-test
+{{{
+$ make busybox-menuconfig
+}}}
+{{{
+Shells  --->
+        Choose your default shell (ash)  --->
+    --- ash
+    ---   Ash Shell Options
+          ...
+          [*]   Builtin getopt to parse positional parameters 
+}}}
+{{{
+ $ make busybox-clean && make
 }}}
 
  * Ajout de l'option suivante '''High resolution Timer Support''' permettant des timing (usleep) plus précis :
@@ -134,7 +151,7 @@ Puis cocher :
   [*] High resolution Timer Support
 }}}
 {{{
- $ make linux26
+$ make linux26 && make
 }}}
 
 == motionSystem (utilisation des servomoteur via FPGA) == 
@@ -154,9 +171,28 @@ $ make
 }}}
 * Il faudra installé le nouveau "Linux Kernel" et le nouveau "root filesystem"
 
+== Activer le [http://www.armadeus.com/wiki/index.php?title=Linux_Debug#Using_DebugFS Armadeus:DebugFS] (voir  [http://www.linuxtopia.org/online_books/linux_kernel/kernel_configuration/ch09s07.html linuxtopia]) ==
+{{{
+   ---> Kernel hacking
+    [*] Debug filesystem
+}}}
 
-== Désactivation du framebuffer (LCD) pour utiliser les pads associés en GPIO ==
+
+== A supprimer en plus ==
+{{{
+ Device Drivers  ---> 
+   [ ] USB support  --->
+   [ ] Sound card support
+   Armadeus specific drivers  --->  
+      [ ] Armadeus Parallel Port emulation driver (with LCD port) 
+      [ ] Armadeus keypad driver  
+}}}
+
+
+== (Deprecated) Désactivation du framebuffer (LCD) pour utiliser les pads associés en GPIO ==
 (voir [http://www.armadeus.com/wiki/index.php?title=FrameBuffer Armadeus:FrameBuffer])
+
+*Pour supprimer l'apparition des messages d'erreur incessant dans la console série RS232 : DevArmadeusSystemConf*
 
  * Configuration
 {{{
@@ -177,30 +213,11 @@ $ make linux26-menuconfig
         [ ] Backlight &LCD device support
 }}}
 
-
- * Activer le [http://www.armadeus.com/wiki/index.php?title=Linux_Debug#Using_DebugFS Armadeus:DebugFS] (voir  [http://www.linuxtopia.org/online_books/linux_kernel/kernel_configuration/ch09s07.html linuxtopia])
-{{{
-   ---> Kernel hacking
-    [*] Debug filesystem
-}}}
-
-
- * A supprimer en plus:
-{{{
- Device Drivers  ---> 
-   [ ] USB support  --->
-   [ ] Sound card support
-   Armadeus specific drivers  --->  
-      [ ] Armadeus Parallel Port emulation driver (with LCD port) 
-      [ ] Armadeus keypad driver  
-}}}
-
  * Recompilation du kernel: 
 {{{
  $ make linux26
 }}}
 
-'''Pour supprimer l'apparition des messages d'erreur incessant dans la console série RS232 : DevArmadeusSystemConf'''
 
 
 
