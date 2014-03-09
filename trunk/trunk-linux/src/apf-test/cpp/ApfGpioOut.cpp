@@ -108,4 +108,5 @@ void test::ApfGpioOut::run(int argc, char *argv[])
 		printf("Error, can't close gpio\n");
 		exit(1);
 	}
+	std::cout << "End Of APF-TEST" << std::endl;
 }

@@ -51,8 +51,8 @@ void test::ApfI2cWithGroveColor::run(int, char*[])
 
 	CMD(0);
 	TCS3414Start(i2c_bus, 100, 1000);
-	while(1)
-	TCS3414Loop(i2c_bus);
+	//while(1)
+		TCS3414Loop(i2c_bus);
 
 	printf("Close i2c bus\n");
 	value = as_i2c_close(i2c_bus);
@@ -65,6 +65,7 @@ void test::ApfI2cWithGroveColor::run(int, char*[])
 		initialized = 0;
 	}
 
+	std::cout << "End Of APF-TEST" << std::endl;
 }
 
 /*
