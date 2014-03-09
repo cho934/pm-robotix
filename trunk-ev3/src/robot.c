@@ -6,7 +6,8 @@
 #include <sys/ioctl.h>
 
 #include "lms2012.h"
-
+#include <sys/time.h>
+long long timeOffset;
 // A = 0x01, B = 0x02, C = 0x04, D = 0x08
 // AC = 0x05
 const char MOTOR_PORT_RIGHT = 0x04;
@@ -28,16 +29,61 @@ IIC *pIic;
 int lPower;
 int rPower;
 
-int robot_getLeftPower(){
+int robot_getLeftPower() {
 	return lPower;
 }
-int robot_getRightPower(){
+int robot_getRightPower() {
 	return rPower;
 }
 
-#ifndef SIMULATED
-void robot_init() {
+long currentTimeInMillis() {
+	struct timeval te;
+	gettimeofday(&te, NULL); // get current time
+	long long milliseconds = (te.tv_sec * 1000LL + te.tv_usec / 1000); // caculate milliseconds
+	return (long) (milliseconds - timeOffset);
+}
 
+#ifndef SIMULATED
+
+#define HTANGLE_MODE_CALIBRATE              0x43
+#define HTANGLE_MODE_RESET                  0x52
+void robot_resetSensors() {
+
+	IICDAT IicDat;
+
+	IicDat.Repeat = 0;
+	IicDat.Time = 0;
+	// Message to write
+	IicDat.WrLng = 3;
+	IicDat.WrData[0] = 0x01;
+	IicDat.WrData[1] = 0x41;
+	IicDat.WrData[2] = HTANGLE_MODE_RESET;
+	// Nothing to read
+	IicDat.RdLng = 0;
+
+	//
+	IicDat.Port = SENSOR_PORT_2;
+	IicDat.Result = -1;
+	int r = 0;
+	while (IicDat.Result) {
+		r = ioctl(iic_device_file, IIC_SETUP, &IicDat);
+	}
+	printf("robot_resetSensors (return_code %d) status %d\n", r, IicDat.Result);
+
+	//
+	IicDat.Port = SENSOR_PORT_3;
+	IicDat.Result = -1;
+	while (IicDat.Result) {
+		r = ioctl(iic_device_file, IIC_SETUP, &IicDat);
+
+	}
+	printf("robot_resetSensors (return_code %d) status %d\n", r, IicDat.Result);
+
+}
+void robot_init() {
+	struct timeval te;
+	gettimeofday(&te, NULL); // get current time
+	timeOffset = (te.tv_sec * 1000LL + te.tv_usec / 1000);
 	//
 	// external step counter
 	//
@@ -53,11 +99,11 @@ void robot_init() {
 		exit(1);
 	}
 	printf("robot_init : IIC Device is ready (%d)\n", iic_device_file);
-
+	robot_resetSensors();
 	IICDAT IicDat;
 	//SPECIAL CONFIGURATION
 	//Setup IIC to read 2 packets
-	IicDat.Result = OK;
+	IicDat.Result = -1;
 
 	IicDat.Repeat = 0;
 	IicDat.Time = 0;
@@ -81,11 +127,23 @@ void robot_init() {
 
 	// Setup I2C comunication
 	IicDat.Port = SENSOR_PORT_2;
-	int r = ioctl(iic_device_file, IIC_SETUP, &IicDat);
-	printf("robot_init : IIC device is ready for left counter (%d) \n", r);
+	int r;
+	while (IicDat.Result) {
+		r = ioctl(iic_device_file, IIC_SETUP, &IicDat);
+
+	}
+	printf(
+			"robot_init : IIC device is ready for left counter (return_code %d) %d\n",
+			r, IicDat.Result);
 	IicDat.Port = SENSOR_PORT_3;
-	r = ioctl(iic_device_file, IIC_SETUP, &IicDat);
-	printf("robot_init : IIC device is ready for right counter (%d) \n", r);
+	IicDat.Result = -1;
+	while (IicDat.Result) {
+		r = ioctl(iic_device_file, IIC_SETUP, &IicDat);
+
+	}
+	printf(
+			"robot_init : IIC device is ready for right counter (return_code %d) %d\n",
+			r, IicDat.Result);
 
 	//
 	// Contact sensors
@@ -111,6 +169,7 @@ void robot_init() {
 		printf("robot_init : error\n");
 		exit(1);
 	}
+
 	printf("robot_init : motors ready (%d)\n", motor_file);
 	usleep(100 * 1000);
 }
@@ -176,7 +235,7 @@ void robot_stopMotorRight() {
 	printf(
 			"robot_stopMotorRight command : [%d, %d] written size: %d on file: %d\n",
 			motor_command[0], motor_command[1], s, motor_file);
-	rPower=0;
+	rPower = 0;
 }
 void robot_stopMotorLeft() {
 	printf("robot_stopMotorLeft\n");
@@ -188,7 +247,7 @@ void robot_stopMotorLeft() {
 	printf(
 			"robot_stopMotorLeft command : [%d, %d] written size: %d on file: %d\n",
 			motor_command[0], motor_command[1], s, motor_file);
-	lPower=0;
+	lPower = 0;
 }
 void robot_setMotorRightSpeed(char speed) {
 	printf("robot_setMotorRightSpeed %d\n", speed);
@@ -207,7 +266,7 @@ void robot_setMotorRightSpeed(char speed) {
 //			"robot_setMotorRightSpeed command : [%d, %d, %d] written size: %d on file: %d\n",
 //			motor_command[0], motor_command[1], motor_command[2], s,
 //			motor_file);
-	rPower=speed;
+	rPower = speed;
 }
 void robot_setMotorLeftSpeed(char speed) {
 	printf("robot_setMotorLeftSpeed %d\n", speed);
@@ -226,7 +285,7 @@ void robot_setMotorLeftSpeed(char speed) {
 //			"robot_setMotorLeftSpeed command : [%d, %d, %d] written size: %d on file: %d\n",
 //			motor_command[0], motor_command[1], motor_command[2], s,
 //			motor_file);
-	lPower=speed;
+	lPower = speed;
 }
 
 long robot_getExternalCounter(int portCounter1) {
@@ -242,17 +301,16 @@ long robot_getExternalCounter(int portCounter1) {
 	int d6 = respbuf[6];
 	int d7 = respbuf[7];
 
-	//printf("E:%d\n", d1 + d6);
-	printf("EV3: port %d : %d %d %d %d %d %d %d %d    \n", portCounter1, d0, d1,
-			d2, d3, d4, d5, d6, d7);
+//	printf("EV3: port %d : %d %d %d %d %d %d %d %d    \n", portCounter1, d0, d1,
+//			d2, d3, d4, d5, d6, d7);
 	int angle = d2;
 	int nbTour = d3;
 	if (angle < 0) {
 		angle = (256 + angle);
 	}
 	long count = nbTour * 256 + angle;
-	printf("E: port %d : %ld\n", portCounter1, count);
-	return count;
+	//printf("E: port %d : %ld\n", portCounter1, count);
+	return -count;
 }
 
 // Odometry
@@ -283,24 +341,13 @@ int robot_isButton1Pressed() {
  * SIMULATION
  *
  **/
-#include <sys/time.h>
-long long timeOffset;
+
 long tLeft;
-
-
 
 long tRight;
 
-
 long rightCounter;
 long leftCounter;
-
-long currentTimeInMillis() {
-	struct timeval te;
-	gettimeofday(&te, NULL); // get current time
-	long long milliseconds =( te.tv_sec*1000LL + te.tv_usec/1000);// caculate milliseconds
-	return (long)(milliseconds-timeOffset);
-}
 
 void robot_init() {
 	tLeft=0;

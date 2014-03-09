@@ -77,23 +77,23 @@ void path_Init(void);
 void path_TriggerWaypoint(TRAJ_STATE state);
 
 void configurePID() {
-	pid_ConfigKP(motors[ALPHA_DELTA][ALPHA_MOTOR].PIDSys, 40);
+	pid_ConfigKP(motors[ALPHA_DELTA][ALPHA_MOTOR].PIDSys, 20);
 	pid_ConfigKI(motors[ALPHA_DELTA][ALPHA_MOTOR].PIDSys, 0);
-	pid_ConfigKD(motors[ALPHA_DELTA][ALPHA_MOTOR].PIDSys, 20);
+	pid_ConfigKD(motors[ALPHA_DELTA][ALPHA_MOTOR].PIDSys, 1);
 	pid_ConfigDPeriod(motors[ALPHA_DELTA][ALPHA_MOTOR].PIDSys, 3);
 
-	pid_ConfigKP(motors[ALPHA_DELTA][DELTA_MOTOR].PIDSys, 1020);
+	pid_ConfigKP(motors[ALPHA_DELTA][DELTA_MOTOR].PIDSys, 100);
 	pid_ConfigKI(motors[ALPHA_DELTA][DELTA_MOTOR].PIDSys, 0);
-	pid_ConfigKD(motors[ALPHA_DELTA][DELTA_MOTOR].PIDSys, 00);
+	pid_ConfigKD(motors[ALPHA_DELTA][DELTA_MOTOR].PIDSys, 1);
 	pid_ConfigDPeriod(motors[ALPHA_DELTA][DELTA_MOTOR].PIDSys, 3);
 
 	pid_ConfigKP(motors[LEFT_RIGHT][LEFT_MOTOR].PIDSys, 75);
 	pid_ConfigKI(motors[LEFT_RIGHT][LEFT_MOTOR].PIDSys, 0);
-	pid_ConfigKD(motors[LEFT_RIGHT][LEFT_MOTOR].PIDSys, 50);
+	pid_ConfigKD(motors[LEFT_RIGHT][LEFT_MOTOR].PIDSys, 1);
 
 	pid_ConfigKP(motors[LEFT_RIGHT][RIGHT_MOTOR].PIDSys, 75);
 	pid_ConfigKI(motors[LEFT_RIGHT][RIGHT_MOTOR].PIDSys, 5);
-	pid_ConfigKD(motors[LEFT_RIGHT][RIGHT_MOTOR].PIDSys, 50);
+	pid_ConfigKD(motors[LEFT_RIGHT][RIGHT_MOTOR].PIDSys, 1);
 	motors_ConfigAllIMax(90000);
 
 }
@@ -171,7 +171,6 @@ void motion_DisablePID() {
 	motion_FreeMotion();
 	RobotMotionState = DISABLE_PID;
 	setPWM(0, 0);
-
 
 	resetAllPIDErrors();
 }
@@ -271,7 +270,7 @@ void *motion_ITTask(void *p_arg) {
 		RobotPosition p = odo_GetPosition();
 		log_status(currentTimeInMillis(), robot_getLeftExternalCounter(),
 				robot_getRightExternalCounter(), robot_getLeftPower(),
-				robot_getRightPower(), p.x, p.y, p.theta);
+				robot_getRightPower(), ord0, ord1, p.x, p.y, p.theta);
 
 		//send position
 		//	if ((periodNb & 0x3F) == 0) {
@@ -283,6 +282,16 @@ void *motion_ITTask(void *p_arg) {
 		updateMotor(&motors[LEFT_RIGHT][RIGHT_MOTOR], dRight);
 		updateMotor(&motors[ALPHA_DELTA][ALPHA_MOTOR], dAlpha);
 		updateMotor(&motors[ALPHA_DELTA][DELTA_MOTOR], dDelta);
+
+		int32 dSpeed0 = 0;
+		int32 dSpeed1 = 0;
+		if (motionCommand.mcType == LEFT_RIGHT) {
+			dSpeed0 = dLeft;
+			dSpeed1 = dRight;
+		} else if (motionCommand.mcType == ALPHA_DELTA) {
+			dSpeed0 = dAlpha * 2;
+			dSpeed1 = dDelta;
+		}
 
 		//order and pwm computation
 		switch (RobotMotionState) {
@@ -323,25 +332,27 @@ void *motion_ITTask(void *p_arg) {
 			printf("motion.c motion_ITTask pid_Compute ord0:%d lastPos0:%d\n",
 					ord0, motors[motionCommand.mcType][0].lastPos);
 			pwm0 = pid_Compute(motors[motionCommand.mcType][0].PIDSys,
-					ord0 - motors[motionCommand.mcType][0].lastPos);
+					ord0 - motors[motionCommand.mcType][0].lastPos, dSpeed0);
 			printf(
 					"motion.c motion_ITTask pid_Compute : order pos:%d last pos:%d\n",
 					ord1, motors[motionCommand.mcType][1].lastPos);
 			//compute pwm for second motor
 			pwm1 = pid_Compute(motors[motionCommand.mcType][1].PIDSys,
-					ord1 - motors[motionCommand.mcType][1].lastPos);
+					ord1 - motors[motionCommand.mcType][1].lastPos, dSpeed1);
 
 			//output pwm to motors
 			if (motionCommand.mcType == LEFT_RIGHT) {
 				printf("motion.c :  LEFT_RIGHT\n");
+				BOUND_INT(pwm0, 100);
+				BOUND_INT(pwm1, 100);
 				setPWM(pwm0, pwm1);
 			} else if (motionCommand.mcType == ALPHA_DELTA) {
 				printf("motion.c :  ALPHA_DELTA\n");
 				pwm0b = pwm1 - pwm0;
-				BOUND_INT(pwm0b, 0x7EFF);
+				BOUND_INT(pwm0b, 100);
 
 				pwm1b = pwm1 + pwm0;
-				BOUND_INT(pwm1b, 0x7EFF);
+				BOUND_INT(pwm1b, 100);
 
 				setPWM(pwm0b, pwm1b);
 			}
@@ -364,10 +375,12 @@ void *motion_ITTask(void *p_arg) {
 
 		case ASSISTED_HANDLING: {
 			//compute pwm for first motor
-			pwm0 = pid_Compute(motors[motionCommand.mcType][0].PIDSys, dLeft);
+			pwm0 = pid_Compute(motors[motionCommand.mcType][0].PIDSys, dLeft,
+					dSpeed0);
 
 			//compute pwm for second motor
-			pwm1 = pid_Compute(motors[motionCommand.mcType][1].PIDSys, dRight);
+			pwm1 = pid_Compute(motors[motionCommand.mcType][1].PIDSys, dRight,
+					dSpeed1);
 
 			//write pwm in registers
 			setPWM(pwm0, pwm1);
@@ -391,6 +404,7 @@ void *motion_ITTask(void *p_arg) {
 	}
 	printf("motion_ITTask end exit()\n");
 	sleep(1);
+	closeLog();
 	//exit(2);
 	return 0;
 }
@@ -400,9 +414,10 @@ void *motion_ITTask(void *p_arg) {
 //a constant and precise period between computation
 void motion_InitTimer(int frequency) {
 //	motion_SetSamplingFrequency(frequency);
-	printf("motion_InitTimer\n");
+
 	signal(SIGALRM, Motion_IT);
-	long delay = 10 * 1000;
+	long delay = (long) (valueSample * 1000.0f * 1000.0f);
+	printf("motion_InitTimer with pause of %ld us\n", delay);
 	struct itimerval tval = {
 	/* subsequent firings */.it_interval = { .tv_sec = 0, .tv_usec = delay },
 	/* first firing */.it_value = { .tv_sec = 0, .tv_usec = delay } };

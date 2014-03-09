@@ -35,6 +35,7 @@
 
 #include "types.h"
 #include <stdlib.h>
+#include <math.h>
 
 typedef struct {
 	float V0;
@@ -45,9 +46,9 @@ typedef struct {
 	float Epsilon;
 } ClothoidParam;
 
-static ClothoidParam clotho;
+//static ClothoidParam clotho;
 
-static RobotCommand nextCommand;
+//static RobotCommand nextCommand;
 
 //static void motion_commandTraj_handler(const CANMessage_uart *msg);
 
@@ -160,13 +161,13 @@ void traj_Init() {
 
 // en m/s (d'apres Cho)
 float motion_GetDefaultSpeed() {
-	return 0.3f;
+	return 0.40f;
 }
 float motion_GetDefaultAccel() {
-	return 0.03f;
+	return 0.10f;
 }
 float motion_GetDefaultDecel() {
-	return 0.03f;
+	return 0.10f;
 }
 
 void motion_Line(RobotCommand *out_cmd, float dist) {
