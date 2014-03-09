@@ -4,13 +4,14 @@
  */
 
 #include <iostream>
-#include <string>
-#include <cstdio>
 #include <cmath>
+/*#include <string>
+#include <cstdio>
+
 #include <cstdlib>
 #include <unistd.h>
+*/
 
-//#include "myv2as_max1027.hpp"
 #include <as_devices/as_max1027_3_3.h>
 #include "ApfAdcIn.hpp"
 
@@ -19,7 +20,7 @@ void test::ApfAdcIn::run(int argc, char *argv[])
 	std::cout << "APF : Use ADC Input on devLightV2 (As_devices)" << std::endl;
 
 	int model = 0;
-	int ret;
+	long ret;
 	int value;
 	int temperature = 0;
 	int temp_read=0;

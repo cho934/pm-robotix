@@ -15,6 +15,8 @@
 #include "ApfFpgaServo.hpp"
 #include "ApfI2cWithGroveColor.hpp"
 #include "ApfSpiWithLs7366.hpp"
+#include "ApfI2cWithMd25.hpp"
+#include "ApfUartWithAX12.hpp"
 
 /*!
  * \brief Méthode principale pour le lancement des tests sur le robot.
@@ -36,10 +38,10 @@ int main(int argc, char** argv)
     manager.add(new test::ApfAdcIn());
     manager.add(new test::ApfDacOut());
     manager.add(new test::ApfFpgaServo());
-
     manager.add(new test::ApfI2cWithGroveColor());
+    manager.add(new test::ApfI2cWithMd25());
     manager.add(new test::ApfSpiWithLs7366());
-
+    manager.add(new test::ApfUartWithAX12());
 
     if (argc == 1)
 	{
