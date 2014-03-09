@@ -12,6 +12,7 @@
 int lCount;
 char **l;
 FILE *logFile;
+int log_closed = 0;
 void initLog(int leftTicksPerM, int rightTicksPerM, float encoderDist) {
 	lCount = 0;
 	l = malloc(sizeof(char*) * 1000);
@@ -26,14 +27,14 @@ void initLog(int leftTicksPerM, int rightTicksPerM, float encoderDist) {
 	fprintf(logFile, "// distance between the 2 encoders in meter\r\n");
 	fprintf(logFile, "encoderDistance:%f\r\n", encoderDist);
 	fprintf(logFile,
-			"// time (ms), left encoder (ticks), right encoder (ticks), left motor power (1-100), right motor power (1-100), x (mm), y (mm), theta (rad)\r\n");
+			"// time (ms), left encoder (ticks), right encoder (ticks), left motor power (0-100), right motor power (0-100), order0, order1, x (mm), y (mm), theta (rad)\r\n");
 }
 
 void flushLog() {
 	if (lCount <= 0) {
 		return;
 	}
-	int i;
+	int i = 0;
 	for (i = 0; i < lCount; i++) {
 		char *str = l[i];
 		// append to file
@@ -48,18 +49,21 @@ void flushLog() {
 	l = malloc(sizeof(char*) * 1000);
 }
 void closeLog() {
-	flushLog();
-	fclose(logFile);
+	if (log_closed == 0) {
+		flushLog();
+		fclose(logFile);
+		log_closed = 1;
+	}
 }
 void log_status(long timeInMillis, long lEndcoder, long rEncoder, int lPower,
-		int rPower, float x, float y, float theta) {
+		int rPower, int ord0, int ord1, float x, float y, float theta) {
 	if (logFile == NULL) {
 		printf("initLog error, exiting");
 		exit(2);
 	}
 	char *str = malloc(sizeof(char) * 200);
-	sprintf(str, "%ld,%ld,%ld,%d,%d,%f,%f,%f", timeInMillis, lEndcoder,
-			rEncoder, lPower, rPower, x, y, theta);
+	sprintf(str, "%ld,%ld,%ld,%d,%d,%d,%d,%f,%f,%f", timeInMillis, lEndcoder,
+			rEncoder, lPower, rPower, ord0, ord1, x, y, theta);
 	l[lCount] = str;
 	lCount++;
 	if (lCount >= 100) {

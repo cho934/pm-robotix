@@ -276,7 +276,7 @@ void testExternalCounters() {
 
 	robot_startMotors();
 
-	int speed = 0;
+	int speed = 20;
 	//PROCESS SENSOR DATA
 	long lStart = robot_getLeftExternalCounter();
 	long rStart = robot_getRightExternalCounter();
@@ -287,7 +287,7 @@ void testExternalCounters() {
 		// Update la vitesse
 		robot_setMotorRightSpeed(speed);
 		robot_setMotorLeftSpeed(speed);
-		if (speed < 30 && i % 20) {
+		if (speed < 100 && i % 20) {
 			speed++;
 		}
 		printf("Speed: %d , counters: left: %ld right: %ld\n", speed,
@@ -382,11 +382,27 @@ void testMotion() {
 	closeLog();
 	printf("test motion end\n");
 }
-
-int main() {
+void testEncoders() {
+	robot_init();
+	int i;
+	printf("Reading encoder during 20s\n");
+	for (i = 0; i < 20; i++) {
+		printf("testInit : left: %ld right: %ld \n",
+				robot_getLeftExternalCounter(),
+				robot_getRightExternalCounter());
+		sleep(1);
+	}
+}
+int main(int argc, const char* argv[]) {
+	// Prints each argument on the command line.
+	int i;
+	for (i = 0; i < argc; i++) {
+		printf("arg %d: %s\n", i, argv[i]);
+	}
 #ifdef SIMULATED
 	printf("Simulation mode enabled\n");
 #endif
+	//testEncoders();
 	//test();
 	//testExternalCounters();
 	//test_motor_encoder();

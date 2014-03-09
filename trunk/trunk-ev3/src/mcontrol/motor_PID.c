@@ -31,17 +31,7 @@
 #include "global.h"
 #include <stdio.h>
 
-#define MAX_D_PERIOD 			64	        //maximum number of period for derivation computation,
-typedef struct {
-	pidConfig conf;					//pid system configuration
-
-	int32 dValues[MAX_D_PERIOD];//all the previous values of error (used for derivation)
-	int32 errSum;					//sum of all the errors
-	int16 curDiff;					//current index in the dValues table
-} pidSystemValues;
-
-pidSystemValues systemValues[MAX_PID_SYSTEM_NUMBER];
-
+#define MAX_D_PERIOD 			64	        //maximum number of period for derivation computation,typedef   struct {pidConfig conf;					//pid system configurationint32 dValues[MAX_D_PERIOD]; //all the previous values of error (used for derivation)int32 errSum;					//sum of all the errorsint16 curDiff;					//current index in the dValues table} pidSystemValues;pidSystemValues systemValues[MAX_PID_SYSTEM_NUMBER];
 //number of system created so far
 PID_SYSTEM pid_Nb;
 
@@ -51,11 +41,11 @@ EXPORTED_FUNCTION void pid_Init() {
 }
 
 EXPORTED_FUNCTION PID_SYSTEM pid_Create() {
-	//no more available system
+//no more available system
 	if (pid_Nb >= MAX_PID_SYSTEM_NUMBER)
 		return -1;
 
-	//init configuration variables
+//init configuration variables
 	systemValues[pid_Nb].conf.kP = 50;
 	systemValues[pid_Nb].conf.kI = 5;
 	systemValues[pid_Nb].conf.kD = 40;
@@ -63,7 +53,7 @@ EXPORTED_FUNCTION PID_SYSTEM pid_Create() {
 	systemValues[pid_Nb].conf.iMax = 128000;
 	systemValues[pid_Nb].curDiff = 0;
 
-	//init current state variables
+//init current state variables
 	pid_ResetError(pid_Nb);
 
 	pid_Nb++;
@@ -108,70 +98,35 @@ EXPORTED_FUNCTION pidConfig pid_GetConfig(PID_SYSTEM system) {
 	return systemValues[system].conf;
 }
 
-EXPORTED_FUNCTION int32 pid_Compute(PID_SYSTEM system, int32 error) {
-	pidSystemValues *val;
+// RCVA
+EXPORTED_FUNCTION int32 pid_Compute(PID_SYSTEM system, int32 error,
+int32 vitesse) {
+	pidSystemValues * val;
 	int32 P, I, D;
 	int32 pwm;
-	int32 errDif;
-	int last;
 
 	error /= VTOPS_PER_TICKS;
 
-	printf("motor_PID.c pid_Compute %d, err:%d ",system,error);
+	//printf("motor_PID.c pid_Compute %d, err:%d ", system, error);
 	val = &(systemValues[system]);
 
-	//stock last values of the error, so we can
-	//differentiate over a custom period
-	val->curDiff++;
-	if (val->curDiff >= MAX_D_PERIOD) {
-		val->curDiff = 0; //restart at the beginning of the buffer
-	}
-
-	//modif test :
-	//sum of all errors of the MAX_D_PERIOD previous period
-	val->errSum -= val->dValues[val->curDiff];
-	val->errSum += error;
-
-	//bound integration values
-	if (val->errSum > val->conf.iMax) {
-		printf("motor_PID.c overflow:%d > %d \n", val->errSum, val->conf.iMax);
-		val->errSum = val->conf.iMax;
-		signalErrorOverflow(system);
-
-	} else if (val->errSum < -val->conf.iMax) {
-		printf("motor_PID.c overflow:%d < %d \n", val->errSum, -val->conf.iMax);
-		val->errSum = -val->conf.iMax;
-		signalErrorOverflow(system);
-
-	}
-
-	//fill the rotating buffer
-	val->dValues[val->curDiff] = error;
-
-	//if we are at the begining of the rotating buffer
-	//we have to take a value at the end of it
-	if (val->conf.dPeriod > val->curDiff) {
-		last = MAX_D_PERIOD + val->curDiff - val->conf.dPeriod;
-	} else {
-		last = val->curDiff - val->conf.dPeriod;
-	}
-
-	//differential of the error over the period
-	errDif = error - val->dValues[last];
-
-	printf("motor_PID.c pid_Compute pid error:%d val:%d \n",error,val->conf.kP);
+	printf("motor_PID.c pid_Compute pid error:%d kP:%d (vitesse:%d)\n", error,
+			val->conf.kP, vitesse);
 
 	P = error * val->conf.kP;
-	I = val->errSum * val->conf.kI;
-	D = errDif * val->conf.kD;
-
-
-
+	I = 0;
+	float kd = (float) val->conf.kD;
+	if (kd < 1.0f) {
+		kd = 1.0f;
+	}
+	//D = (int) ((-1.0f) * (((float) vitesse) / kd));
+	D = 0;
 	pwm = P + I + D;
 
 	pwm /= 256;
-	printf("motor_PID.c pid_Compute pid P:%d I:%d D:%d pwm:%d\n",P,I,D,pwm);
-	//bound the resulting pwm
+	printf("motor_PID.c pid_Compute pid P:%d I:%d D:%d -> pwm:%d\n", P, I, D,
+			pwm);
+//bound the resulting pwm
 	if (pwm > MAX_PWM_VALUE) {
 		pwm = MAX_PWM_VALUE;
 	} else if (pwm < -MAX_PWM_VALUE) {
@@ -184,9 +139,9 @@ EXPORTED_FUNCTION int32 pid_Compute(PID_SYSTEM system, int32 error) {
 EXPORTED_FUNCTION void pid_ResetError(PID_SYSTEM system) {
 	int i;
 
-	for (i = 0; i < MAX_D_PERIOD; i++)
+	for (i = 0; i < MAX_D_PERIOD; i++) {
 		systemValues[pid_Nb].dValues[i] = 0;
-
+	}
 	systemValues[pid_Nb].errSum = 0;
 	systemValues[pid_Nb].curDiff = 0;
 }

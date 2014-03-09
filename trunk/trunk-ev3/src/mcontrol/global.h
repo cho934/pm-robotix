@@ -24,10 +24,10 @@
 #define MAX_PID_SYSTEM_NUMBER	6
 
 
-#define VTOPS_PER_TICKS 100
+#define VTOPS_PER_TICKS 1000
 
 // Attention ces valeurs sont couplées
-#define DEFAULT_SAMPLING_FREQ 100
+#define DEFAULT_SAMPLING_FREQ 100 // en Hz (cad combien de fois par seconde)
 #define valueSample 0.01f //(1f/DEFAULT_SAMPLING_FREQ)
 
 

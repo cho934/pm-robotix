@@ -80,7 +80,7 @@ EXPORTED_FUNCTION pidConfig pid_GetConfig(PID_SYSTEM system);
 //! \param system The system on which we compute the PID
 //! \param error The difference between measured and reference values
 //! \return The new command to apply on the system (pwm)
-EXPORTED_FUNCTION int32 pid_Compute(PID_SYSTEM system, int32 error);
+EXPORTED_FUNCTION int32 pid_Compute(PID_SYSTEM system, int32 error,int32 vitesse);
 
 //! \brief Reset the integral error
 //!

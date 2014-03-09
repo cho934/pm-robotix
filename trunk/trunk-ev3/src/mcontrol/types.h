@@ -16,7 +16,9 @@
 #define int32 int
 #define BOOL int
 #define EXPORTED_FUNCTION
-#define NULL 0
+#ifndef NULL
+	#define NULL 0
+#endif
 #define FALSE 0
 #define TRUE 1
 
