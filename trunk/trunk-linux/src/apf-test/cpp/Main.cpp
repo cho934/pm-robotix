@@ -17,6 +17,8 @@
 #include "ApfSpiWithLs7366.hpp"
 #include "ApfI2cWithMd25.hpp"
 #include "ApfUartWithAX12.hpp"
+#include "ApfI2cWithArduino.hpp"
+#include "ApfI2cWithGpio.hpp"
 
 /*!
  * \brief Méthode principale pour le lancement des tests sur le robot.
@@ -42,6 +44,9 @@ int main(int argc, char** argv)
     manager.add(new test::ApfI2cWithMd25());
     manager.add(new test::ApfSpiWithLs7366());
     manager.add(new test::ApfUartWithAX12());
+    manager.add(new test::ApfI2cWithArduino());
+    manager.add(new test::ApfI2cWithGpio());
+
 
     if (argc == 1)
 	{

@@ -21,16 +21,5 @@ typedef unsigned short ushort;
  */
 typedef unsigned long ulong;
 
-namespace pmx
-{
 
-    /*!
-     * \brief Enumération du mode de programmation.
-     */
-    enum RobotMode
-    {
-        ROBOTMATCHES, ROBOTHOMOLOGATION
-    };
-
-}
 #endif
