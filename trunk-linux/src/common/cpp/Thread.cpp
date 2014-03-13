@@ -7,6 +7,7 @@
 #include "Thread.hpp"
 #include <sys/types.h>
 #include <sys/syscall.h>
+#include <pthread.h>
 
 #ifndef EAGAIN
 #define EAGAIN 11

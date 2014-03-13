@@ -9,15 +9,49 @@
 #include <unistd.h>
 #include "ApfUartWithAX12.hpp"
 
+#include "SerialPort.hpp"
+#include "Dynamixel.hpp"
+
 #include <fcntl.h>
 #include <errno.h>
 #include <termios.h>
 
 
+
+
 void test::ApfUartWithAX12::run(int, char*[])
 {
-	std::cout << "APF : Use UART2 " << std::endl;
+	std::cout << "APF : Use UART2 and AX-12" << std::endl;
 
+
+	int error=0;
+	int idAX12=7;
+
+	SerialPort serialPort;
+	Dynamixel dynamixel;
+
+
+	if (serialPort.connect("//dev//ttySMX1")!=0) {
+		dynamixel.sendTossModeCommand(&serialPort);
+
+		int pos=dynamixel.getPosition(&serialPort, idAX12);
+
+		if (pos>250 && pos <1023)
+			dynamixel.setPosition(&serialPort, idAX12, pos-100);
+		else
+			printf ("\nPosition <%i> under 250 or over 1023\n", pos);
+
+		serialPort.disconnect();
+	}
+	else {
+		printf ("\nCan't open serial port");
+		error=-1;
+	}
+
+
+
+
+	/*
 	int fd;
 	// Open the Port. We want read/write, no "controlling tty" status, and open it no matter what state DCD is in
 	fd = open("/dev/ttySMX1", O_RDWR | O_NOCTTY | O_NDELAY);
@@ -59,7 +93,9 @@ void test::ApfUartWithAX12::run(int, char*[])
 	// Don't forget to clean up
 	close(fd);
 	//return 0;
-
+*/
 
 	std::cout << "End Of APF-TEST" << std::endl;
 }
+
+

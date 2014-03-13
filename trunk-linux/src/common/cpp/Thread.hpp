@@ -6,7 +6,7 @@
 #ifndef UTILS_THREAD_HPP
 #define UTILS_THREAD_HPP
 
-#include <pthread.h>
+
 #include <stdio.h>
 #include "ThreadState.hpp"
 #include "Mutex.hpp"
