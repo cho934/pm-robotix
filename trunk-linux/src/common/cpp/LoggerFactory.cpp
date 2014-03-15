@@ -9,7 +9,7 @@ utils::LoggerFactory::LoggerFactory()
 : appenders_(), loggers_(), rootLogger_()
 {
     lock=new Mutex();
-    initialize();
+    this->initialize();
     
     if(rootLogger() == NULL)
     {

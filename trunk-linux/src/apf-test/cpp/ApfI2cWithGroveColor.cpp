@@ -23,7 +23,9 @@ bool compensateEnabled = false; //enable/disable color compensation of the senso
 
 void test::ApfI2cWithGroveColor::run(int, char*[])
 {
-	std::cout << "APF : Use I2C on devLightV2 (As_devices) with Grove Color Sensor" << std::endl;
+	std::cout
+			<< "APF : Use I2C on devLightV2 (As_devices) with Grove Color Sensor"
+			<< std::endl;
 	int value;
 	int initialized = 0;
 
@@ -50,9 +52,12 @@ void test::ApfI2cWithGroveColor::run(int, char*[])
 	usleep(5000); //fréq i2c à 100kHz : attente de l'application complète de la trame
 
 	CMD(0);
-	TCS3414Start(i2c_bus, 100, 1000);
-	//while(1)
+	TCS3414Start(i2c_bus, 10, 100);
+	for (int i = 0; i < 1000; i++)
+	{
 		TCS3414Loop(i2c_bus);
+		//usleep(500000);
+	}
 
 	printf("Close i2c bus\n");
 	value = as_i2c_close(i2c_bus);
@@ -111,8 +116,8 @@ int test::ApfI2cWithGroveColor::writeRegisterbyte(struct as_i2c_device *aDev,
 	if (result < 0)
 	{
 		//errorCount_++;
-		std::cout << "as_i2c_write_reg_byte: reg=" << (int) reg
-				<< " val=" << (int) value << " !" << std::endl;
+		std::cout << "as_i2c_write_reg_byte: reg=" << (int) reg << " val="
+				<< (int) value << " !" << std::endl;
 		exit(1);
 	}
 	else
@@ -170,8 +175,8 @@ uint8_t test::ApfI2cWithGroveColor::TSC3414Red(struct as_i2c_device *aDev)
 	ret = readRegisterbyte(aDev, 0x92, &redLow); //read Clear register
 	ret = readRegisterbyte(aDev, 0x93, &redHigh); //read Clear register
 
-	std::cout << "redLow: " << (int) redLow << " \tredHigh: "
-			<< (int) redHigh << std::endl;
+	std::cout << "redLow: " << (int) redLow << " \tredHigh: " << (int) redHigh
+			<< std::endl;
 	redHigh = (redHigh * 256) + redLow;
 
 	return redHigh;
@@ -269,8 +274,7 @@ void test::ApfI2cWithGroveColor::TCS3414Start(struct as_i2c_device *aDev,
 	}
 	else
 	{
-		std::cout  << "improper integration time has been set!"
-				<< std::endl;
+		std::cout << "improper integration time has been set!" << std::endl;
 	}
 
 	//0000 0011 //Enable ADC_EN (needed to allow integration every 100ms)
@@ -340,7 +344,7 @@ float test::ApfI2cWithGroveColor::CCTCalc(uint8_t allcolors[])
 	float CCT =
 			((449 * pow(n, 3)) + (3525 * pow(n, 2)) + (6823.3 * n) + 5520.33);
 
-	std::cout  << "Illuminance: " << TCS3414tristimulus[1] << " \tx: "
+	std::cout << "Illuminance: " << TCS3414tristimulus[1] << " \tx: "
 			<< TCS3414chromaticityCoordinates[0] << " \ty: "
 			<< TCS3414chromaticityCoordinates[1] << " \tCCT:  " << CCT << " K"
 			<< std::endl;
@@ -374,7 +378,7 @@ void test::ApfI2cWithGroveColor::TCS3414Loop(struct as_i2c_device *aDev)
 	std::cout << "Clear: " << (int) TCS3414values[0] << " \tRed: "
 			<< (int) TCS3414values[1] << " \tGreen: " << (int) TCS3414values[2]
 			<< " \tBlue:  " << (int) TCS3414values[3] << std::endl;
-	std::cout  << std::endl;
+	std::cout << std::endl;
 
 	//pause
 	usleep(loopdelay * 1000); //delays by the integration time between measurements

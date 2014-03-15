@@ -123,7 +123,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="robot-test|robot/cpp/Main.cpp|robot-test/cpp/Main.cpp|pmx-match-main|apf-test|robot-test/cpp/UTGpioWithModeTest.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry excluding="dev-simu/cpp|robot-test|robot/cpp/Main.cpp|robot-test/cpp/Main.cpp|pmx-match-main|apf-test|robot-test/cpp/UTGpioWithModeTest.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -208,7 +208,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="src/dev-simu|src/robot-test|src/dev-test|todo_|src/common|src/doc|src/pmx-match-main" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="src/dev-simu|src/robot-test|src/dev-test|todo_|src/doc|src/pmx-match-main" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -240,6 +240,7 @@
 								<option id="gnu.c.compiler.option.misc.other.1805203324" name="Other flags" superClass="gnu.c.compiler.option.misc.other" value="-c -fmessage-length=0" valueType="string"/>
 								<option id="gnu.c.compiler.option.include.paths.722328358" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/buildroot/build_armv4t/staging_dir/usr/include"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src/apf-test/cpp}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ARM/src/common/cpp}&quot;"/>
 									<listOptionValue builtIn="false" value="../media/Armadeus/armadeus-3.4/buildroot/build_armv4t/staging_dir/usr/lib/gcc/arm-linux-uclibcgnueabi/4.2.1/include"/>
 									<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/buildroot/build_armv4t/staging_dir/usr/lib/gcc/arm-linux-uclibcgnueabi/4.2.1/include"/>
@@ -251,6 +252,7 @@
 								<option id="gnu.cpp.compiler.option.debugging.level.688606292" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.1296810458" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/buildroot/build_armv4t/staging_dir/usr/include"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src/apf-test/cpp}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ARM/src/common/cpp}&quot;"/>
 									<listOptionValue builtIn="false" value="../media/Armadeus/armadeus-3.4/buildroot/build_armv4t/staging_dir/usr/lib/gcc/arm-linux-uclibcgnueabi/4.2.1/include"/>
 									<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/buildroot/build_armv4t/staging_dir/usr/lib/gcc/arm-linux-uclibcgnueabi/4.2.1/include"/>
@@ -285,6 +287,7 @@
 					</folderInfo>
 					<sourceEntries>
 						<entry excluding="robot-test|robot/cpp/Main.cpp|dev-simu|dev-test|robot-test/cpp/Main.cpp|doc|pmx-match-main|apf-test|robot-test/cpp/UTGpioWithModeTest.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src/apf-test/cpp"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
