@@ -16,14 +16,14 @@ class GpioPort
 private:
 	struct as_gpio_device *gpio_dev;
 
-private:
+public:
 	/*!
 	 * \brief Constructeur de la classe.
 	 *
 	 * Ce constructeur est privé pour empécher la création d'une instance
 	 * de la classe.
 	 */
-	GpioPort();
+	GpioPort(char portLetter);
 
 public:
 	/*!
@@ -32,11 +32,9 @@ public:
 	virtual ~GpioPort();
 
 public:
-	int gpio_open(char portLetter, int pinNum);
-
 	int gpio_close(void);
-	int gpio_set_pin_direction( int aDirection);
-	int gpio_set_pin_value( int aValue);
+	int gpio_set_pin_direction(int pinNum, int aDirection);
+	int gpio_set_pin_value(int pinNum, int aValue);
 
 };
 }

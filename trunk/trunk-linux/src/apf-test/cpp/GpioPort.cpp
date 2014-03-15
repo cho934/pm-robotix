@@ -8,25 +8,18 @@
 
 #include "GpioPort.hpp"
 
-utils::GpioPort::GpioPort()
+utils::GpioPort::GpioPort(char portLetter)
 {
-	gpio_dev=0;
-}
-
-utils::GpioPort::~GpioPort()
-{
-}
-
-int utils::GpioPort::gpio_open(char portLetter, int pinNum)
-{
-	gpio_dev = as_gpio_open(portLetter, pinNum);
+	gpio_dev = as_gpio_open(portLetter);
 	if (gpio_dev == NULL)
 	{
 		printf("Error can't open gpio %c\nHave you run loadgpio.sh ?\n",
 				portLetter);
-		return -1;
 	}
-	return 0;
+}
+
+utils::GpioPort::~GpioPort()
+{
 }
 
 int utils::GpioPort::gpio_close(void)
@@ -40,7 +33,7 @@ int utils::GpioPort::gpio_close(void)
 	return 0;
 }
 
-int utils::GpioPort::gpio_set_pin_direction(int aDirection)
+int utils::GpioPort::gpio_set_pin_direction(int pinNum, int aDirection)
 {
 	int ret = as_gpio_set_pin_direction(gpio_dev, aDirection);
 	if(ret < 0)
@@ -51,7 +44,7 @@ int utils::GpioPort::gpio_set_pin_direction(int aDirection)
 	return 0;
 }
 
-int utils::GpioPort::gpio_set_pin_value(int aValue)
+int utils::GpioPort::gpio_set_pin_value(int pinNum, int aValue)
 {
 	int ret = as_gpio_set_pin_value(gpio_dev, aValue);
 	if(ret < 0)
