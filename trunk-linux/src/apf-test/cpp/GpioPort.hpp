@@ -17,14 +17,16 @@ class GpioPort
 public:
 	static as_gpio_device & PortB()
 	{
-		static GpioPort instance = as_gpio_open('B');
-		return instance;
+		/*static as_gpio_device *instance;
+		instance->port_letter = 'B';
+		int err = as_gpio_get_port_letter(instance);
+		return instance;*/
 	}
 
 	static as_gpio_device & PortD()
 	{
-		static GpioPort instance = as_gpio_open('D');
-		return instance;
+		/*static as_gpio_device instance = as_gpio_get_port_letter('D');
+		return instance;*/
 	}
 
 private:
@@ -34,7 +36,7 @@ private:
 	 * Ce constructeur est privé pour empécher la création d'une instance
 	 * de la classe.
 	 */
-	GpioPort(char portLetter);
+	GpioPort();
 
 public:
 	/*!
