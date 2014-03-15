@@ -11,7 +11,8 @@
 //#include <sys/ioctl.h>
 #include <linux/ppdev.h>
 
-#include <as_devices/as_gpio.h>
+//#include <as_devices/as_gpio.h>
+#include "GpioPort.hpp"
 
 #include "ApfGpioOut.hpp"
 
@@ -66,6 +67,9 @@ void test::ApfGpioOut::run(int argc, char *argv[])
 
     std::cout << "Toggling LED " << port_letter << pin_num << " " << count << " times" << " delai:" << delay << "us"  << std::endl;
 
+    utils::GpioPort::PortB;
+
+    /*
 
     gpio_dev = as_gpio_open(port_letter, pin_num);
 	if (gpio_dev == NULL)
@@ -108,5 +112,7 @@ void test::ApfGpioOut::run(int argc, char *argv[])
 		printf("Error, can't close gpio\n");
 		exit(1);
 	}
+
+	*/
 	std::cout << "End Of APF-TEST" << std::endl;
 }
