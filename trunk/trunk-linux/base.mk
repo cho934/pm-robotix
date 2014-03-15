@@ -12,22 +12,21 @@ XENO=/media/Armadeus/armadeus-3.4/buildroot/project_build_armv4t/apf9328/root/us
 ifeq ($(wildcard $(XENO)), )
     CXX = g++
     INCLUDE = /usr
-    CXXFLAGS_EXTRA = -DSIMU -I$(DEVSIMU)/$(SOURCE)
+    CXXFLAGS_EXTRA = -DSIMU -I$(DEVSIMU)/$(CPPSOURCE) -I$(DEVSIMU)/$(CSOURCE)
     LDFLAGS_EXTRA = -lrt ../../build/dev-simu/*.o
- 
 else
     CXX = arm-linux-uclibcgnueabi-g++
     INCLUDE = $(XENO)
     CXXFLAGS_EXTRA = -ggdb -I$(INCLUDE)/include/native -I$(INCLUDE)/include/rtdm
     LDFLAGS_EXTRA = -ggdb -lnative -lrtdm -las_devices -Xlinker $(INCLUDE)/lib/libnative.a $(INCLUDE)/lib/librtdm.a
-
 endif
 
 # Folder for intermediate files
 BUILD = ../../build/$(shell basename $(CURDIR))
 
-# Folder containing source files
-SOURCE = cpp
+# Folders containing source files for c/c++ files
+CPPSOURCE = cpp
+CSOURCE = c
 
 # Folder containing resource files - to be copied with output
 RESOURCE = res
@@ -38,14 +37,15 @@ COMMON = ../common
 # Path to the dev-simu project
 DEVSIMU = ../dev-simu
 
-# All the source files
-FILES = $(notdir $(wildcard $(SOURCE)/*.cpp))
+# All the c/c++ source files
+CPPFILES = $(notdir $(wildcard $(CPPSOURCE)/*.cpp))
+CFILES =  $(notdir $(wildcard $(CSOURCE)/*.c))
 
 # All the intermediate files
-OBJ = $(addprefix $(BUILD)/,$(FILES:.cpp=.o))
+OBJ = $(addprefix $(BUILD)/,$(CPPFILES:.cpp=.o)) $(addprefix $(BUILD)/,$(CFILES:.c=.o))
 
 # Default compiler variables
-CXXFLAGS = -W -Wall -g -ggdb -I$(COMMON)/$(SOURCE) -I$(INCLUDE)/include $(CXXFLAGS_EXTRA)
+CXXFLAGS = -W -Wall -g -ggdb -I$(COMMON)/$(CPPSOURCE) -I$(INCLUDE)/include $(CXXFLAGS_EXTRA)
 
 LDFLAGS = -lpthread -L$(INCLUDE)/lib -Xlinker -rpath $(INCLUDE)/lib $(LDFLAGS_EXTRA)
 
@@ -75,23 +75,31 @@ dev-simu:
 endif
 
 # Target to build .o files - precompiled file
-$(BUILD)/%.o: $(SOURCE)/%.cpp
+$(BUILD)/%.o: $(CPPSOURCE)/%.cpp
+	@mkdir -p $(BUILD)
+	@$(CXX) -o $@ -c $< $(CXXFLAGS)
+
+$(BUILD)/%.o: $(CSOURCE)/%.c
 	@mkdir -p $(BUILD)
 	@$(CXX) -o $@ -c $< $(CXXFLAGS)
 
 # Target to build .d files - dependency file
-$(BUILD)/%.d: $(SOURCE)/%.cpp
+$(BUILD)/%.d: $(CPPSOURCE)/%.cpp
 	@mkdir -p $(BUILD)
-	@$(CXX) -MM -MT '$(@:.d=.o) $@' -o $@ $< -I$(COMMON)/$(SOURCE)
+	@$(CXX) -MM -MT '$(@:.d=.o) $@' -o $@ $< -I$(COMMON)/$(CPPSOURCE) -I$(COMMON)/$(CSOURCE)
+
+$(BUILD)/%.d: $(CPPSOURCE)/%.c
+	@mkdir -p $(BUILD)
+	@$(CXX) -MM -MT '$(@:.d=.o) $@' -o $@ $< -I$(COMMON)/$(CPPSOURCE) -I$(COMMON)/$(CSOURCE)
 
 # Target to format the source code (deprecated)
 format:
-	indent -sc -pmt $(SOURCE)/*.cpp $(SOURCE)/*.hpp
-	rm -f $(SOURCE)/*.cpp~
-	rm -f $(SOURCE)/*.hpp~
-	astyle --options=../../astyle.cfg $(SOURCE)/*.cpp $(SOURCE)/*.hpp
-	rm -f $(SOURCE)/*.cpp.orig
-	rm -f $(SOURCE)/*.hpp.orig
+	indent -sc -pmt $(CPPSOURCE)/*.cpp $(CPPSOURCE)/*.hpp
+	rm -f $(CPPSOURCE)/*.cpp~
+	rm -f $(CPPSOURCE)/*.hpp~
+	astyle --options=../../astyle.cfg $(CPPSOURCE)/*.cpp $(CPPSOURCE)/*.hpp
+	rm -f $(CPPSOURCE)/*.cpp.orig
+	rm -f $(CPPSOURCE)/*.hpp.orig
 
 ifdef TARGET
 # Target to clean intermediate files
