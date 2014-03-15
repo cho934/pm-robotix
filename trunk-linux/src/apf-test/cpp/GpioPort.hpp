@@ -13,19 +13,17 @@ namespace utils
 
 class GpioPort
 {
-private:
-	struct as_gpio_device *gpio_dev;
 
 public:
-	static GpioPort & PortB()
+	static as_gpio_device & PortB()
 	{
-		static GpioPort instance('B');
+		static GpioPort instance = as_gpio_open('B');
 		return instance;
 	}
 
-	static GpioPort & PortD()
+	static as_gpio_device & PortD()
 	{
-		static GpioPort instance('D');
+		static GpioPort instance = as_gpio_open('D');
 		return instance;
 	}
 
@@ -43,11 +41,6 @@ public:
 	 * \brief Destructeur de la classe.
 	 */
 	virtual ~GpioPort();
-
-public:
-	int gpio_close(void);
-	int gpio_set_pin_direction(int pinNum, int aDirection);
-	int gpio_set_pin_value(int pinNum, int aValue);
 
 };
 }
