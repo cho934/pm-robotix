@@ -17,6 +17,19 @@ private:
 	struct as_gpio_device *gpio_dev;
 
 public:
+	static GpioPort & PortB()
+	{
+		static GpioPort instance('B');
+		return instance;
+	}
+
+	static GpioPort & PortD()
+	{
+		static GpioPort instance('D');
+		return instance;
+	}
+
+private:
 	/*!
 	 * \brief Constructeur de la classe.
 	 *
