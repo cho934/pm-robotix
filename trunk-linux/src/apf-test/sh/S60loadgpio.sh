@@ -19,10 +19,18 @@ modprobe servo
 #echo '1' > /sys/class/servo/servo0/enable
 #echo '1' > /sys/class/servo/servo1/enable
 
-#initialisation de la frequence de bus I2C à 100kHz
-imxregs IFDR 0x17
+#initialisation de la frequence de bus I2C 
+#à 250kHz
+#imxregs IFDR 0x10 
+#à 100kHz
+imxregs IFDR 0x17 
+#identification des devices
+i2cdetect -y -a 0
 
 modprobe spidev
+
+stty -F /dev/ttySMX1 115200
+stty -F /dev/ttySMX1 speed
 
 #sleep 3
 cd /pmx
