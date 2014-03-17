@@ -17,13 +17,20 @@
 #define DYNAMIXEL_H_
 
 typedef unsigned char byte;
+#define Tx_MODE                     1
+#define Rx_MODE                     0
 
 #include "SerialPort.hpp"
+#include "GpioPort.hpp"
+
 
 class Dynamixel {
 
 	private:
-		static const int waitTimeForResponse=4;
+		utils::GpioPort gpio_;
+
+		static const int waitTimeForResponse=2; //4
+		static const int waitTimeForResponseUs=510;
 		static const int BufferSize=1024;
 
 		byte buffer[BufferSize];
