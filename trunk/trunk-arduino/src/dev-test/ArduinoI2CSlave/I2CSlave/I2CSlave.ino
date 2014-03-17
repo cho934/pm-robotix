@@ -135,7 +135,7 @@ void receiveData(int byteCount)
   { 
      requestCommand = requestCommand + (char)Wire.read();
   }
-  requestCommand = requestCommand.substring(0,3); //4 caracters are received
+  //requestCommand = requestCommand.substring(0,3); //4 caracters are received
   commander.processCommand(requestCommand);
 }
 
