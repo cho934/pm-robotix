@@ -32,8 +32,9 @@ namespace test
         /*!
          * \brief Constructeur de la classe.
          */
-        ApfI2cWithArduino() : pmx::ConsoleUnitTest("ApfI2cWithArduino : communicate avec une arduino par i2c")
+        ApfI2cWithArduino() : pmx::ConsoleUnitTest("ApfI2cWithArduino : communication avec une arduino par i2c")
         {
+        	i2c_bus = 0;
         }
 
         /*!

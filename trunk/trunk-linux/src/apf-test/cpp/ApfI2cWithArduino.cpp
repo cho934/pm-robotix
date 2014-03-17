@@ -12,11 +12,11 @@
 #include <as_devices/as_i2c.h>
 #include "ApfI2cWithArduino.hpp"
 
-
-
 void test::ApfI2cWithArduino::run(int, char*[])
 {
-	std::cout << "APF : Use I2C on devLightV2 (As_devices) with Grove Color Sensor" << std::endl;
+	std::cout
+			<< "APF : Use I2C on devLightV2 (As_devices) with Grove Color Sensor"
+			<< std::endl;
 	std::cout << "==========================================" << std::endl;
 
 	// initialize buffer
@@ -49,59 +49,27 @@ void test::ApfI2cWithArduino::run(int, char*[])
 	}
 	usleep(5000); //fréq i2c à 100kHz : attente de l'application complète de la trame
 
-
-
-
-
-/*
-	// open device on /dev/i2c-0
-	if ((deviceHandle = open("/dev/i2c-0", O_RDWR)) < 0) {
-		printf("Error: Couldn't open device! %d\n", deviceHandle);
-		exit(1);
-	}
-
-	// connect to arduino as i2c slave
-	if (ioctl(deviceHandle, I2C_SLAVE, deviceI2CAddress) < 0) {
-		printf("Error: Couldn't find arduino on address!\n");
-		exit(1);
-	}
-
-	// begin transmission and request acknowledgement
-	readBytes = write(deviceHandle, buffer, 1);
-	if (readBytes != 1)
-	{
-		printf("Error: Received no ACK-Bit, couldn't established connection!");
-	}
-	else
-	{l*/
-
-
+	buffer[0] = 0x00;
 	// begin transmission and request acknowledgement
 	ret = writeI2CSize(i2c_bus, buffer, 1);
 	if (ret < 0)
 	{
 		printf(" Error writeI2CSize");
-		exit(1);
 	}
 
-	// drive some tests
-	testCommand("L11", "LED1 on");
-	usleep(2000000); // 2s
-	testCommand("L10", "LED1 off");
-	usleep(2000000); // 2s
-	testCommand("L21", "LED2 on");
-	usleep(2000000); // 2s
-	testCommand("L20", "LED2 off");
-	usleep(2000000); // 2s
-	testCommand("L31", "LED3 on");
-	usleep(2000000); // 2s
-	testCommand("L30", "LED3 off");
-	usleep(2000000); // 2s
-	testCommand("R11", "Relay on");
-	usleep(2000000); // 2s
-	testCommand("R10", "Relay off");
+	for (int i = 0; i < 20000; i++)
+	{
+		// drive some tests
 
-
+		testCommand("L11", "LED1 on");
+		usleep(500000);
+		testCommand("L10", "LED1 off");
+		usleep(500000);
+		testCommand("L21", "LED2 on");
+		usleep(500000);
+		testCommand("L20", "LED2 off");
+		usleep(500000);
+	}
 
 	printf("Close i2c bus\n");
 	ret = as_i2c_close(i2c_bus);
@@ -114,58 +82,49 @@ void test::ApfI2cWithArduino::run(int, char*[])
 		initialized = 0;
 	}
 
-
 	std::cout << "End Of APF-TEST" << std::endl;
 }
 
-
 // function for testing command
-void test::ApfI2cWithArduino::testCommand(const char command[3], const char action[10])
+void test::ApfI2cWithArduino::testCommand(const char command[3],
+		const char action[10])
 {
+	std::cout << "Switching" << action << std::endl;
 	int ret = 0;
-	// switch on
-	printf("Switching %s ... ", action);
-	//readBytes = write(deviceHandle, command, 3);
-	ret = writeI2CSize(i2c_bus, command, sizeof(command));
+	ret = writeI2CSize(i2c_bus, command, 3);
 	if (ret < 0)
 	{
-		printf(" Error writeI2C");
-		exit(1);
+		std::cout << "Error writeI2C" << std::endl;
 	}
 
 	// give arduino some reaction time
-	//usleep(100000); // 100ms
-
-	// read success
-	//readBytes = read(deviceHandle, buffer, 1);
-	//if (readBytes != 1)
-	//{
-	//	printf("Error: Received no data!");
-	//}
+	usleep(1000);
 
 	ret = readI2CSize(i2c_bus, buffer, 1);
-		if (ret < 0)
+	if (ret < 0)
+	{
+		std::cout << "Error readI2CSize" << std::endl;
+	}
+	else
+	{
+		// check response: 0 = error / 1 = success
+		if (buffer[0] == 1)
 		{
-			printf(" Error writeI2C");
-			exit(1);
+			std::cout << "success!" << std::endl;
 		}else
 		{
-			// check response: 0 = error / 1 = success
-			if (buffer[0] == 1)
-			{
-				printf("OK!\n");
-			}
+			std::cout << "error arduino!" << std::endl;
 		}
-
+	}
 }
 
-int test::ApfI2cWithArduino::readI2CSize(struct as_i2c_device *aDev,
-		char *buf, size_t size)
+int test::ApfI2cWithArduino::readI2CSize(struct as_i2c_device *aDev, char *buf,
+		size_t size)
 {
 	lock();
 	int ret = 0;
 
-	ret = as_i2c_read(aDev, (unsigned char*)buf, size);
+	ret = as_i2c_read(aDev, (unsigned char*) buf, size);
 	if (ret < 0)
 	{
 		std::cout << "ERROR as_i2c_read!" << std::endl;
@@ -174,17 +133,16 @@ int test::ApfI2cWithArduino::readI2CSize(struct as_i2c_device *aDev,
 	return ret;
 }
 
-
-int test::ApfI2cWithArduino::writeI2CSize(struct as_i2c_device *aDev,  const char *buf, size_t size)
+int test::ApfI2cWithArduino::writeI2CSize(struct as_i2c_device *aDev,
+		const char *buf, size_t size)
 {
 	lock();
 	int result = 0;
-	result = as_i2c_write(aDev, (unsigned char*)buf, size);
+	result = as_i2c_write(aDev, (unsigned char*) buf, size);
 	if (result < 0)
-		{
-			//errorCount_++;
-			std::cout << "write : as_i2c_write"  << std::endl;
-		}
+	{
+		std::cout << "write : as_i2c_write" << std::endl;
+	}
 	unlock();
 	return result;
 }
