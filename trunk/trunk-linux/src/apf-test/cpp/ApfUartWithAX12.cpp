@@ -21,7 +21,7 @@ void test::ApfUartWithAX12::run(int, char*[])
 	std::cout << "APF : Use UART2 and AX-12" << std::endl;
 
 	int error = 0;
-	int idAX12 = 7;
+	int idAX12 = 8;
 
 	SerialPort serialPort;
 	Dynamixel dynamixel;
@@ -29,12 +29,21 @@ void test::ApfUartWithAX12::run(int, char*[])
 	if (serialPort.connect("//dev//ttySMX1") != 0)
 	{
 		dynamixel.sendTossModeCommand(&serialPort);
-
+		int pos = 0;
+		int err = 0;
+		int v2 = 0;
 		for (int i = 0; i < 20000; i++)
 		{
 
-			int pos = dynamixel.getPosition(&serialPort, idAX12);
-			printf("\nPosition <%i> under 250 or over 1023\n", pos);
+
+			//int v2 = rand() % 100 + 1;     // v2 in the range 1 to 100 //2147483647
+			v2 = (rand() % 600) + 200;     // v2 in the range 200 to 800
+			printf("\n\nGo Position <%d>", v2);
+			err = dynamixel.setPosition(&serialPort, idAX12, v2);
+			usleep(500000);
+			pos = dynamixel.getPosition(&serialPort, idAX12);
+						printf("Last Position <%d>\n", pos);
+						usleep(500000);
 		}
 /*
 		if (pos > 250 && pos < 1023)

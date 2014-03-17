@@ -9,43 +9,81 @@
 #include "GpioPort.hpp"
 
 utils::GpioPort::GpioPort()
+		: device_(NULL), opened_(0)
 {
+}
+
+utils::GpioPort::GpioPort(char portLetter, int pinNum)
+		: device_(NULL), opened_(0)
+{
+	lock();
+	device_ = as_gpio_open(portLetter, pinNum);
+	if (device_ == NULL)
+	{
+
+		//printf("Error can't open gpio %c\nHave you run loadgpio.sh ?\n", portLetter);
+		throw new GpioException(
+				"Error can't open gpio port. Have you run loadgpio.sh ?");
+	}
+	else
+		opened_ = 1;
+	unlock();
 }
 
 utils::GpioPort::~GpioPort()
 {
-}
-/*
-int utils::GpioPort::gpio_close(void)
-{
-	int ret = as_gpio_close(gpio_dev);
-	if(ret < 0)
+	if (opened_ == 1)
 	{
-		printf("Error, can't close gpio\n");
-		return ret;
+		throw new GpioException("Error gpio not closed");
 	}
-	return 0;
 }
 
-int utils::GpioPort::gpio_set_pin_direction(int pinNum, int aDirection)
+void utils::GpioPort::open(char portLetter, int pinNum)
 {
-	int ret = as_gpio_set_pin_direction(gpio_dev, aDirection);
-	if(ret < 0)
+	lock();
+	device_ = as_gpio_open(portLetter, pinNum);
+	std::cout << "as_gpio_open " << device_->fpin << std::endl;
+
+	if (device_ == NULL)
 	{
-		printf("Error, can't change direction\n");
-		return ret;
+		//printf("Error can't open gpio %c\nHave you run loadgpio.sh ?\n", portLetter);
+		throw new GpioException(
+				"Error can't open gpio port. Have you run loadgpio.sh ?");
 	}
-	return 0;
+	else
+		opened_ = 1;
+	unlock();
 }
 
-int utils::GpioPort::gpio_set_pin_value(int pinNum, int aValue)
+void utils::GpioPort::close(void)
 {
-	int ret = as_gpio_set_pin_value(gpio_dev, aValue);
-	if(ret < 0)
+	int ret = as_gpio_close(device_);
+	if (ret < 0)
 	{
-	 printf("Error, can't change pin value\n");
-	 return ret;
+		//printf("Error, can't close gpio\n");
+		throw new GpioException("Error, can't close gpio");
+
 	}
-	return 0;
-}*/
+	opened_ = 0;
+}
+
+void utils::GpioPort::setDirection(int aDirection)
+{
+	int ret = as_gpio_set_pin_direction(device_, aDirection);
+	if (ret < 0)
+	{
+		//printf("Error, can't change direction\n");
+		throw new GpioException("Error, can't change direction");
+	}
+}
+
+void utils::GpioPort::setValue(int aValue)
+{
+	int ret = as_gpio_set_pin_value(device_, aValue);
+	if (ret < 0)
+	{
+		printf("Error, can't change pin value\n");
+		throw new GpioException("Error, can't change pin value");
+	}
+}
 
