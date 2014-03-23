@@ -7,6 +7,7 @@
 
 #include "lms2012.h"
 #include <sys/time.h>
+
 long long timeOffset;
 // A = 0x01, B = 0x02, C = 0x04, D = 0x08
 // AC = 0x05
@@ -80,6 +81,8 @@ void robot_resetSensors() {
 	printf("robot_resetSensors (return_code %d) status %d\n", r, IicDat.Result);
 
 }
+long robot_getLeftExternalCounter();
+long robot_getRightExternalCounter();
 void robot_init() {
 	struct timeval te;
 	gettimeofday(&te, NULL); // get current time
@@ -100,6 +103,7 @@ void robot_init() {
 	}
 	printf("robot_init : IIC Device is ready (%d)\n", iic_device_file);
 	robot_resetSensors();
+
 	IICDAT IicDat;
 	//SPECIAL CONFIGURATION
 	//Setup IIC to read 2 packets
@@ -172,6 +176,17 @@ void robot_init() {
 
 	printf("robot_init : motors ready (%d)\n", motor_file);
 	usleep(100 * 1000);
+
+	long left = robot_getLeftExternalCounter();
+	long right = robot_getRightExternalCounter();
+	while (left != 0 && right != 0) {
+		printf("Reset sensors %ld %ld\n", left, right);
+		robot_resetSensors();
+		sleep(1);
+		left = robot_getLeftExternalCounter();
+		right = robot_getRightExternalCounter();
+	}
+
 }
 void robot_dispose() {
 	int result;
@@ -250,7 +265,7 @@ void robot_stopMotorLeft() {
 	lPower = 0;
 }
 void robot_setMotorRightSpeed(char speed) {
-	printf("robot_setMotorRightSpeed %d\n", speed);
+	printf("robot_setMotorRightSpeed REAL %d\n", speed);
 
 	//DEFINE VARIABLES
 	char motor_command[3];
@@ -261,7 +276,7 @@ void robot_setMotorRightSpeed(char speed) {
 	motor_command[1] = MOTOR_PORT_RIGHT;
 	// Set the motor desired speed 0 to 100
 	motor_command[2] = speed;
-	int s = write(motor_file, motor_command, 3);
+	write(motor_file, motor_command, 3);
 //	printf(
 //			"robot_setMotorRightSpeed command : [%d, %d, %d] written size: %d on file: %d\n",
 //			motor_command[0], motor_command[1], motor_command[2], s,
@@ -269,7 +284,7 @@ void robot_setMotorRightSpeed(char speed) {
 	rPower = speed;
 }
 void robot_setMotorLeftSpeed(char speed) {
-	printf("robot_setMotorLeftSpeed %d\n", speed);
+	printf("robot_setMotorLeftSpeed REAL %d\n", speed);
 
 	//DEFINE VARIABLES
 	char motor_command[3];
@@ -280,7 +295,7 @@ void robot_setMotorLeftSpeed(char speed) {
 	motor_command[1] = MOTOR_PORT_LEFT;
 	// Set the motor desired speed 0 to 100
 	motor_command[2] = speed;
-	int s = write(motor_file, motor_command, 3);
+	write(motor_file, motor_command, 3);
 //	printf(
 //			"robot_setMotorLeftSpeed command : [%d, %d, %d] written size: %d on file: %d\n",
 //			motor_command[0], motor_command[1], motor_command[2], s,
@@ -292,14 +307,14 @@ long robot_getExternalCounter(int portCounter1) {
 
 	DATA8 *respbuf = pIic->Raw[portCounter1][pIic->Actual[portCounter1]];
 	respbuf = pIic->Raw[portCounter1][pIic->Actual[portCounter1]];
-	int d0 = respbuf[0];
-	int d1 = respbuf[1];
+//	int d0 = respbuf[0];
+//	int d1 = respbuf[1];
 	int d2 = respbuf[2];
 	int d3 = respbuf[3];
-	int d4 = respbuf[4];
-	int d5 = respbuf[5];
-	int d6 = respbuf[6];
-	int d7 = respbuf[7];
+//	int d4 = respbuf[4];
+//	int d5 = respbuf[5];
+//	int d6 = respbuf[6];
+//	int d7 = respbuf[7];
 
 //	printf("EV3: port %d : %d %d %d %d %d %d %d %d    \n", portCounter1, d0, d1,
 //			d2, d3, d4, d5, d6, d7);

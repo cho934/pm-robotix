@@ -52,6 +52,7 @@ typedef struct
   int8 posIndex;
   int32 prevPos[MOTOR_SPEED_PERIOD_NB];	//previous value of position for speed computation
 } MOTOR;
+
 static MOTOR motors[MAX_MOTION_CONTROL_TYPE_NUMBER][MOTOR_PER_TYPE];
 
 //! initialisation of the motor structure
