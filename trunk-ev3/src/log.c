@@ -56,14 +56,16 @@ void closeLog() {
 	}
 }
 void log_status(long timeInMillis, long lEndcoder, long rEncoder, int lPower,
-		int rPower, int ord0, int ord1, float x, float y, float theta) {
+		int rPower, int ord0, int ord1, int current0, int current1, float x,
+		float y, float theta) {
 	if (logFile == NULL) {
 		printf("initLog error, exiting");
 		exit(2);
 	}
 	char *str = malloc(sizeof(char) * 200);
-	sprintf(str, "%ld,%ld,%ld,%d,%d,%d,%d,%f,%f,%f", timeInMillis, lEndcoder,
-			rEncoder, lPower, rPower, ord0, ord1, x, y, theta);
+	sprintf(str, "%ld,%ld,%ld,%d,%d,%d,%d,%d,%d,%f,%f,%f", timeInMillis,
+			lEndcoder, rEncoder, lPower, rPower, ord0, ord1, current0, current1,
+			x, y, theta);
 	l[lCount] = str;
 	lCount++;
 	if (lCount >= 100) {

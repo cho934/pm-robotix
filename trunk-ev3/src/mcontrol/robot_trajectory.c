@@ -429,11 +429,12 @@ void motion_StepOrderLR(RobotCommand *out_cmd, int32 posLeft, int32 posRight) {
 void motion_StepOrderAD(RobotCommand *out_cmd, int32 posAlpha, int32 posDelta) {
 	out_cmd->cmdType = STEP_COMMAND;
 	out_cmd->mcType = ALPHA_DELTA;
-
+	printf("1: %d\n",out_cmd->cmdType);
 	//ALPHA
 	ComputeStepOrder(&(out_cmd->cmd.stepCmd[ALPHA_MOTOR]), posAlpha);
-
+	printf("2: %d\n",out_cmd->cmdType);
 	//DELTA
 	ComputeStepOrder(&(out_cmd->cmd.stepCmd[DELTA_MOTOR]), posDelta);
+	printf("3: %d\n",out_cmd->cmdType);
 }
 

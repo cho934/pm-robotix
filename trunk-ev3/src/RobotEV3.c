@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
+#include <math.h>
 #include <unistd.h>
+#include <string.h>
 #include <sys/mman.h>
 #include <sys/ioctl.h>
 #include "lms2012.h"
@@ -10,6 +12,8 @@
 #include "mcontrol/motion.h"
 #include "mcontrol/encoder.h"
 #include "log.h"
+#include "mcontrol/global.h"
+#include "mcontrol/path_manager.h"
 
 void a(char motorPort) {
 
@@ -45,39 +49,27 @@ void a(char motorPort) {
 
 }
 void test() {
-	//a(2);
-	//	a(4);
+
 	robot_init();
 
 	robot_startMotors();
-	sleep(2);
-	robot_setMotorRightSpeed(50);
-//	robot_setMotorLeftSpeed(100);
-	sleep(2);
-	printf("SET SPEED TO 0\n");
-	//		robot_setMotorRightSpeed(0);
-	//		robot_setMotorLeftSpeed(0);
-	//	sleep(2);
+
+	printf("SET SPEED TO 100\n");
 
 	robot_setMotorRightSpeed(100);
-	robot_setMotorLeftSpeed(50);
+	robot_setMotorLeftSpeed(100);
 
-	sleep(2);
+	sleep(5);
 	printf("SET SPEED TO 0\n");
 	robot_setMotorRightSpeed(0);
-	//robot_setMotorLeftSpeed(0);
+	robot_setMotorLeftSpeed(0);
 
 	sleep(5);
 	printf("SLEEP STOP\n");
 	robot_stopMotorLeft();
-//	robot_stopMotorRight();
+	robot_stopMotorRight();
 	robot_dispose();
 
-	/*robot_startMotorRight();
-	 robot_setMotorRightSpeed(100);
-
-	 robot_stopMotorRight();
-	 */
 	sleep(2);
 
 }
@@ -270,12 +262,12 @@ void testUart() {
 	close(file);
 
 }
-void testExternalCounters() {
+void testExternalCounters(int seconds, int enableMotors) {
 
 	robot_init();
-
-	robot_startMotors();
-
+	if (enableMotors > 0) {
+		robot_startMotors();
+	}
 	int speed = 20;
 	//PROCESS SENSOR DATA
 	long lStart = robot_getLeftExternalCounter();
@@ -283,31 +275,36 @@ void testExternalCounters() {
 
 	// Boucle principale
 	int i;
-	for (i = 0; i < 40; i++) {
-		// Update la vitesse
-		robot_setMotorRightSpeed(speed);
-		robot_setMotorLeftSpeed(speed);
-		if (speed < 100 && i % 20) {
-			speed++;
+	for (i = 0; i < seconds; i++) {
+		if (enableMotors > 0) {
+			// Update la vitesse
+			robot_setMotorRightSpeed(speed);
+			robot_setMotorLeftSpeed(speed);
+			if (speed < 100 && i % 20) {
+				speed++;
+			}
 		}
-		printf("Speed: %d , counters: left: %ld right: %ld\n", speed,
+		printf("Current speed: %d , counters: left: %ld right: %ld\n", speed,
 				robot_getLeftExternalCounter(),
 				robot_getRightExternalCounter());
-		printf("left: %ld  right: %ld\n",
+		printf("Counters from start : left: %ld  right: %ld\n",
 				lStart - robot_getLeftExternalCounter(),
 				rStart - robot_getRightExternalCounter());
-		usleep(100 * 1000);
+		usleep(1000 * 1000);
 	}
-
-	printf("SET SPEED TO 0\n");
-	robot_setMotorRightSpeed(0);
-	robot_setMotorLeftSpeed(0);
+	if (enableMotors > 0) {
+		printf("Motors stopped\n");
+		robot_setMotorRightSpeed(0);
+		robot_setMotorLeftSpeed(0);
+	}
+	printf("Waiting 1s\n");
 	sleep(1);
-	printf("left: %ld right: %ld\n", lStart - robot_getLeftExternalCounter(),
+	printf("Current speed: %d , counters: left: %ld right: %ld\n", speed,
+			robot_getLeftExternalCounter(), robot_getRightExternalCounter());
+	printf("Counters from start : left: %ld  right: %ld\n",
+			lStart - robot_getLeftExternalCounter(),
 			rStart - robot_getRightExternalCounter());
-	printf("STOP\n");
-//	robot_stopMotorLeft();
-//	robot_stopMotorRight();
+
 	robot_dispose();
 	printf("END\n");
 
@@ -354,23 +351,23 @@ void testButton2() {
 	close(file);
 }
 
-void init(int lResolution, int rResolution, float dist) {
+void init(int lResolution, int rResolution, float dist, int startAsserv) {
 	robot_init();
 	encoder_SetDist(dist);
 	encoder_SetResolution(lResolution, rResolution);
 	initLog(lResolution, rResolution, dist);
 	printf("Encoders resolution: %d %d , distance: %f\n", lResolution,
 			rResolution, dist);
-	motion_Init();
+	if (startAsserv > 0) {
+		motion_Init();
+	}
 }
-void testMotion() {
-
-	init(4200, 4200, 0.25f);
+void motionLine(int mm) {
 
 	RobotCommand* cmd = malloc(sizeof(RobotCommand));
-	// 90 cms
-	motion_Line(cmd, .90f);
-	printf("loading line cmd\n");
+	float meters = mm / 1000.0f;
+	motion_Line(cmd, meters);
+	printf("Loading line command for %d mm (%f meters)\n", mm, meters);
 	motion_SetCurrentCommand(cmd);
 	int i = 0;
 	int nbSec = 10;
@@ -382,6 +379,28 @@ void testMotion() {
 	closeLog();
 	printf("test motion end\n");
 }
+
+void motionRotate(int degres) {
+
+	RobotCommand* cmd = malloc(sizeof(RobotCommand));
+	float rad = (degres * M_PI) / 180.0;
+	// 90 cms
+	motion_Rotate(cmd, rad);
+	//motion_Line(cmd, .90f);
+	printf("Loading rotate command %d degres (%f rad)\n", degres, rad);
+	motion_SetCurrentCommand(cmd);
+
+	int i = 0;
+	int nbSec = 10;
+	for (i = 0; i < 200 * nbSec; i++) {
+		// loop because timer with kill
+		sleep(1);
+	}
+	free(cmd);
+	closeLog();
+	printf("test motion end\n");
+}
+
 void testEncoders() {
 	robot_init();
 	int i;
@@ -394,19 +413,97 @@ void testEncoders() {
 	}
 }
 int main(int argc, const char* argv[]) {
+#ifdef SIMULATED
+	printf("Simulation mode enabled\n");
+#endif
+
 	// Prints each argument on the command line.
 	int i;
 	for (i = 0; i < argc; i++) {
 		printf("arg %d: %s\n", i, argv[i]);
 	}
-#ifdef SIMULATED
-	printf("Simulation mode enabled\n");
-#endif
-	//testEncoders();
-	//test();
-	//testExternalCounters();
-	//test_motor_encoder();
-	//calibrate();
-	testMotion();
+	if (argc != 3) {
+		printf("Utilisation : EV3 commande parametre\n");
+		printf("Examples:\n");
+		printf(
+				"- rotation sur la droite de 90 degres :        EV3 rotate 90\n");
+		printf(
+				"- avance de 500mm en ligne droite :            EV3 line  500\n");
+		printf(
+				"- mise à 100 des moteurs pendant 5s :          EV3 test0 null\n");
+		printf(
+				"- affiche les codeurs externes 30s :           EV3 test1  30\n");
+		printf(
+				"- avance et affiche les codeurs externes 5s :  EV3 test2   5\n");
+		printf(
+				"- avance pour reglage PID sur 300mm :          EV3 pidAD 300\n");
+		return 0;
+	}
+	if (strcmp(argv[1], "test0") == 0) {
+		test();
+	} else {
+		int lRes = 3800;
+		int rRes = 3800;
+		float dist = 0.128f;
+
+		if (strcmp(argv[1], "line") == 0) {
+			init(lRes, rRes, dist, 1);
+			int mm = atoi(argv[2]);
+			motionLine(mm);
+		} else if (strcmp(argv[1], "rotate") == 0) {
+			init(lRes, rRes, dist, 1);
+			int degres = atoi(argv[2]);
+			motionRotate(degres);
+		} else if (strcmp(argv[1], "test0") == 0) {
+			init(lRes, rRes, dist, 0);
+			test();
+		} else if (strcmp(argv[1], "test1") == 0) {
+			init(lRes, rRes, dist, 0);
+			int secs = atoi(argv[2]);
+			testExternalCounters(secs, 0);
+		} else if (strcmp(argv[1], "test2") == 0) {
+			init(lRes, rRes, dist, 0);
+			int secs = atoi(argv[2]);
+			testExternalCounters(secs, 1);
+		} else if (strcmp(argv[1], "pidAD") == 0) {
+			int mm = atoi(argv[2]);
+			init(lRes, rRes, dist, 1);
+			RobotCommand* cmd = malloc(sizeof(RobotCommand));
+			float meters = mm / 1000.0f;
+
+			motion_StepOrderAD(cmd, 0.0f, meters / valueVTops);
+			printf("Check cmd\n");
+			checkRobotCommand(cmd);
+			printf("Loading StepOrderAD command for %d mm (%f meters)\n", mm,
+					meters);
+
+			path_LaunchTrajectory(cmd);
+			printf("path_WaitEndOfTrajectory\n");
+			//int result = path_WaitEndOfTrajectory();
+
+			//	printf("path_WaitEndOfTrajectory returned : %d : %d\n", result,
+			//			TRAJ_OK);
+
+			sleep(5);
+
+			robot_setMotorLeftSpeed(0);
+			robot_setMotorRightSpeed(0);
+			free(cmd);
+			closeLog();
+
+		} else {
+			printf("Commande %s inconnue\n", argv[1]);
+		}
+	}
+
+//testEncoders();
+//test();
+//testExternalCounters();
+//test_motor_encoder();
+//calibrate();
+//testMotionLine();
+//testMotionRotate90();
+//motion_DoRotate(M_PI*1.0f);
+	printf("Bye\n");
 	return 0;
 }

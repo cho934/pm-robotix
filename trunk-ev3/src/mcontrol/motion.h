@@ -41,7 +41,7 @@ typedef enum
 } MOTION_STATE;
 
 extern MOTION_STATE RobotMotionState;
-
+void checkRobotCommand(RobotCommand *cmd);
 //! Load motion control module
 void motion_Init(void);
 

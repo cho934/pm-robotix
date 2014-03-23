@@ -27,6 +27,7 @@
 #include "path_manager.h"
 #include "motion.h"
 #include <semaphore.h>
+#include <stdio.h>
 
 WAYPOINT nextWaypoint;
 static BOOL waitingSemaphore;
@@ -48,10 +49,11 @@ void path_TriggerWaypoint(TRAJ_STATE state);
 //}
 
 void path_Init(void) {
-
+	printf("path_Init\n");
+	trajState=TRAJ_OK;
 	waitingSemaphore = FALSE;
 	sem_init(&semWaypoint, 0, 0);
-
+	printf("path_Init done\n");
 
 //	ex_PushITHandler(COLLISION, ex_defaultCollisionCallback);
 //	ex_PushITHandler(APPROACHING_COLLISION, ex_defaultCollisionCallback);
