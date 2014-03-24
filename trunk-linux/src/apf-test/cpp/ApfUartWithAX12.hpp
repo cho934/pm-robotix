@@ -8,6 +8,7 @@
 
 #include "../../common/cpp/ConsoleUnitTest.hpp"
 #include "../../common/cpp/LoggerFactory.hpp"
+#include "Dynamixel.hpp"
 
 namespace test
 {

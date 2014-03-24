@@ -1,6 +1,7 @@
 /*!
  * \file
  * \brief Définition de la classe ApfI2cWithArduino.
+ * \brief basé sur http://binerry.de/post/27128825416/raspberry-pi-with-i2c-arduino-slave
  */
 
 #ifndef TEST_APFI2CWITHARDUINO_HPP

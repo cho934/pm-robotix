@@ -1,6 +1,7 @@
 /*!
  * \file
  * \brief Implémentation de la classe ApfI2cWithArduino, concernant la communication par I2C avec une carte Arduino.
+ * \brief basé sur http://binerry.de/post/27128825416/raspberry-pi-with-i2c-arduino-slave
  */
 #include <iostream>
 #include <fcntl.h>

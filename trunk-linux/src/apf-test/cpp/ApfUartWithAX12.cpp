@@ -1,6 +1,6 @@
 /*!
  * \file
- * \brief Implémentation de la classe ApfI2cWithMd25, concernant l'utilisation des servomoteurs AX12.
+ * \brief Implémentation de la classe ApfUartWithAX12, concernant l'utilisation des servomoteurs AX12.
  */
 
 #include <iostream>
@@ -9,99 +9,55 @@
 #include <unistd.h>
 #include "ApfUartWithAX12.hpp"
 
-#include "SerialPort.hpp"
-#include "Dynamixel.hpp"
-
-#include <fcntl.h>
-#include <errno.h>
-#include <termios.h>
-
 void test::ApfUartWithAX12::run(int, char*[])
 {
+	//add param ID Loop
 	std::cout << "APF : Use UART2 and AX-12" << std::endl;
 
-	int error = 0;
 	int idAX12 = 8;
 
-	SerialPort serialPort;
 	Dynamixel dynamixel;
 
-	if (serialPort.connect("//dev//ttySMX1") != 0)
+	long temp = 0;
+	int data = 0;
+	int volt = 0;
+	int pos = 0;
+	int v2 = 0;
+	for (int i = 0; i < 20000; i++)
 	{
-		dynamixel.sendTossModeCommand(&serialPort);
-		int pos = 0;
-		int err = 0;
-		int v2 = 0;
-		for (int i = 0; i < 20000; i++)
-		{
+		volt = 0;
+		temp = 0;
+		//int v2 = rand() % 100 + 1;     // v2 in the range 1 to 100 //2147483647
+		v2 = (rand() % 600) + 200;     // v2 in the range 200 to 800
 
+		data = DxlGetAxLed(idAX12);
+		std::cout << "Led=" << data << std::endl;
 
-			//int v2 = rand() % 100 + 1;     // v2 in the range 1 to 100 //2147483647
-			v2 = (rand() % 600) + 200;     // v2 in the range 200 to 800
-			printf("\n\nGo Position <%d>", v2);
-			err = dynamixel.setPosition(&serialPort, idAX12, v2);
-			usleep(500000);
-			pos = dynamixel.getPosition(&serialPort, idAX12);
-						printf("Last Position <%d>\n", pos);
-						usleep(500000);
-		}
-/*
-		if (pos > 250 && pos < 1023)
-			dynamixel.setPosition(&serialPort, idAX12, pos - 100);
-		else
-			printf("\nPosition <%i> under 250 or over 1023\n", pos);
-*/
-		serialPort.disconnect();
+		DxlSetAxLedOn(idAX12);
+
+		std::cout << "Go Position=" << v2 << std::endl;
+		DxlSetPos(idAX12, v2);
+		data = DxlGetAxLed(idAX12);
+		std::cout << "Led=" << data << std::endl;
+		usleep(1000000);
+
+		DxlSetAxLedOff(idAX12);
+
+		volt = DxlGetVoltage(idAX12);
+		std::cout << "volt=" << volt << std::endl;
+
+		temp = DxlGetTemperature(idAX12);
+		std::cout << "temp=" << temp << std::endl;
+
+		data = DxlGetBaud(idAX12);
+		std::cout << "baud=" << reinterpret_cast<void*>(data) << std::endl;
+
+		pos = DxlGetPos(idAX12);
+		std::cout << "Last Position=" << pos << std::endl;
+
+		usleep(1000000);
+
 	}
-	else
-	{
-		printf("\nCan't open serial port");
-		error = -1;
-	}
-
-	/*
-	 int fd;
-	 // Open the Port. We want read/write, no "controlling tty" status, and open it no matter what state DCD is in
-	 fd = open("/dev/ttySMX1", O_RDWR | O_NOCTTY | O_NDELAY);
-	 if (fd == -1) {
-	 //perror("open_port: Unable to open /dev/ttyAMA0 - ");
-	 //return(-1);
-	 std::cout << "Error, open_port: Unable to open /dev/ttySMX1 -" << std::endl;
-	 exit(1);
-	 }
-
-	 std::cout << "open ok " << std::endl;
-	 // Turn off blocking for reads, use (fd, F_SETFL, FNDELAY) if you want that
-	 fcntl(fd, F_SETFL, 0);
-
-	 // Write to the port
-	 int n = write(fd,"Hello Peripheral\n",255);
-	 if (n < 0) {
-	 //perror("Write failed - ");
-	 //return -1;
-	 std::cout << "Error, Write failed -" << std::endl;
-	 exit(1);
-	 }
-	 std::cout << "write ok " << std::endl;
-
-	 // Read up to 255 characters from the port if they are there
-	 char buf[256];
-	 n = read(fd, (void*)buf, 255);
-	 if (n < 0) {
-	 //perror("Read failed - ");
-	 //return -1;
-	 std::cout << "Error, Read failed -" << std::endl;
-	 exit(1);
-	 } else if (n == 0) printf("No data on port\n");
-	 else {
-	 buf[n] = '\0';
-	 printf("%i bytes read : %s", n, buf);
-	 }
-
-	 // Don't forget to clean up
-	 close(fd);
-	 //return 0;
-	 */
 
 	std::cout << "End Of APF-TEST" << std::endl;
 }
