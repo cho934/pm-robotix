@@ -10,12 +10,13 @@
 
 #include "SerialPort.hpp"
 
-
-int SerialPort::connect() {
+int SerialPort::connect()
+{
 	return connect("//dev//ttySMX1");
 }
 
-int SerialPort::connect(const char *device) {
+int SerialPort::connect(const char *device)
+{ //TODO add baud
 	struct termios terminalAttributes;
 
 	/*
@@ -27,7 +28,7 @@ int SerialPort::connect(const char *device) {
 	 * When possible, the file is opened in nonblocking mode
 	 *
 	 */
-	fileDescriptor = open(device, O_RDWR | O_NOCTTY | O_NDELAY | O_FSYNC );
+	fileDescriptor = open(device, O_RDWR | O_NOCTTY | O_NDELAY | O_FSYNC);
 
 	// clear terminalAttributes data
 	memset(&terminalAttributes, 0, sizeof(struct termios));
@@ -50,7 +51,7 @@ int SerialPort::connect(const char *device) {
 	 * Ignore framing errors and parity errors.
 	 * (XSI) Map NL to CR-NL on output.
 	 */
-	terminalAttributes.c_iflag = IGNPAR |  ONLCR;
+	terminalAttributes.c_iflag = IGNPAR | ONLCR;
 
 	/*
 	 * output modes: flag constants defined in POSIX.1
@@ -95,19 +96,31 @@ int SerialPort::connect(const char *device) {
 
 void SerialPort::disconnect(void)
 {
-    close(fileDescriptor);
-    printf("\nPort 1 has been CLOSED and %d is the file description\n", fileDescriptor);
+	close(fileDescriptor);
+	printf("\nPort 1 has been CLOSED and %d is the file description\n",
+			fileDescriptor);
 }
 
-int SerialPort::sendArray(unsigned char *buffer, int len) {
-	int n=write(fileDescriptor, buffer, len);
+int SerialPort::sendArray(unsigned char *buffer, int len)
+{
+	int n = write(fileDescriptor, buffer, len);
 	return n;
 }
 
-int SerialPort::getArray (unsigned char *buffer, int len)
+int SerialPort::getArray(unsigned char *buffer, int len)
 {
-	int n1=bytesToRead();
-	int n=read(fileDescriptor, buffer, len);
+	int n = 0;
+	for (int i = 0; i < 1000; i++) //tempo to wait data in the buffer
+	{
+		n = bytesToRead();
+		if (n >= len)
+			break;
+		else
+		{
+			usleep(10);
+		}
+	}
+	n = read(fileDescriptor, buffer, len);
 	return n;
 }
 
@@ -119,7 +132,7 @@ void SerialPort::clear()
 
 int SerialPort::bytesToRead()
 {
-	int bytes=0;
+	int bytes = 0;
 	ioctl(fileDescriptor, FIONREAD, &bytes);
 
 	return bytes;

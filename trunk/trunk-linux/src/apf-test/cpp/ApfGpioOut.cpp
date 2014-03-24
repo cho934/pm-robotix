@@ -18,6 +18,7 @@ void test::ApfGpioOut::run(int argc, char *argv[])
 	string str;
 	int count = 4; //par defaut
 	int delay = 1000000; //par defaut
+	int io = 0;
 
 	char port_letter = 'D';
 	int pin_num = 31;
@@ -31,7 +32,7 @@ void test::ApfGpioOut::run(int argc, char *argv[])
 	if (argc < 5)
 	{
 		std::cout << "USAGE: APF_TEST " << argv[1]
-				<< " [GPIO1_PORT:A B C D] [GPIO1_PIN:0...31] [GPIO2_PORT:A B C D] [GPIO2_PIN:0...31] [count:4 times (default)] [delay:100000us (default)]"
+				<< " [GPIO1_PORT:A B C D] [GPIO1_PIN:0...31] [GPIO2_PORT:A B C D] [GPIO2_PIN:0...31] [by IOCTL:0 by ASDEVICES:1] [count:4 times (option)] [delay:100000us (option)]"
 				<< std::endl;
 	}
 	if (argc > 2)
@@ -78,59 +79,89 @@ void test::ApfGpioOut::run(int argc, char *argv[])
 
 	if (argc > 6)
 	{
-		count = atoi(argv[6]);
+		io = atoi(argv[6]);
+		std::cout << "io=[" << io << "]"<< std::flush;
 	}
 	if (argc > 7)
 	{
-		delay = atoi(argv[7]);
+		count = atoi(argv[7]);
+	}
+	if (argc > 8)
+	{
+		delay = atoi(argv[8]);
 	}
 
 	std::cout << "Toggling LED " << port_letter << pin_num << " "
 			<< port_letter2 << pin_num2 << " " << count << " times" << " delai:"
 			<< delay << "us" << std::endl;
-
+	bool nok = false;
 	try
 	{
-		utils::GpioPort* gpio1 = new utils::GpioPort(port_letter, pin_num);
-		utils::GpioPort* gpio2 = new utils::GpioPort(port_letter2, pin_num2);
-		std::cout << "created " << std::endl;
+		utils::GpioPort* gpio1 = new utils::GpioPort();
+		utils::GpioPort* gpio2 = new utils::GpioPort();
 
-		//gpio1.open(port_letter, pin_num);
-		//gpio2.open(port_letter2, pin_num2);
-		//gpio1.open('B', 17);
-		//gpio2.open('B', 17);
-		std::cout << "opened " << std::endl;
-
-		gpio1->setDirection(1);
-		gpio2->setDirection(1);
-		std::cout << "setDirection " << std::endl;
-
-		gpio1->setValue(0);
-		gpio2->setValue(0);
-		std::cout << "setValue " << std::endl;
-
-		for (int i = 0; i < count; i++)
+		if (io == 0) //ASDEVICES
 		{
-			//std::cout << "ON " << std::flush;
-			gpio1->setValue(1);
-			usleep(delay);
-			gpio2->setValue(0);
+			std::cout << "created " << std::endl;
+			gpio1->openAs(port_letter, pin_num);
+			gpio2->openAs(port_letter2, pin_num2);
+			std::cout << "opened " << std::endl;
+			gpio1->setDirectionAs(1);
+			gpio2->setDirectionAs(1);
+			std::cout << "setDirection " << std::endl;
+			gpio1->setValueAs(0);
+			gpio2->setValueAs(0);
+			std::cout << "setValue as" << std::endl;
+			for (int i = 0; i < count; i++)
+			{
+				//std::cout << "ON " << std::flush;
+				gpio1->setValueAs(1);
+				//usleep(delay);
+				gpio2->setValueAs(0);
+				usleep(delay);
 
-			usleep(delay);
-			//std::cout << "OFF " << std::flush;
-			gpio1->setValue(0);
-			usleep(delay);
-			gpio2->setValue(1);
+				//std::cout << "OFF " << std::flush;
+				gpio1->setValueAs(0);
+				//usleep(delay);
+				gpio2->setValueAs(1);
+				usleep(delay);
+			}
+		}
+		else //IOCTL
+		{
 
-			usleep(delay);
+			std::cout << "created IOCTL" << std::endl;
+			gpio1->openIoctl(port_letter, pin_num);
+			gpio2->openIoctl(port_letter2, pin_num2);
+			std::cout << "opened IOCTL " << std::endl;
+			gpio1->setDirIoctl(1);
+			gpio2->setDirIoctl(1);
+			std::cout << "setDirection IOCTL" << std::endl;
+			gpio1->setValueIoctl(0);
+			gpio2->setValueIoctl(0);
+			std::cout << "setValue IOCTL" << std::endl;
+			for (int i = 0; i < count; i++)
+			{
+				//std::cout << "ON " << std::flush;
+				gpio1->setValueIoctl(true);
+				//usleep(delay);
+				gpio2->setValueIoctl(false);
+				usleep(delay);
 
+				//std::cout << "OFF " << std::flush;
+				gpio1->setValueIoctl(false);
+				//usleep(delay);
+				gpio2->setValueIoctl(true);
+				usleep(delay);
+			}
 		}
 	} catch (utils::Exception* exception)
 	{
+		nok = true;
 		std::cout << "Exception: " << exception->what() << std::endl;
-
 	}
 
+	//return nok;
 	/*
 
 	 gpio_dev = as_gpio_open(port_letter, pin_num);

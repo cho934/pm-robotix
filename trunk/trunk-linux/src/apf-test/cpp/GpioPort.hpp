@@ -10,6 +10,7 @@
 #include "../../common/cpp/Exception.hpp"
 #include "../../common/cpp/Mutex.hpp"
 
+
 namespace utils
 {
 
@@ -29,18 +30,19 @@ public:
 	}
 };
 
-class GpioPort : public utils::Mutex
+class GpioPort // : public utils::Mutex
 {
 private:
 	struct as_gpio_device *device_;
 	int opened_;
+	int fd_;//pour ioctl
 
 public:
 	/*!
 	 * \brief Constructeur de la classe.
 	 */
 	GpioPort();
-	GpioPort(char portLetter, int pinNum);
+	//GpioPort(char portLetter, int pinNum);
 
 	/*!
 	 * \brief Destructeur de la classe.
@@ -48,15 +50,21 @@ public:
 	virtual ~GpioPort();
 
 public:
-	void open(char portLetter, int pinNum);
-	void close(void);
+	void openAs(char portLetter, int pinNum);
+	void closeAs(void);
 
 	/*!
-	 * \brief Destructeur de la classe.
+	 * \brief Set the GPIO Direction.
 	 * \param aDirection (0:in, 1:out)
 	 */
-	void setDirection(int aDirection);
-	void setValue(int aValue);
+	void setDirectionAs(int aDirection);
+	void setValueAs(int aValue);
+
+	void openIoctl(char portLetter, int pinNum);
+	void closeIoctl(void);
+	void setDirIoctl(int aDirection);
+	void setValueIoctl(bool aValue);
+
 };
 }
 
