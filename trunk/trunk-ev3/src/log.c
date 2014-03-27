@@ -9,10 +9,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int lCount;
-char **l;
-FILE *logFile;
-int log_closed = 0;
+static int lCount;
+static char **l;
+static FILE *logFile;
+static int log_closed = 0;
+
 void initLog(int leftTicksPerM, int rightTicksPerM, float encoderDist) {
 	lCount = 0;
 	l = malloc(sizeof(char*) * 1000);
@@ -53,6 +54,7 @@ void closeLog() {
 		flushLog();
 		fclose(logFile);
 		log_closed = 1;
+		free(l);
 	}
 }
 void log_status(long timeInMillis, long lEndcoder, long rEncoder, int lPower,

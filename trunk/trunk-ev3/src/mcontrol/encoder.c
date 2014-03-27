@@ -28,9 +28,10 @@
 
 #include "global.h"
 #include "../robot.h"
+#include <stdio.h>
 
 void encoder_Init() {
-	// lm629_Load();
+
 }
 
 void encoder_SetDist(float dist) {
@@ -62,13 +63,11 @@ static int32 lastLeft = 0;
 static int32 lastRight = 0;
 void encoder_ReadSensor(int32 *dLeft, int32 *dRight, int32 *dAlpha,
 int32 *dDelta) {
-	static float dTheta;
-	static float dV;
+
 	static int32 left, right;
 
 	//read encoder
-//	left = -lm629_ReadRealPosition(LWHEEL);
-	//right = lm629_ReadRealPosition(RWHEEL);
+
 	left = robot_getLeftExternalCounter();
 	right = robot_getRightExternalCounter();
 	printf("encoder.c encoder_ReadSensor l:%d r:%d\n", left, right);

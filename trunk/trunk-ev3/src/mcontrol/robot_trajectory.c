@@ -36,6 +36,7 @@
 #include "types.h"
 #include <stdlib.h>
 #include <math.h>
+#include <stdio.h>
 
 typedef struct {
 	float V0;
@@ -415,26 +416,28 @@ void motion_SpeedControlAD(RobotCommand *out_cmd, float spAlpha,
 			convertAccelTovTopsPerPeriodSqd(accDelta));
 }
 
-void motion_StepOrderLR(RobotCommand *out_cmd, int32 posLeft, int32 posRight) {
+void motion_StepOrderLR(RobotCommand *out_cmd, int32 posLeft, int32 posRight,
+		int seconds) {
 	out_cmd->cmdType = STEP_COMMAND;
 	out_cmd->mcType = LEFT_RIGHT;
 
 	//LEFT
-	ComputeStepOrder(&(out_cmd->cmd.stepCmd[LEFT_MOTOR]), posLeft);
+	ComputeStepOrder(&(out_cmd->cmd.stepCmd[LEFT_MOTOR]), posLeft, seconds);
 
 	//RIGHT
-	ComputeStepOrder(&(out_cmd->cmd.stepCmd[RIGHT_MOTOR]), posRight);
+	ComputeStepOrder(&(out_cmd->cmd.stepCmd[RIGHT_MOTOR]), posRight, seconds);
 }
 
-void motion_StepOrderAD(RobotCommand *out_cmd, int32 posAlpha, int32 posDelta) {
+void motion_StepOrderAD(RobotCommand *out_cmd, int32 posAlpha, int32 posDelta,
+		int seconds) {
 	out_cmd->cmdType = STEP_COMMAND;
 	out_cmd->mcType = ALPHA_DELTA;
-	printf("1: %d\n",out_cmd->cmdType);
+	printf("1: %d\n", out_cmd->cmdType);
 	//ALPHA
-	ComputeStepOrder(&(out_cmd->cmd.stepCmd[ALPHA_MOTOR]), posAlpha);
-	printf("2: %d\n",out_cmd->cmdType);
+	ComputeStepOrder(&(out_cmd->cmd.stepCmd[ALPHA_MOTOR]), posAlpha, seconds);
+	printf("2: %d\n", out_cmd->cmdType);
 	//DELTA
-	ComputeStepOrder(&(out_cmd->cmd.stepCmd[DELTA_MOTOR]), posDelta);
-	printf("3: %d\n",out_cmd->cmdType);
+	ComputeStepOrder(&(out_cmd->cmd.stepCmd[DELTA_MOTOR]), posDelta, seconds);
+	printf("3: %d\n", out_cmd->cmdType);
 }
 

@@ -26,7 +26,7 @@
 
 #include "robot_unitConversion.h"
 #include "global.h"
-
+#define _ISOC99_SOURCE
 #include <math.h>
 
 int32 convertDistTovTops(float dist) {

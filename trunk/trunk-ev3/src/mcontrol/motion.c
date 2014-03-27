@@ -134,13 +134,16 @@ void motion_Destroy() {
 
 }
 void signalEndOfTraj() {
+	printf("signalEndOfTraj %d\n",nextWaypoint.type);
 	if (motionCommand.cmdType == POSITION_COMMAND) {
 		motion_FreeMotion();
 	}
 
 	if (nextWaypoint.type == WP_END_OF_TRAJ) {
+		printf("signalEndOfTraj path_TriggerWaypoint\n" );
 		path_TriggerWaypoint(TRAJ_OK);
 	}
+	exit(0);
 }
 
 void motion_FreeMotion() {
@@ -222,8 +225,6 @@ void motion_SetCurrentCommand(RobotCommand *cmd) {
 	printf("motion_SetCurrentCommand done\n");
 }
 
-
-
 //Motion control main loop
 //implemented as an IT task, armed on a timer to provide
 //a constant and precise period between computation
@@ -275,7 +276,7 @@ void *motion_ITTask(void *p_arg) {
 		switch (RobotMotionState) {
 		case TRAJECTORY_RUNNING:
 			//lock motionCommand
-		 	pthread_mutex_lock(&mtxMotionCommand);
+			pthread_mutex_lock(&mtxMotionCommand);
 
 			double dSpeed0 = 0;
 			double dSpeed1 = 0;
@@ -364,12 +365,11 @@ void *motion_ITTask(void *p_arg) {
 			break;
 
 		case DISABLE_PID: {
-			printf("motion_ITTask DISABLE_PID end exit \n");
-			stop = 1;
+			printf("motion_ITTask DISABLE_PID  \n");
 			break;
 		}
 		case FREE_MOTION: {
-			printf("motion_ITTask FREE_MOTION end exit \n");
+			printf("motion_ITTask FREE_MOTION  \n");
 			//stop = 1;
 			break;
 		}

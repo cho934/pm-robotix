@@ -30,26 +30,20 @@
 
 static RobotCommand cmd;
 
-
 static float pos_x;
 static float pos_y;
 static float pos_theta;
 
-
-void pos_SetPosition(float x, float y, float theta)
-{
-        //TODO Odometry... odo_SetPosition(float x, float y, float theta)
+void pos_SetPosition(float x, float y, float theta) {
+	//TODO Odometry... odo_SetPosition(float x, float y, float theta)
 }
 
-void pos_GetPositionXYTheta(float *x, float *y, float *theta)
-{
-//TODO Odometry... odo_GetPositionXYTheta(float *x, float *y, float *theta)
-
-        *x = pos_x;
-        *y = pos_y;
-        *theta = pos_theta;
+void pos_GetPositionXYTheta(float *x, float *y, float *theta) {
+	//TODO Odometry... odo_GetPositionXYTheta(float *x, float *y, float *theta)
+	*x = pos_x;
+	*y = pos_y;
+	*theta = pos_theta;
 }
-
 
 TRAJ_STATE motion_DoLine(float dist) {
 	motion_Line(&cmd, dist);
