@@ -1,21 +1,21 @@
 /*******************************************************************************
-* ClubElek Robot motion control software for Eurobot 2007
-* Copyright (C) 2006-2007 ClubElek
-*
-* This program is free software; you can redistribute it and/or
-* modify it under the terms of the GNU General Public License
-* as published by the Free Software Foundation; either version 2
-* of the License, or (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*******************************************************************************/
+ * ClubElek Robot motion control software for Eurobot 2007
+ * Copyright (C) 2006-2007 ClubElek
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *******************************************************************************/
 //! \file motor.h
 //! \author Julien Rouviere <gmail address : julien.rouviere@...>
 //! \author ClubElek <http://clubelek.insa-lyon.fr>
@@ -44,16 +44,15 @@
 #define MOTOR_SPEED_PERIOD_NB		9
 
 //! structure used internally for stocking current value for each motors
-typedef struct
-{
-  PID_SYSTEM PIDSys;
-  int32 lastPos;
-  
-  int8 posIndex;
-  int32 prevPos[MOTOR_SPEED_PERIOD_NB];	//previous value of position for speed computation
+typedef struct {
+	PID_SYSTEM PIDSys;
+	int32 lastPos;
+
+	int posIndex;
+	int32 prevPos[MOTOR_SPEED_PERIOD_NB];//previous value of position for speed computation
 } MOTOR;
 
-static MOTOR motors[MAX_MOTION_CONTROL_TYPE_NUMBER][MOTOR_PER_TYPE];
+MOTOR motors[MAX_MOTION_CONTROL_TYPE_NUMBER][MOTOR_PER_TYPE];
 
 //! initialisation of the motor structure
 void initMotor(MOTOR *motor);
@@ -66,6 +65,5 @@ void updateMotor(MOTOR *motor, int32 delta);
 
 //! Compute current motor speed
 int32 getMotorSpeed(MOTOR *motor);
-
 
 #endif//_MOTOR_H_

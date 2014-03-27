@@ -1,6 +1,10 @@
 #ifndef ROBOT_H_
 #define ROBOT_H_
 
+extern long long timeOffset;
+extern int lPower;
+extern int rPower;
+
 long currentTimeInMillis();
 
 void robot_init();
@@ -19,6 +23,9 @@ void robot_setMotorLeftSpeed(int speed);
 
 long robot_getLeftExternalCounter();
 long robot_getRightExternalCounter();
+
+long robot_getLeftInternalCounter();
+long robot_getRightInternalCounter();
 
 int robot_isButton1Pressed();
 

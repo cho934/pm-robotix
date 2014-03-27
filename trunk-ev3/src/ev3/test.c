@@ -1,19 +1,82 @@
+/*
+ * test.c
+ *
+ *  Created on: Dec 1, 2013
+ *      Author: maillard
+ */
 #include <stdio.h>
-#include <stdlib.h>
 #include <fcntl.h>
-#include <math.h>
 #include <unistd.h>
-#include <string.h>
-#include <sys/mman.h>
+#include  <sys/mman.h>
 #include <sys/ioctl.h>
 #include "lms2012.h"
-#include "robot.h"
-#include "test.h"
-#include "mcontrol/motion.h"
-#include "mcontrol/encoder.h"
-#include "log.h"
-#include "mcontrol/global.h"
-#include "mcontrol/path_manager.h"
+
+// A = 0x01, B = 0x02, C = 0x04, D = 0x08
+
+int test_motor_encoder() {
+	int motorSpeed = 19;
+	int motorLeft = 0x02;
+	int motorRight = 0x04;
+
+	MOTORDATA *pMotorData;
+
+	char motor_command[4];
+	int motor_file;
+	int encoder_file;
+	int i;
+	//Open the device file asscoiated to the motor controlers
+	if ((motor_file = open(PWM_DEVICE_NAME, O_WRONLY)) == -1) {
+		printf("Failed to open device\n");
+		return -1; //Failed to open device
+	}
+	//Open the device file asscoiated to the motor encoders
+	if ((encoder_file = open(MOTOR_DEVICE_NAME, O_RDWR | O_SYNC)) == -1)
+		return -1; //Failed to open device
+	pMotorData = (MOTORDATA*) mmap(0, sizeof(MOTORDATA) * vmOUTPUTS,
+	PROT_READ | PROT_WRITE, MAP_FILE | MAP_SHARED, encoder_file, 0);
+	if (pMotorData == MAP_FAILED) {
+		printf("Map failed\n");
+		return -1;
+	}
+	// All motor operations use the first command byte to indicate the type of operation
+	// and the second one to indicate the motor(s) port(s)
+	motor_command[0] = opOUTPUT_SPEED;
+	motor_command[1] = motorLeft;
+	motor_command[2] = motorSpeed;
+	write(motor_file, motor_command, 3);
+	motor_command[0] = opOUTPUT_SPEED;
+	motor_command[1] = motorRight;
+	motor_command[2] = motorSpeed;
+	write(motor_file, motor_command, 3);
+	// Start the motor
+	motor_command[0] = opOUTPUT_START;
+	motor_command[1] = motorLeft | motorRight;
+	write(motor_file, motor_command, 2);
+	// Read encoders while running the motor
+	int startLeft = pMotorData[1].TachoSensor;
+	int startRight = pMotorData[2].TachoSensor;
+
+	for (i = 1; i < 6; i++) {
+		printf("Spd/Cnt/Snr: L=%d/%d/%d R=%d/%d/%d\n", pMotorData[1].Speed,
+				pMotorData[1].TachoCounts, pMotorData[1].TachoSensor,
+				pMotorData[2].Speed, pMotorData[2].TachoCounts,
+				pMotorData[2].TachoSensor);
+		printf("Left:%d Right:%d\n", pMotorData[1].TachoSensor - startLeft,
+				pMotorData[2].TachoSensor - startRight);
+		sleep(1);
+	}
+	// Stop the motor
+	motor_command[0] = opOUTPUT_STOP;
+	write(motor_file, motor_command, 2);
+	// Close device files
+
+	printf("Left:%d Right:%d\n", pMotorData[1].TachoSensor - startLeft,
+			pMotorData[2].TachoSensor - startRight);
+
+	close(encoder_file);
+	close(motor_file);
+	return 0;
+}
 
 void a(char motorPort) {
 
@@ -48,32 +111,6 @@ void a(char motorPort) {
 	close(motor_file);
 
 }
-void test() {
-
-	robot_init();
-
-	robot_startMotors();
-
-	printf("SET SPEED TO 100\n");
-
-	robot_setMotorRightSpeed(100);
-	robot_setMotorLeftSpeed(100);
-
-	sleep(5);
-	printf("SET SPEED TO 0\n");
-	robot_setMotorRightSpeed(0);
-	robot_setMotorLeftSpeed(0);
-
-	sleep(5);
-	printf("SLEEP STOP\n");
-	robot_stopMotorLeft();
-	robot_stopMotorRight();
-	robot_dispose();
-
-	sleep(2);
-
-}
-
 //=====================================================================
 // ReadSensorHTAngle(port, Angle, AccAngle, RPM)
 // Reads the HiTechnic Angle Sensor and returns the current:
@@ -173,12 +210,8 @@ int calibrate() {
 	printf("Device is ready %d \n", r);
 
 	long angleCounter = 0;
-	int lastAngle = 0;
+
 	DATA8 *respbuf = pIic->Raw[portCounter1][pIic->Actual[portCounter1]];
-	lastAngle = respbuf[0];
-	//PROCESS SENSOR DATA
-	//Read IIC device state
-	long startCounter = 0;
 
 	for (i = 0; i < 10000; i++) {
 
@@ -203,10 +236,6 @@ int calibrate() {
 		}
 		//printf("E: d3 corrige %d\n", d3);
 		angleCounter = nbTour * 256 + angle;
-
-		if (i == 0) {
-			startCounter = angleCounter;
-		}
 
 		//printf("Last:%d d:%d \n", lastAngle, delta);
 		printf("EV3: nbTour:%d angle:%d  t:%ld\n", nbTour, angle, angleCounter);
@@ -262,53 +291,6 @@ void testUart() {
 	close(file);
 
 }
-void testExternalCounters(int seconds, int enableMotors) {
-
-	robot_init();
-	if (enableMotors > 0) {
-		robot_startMotors();
-	}
-	int speed = 20;
-	//PROCESS SENSOR DATA
-	long lStart = robot_getLeftExternalCounter();
-	long rStart = robot_getRightExternalCounter();
-
-	// Boucle principale
-	int i;
-	for (i = 0; i < seconds; i++) {
-		if (enableMotors > 0) {
-			// Update la vitesse
-			robot_setMotorRightSpeed(speed);
-			robot_setMotorLeftSpeed(speed);
-			if (speed < 100 && i % 20) {
-				speed++;
-			}
-		}
-		printf("Current speed: %d , counters: left: %ld right: %ld\n", speed,
-				robot_getLeftExternalCounter(),
-				robot_getRightExternalCounter());
-		printf("Counters from start : left: %ld  right: %ld\n",
-				lStart - robot_getLeftExternalCounter(),
-				rStart - robot_getRightExternalCounter());
-		usleep(1000 * 1000);
-	}
-	if (enableMotors > 0) {
-		printf("Motors stopped\n");
-		robot_setMotorRightSpeed(0);
-		robot_setMotorLeftSpeed(0);
-	}
-	printf("Waiting 1s\n");
-	sleep(1);
-	printf("Current speed: %d , counters: left: %ld right: %ld\n", speed,
-			robot_getLeftExternalCounter(), robot_getRightExternalCounter());
-	printf("Counters from start : left: %ld  right: %ld\n",
-			lStart - robot_getLeftExternalCounter(),
-			rStart - robot_getRightExternalCounter());
-
-	robot_dispose();
-	printf("END\n");
-
-}
 void testButton2() {
 	// Bouton poussoir : ANALOG, Pin1, Pressed if value < 225
 	int buttonPort = 0;
@@ -349,161 +331,4 @@ void testButton2() {
 	//CLOSE DEVICE
 	printf("Closing device\n");
 	close(file);
-}
-
-void init(int lResolution, int rResolution, float dist, int startAsserv) {
-	robot_init();
-	encoder_SetDist(dist);
-	encoder_SetResolution(lResolution, rResolution);
-	initLog(lResolution, rResolution, dist);
-	printf("Encoders resolution: %d %d , distance: %f\n", lResolution,
-			rResolution, dist);
-	if (startAsserv > 0) {
-		motion_Init();
-	}
-}
-void motionLine(int mm) {
-
-	RobotCommand* cmd = malloc(sizeof(RobotCommand));
-	float meters = mm / 1000.0f;
-	motion_Line(cmd, meters);
-	printf("Loading line command for %d mm (%f meters)\n", mm, meters);
-	motion_SetCurrentCommand(cmd);
-	int i = 0;
-	int nbSec = 10;
-	for (i = 0; i < 200 * nbSec; i++) {
-		// loop because timer with kill
-		sleep(1);
-	}
-	free(cmd);
-	closeLog();
-	printf("test motion end\n");
-}
-
-void motionRotate(int degres) {
-
-	RobotCommand* cmd = malloc(sizeof(RobotCommand));
-	float rad = (degres * M_PI) / 180.0;
-	// 90 cms
-	motion_Rotate(cmd, rad);
-	//motion_Line(cmd, .90f);
-	printf("Loading rotate command %d degres (%f rad)\n", degres, rad);
-	motion_SetCurrentCommand(cmd);
-
-	int i = 0;
-	int nbSec = 10;
-	for (i = 0; i < 200 * nbSec; i++) {
-		// loop because timer with kill
-		sleep(1);
-	}
-	free(cmd);
-	closeLog();
-	printf("test motion end\n");
-}
-
-void testEncoders() {
-	robot_init();
-	int i;
-	printf("Reading encoder during 20s\n");
-	for (i = 0; i < 20; i++) {
-		printf("testInit : left: %ld right: %ld \n",
-				robot_getLeftExternalCounter(),
-				robot_getRightExternalCounter());
-		sleep(1);
-	}
-}
-int main(int argc, const char* argv[]) {
-#ifdef SIMULATED
-	printf("Simulation mode enabled\n");
-#endif
-
-	// Prints each argument on the command line.
-	int i;
-	for (i = 0; i < argc; i++) {
-		printf("arg %d: %s\n", i, argv[i]);
-	}
-	if (argc != 3) {
-		printf("Utilisation : EV3 commande parametre\n");
-		printf("Examples:\n");
-		printf(
-				"- rotation sur la droite de 90 degres :        EV3 rotate 90\n");
-		printf(
-				"- avance de 500mm en ligne droite :            EV3 line  500\n");
-		printf(
-				"- mise à 100 des moteurs pendant 5s :          EV3 test0 null\n");
-		printf(
-				"- affiche les codeurs externes 30s :           EV3 test1  30\n");
-		printf(
-				"- avance et affiche les codeurs externes 5s :  EV3 test2   5\n");
-		printf(
-				"- avance pour reglage PID sur 300mm :          EV3 pidAD 300\n");
-		return 0;
-	}
-	if (strcmp(argv[1], "test0") == 0) {
-		test();
-	} else {
-		int lRes = 3800;
-		int rRes = 3800;
-		float dist = 0.128f;
-
-		if (strcmp(argv[1], "line") == 0) {
-			init(lRes, rRes, dist, 1);
-			int mm = atoi(argv[2]);
-			motionLine(mm);
-		} else if (strcmp(argv[1], "rotate") == 0) {
-			init(lRes, rRes, dist, 1);
-			int degres = atoi(argv[2]);
-			motionRotate(degres);
-		} else if (strcmp(argv[1], "test0") == 0) {
-			init(lRes, rRes, dist, 0);
-			test();
-		} else if (strcmp(argv[1], "test1") == 0) {
-			init(lRes, rRes, dist, 0);
-			int secs = atoi(argv[2]);
-			testExternalCounters(secs, 0);
-		} else if (strcmp(argv[1], "test2") == 0) {
-			init(lRes, rRes, dist, 0);
-			int secs = atoi(argv[2]);
-			testExternalCounters(secs, 1);
-		} else if (strcmp(argv[1], "pidAD") == 0) {
-			int mm = atoi(argv[2]);
-			init(lRes, rRes, dist, 1);
-			RobotCommand* cmd = malloc(sizeof(RobotCommand));
-			float meters = mm / 1000.0f;
-
-			motion_StepOrderAD(cmd, 0.0f, meters / valueVTops);
-			printf("Check cmd\n");
-			checkRobotCommand(cmd);
-			printf("Loading StepOrderAD command for %d mm (%f meters)\n", mm,
-					meters);
-
-			path_LaunchTrajectory(cmd);
-			printf("path_WaitEndOfTrajectory\n");
-			//int result = path_WaitEndOfTrajectory();
-
-			//	printf("path_WaitEndOfTrajectory returned : %d : %d\n", result,
-			//			TRAJ_OK);
-
-			sleep(5);
-
-			robot_setMotorLeftSpeed(0);
-			robot_setMotorRightSpeed(0);
-			free(cmd);
-			closeLog();
-
-		} else {
-			printf("Commande %s inconnue\n", argv[1]);
-		}
-	}
-
-//testEncoders();
-//test();
-//testExternalCounters();
-//test_motor_encoder();
-//calibrate();
-//testMotionLine();
-//testMotionRotate90();
-//motion_DoRotate(M_PI*1.0f);
-	printf("Bye\n");
-	return 0;
 }

@@ -50,7 +50,7 @@ void path_TriggerWaypoint(TRAJ_STATE state);
 
 void path_Init(void) {
 	printf("path_Init\n");
-	trajState=TRAJ_OK;
+	trajState = TRAJ_OK;
 	waitingSemaphore = FALSE;
 	sem_init(&semWaypoint, 0, 0);
 	printf("path_Init done\n");
@@ -60,6 +60,7 @@ void path_Init(void) {
 }
 
 void path_SetNextWaypoint(WAYPOINT *wp) {
+	printf("path_SetNextWaypoint type: %d\n", wp->type);
 	nextWaypoint = *wp;
 }
 
