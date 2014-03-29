@@ -66,7 +66,7 @@ void Dynamixel::setRX()
 //return 0 if ok , TODO -1 otherwise
 void Dynamixel::setCommand(int idAX12, int regstart, int data, int nb2Write)
 {
-	int error = -1;
+	//int error = -1;
 	int statuserror = 0;
 	utils::Chronometer chrono;
 	lock();

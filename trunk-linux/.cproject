@@ -62,7 +62,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="sh|todo_" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="src/todo|sh|todo_" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -123,7 +123,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="dev-simu/cpp|robot-test|robot/cpp/Main.cpp|robot-test/cpp/Main.cpp|pmx-match-main|apf-test|robot-test/cpp/UTGpioWithModeTest.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry excluding="todo|dev-simu/cpp|robot-test|robot/cpp/Main.cpp|robot-test/cpp/Main.cpp|pmx-match-main|apf-test|robot-test/cpp/UTGpioWithModeTest.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -208,7 +208,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="src/dev-simu|src/robot-test|src/dev-test|todo_|src/doc|src/pmx-match-main" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="src/todo|src/dev-simu|src/robot-test|src/dev-test|todo_|src/doc|src/pmx-match-main" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -286,7 +286,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="robot-test|robot/cpp/Main.cpp|dev-simu|dev-test|robot-test/cpp/Main.cpp|doc|pmx-match-main|apf-test|robot-test/cpp/UTGpioWithModeTest.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry excluding="todo|robot-test|robot/cpp/Main.cpp|dev-simu|dev-test|robot-test/cpp/Main.cpp|doc|pmx-match-main|apf-test|robot-test/cpp/UTGpioWithModeTest.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src/apf-test/cpp"/>
 					</sourceEntries>
 				</configuration>

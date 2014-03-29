@@ -492,7 +492,7 @@ namespace pmx
          * \brief indique que le mode test pid position afin de ne pas prendre en compte le test d'arret en position.
          *
          */
-        inline void pidPositionTest(bool value)
+        inline void pidPositionTest(bool )
         {
             /*this->speedManager_->modeTestPidPos(value);*/
         }
