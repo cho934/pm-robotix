@@ -6,12 +6,14 @@
 #include <iostream>
 #include "Robot.hpp"
 #include "Exception.hpp"
+#include "LedIndicator.hpp"
 
 pmx::Robot::Robot()
-		: base_(*this), myColor_(pmx::PMXNOCOLOR)//, irSensorsGroup_(*this),
+		: base_(*this), myColor_(pmx::PMXNOCOLOR) //, irSensorsGroup_(*this),
 
 {
-
+	//Led indicator
+	pmx::LedIndicator::instance().reset();
 }
 
 void pmx::Robot::initialize(const std::string& prefix,
@@ -44,7 +46,6 @@ void pmx::Robot::stop()
 
 	this->stopDevices();
 
-
 }
 
 void pmx::Robot::stopDevices()
@@ -63,41 +64,41 @@ void pmx::Robot::goTo(double x, double y, BaseWay way, bool detection)
 {
 	/*
 
-	if (detection == true)
-	{
-		irSensorsGroup().startTimer();
-	}
+	 if (detection == true)
+	 {
+	 irSensorsGroup().startTimer();
+	 }
 
-	base().arrivedDestination(false);
-	bool opponentDetected = false;
+	 base().arrivedDestination(false);
+	 bool opponentDetected = false;
 
-	while (base().arrivedDestination() == false)
-	{
-		opponentDetected = base().checkOpponent();
-		if (!opponentDetected)
-		{
-			opponentDetected = base().movexy(x, y, way, detection);
+	 while (base().arrivedDestination() == false)
+	 {
+	 opponentDetected = base().checkOpponent();
+	 if (!opponentDetected)
+	 {
+	 opponentDetected = base().movexy(x, y, way, detection);
 
-			if (opponentDetected == true)
-			{
-				base().stop();
-				logger().info() << " !! opponentDetected time="
-						<< chronometerRobot().getElapsedTimeInSec()
-						<< utils::end;
-			}
-		}
-		else
-		{
-			base().stop();
-			logger().info() << " sleep" << utils::end;
-			sleep(1);
-		}
-	}
+	 if (opponentDetected == true)
+	 {
+	 base().stop();
+	 logger().info() << " !! opponentDetected time="
+	 << chronometerRobot().getElapsedTimeInSec()
+	 << utils::end;
+	 }
+	 }
+	 else
+	 {
+	 base().stop();
+	 logger().info() << " sleep" << utils::end;
+	 sleep(1);
+	 }
+	 }
 
-	if (detection == true)
-	{
-		irSensorsGroup().stopTimer();
-	}*/
+	 if (detection == true)
+	 {
+	 irSensorsGroup().stopTimer();
+	 }*/
 
 }
 
@@ -105,41 +106,41 @@ void pmx::Robot::goToTeta(double x, double y, double teta, BaseWay way,
 		bool detection)
 {
 
-/*
-	if (detection == true)
-	{
-		irSensorsGroup().startTimer();
-	}
+	/*
+	 if (detection == true)
+	 {
+	 irSensorsGroup().startTimer();
+	 }
 
-	base().arrivedDestination(false);
-	bool opponentDetected = false;
+	 base().arrivedDestination(false);
+	 bool opponentDetected = false;
 
-	while (base().arrivedDestination() == false)
-	{
-		opponentDetected = base().checkOpponent();
-		if (!opponentDetected)
-		{
-			opponentDetected = base().movexyTeta(x, y, way, teta, detection);
+	 while (base().arrivedDestination() == false)
+	 {
+	 opponentDetected = base().checkOpponent();
+	 if (!opponentDetected)
+	 {
+	 opponentDetected = base().movexyTeta(x, y, way, teta, detection);
 
-			if (opponentDetected == true)
-			{
-				base().stop();
-				logger().info() << " !! opponentDetected time="
-						<< chronometerRobot().getElapsedTimeInSec()
-						<< utils::end;
-			}
-		}
-		else
-		{
-			base().stop();
-			logger().info() << " sleep" << utils::end;
-			sleep(1);
-		}
-	}
+	 if (opponentDetected == true)
+	 {
+	 base().stop();
+	 logger().info() << " !! opponentDetected time="
+	 << chronometerRobot().getElapsedTimeInSec()
+	 << utils::end;
+	 }
+	 }
+	 else
+	 {
+	 base().stop();
+	 logger().info() << " sleep" << utils::end;
+	 sleep(1);
+	 }
+	 }
 
-	if (detection == true)
-	{
-		irSensorsGroup().stopTimer();
-	}*/
+	 if (detection == true)
+	 {
+	 irSensorsGroup().stopTimer();
+	 }*/
 
 }

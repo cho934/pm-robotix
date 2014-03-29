@@ -4,12 +4,12 @@
  * sur le robot.
  */
 
-//extern "C" {
-//#include "as_devices/as_i2c.h"
-//}
+
 #include <iostream>
 #include "../../common/cpp/ConsoleUnitTestManager.hpp"
 #include "../../common/cpp/LoggerFactory.hpp"
+
+#include "LedIndicatorTest.hpp"
 
 /*!
  * \brief Méthode principale pour le lancement des tests sur le robot.
@@ -27,6 +27,8 @@ int main(int argc, char** argv)
 	logger.info("Lancement des tests unitaires");
 
 	pmx::ConsoleUnitTestManager manager;
+
+	manager.add(new robottest::LedIndicatorTest());
 
 	if (argc == 1)
 	{

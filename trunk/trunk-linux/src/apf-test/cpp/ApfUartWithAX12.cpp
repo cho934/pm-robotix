@@ -8,13 +8,14 @@
 #include <cstdlib>
 #include <unistd.h>
 #include "ApfUartWithAX12.hpp"
+//#include "Dynamixel.hpp"
 
 void test::ApfUartWithAX12::run(int, char*[])
 {
 	//add param ID Loop
 	std::cout << "APF : Use UART2 and AX-12" << std::endl;
 
-	int idAX12 = 8;
+	int idAX12 = 7;
 
 	Dynamixel dynamixel;
 
@@ -51,6 +52,21 @@ void test::ApfUartWithAX12::run(int, char*[])
 
 		data = DxlGetBaud(idAX12);
 		std::cout << "baud=" << reinterpret_cast<void*>(data) << std::endl;
+
+		data = DxlGetReturnDelay(idAX12);
+		std::cout << "delay=" << reinterpret_cast<void*>(data) << std::endl;
+
+		data = DxlGetEnableTorque(idAX12);
+		std::cout << "enable torque=" << reinterpret_cast<void*>(data) << std::endl;
+
+		data = DxlGetMaxTorqueLimit(idAX12);
+		std::cout << "max torque limit=" << reinterpret_cast<void*>(data) << std::endl;
+
+		data = DxlGetMaxTorque(idAX12);
+		std::cout << "max torque=" << reinterpret_cast<void*>(data) << std::endl;
+
+
+
 
 		pos = DxlGetPos(idAX12);
 		std::cout << "Last Position=" << pos << std::endl;
