@@ -60,11 +60,24 @@ private:
 		paths[5]->openIoctl('A', 7);
 		paths[6]->openIoctl('A', 10);
 		paths[7]->openIoctl('A', 11);
-
 		for (int i = 0; i < 8; i++)
 		{
 			paths[i]->setDirIoctl(1);
 		}
+		/*
+		 paths[0]->openAs('A', 4);
+		 paths[1]->openAs('A', 5);
+		 paths[2]->openAs('A', 6);
+		 paths[3]->openAs('A', 9);
+		 paths[4]->openAs('A', 8);
+		 paths[5]->openAs('A', 7);
+		 paths[6]->openAs('A', 10);
+		 paths[7]->openAs('A', 11);
+
+		 for (int i = 0; i < 8; i++)
+		 {
+		 paths[i]->setDirectionAs(1);
+		 }*/
 	}
 
 	/*!
@@ -72,10 +85,16 @@ private:
 	 */
 	virtual ~LedIndicator()
 	{
+
 		for (int i = 0; i < 8; i++)
 		{
 			paths[i]->closeIoctl();
 		}
+		/*
+		 for (int i = 0; i < 8; i++)
+		 {
+		 paths[i]->closeAs();
+		 }*/
 	}
 
 public:
