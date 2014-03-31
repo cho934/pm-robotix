@@ -13,7 +13,7 @@ pmx::Robot::Robot()
 
 {
 	//Led indicator
-	pmx::LedIndicator::instance().reset();
+	//pmx::LedIndicator::instance().reset();
 }
 
 void pmx::Robot::initialize(const std::string& prefix,
