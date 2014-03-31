@@ -6,10 +6,9 @@
 #ifndef HOSTGPIOPORT_H_
 #define HOSTGPIOPORT_H_
 
+#include <iostream>
 #include <as_devices/as_gpio.h>
 #include "../../common/cpp/Exception.hpp"
-#include "../../common/cpp/Mutex.hpp"
-
 
 namespace utils
 {
@@ -17,43 +16,49 @@ namespace utils
 /*!
  * \brief Exception lancée s'il y a une erreur avec les GPIO.
  */
-class GpioException: public Exception
+class HostGpioException: public Exception
 {
 public:
-	GpioException(const std::string & message)
+	HostGpioException(const std::string & message)
 			: Exception(message)
 	{
+		//std::cout << message << std::endl;
 	}
 
-	virtual ~ GpioException() throw ()
+	virtual ~ HostGpioException() throw ()
 	{
 	}
 };
 
-class HostGpioPort // : public utils::Mutex
+class HostGpioPort
 {
 private:
 	struct as_gpio_device *device_;
-	int opened_;
-	int fd_;//pour ioctl
+	int fd_; //pour ioctl
+	char port_letter_;
+	int pin_number_;
+	static int* portA_opened_;
+	static int* portD_opened_;
 
 public:
 	/*!
 	 * \brief Constructeur de la classe.
 	 */
 	HostGpioPort();
-	//GpioPort(char portLetter, int pinNum);
 
 	/*!
 	 * \brief Destructeur de la classe.
 	 */
 	virtual ~HostGpioPort();
 
+	void checkIf(int value);
+	void setData(int value);
+
 public:
 
 	//version as_devices
 	void openAs(char portLetter, int pinNum);
-	void closeAs(void);
+	void closeAs();
 
 	/*!
 	 * \brief Set the GPIO Direction.
@@ -64,7 +69,7 @@ public:
 
 	//version ioctl
 	void openIoctl(char portLetter, int pinNum);
-	void closeIoctl(void);
+	void closeIoctl();
 	void setDirIoctl(int aDirection);
 	void setValueIoctl(bool aValue);
 

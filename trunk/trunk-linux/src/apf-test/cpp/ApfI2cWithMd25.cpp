@@ -32,7 +32,7 @@ void test::ApfI2cWithMd25::run(int, char*[])
 	value = as_i2c_set_slave_addr(i2c_bus, MD25_DEFAULT_ADDRESS);
 	if (value < 0)
 	{
-		printf(" Error, can't close i2c bus num %d\n", MD25_I2C_BUS);
+		printf(" Error, can't as_i2c_set_slave_addr i2c bus num %d\n", MD25_I2C_BUS);
 	}
 	usleep(5000); //fréq i2c à 100kHz : attente de l'application complète de la trame
 
@@ -42,6 +42,7 @@ void test::ApfI2cWithMd25::run(int, char*[])
 
 	float bat = getBatteryVolts(i2c_bus);
 	std::cout << "getBatteryVolts" << bat << std::endl;
+
 
 
 
