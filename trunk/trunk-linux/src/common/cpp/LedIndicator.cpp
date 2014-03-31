@@ -9,6 +9,7 @@ void pmx::LedIndicator::set(int position, int status)
 {
 	this->lock();
 	paths[position]->setValueIoctl(status);
+	//paths[position]->setValueAs(status);
 	this->unlock();
 }
 
