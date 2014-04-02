@@ -15,4 +15,13 @@ void utils::LoggerFactory::initialize()
 
 	add(utils::Level::ERROR, "", "console");
 
+	add(utils::Level::INFO, "robottest::LedIndicatorTest", "console");
+	add(utils::Level::INFO, "robottest::GroveColorTest", "console");
+	add(utils::Level::INFO, "robottest::LedBarTest", "console");
+
+
+	add(utils::Level::DEBUG, "pmx::Robot", "console");
+	add(utils::Level::DEBUG, "pmx::GroveColorSensor", "console");
+	add(utils::Level::DEBUG, "pmx::ActionManager", "console");
+
 }

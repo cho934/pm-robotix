@@ -48,7 +48,7 @@ utils::Thread::yield()
 bool
 utils::Thread::start()
 {
-    printf("    utils::Thread::start()\n");
+    //printf("    utils::Thread::start()\n");
     this->setState(utils::STARTING);
    
     int code = pthread_create(&threadId_, NULL, utils::Thread::entryPoint, (void *) this);

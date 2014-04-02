@@ -9,12 +9,13 @@
 
 #include <string>
 
-#include "Mutex.hpp"
 #include "Macro.hpp"
 #include "HostGpioPort.hpp"
+#include "LoggerFactory.hpp"
 
 namespace pmx
 {
+
 /*!
  * \brief Cette classe permet d'interagir avec la série de 8 leds.
  *
@@ -22,7 +23,7 @@ namespace pmx
  * utilisée à tout endroit du programme sans difficulté, en contrepartie
  * les sorties pour les leds doivent être dédiées.
  */
-class LedIndicator: utils::Mutex
+class LedIndicator
 {
 public:
 
@@ -38,6 +39,18 @@ public:
 		return instance;
 	}
 
+	/*!
+	 * \brief Retourne le \ref Logger associé à la classe \ref LedIndicatorTest.
+	 */
+	static inline const utils::Logger & logger()
+	{
+		static const utils::Logger & instance = utils::LoggerFactory::logger("pmx::LedIndicator");
+		return instance;
+	}
+
+	/*!
+	 * \brief Liste des gpio à utiliser.
+	 */
 	utils::HostGpioPort * paths[8];
 
 private:
@@ -47,37 +60,43 @@ private:
 	 */
 	LedIndicator()
 	{
-		for (int i = 0; i < 8; i++)
+		try
 		{
-			paths[i] = new utils::HostGpioPort();
-		}
+			for (int i = 0; i < 8; i++)
+			{
+				paths[i] = new utils::HostGpioPort();
+			}
 
-		paths[0]->openIoctl('A', 4);
-		paths[1]->openIoctl('A', 5);
-		paths[2]->openIoctl('A', 6);
-		paths[3]->openIoctl('A', 9);
-		paths[4]->openIoctl('A', 8);
-		paths[5]->openIoctl('A', 7);
-		paths[6]->openIoctl('A', 10);
-		paths[7]->openIoctl('A', 11);
-		for (int i = 0; i < 8; i++)
+			paths[0]->openIoctl('A', 4);
+			paths[1]->openIoctl('A', 5);
+			paths[2]->openIoctl('A', 6);
+			paths[3]->openIoctl('A', 9);
+			paths[4]->openIoctl('A', 8);
+			paths[5]->openIoctl('A', 7);
+			paths[6]->openIoctl('A', 10);
+			paths[7]->openIoctl('A', 11);
+			for (int i = 0; i < 8; i++)
+			{
+				paths[i]->setDirIoctl(1);
+			}
+			/*
+			 paths[0]->openAs('A', 4);
+			 paths[1]->openAs('A', 5);
+			 paths[2]->openAs('A', 6);
+			 paths[3]->openAs('A', 9);
+			 paths[4]->openAs('A', 8);
+			 paths[5]->openAs('A', 7);
+			 paths[6]->openAs('A', 10);
+			 paths[7]->openAs('A', 11);
+
+			 for (int i = 0; i < 8; i++)
+			 {
+			 paths[i]->setDirectionAs(1);
+			 }*/
+		} catch (utils::Exception * e)
 		{
-			paths[i]->setDirIoctl(1);
+			logger().error() << "Exception : " << e->what() << utils::end;
 		}
-		/*
-		 paths[0]->openAs('A', 4);
-		 paths[1]->openAs('A', 5);
-		 paths[2]->openAs('A', 6);
-		 paths[3]->openAs('A', 9);
-		 paths[4]->openAs('A', 8);
-		 paths[5]->openAs('A', 7);
-		 paths[6]->openAs('A', 10);
-		 paths[7]->openAs('A', 11);
-
-		 for (int i = 0; i < 8; i++)
-		 {
-		 paths[i]->setDirectionAs(1);
-		 }*/
 	}
 
 	/*!
@@ -85,16 +104,22 @@ private:
 	 */
 	virtual ~LedIndicator()
 	{
-
-		for (int i = 0; i < 8; i++)
+		try
 		{
-			paths[i]->closeIoctl();
+			for (int i = 0; i < 8; i++)
+			{
+				paths[i]->closeIoctl();
+			}
+			/*
+			 for (int i = 0; i < 8; i++)
+			 {
+			 paths[i]->closeAs();
+			 }*/
+
+		} catch (utils::Exception * e)
+		{
+			logger().error() << "Exception : " << e->what() << utils::end;
 		}
-		/*
-		 for (int i = 0; i < 8; i++)
-		 {
-		 paths[i]->closeAs();
-		 }*/
 	}
 
 public:
@@ -153,6 +178,9 @@ public:
 	 * \brief Clignote toutes les leds nb fois sur les 2 valeurs hex val1 et val2.
 	 */
 	void alternate(uint nb, uint timeus, uint val1, uint val2);
+
+	//TODO k2mil()
+
 };
 }
 

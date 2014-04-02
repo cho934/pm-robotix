@@ -7,13 +7,20 @@
 #include "Robot.hpp"
 #include "Exception.hpp"
 #include "LedIndicator.hpp"
+#include "HostI2cBus.hpp"
 
 pmx::Robot::Robot()
-		: base_(*this), myColor_(pmx::PMXNOCOLOR) //, irSensorsGroup_(*this),
-
+		: base_(*this),
+		  myColor_(pmx::PMXNOCOLOR),
+		  groveColorSensor_(*this),
+		  ledBar_(*this)
+//, irSensorsGroup_(*this),
 {
-	//Led indicator
-	//pmx::LedIndicator::instance().reset();
+
+	//Led indicator initialisation
+	pmx::LedIndicator::instance().reset();
+
+
 }
 
 void pmx::Robot::initialize(const std::string& prefix,
@@ -36,6 +43,8 @@ void pmx::Robot::configure(const std::string & configurationFile)
 
 void pmx::Robot::start()
 {
+	actionManager_.start();
+
 	logger().info("Robot is started");
 
 }
@@ -44,13 +53,19 @@ void pmx::Robot::stop()
 {
 	logger().info("Stop");
 
+	//close I2C
+	utils::HostI2cBus::instance().close();
+
 	this->stopDevices();
+	this->stopManagers();
 
 }
 
 void pmx::Robot::stopDevices()
 {
 	this->base().stop();
+
+	this->ledBar().stop(true);
 
 }
 

@@ -10,6 +10,8 @@
 #include "../../common/cpp/LoggerFactory.hpp"
 
 #include "LedIndicatorTest.hpp"
+#include "LedBarTest.hpp"
+#include "GroveColorTest.hpp"
 
 /*!
  * \brief Méthode principale pour le lancement des tests sur le robot.
@@ -22,13 +24,15 @@
  */
 int main(int argc, char** argv)
 {
-	std::cout << "main robot-test Start" << std::endl;
-	const utils::Logger& logger = utils::LoggerFactory::logger("main");
-	logger.info("Lancement des tests unitaires");
+	//std::cout << "main robot-test Start" << std::endl;
+	//const utils::Logger& logger = utils::LoggerFactory::logger("main");
+	//logger.info("Lancement des tests unitaires");
 
 	pmx::ConsoleUnitTestManager manager;
 
 	manager.add(new robottest::LedIndicatorTest());
+	manager.add(new robottest::LedBarTest());
+	manager.add(new robottest::GroveColorTest());
 
 	if (argc == 1)
 	{
