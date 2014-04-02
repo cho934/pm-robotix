@@ -5,12 +5,18 @@
 
 #include "LedIndicator.hpp"
 
+
 void pmx::LedIndicator::set(int position, int status)
 {
-	this->lock();
-	paths[position]->setValueIoctl(status);
-	//paths[position]->setValueAs(status);
-	this->unlock();
+	//TODO desactiver le device si exception
+	try
+	{
+		paths[position]->setValueIoctl(status);
+		//paths[position]->setValueAs(status);
+	} catch (utils::Exception * e)
+	{
+		logger().error() << "Exception : " << e->what() << utils::end;
+	}
 }
 
 void pmx::LedIndicator::reset()

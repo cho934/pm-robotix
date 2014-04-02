@@ -1,6 +1,6 @@
 /*!
  * \file
- * \brief Définition de la classe HostGpioPort.
+ * \brief Définition de la classe HostGpioPort, gestion des ports gpio pour la carte APF9328.
  */
 
 #ifndef HOSTGPIOPORT_H_
@@ -9,6 +9,7 @@
 #include <iostream>
 #include <as_devices/as_gpio.h>
 #include "../../common/cpp/Exception.hpp"
+#include "../../common/cpp/Mutex.hpp"
 
 namespace utils
 {
@@ -22,7 +23,6 @@ public:
 	HostGpioException(const std::string & message)
 			: Exception(message)
 	{
-		//std::cout << message << std::endl;
 	}
 
 	virtual ~ HostGpioException() throw ()
@@ -30,7 +30,7 @@ public:
 	}
 };
 
-class HostGpioPort
+class HostGpioPort: utils::Mutex
 {
 private:
 	struct as_gpio_device *device_;
@@ -61,7 +61,7 @@ public:
 	void closeAs();
 
 	/*!
-	 * \brief Set the GPIO Direction.
+	 * \brief Set the GPIO Direction by AsDevices.
 	 * \param aDirection (0:in, 1:out)
 	 */
 	void setDirectionAs(int aDirection);
@@ -70,6 +70,11 @@ public:
 	//version ioctl
 	void openIoctl(char portLetter, int pinNum);
 	void closeIoctl();
+
+	/*!
+	 * \brief Set the GPIO Direction by ioctl.
+	 * \param aDirection (0:in, 1:out)
+	 */
 	void setDirIoctl(int aDirection);
 	void setValueIoctl(bool aValue);
 

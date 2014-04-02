@@ -1,6 +1,6 @@
 /*!
  * \file
- * \brief Définition de la classe HostI2cBus.
+ * \brief Définition de la classe HostI2cBus, gestion du bus i2c pour APF9328.
  */
 
 #ifndef HOSTI2CBUS_H_
@@ -9,7 +9,6 @@
 #include <as_devices/as_i2c.h>
 #include "../../common/cpp/Exception.hpp"
 #include "../../common/cpp/Mutex.hpp"
-
 
 namespace utils
 {
@@ -30,29 +29,98 @@ public:
 	}
 };
 
-class HostI2cBus //: public utils::Mutex
+class I2cWarning: public Exception
 {
+public:
+	I2cWarning(const std::string & message)
+			: Exception(message)
+	{
+	}
+
+	virtual ~ I2cWarning() throw ()
+	{
+	}
+};
+
+class HostI2cBus: public utils::Mutex
+{
+public:
+
+	/*!
+	 * \brief Cette méthode statique retourne l'instance unique de la classe HostI2cBus.
+	 * \return L'instance unique de la classe.
+	 *
+	 */
+	static HostI2cBus & instance()
+	{
+		static HostI2cBus instance;
+		return instance;
+	}
 private:
-	struct as_i2c_device *i2c_device_;
+	/*!
+	 * \brief Stored i2c parameters.
+	 */
+	struct as_i2c_device *device_;
+
+	/*!
+	 * \brief true if the i2c is opened.
+	 */
 	int opened_;
 
-public:
 	/*!
 	 * \brief Constructeur de la classe.
 	 */
 	HostI2cBus();
-	//GpioPort(char portLetter, int pinNum);
 
 	/*!
 	 * \brief Destructeur de la classe.
 	 */
-	virtual ~HostI2cBus();
+	virtual ~HostI2cBus()
+	{
+		/*
+		close();
+		if (opened_ == 1)
+		{
+			throw new I2cException("Error i2c bus not closed");
+		}*/
+	}
 
 public:
-	void openI2c();
-	void closeI2c();
+	/*!
+	 * \brief Read a byte from the given register.
+	 *
+	 * \param   reg   the given register.
+	 * \param   data   the read value.
+	 *
+	 * \return return 0 on success, -1 on write error (\e reg byte), -2 on read error.
+	 */
+	int readRegisterbyte(uint8_t reg, uint8_t* data);
 
+	/*!
+	 * \brief Write a byte to the I2C given register.
+	 *
+	 * \param   reg   register to write.
+	 * \param   value   value to apply.
+	 *
+	 * \return 0 on success, -1 on error.
+	 */
+	int writeRegisterbyte(uint8_t reg, uint8_t value);
 
+	/*!
+	 * \brief Open i2c.
+	 */
+	void open();
+
+	/*!
+	 * \brief Close i2c.
+	 */
+	void close();
+
+	/*!
+	 * \brief Set the slave by his address.
+	 * \param   slaveAddr	slave address.
+	 */
+	void setSlave(int slaveAddr);
 
 };
 }

@@ -1,10 +1,10 @@
 /*!
  * \file
- * \brief Définition de la classe LedIndicatorTest.
+ * \brief Définition de la classe GroveColorTest.
  */
 
-#ifndef ROBOTTEST_LEDINDICATORTEST_HPP
-#define	ROBOTTEST_LEDINDICATORTEST_HPP
+#ifndef ROBOTTEST_GROVECOLORTEST_HPP
+#define	ROBOTTEST_GROVECOLORTEST_HPP
 
 #include "../../common/cpp/ConsoleUnitTest.hpp"
 #include "../../common/cpp/LoggerFactory.hpp"
@@ -12,9 +12,9 @@
 namespace robottest
 {
     /*!
-     * \brief Effectue un test de clignotement des LEDs du tableau d'affichage.
+     * \brief Effectue un test.
      */
-    class LedIndicatorTest : public pmx::ConsoleUnitTest
+    class GroveColorTest : public pmx::ConsoleUnitTest
     {
     private:
 
@@ -23,7 +23,7 @@ namespace robottest
          */
         static inline const utils::Logger & logger()
         {
-            static const utils::Logger & instance = utils::LoggerFactory::logger("robottest::LedIndicatorTest");
+            static const utils::Logger & instance = utils::LoggerFactory::logger("robottest::GroveColorTest");
             return instance;
         }
 
@@ -32,14 +32,14 @@ namespace robottest
         /*!
          * \brief Constructeur de la classe.
          */
-        LedIndicatorTest() : pmx::ConsoleUnitTest("LedIndicatorTest : Blink Led board directly")
+        GroveColorTest() : pmx::ConsoleUnitTest("GroveColorTest : get colors from Gorve sensor")
         {
         }
 
         /*!
          * \brief Destructeur de la classe.
          */
-        virtual ~LedIndicatorTest()
+        virtual ~GroveColorTest()
         {
         }
 

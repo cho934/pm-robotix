@@ -77,26 +77,32 @@ void utils::HostGpioPort::closeAs(void)
 
 void utils::HostGpioPort::setDirectionAs(int aDirection)
 {
+	//lock();
 	checkIf(0); //check if gpio is opened
 
 	int ret = as_gpio_set_pin_direction(device_, aDirection);
 	if (ret < 0)
 	{
+		//unlock();
 		std::ostringstream msg;
 		msg << "Error gpio setDirectionAs, can't change direction on " << port_letter_ << pin_number_ << " !";
 		throw new HostGpioException(msg.str());
 	}
+	//unlock();
 }
 
 void utils::HostGpioPort::setValueAs(int aValue)
 {
+	//lock();
 	checkIf(0); //check if gpio is opened
 
 	int ret = as_gpio_set_pin_value(device_, aValue);
 	if (ret < 0)
 	{
+		//unlock();
 		throw new HostGpioException("Error gpio setValueAs, can't change pin value");
 	}
+	//unlock();
 }
 
 void utils::HostGpioPort::checkIf(int value)
@@ -177,22 +183,27 @@ void utils::HostGpioPort::closeIoctl(void)
 
 void utils::HostGpioPort::setDirIoctl(int aDirection)
 {
+	//lock();
 	checkIf(0); //check if gpio is opened
 
 	if (aDirection != 0 and aDirection != 1)
 	{
+		//unlock();
 		throw new HostGpioException("Error gpio setDirIoctl, bad aDirection !");
 	}
 	int err = ioctl(fd_, GPIOWRDIRECTION, &aDirection); //OUT => 1 IN =>0
 	if (err < 0)
 	{
+		//unlock();
 		//std::cout << "Warning setDirIoctl, unable to set gpio direction !" << std::endl;
 		throw new HostGpioException("Warning setDirIoctl, unable to set gpio direction !");
 	}
+	//unlock();
 }
 
 void utils::HostGpioPort::setValueIoctl(bool aValue)
 {
+	//lock();
 	checkIf(0); //check if gpio is opened
 
 	int portval = 1;
@@ -203,6 +214,8 @@ void utils::HostGpioPort::setValueIoctl(bool aValue)
 	int err = ioctl(fd_, GPIOWRDATA, &portval);
 	if (err < 0)
 	{
+		unlock();
 		throw new HostGpioException("Error gpio setValueIoctl, unable to set gpio value !");
 	}
+	//unlock();
 }

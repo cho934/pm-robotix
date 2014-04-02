@@ -10,131 +10,175 @@
 #include "Base.hpp"
 #include "Chronometer.hpp"
 #include "RobotColor.hpp"
-
+#include "GroveColorSensor.hpp"
+#include "LedIndicator.hpp"
+#include "ActionManager.hpp"
+#include "LedBar.hpp"
 
 namespace pmx
 {
-    /*!
-     * \brief Cette classe représente le robot.
-     *
-     * Cette classe maitresse de l'application représente le robot et permet
-     * d'accéder à l'ensemble de ses éléments.
-     */
-    class Robot : public IInitialized
-    {
-    private:
+/*!
+ * \brief Cette classe représente le robot.
+ *
+ * Cette classe maitresse de l'application représente le robot et permet
+ * d'accéder à l'ensemble de ses éléments.
+ */
+class Robot: public IInitialized
+{
+private:
 
-        /*!
-         * \brief Retourne le \ref Logger associé à la classe \ref Robot.
-         */
-        static inline const utils::Logger & logger()
-        {
-            static const utils::Logger & instance = utils::LoggerFactory::logger("pmx::Robot");
-            return instance;
-        }
+	/*!
+	 * \brief Retourne le \ref Logger associé à la classe \ref Robot.
+	 */
+	static inline const utils::Logger & logger()
+	{
+		static const utils::Logger & instance = utils::LoggerFactory::logger("pmx::Robot");
+		return instance;
+	}
+	/*!
+	 * \brief Assure la gestion des actions du robot.
+	 */
+	pmx::ActionManager actionManager_;
 
-        /*!
-         * \brief chronometerRobot.
-         */
-        utils::Chronometer chronometerRobot_;
+	/*!
+	 * \brief chronometerRobot.
+	 */
+	utils::Chronometer chronometerRobot_;
 
-       /*!
-         * \brief Base roulante du robot.
-         */
-        pmx::Base base_;
+	/*!
+	 * \brief Base roulante du robot.
+	 */
+	pmx::Base base_;
 
-        /*!
-         * \brief Couleur du robot.
-         */
-        pmx::RobotColor myColor_;
+	/*!
+	 * \brief Couleur du robot.
+	 */
+	pmx::RobotColor myColor_;
 
+	/*!
+	 * \brief GroveColorSensor.
+	 */
+	pmx::GroveColorSensor groveColorSensor_;
 
-    public:
+	/*!
+	 * \brief Barre de LED.
+	 */
+	pmx::LedBar ledBar_;
 
-        /*!
-         * \brief Constructeur de la classe.
-         */
-        Robot();
+public:
 
-        /*!
-         * \brief Destructeur de la classe.
-         */
-        virtual inline ~Robot()
-        {
-        }
+	/*!
+	 * \brief Constructeur de la classe.
+	 */
+	Robot();
 
-        /*!
-         * \brief Cette méthode retourne l'objet de manipulation de la base
-         * roulante du robot.
-         * \return La base roulante du robot.
-         */
-        inline pmx::Base & base()
-        {
-            return base_;
-        }
+	/*!
+	 * \brief Destructeur de la classe.
+	 */
+	virtual inline ~Robot()
+	{
+	}
 
-        /*!
-         * \brief Retourne la couleur du robot.
-         */
-        inline pmx::RobotColor myColor() const
-        {
-            return myColor_;
-        }
+	/*!
+	 * \brief Cette méthode retourne l'objet de manipulation de la base
+	 * roulante du robot.
+	 * \return La base roulante du robot.
+	 */
+	inline pmx::Base & base()
+	{
+		return base_;
+	}
 
-        /*!
-         * \brief Enregistre la couleur du robot.
-         */
-        inline void myColorIs(pmx::RobotColor color)
-        {
-            this->myColor_ = color;
-        }
+	/*!
+	 * \brief Retourne la couleur du robot.
+	 */
+	inline pmx::RobotColor myColor() const
+	{
+		return myColor_;
+	}
 
+	/*!
+	 * \brief Enregistre la couleur du robot.
+	 */
+	inline void myColorIs(pmx::RobotColor color)
+	{
+		this->myColor_ = color;
+	}
 
-        /*!
-         * \brief Cette methode retourne l'objet de manipulation du chronometer.
-         * \return Le chronometer.
-         */
-        inline utils::Chronometer & chronometerRobot()
-        {
-            return chronometerRobot_;
-        }
+	/*!
+	 * \brief Cette methode retourne l'objet de manipulation du chronometer.
+	 * \return Le chronometer.
+	 */
+	inline utils::Chronometer & chronometerRobot()
+	{
+		return chronometerRobot_;
+	}
 
-        /*!
-         * \brief Active le robot.
-         *
-         * Cette méthode lance les différents threads associés et initialise
-         * le système.
-         */
-        void start();
+	/*!
+	 * \brief Cette methode retourne l'objet de manipulation du GroveColorSensor.
+	 * \return Le GroveColorSensor.
+	 */
+	inline pmx::GroveColorSensor & groveColorSensor()
+	{
+		return groveColorSensor_;
+	}
 
-        /*!
-         * \brief Arrete le robot et libère les ressources associés.
-         */
-        void stop();
+	/*!
+	 * \brief Cette methode retourne l'objet de manipulation du GroveColorSensor.
+	 * \return Le GroveColorSensor.
+	 */
+	inline pmx::LedBar & ledBar()
+	{
+		return ledBar_;
+	}
 
-        /*!
-         * \brief Arrete le thread sensorManager et actionManager.
-         */
-        void stopManagers();
+	/*!
+	 * \brief Ajout d'une action.
+	 * \param action
+	 *        L'action à ajouter.
+	 */
+	inline void addAction(IAction * action)
+	{
+		logger().debug() << "Robot addAction" << utils::end;
+		actionManager_.addAction(action);
+	}
 
-         /*!
-         * \brief Arrete les composant du robot.
-         */
-        void stopDevices();
+	/*!
+	 * \brief Active le robot.
+	 *
+	 * Cette méthode lance les différents threads associés et initialise
+	 * le système.
+	 */
+	void start();
 
-        /*!
-         * \brief Initialise les paramètres du robot via un fichier de configuration.
-         */
-        virtual void initialize(const std::string & prefix, utils::Configuration & configuration);
-        /*!
-         * \brief Lance l'initialisation par fichier de configuration
-         */
-        void configure(const std::string & configurationFile);
+	/*!
+	 * \brief Arrete le robot et libère les ressources associés.
+	 */
+	void stop();
 
-      void  goTo(double x, double y, BaseWay way, bool detection);
+	/*!
+	 * \brief Arrete le thread sensorManager et actionManager.
+	 */
+	void stopManagers();
 
-      void  goToTeta(double x, double y, double teta, BaseWay way, bool detection);
-    };
+	/*!
+	 * \brief Arrete les composant du robot.
+	 */
+	void stopDevices();
+
+	/*!
+	 * \brief Initialise les paramètres du robot via un fichier de configuration.
+	 */
+	virtual void initialize(const std::string & prefix, utils::Configuration & configuration);
+	/*!
+	 * \brief Lance l'initialisation par fichier de configuration
+	 */
+	void configure(const std::string & configurationFile);
+
+	void goTo(double x, double y, BaseWay way, bool detection);
+
+	void goToTeta(double x, double y, double teta, BaseWay way, bool detection);
+};
 }
 
 #endif

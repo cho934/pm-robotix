@@ -4,44 +4,126 @@
  */
 
 #include <iostream>
+#include <sstream>
 #include "HostI2cBus.hpp"
 
 utils::HostI2cBus::HostI2cBus()
-		: i2c_device_(NULL), opened_(0)
+		: device_(NULL), opened_(0)
 {
 }
 
-utils::HostI2cBus::~HostI2cBus()
+void utils::HostI2cBus::open()
+{
+	if (opened_ == 0)
+	{
+		int i2c_id = 0; //Bus I2C sur la carte APF9328
+		device_ = as_i2c_open(i2c_id);
+		if (device_ == NULL)
+		{
+			throw new I2cException("Error HostI2cBus::open, can't open i2c port !");
+		}
+		else
+			opened_ = 1;
+	}
+	else //i2c already opened
+	{
+		throw new I2cWarning("Warning HostI2cBus::open, i2c bus already opened !");
+	}
+}
+
+void utils::HostI2cBus::close(void)
 {
 	if (opened_ == 1)
 	{
-		throw new I2cException("Error i2c  not closed properly");
-	}
-}
+		int ret = as_i2c_close(device_);
 
-void utils::HostI2cBus::openI2c()
-{
-	int i2c_id = 0; //Bus I2C sur la carte APF9328
-	i2c_device_ = as_i2c_open(i2c_id);
-
-	if (i2c_device_ == NULL)
-	{
-		throw new I2cException(
-				"Error can't open i2c port");
+		if (ret < 0)
+		{
+			throw new I2cException("Error HostI2cBus::close, can't close I2C !");
+		}
+		opened_ = 0;
 	}
 	else
-		opened_ = 1;
-
-}
-
-void utils::HostI2cBus::closeI2c(void)
-{
-	int ret = as_i2c_close(i2c_device_);
-	if (ret < 0)
 	{
-		throw new I2cException("Error, can't close I2C");
-
+		throw new I2cException("Error HostI2cBus::close, i2c already closed !");
 	}
-	opened_ = 0;
 }
 
+void utils::HostI2cBus::setSlave(int slaveAddr)
+{
+	if (opened_ == 1)
+	{
+		lock();
+		int err = as_i2c_set_slave_addr(device_, slaveAddr);
+
+		if (err < 0)
+		{
+			std::ostringstream msg;
+			msg << "Error HostI2cBus::setSlave, can't set slave n°" << slaveAddr << "("
+					<< reinterpret_cast<void*>(slaveAddr) << "), is the slave connected ?";
+			throw new I2cException(msg.str());
+		}
+		usleep(5000); //fréq i2c à 100kHz : attente de l'application complète de la trame
+		unlock();
+	}
+	else
+	{
+		throw new I2cException("Error HostI2cBus::setSlave, i2c not opened !");
+	}
+}
+
+int utils::HostI2cBus::readRegisterbyte(uint8_t reg, uint8_t* data)
+{
+	if (opened_ == 1)
+	{
+		lock();
+		int ret = 0;
+
+		ret = as_i2c_read_reg(device_, reg, data, 1);
+		if (ret < 0)
+		{
+			if (ret == -1)
+			{
+				unlock();
+				throw new I2cException("Error HostI2cBus::readRegisterbyte, i2c WRITE error !");
+				//std::cout << "as_i2c_read_reg_byte: reg " << (int) reg << " WRITE error!" << std::endl;
+			}
+			if (ret == -2)
+			{
+				unlock();
+				throw new I2cException("Error HostI2cBus::readRegisterbyte, i2c READ error !");
+				//std::cout << "as_i2c_read_reg_byte: reg " << (int) reg << " READ error!" << std::endl;
+			}
+			unlock();
+			throw new I2cException("Error HostI2cBus::readRegisterbyte, i2c error !");
+		}
+		unlock();
+		return ret;
+	}
+	else
+	{
+		throw new I2cException("Error HostI2cBus::readRegisterbyte, i2c not opened !");
+	}
+}
+
+int utils::HostI2cBus::writeRegisterbyte(uint8_t reg, uint8_t value)
+{
+
+	lock();
+	int result = 0;
+
+	result = as_i2c_write_reg_byte(device_, reg, value);
+
+	if (result < 0)
+	{
+		unlock();
+		throw new I2cException("Error HostI2cBus::writeRegisterbyte, i2c error !");
+		//std::cout << "as_i2c_write_reg_byte: reg=" << (int) reg << " val=" << (int) value << " !" << std::endl;
+	}
+
+
+		//TODO usleep(1000); //fréq i2c à 100kHz : attente de l'application complète de la trame
+
+		unlock();
+	return result;
+}
