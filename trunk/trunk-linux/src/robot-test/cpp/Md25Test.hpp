@@ -1,10 +1,10 @@
 /*!
  * \file
- * \brief Définition de la classe GroveColorTest.
+ * \brief Définition de la classe Md25Test.
  */
 
-#ifndef ROBOTTEST_GROVECOLORTEST_HPP
-#define	ROBOTTEST_GROVECOLORTEST_HPP
+#ifndef 	ROBOTTEST_MD25TEST_HPP
+#define	ROBOTTEST_MD25TEST_HPP
 
 #include "../../common/cpp/ConsoleUnitTest.hpp"
 #include "../../common/cpp/LoggerFactory.hpp"
@@ -14,16 +14,16 @@ namespace robottest
     /*!
      * \brief Effectue un test.
      */
-    class GroveColorTest : public pmx::ConsoleUnitTest
+    class Md25Test : public pmx::ConsoleUnitTest
     {
     private:
 
         /*!
-         * \brief Retourne le \ref Logger associé à la classe \ref GroveColorTest.
+         * \brief Retourne le \ref Logger associé à la classe \ref Md25Test.
          */
         static inline const utils::Logger & logger()
         {
-            static const utils::Logger & instance = utils::LoggerFactory::logger("robottest::GroveColorTest");
+            static const utils::Logger & instance = utils::LoggerFactory::logger("robottest::Md25Test");
             return instance;
         }
 
@@ -32,14 +32,14 @@ namespace robottest
         /*!
          * \brief Constructeur de la classe.
          */
-        GroveColorTest() : pmx::ConsoleUnitTest("GroveColorTest : get colors from Gorve sensor")
+        Md25Test() : pmx::ConsoleUnitTest("Md25Test : ")
         {
         }
 
         /*!
          * \brief Destructeur de la classe.
          */
-        virtual ~GroveColorTest()
+        virtual ~Md25Test()
         {
         }
 

@@ -14,6 +14,7 @@
 #include "LedIndicator.hpp"
 #include "ActionManager.hpp"
 #include "LedBar.hpp"
+#include "Md25.hpp"
 
 namespace pmx
 {
@@ -64,6 +65,11 @@ private:
 	 * \brief Barre de LED.
 	 */
 	pmx::LedBar ledBar_;
+
+	/*!
+	 * \brief MotorisationMd25.
+	 */
+	pmx::Md25 md25_;
 
 public:
 
@@ -124,13 +130,22 @@ public:
 	}
 
 	/*!
-	 * \brief Cette methode retourne l'objet de manipulation du GroveColorSensor.
-	 * \return Le GroveColorSensor.
+	 * \brief Cette methode retourne l'objet de manipulation du ledBar.
+	 * \return Le ledBar.
 	 */
 	inline pmx::LedBar & ledBar()
 	{
 		return ledBar_;
 	}
+
+	/*!
+		 * \brief Cette methode retourne l'objet de manipulation du ledBar.
+		 * \return Le ledBar.
+		 */
+		inline pmx::Md25 & md25()
+		{
+			return md25_;
+		}
 
 	/*!
 	 * \brief Ajout d'une action.
