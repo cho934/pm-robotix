@@ -94,7 +94,7 @@ public:
 	 *
 	 * \return return 0 on success, -1 on write error (\e reg byte), -2 on read error.
 	 */
-	int readRegisterbyte(uint8_t reg, uint8_t* data);
+	int readRegValue(uint8_t slave_addr, uint8_t reg, uint8_t* data);
 
 	/*!
 	 * \brief Write a byte to the I2C given register.
@@ -104,7 +104,7 @@ public:
 	 *
 	 * \return 0 on success, -1 on error.
 	 */
-	int writeRegisterbyte(uint8_t reg, uint8_t value);
+	int writeRegValue(uint8_t slave_addr, uint8_t reg, uint8_t value);
 
 	/*!
 	 * \brief Open i2c.
@@ -116,11 +116,12 @@ public:
 	 */
 	void close();
 
+private:
 	/*!
 	 * \brief Set the slave by his address.
 	 * \param   slaveAddr	slave address.
 	 */
-	void setSlave(int slaveAddr);
+	void setSlave(uint8_t slaveAddr);
 
 };
 }

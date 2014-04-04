@@ -8,12 +8,14 @@
 #include "Exception.hpp"
 #include "LedIndicator.hpp"
 #include "HostI2cBus.hpp"
+//#include "Md25.hpp"
 
 pmx::Robot::Robot()
 		: base_(*this),
 		  myColor_(pmx::PMXNOCOLOR),
 		  groveColorSensor_(*this),
-		  ledBar_(*this)
+		  ledBar_(*this),
+		  md25_(*this)
 //, irSensorsGroup_(*this),
 {
 

@@ -94,7 +94,7 @@ int test::ApfI2cWithGroveColor::readRegisterbyte(struct as_i2c_device *aDev,
 		if (ret == -2)
 			std::cout << "as_i2c_read_reg_byte: reg " << (int) reg
 					<< " READ error!" << std::endl;
-		exit(1);
+		//exit(1);
 	}
 	else
 	{
@@ -118,7 +118,7 @@ int test::ApfI2cWithGroveColor::writeRegisterbyte(struct as_i2c_device *aDev,
 		//errorCount_++;
 		std::cout << "as_i2c_write_reg_byte: reg=" << (int) reg << " val="
 				<< (int) value << " !" << std::endl;
-		exit(1);
+		//exit(1);
 	}
 	else
 	{

@@ -108,6 +108,10 @@ private:
 	 */
 	float CCTCalc(uint8_t allcolors[]);
 
+	void write_i2c(uint8_t command, uint8_t value);
+
+	uint8_t read_i2c(uint8_t command);
+
 };
 }
 
