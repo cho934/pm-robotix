@@ -23,5 +23,6 @@ void utils::LoggerFactory::initialize()
 	add(utils::Level::DEBUG, "pmx::Robot", "console");
 	add(utils::Level::DEBUG, "pmx::GroveColorSensor", "console");
 	add(utils::Level::DEBUG, "pmx::ActionManager", "console");
+	add(utils::Level::DEBUG, "pmx::ExtEncoder", "console");
 
 }

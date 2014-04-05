@@ -15,6 +15,7 @@
 #include "ActionManager.hpp"
 #include "LedBar.hpp"
 #include "Md25.hpp"
+#include "ExtEncoder.hpp"
 
 namespace pmx
 {
@@ -70,6 +71,16 @@ private:
 	 * \brief MotorisationMd25.
 	 */
 	pmx::Md25 md25_;
+
+	/*!
+	 * \brief Encoder Left;.
+	 */
+	pmx::ExtEncoder encoderLeft_;
+
+	/*!
+	 * \brief Encoder Right;.
+	 */
+	pmx::ExtEncoder encoderRight_;
 
 public:
 
@@ -139,13 +150,31 @@ public:
 	}
 
 	/*!
-		 * \brief Cette methode retourne l'objet de manipulation du ledBar.
-		 * \return Le ledBar.
-		 */
-		inline pmx::Md25 & md25()
-		{
-			return md25_;
-		}
+	 * \brief Cette methode retourne l'objet de manipulation du ledBar.
+	 * \return Le ledBar.
+	 */
+	inline pmx::Md25 & md25()
+	{
+		return md25_;
+	}
+
+	/*!
+	 * \brief Cette methode retourne le codeur gauche.
+	 * \return encoderLeft_.
+	 */
+	inline pmx::ExtEncoder & EncoderLeft()
+	{
+		return encoderLeft_;
+	}
+
+	/*!
+	 * \brief Cette methode retourne le codeur droit.
+	 * \return encoderRight_.
+	 */
+	inline pmx::ExtEncoder & EncoderRight()
+	{
+		return encoderRight_;
+	}
 
 	/*!
 	 * \brief Ajout d'une action.
