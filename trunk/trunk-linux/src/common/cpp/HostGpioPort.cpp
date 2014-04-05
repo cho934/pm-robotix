@@ -22,8 +22,9 @@
 
 //Definition de l'attribut de classe
 int* utils::HostGpioPort::portA_opened_ = NULL;
+int* utils::HostGpioPort::portB_opened_ = NULL;
+int* utils::HostGpioPort::portC_opened_ = NULL;
 int* utils::HostGpioPort::portD_opened_ = NULL;
-
 
 utils::HostGpioPort::HostGpioPort()
 		: device_(NULL), fd_(0), port_letter_(NULL), pin_number_(0)
@@ -32,6 +33,16 @@ utils::HostGpioPort::HostGpioPort()
 	{
 		utils::HostGpioPort::portA_opened_ = (int *) malloc(32 * sizeof(int));
 		memset(utils::HostGpioPort::portA_opened_, 0, 32 * sizeof(int));
+	}
+	if (utils::HostGpioPort::portB_opened_ == NULL)
+	{
+		utils::HostGpioPort::portB_opened_ = (int *) malloc(32 * sizeof(int));
+		memset(utils::HostGpioPort::portB_opened_, 0, 32 * sizeof(int));
+	}
+	if (utils::HostGpioPort::portC_opened_ == NULL)
+	{
+		utils::HostGpioPort::portC_opened_ = (int *) malloc(32 * sizeof(int));
+		memset(utils::HostGpioPort::portC_opened_, 0, 32 * sizeof(int));
 	}
 	if (utils::HostGpioPort::portD_opened_ == NULL)
 	{
@@ -52,7 +63,6 @@ void utils::HostGpioPort::openAs(char portLetter, int pinNum)
 	checkIf(1); //check if gpio is not opened
 
 	device_ = as_gpio_open(portLetter, pinNum);
-	//std::cout << "as_gpio_open " << device_->fpin << std::endl;
 	if (device_ == NULL)
 	{
 		throw new HostGpioException("Error gpio openAs, can't open gpio port. Have you run loadgpio.sh ?");
@@ -77,32 +87,26 @@ void utils::HostGpioPort::closeAs(void)
 
 void utils::HostGpioPort::setDirectionAs(int aDirection)
 {
-	//lock();
 	checkIf(0); //check if gpio is opened
 
 	int ret = as_gpio_set_pin_direction(device_, aDirection);
 	if (ret < 0)
 	{
-		//unlock();
 		std::ostringstream msg;
 		msg << "Error gpio setDirectionAs, can't change direction on " << port_letter_ << pin_number_ << " !";
 		throw new HostGpioException(msg.str());
 	}
-	//unlock();
 }
 
 void utils::HostGpioPort::setValueAs(int aValue)
 {
-	//lock();
 	checkIf(0); //check if gpio is opened
 
 	int ret = as_gpio_set_pin_value(device_, aValue);
 	if (ret < 0)
 	{
-		//unlock();
 		throw new HostGpioException("Error gpio setValueAs, can't change pin value");
 	}
-	//unlock();
 }
 
 void utils::HostGpioPort::checkIf(int value)
@@ -113,6 +117,18 @@ void utils::HostGpioPort::checkIf(int value)
 	{
 	case 'A':
 		if (utils::HostGpioPort::portA_opened_[pin_number_] == value)
+		{
+			err = 1;
+		}
+		break;
+	case 'B':
+		if (utils::HostGpioPort::portB_opened_[pin_number_] == value)
+		{
+			err = 1;
+		}
+		break;
+	case 'C':
+		if (utils::HostGpioPort::portC_opened_[pin_number_] == value)
 		{
 			err = 1;
 		}
@@ -128,7 +144,7 @@ void utils::HostGpioPort::checkIf(int value)
 	}
 	if (err == 1)
 	{
-		if(value == 0)
+		if (value == 0)
 			msg << "Error gpio " << port_letter_ << pin_number_ << " not opened !";
 		else
 			msg << "Error gpio " << port_letter_ << pin_number_ << " already opened !";
@@ -142,6 +158,12 @@ void utils::HostGpioPort::setData(int value)
 	{
 	case 'A':
 		utils::HostGpioPort::portA_opened_[pin_number_] = value;
+		break;
+	case 'B':
+		utils::HostGpioPort::portB_opened_[pin_number_] = value;
+		break;
+	case 'C':
+		utils::HostGpioPort::portC_opened_[pin_number_] = value;
 		break;
 	case 'D':
 		utils::HostGpioPort::portD_opened_[pin_number_] = value;
@@ -183,27 +205,22 @@ void utils::HostGpioPort::closeIoctl(void)
 
 void utils::HostGpioPort::setDirIoctl(int aDirection)
 {
-	//lock();
 	checkIf(0); //check if gpio is opened
 
 	if (aDirection != 0 and aDirection != 1)
 	{
-		//unlock();
 		throw new HostGpioException("Error gpio setDirIoctl, bad aDirection !");
 	}
 	int err = ioctl(fd_, GPIOWRDIRECTION, &aDirection); //OUT => 1 IN =>0
 	if (err < 0)
 	{
-		//unlock();
 		//std::cout << "Warning setDirIoctl, unable to set gpio direction !" << std::endl;
 		throw new HostGpioException("Warning setDirIoctl, unable to set gpio direction !");
 	}
-	//unlock();
 }
 
 void utils::HostGpioPort::setValueIoctl(bool aValue)
 {
-	//lock();
 	checkIf(0); //check if gpio is opened
 
 	int portval = 1;
@@ -214,8 +231,6 @@ void utils::HostGpioPort::setValueIoctl(bool aValue)
 	int err = ioctl(fd_, GPIOWRDATA, &portval);
 	if (err < 0)
 	{
-		unlock();
 		throw new HostGpioException("Error gpio setValueIoctl, unable to set gpio value !");
 	}
-	//unlock();
 }

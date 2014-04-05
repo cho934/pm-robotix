@@ -6,16 +6,18 @@
 #include <iostream>
 #include "Robot.hpp"
 #include "Exception.hpp"
-#include "LedIndicator.hpp"
+//#include "LedIndicator.hpp"
 #include "HostI2cBus.hpp"
-//#include "Md25.hpp"
+#include "HostSpiBus.hpp"
 
 pmx::Robot::Robot()
 		: base_(*this),
 		  myColor_(pmx::PMXNOCOLOR),
 		  groveColorSensor_(*this),
 		  ledBar_(*this),
-		  md25_(*this)
+		  md25_(*this),
+		  encoderLeft_(*this,'B', 17),
+		  encoderRight_(*this,'D', 31)
 //, irSensorsGroup_(*this),
 {
 
@@ -57,6 +59,11 @@ void pmx::Robot::stop()
 
 	//close I2C
 	utils::HostI2cBus::instance().close();
+
+	//close SPI
+	utils::HostSpiBus::instance().close();
+
+
 
 	this->stopDevices();
 	this->stopManagers();

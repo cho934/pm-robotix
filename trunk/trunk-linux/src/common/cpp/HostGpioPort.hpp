@@ -38,6 +38,8 @@ private:
 	char port_letter_;
 	int pin_number_;
 	static int* portA_opened_;
+	static int* portB_opened_;
+	static int* portC_opened_;
 	static int* portD_opened_;
 
 public:
@@ -50,11 +52,6 @@ public:
 	 * \brief Destructeur de la classe.
 	 */
 	virtual ~HostGpioPort();
-
-	void checkIf(int value);
-	void setData(int value);
-
-public:
 
 	//version as_devices
 	void openAs(char portLetter, int pinNum);
@@ -77,6 +74,11 @@ public:
 	 */
 	void setDirIoctl(int aDirection);
 	void setValueIoctl(bool aValue);
+
+private:
+
+	void checkIf(int value);
+	void setData(int value);
 
 };
 }
