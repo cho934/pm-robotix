@@ -49,15 +49,24 @@ void test::ApfFpgaServo::run(int argc, char *argv[])
 		exit(1);
 	}
 
+	std::cout << "01" << std::endl;
 	setServoEnable(num, 1);
+	std::cout << "02" << std::endl;
 	setServoPosition(num, initpos);
+	std::cout << "03" << std::endl;
+
+
 
 	int currentPos = getServoCurrentPosition(num);
+	std::cout << "04 cur=" << currentPos << " init="<< initpos<< std::endl;
+	/*
 	while (currentPos == initpos)
 	{
 		currentPos = getServoCurrentPosition(num);
 		usleep(1000);
-	}
+	}*/
+
+	std::cout << "05" << std::endl;
 
 	std::cout << "Servo" << num << ": current:" << currentPos
 			<< " to desired position: " << initpos << std::endl;
@@ -128,24 +137,30 @@ void test::ApfFpgaServo::setServoEnable(int servoID, int value)
 	}
 	else
 	{
-		this->lock();
+		std::cout << "10" << std::endl;
+		//this->lock();
+		std::cout << "11" << std::endl;
 		char* operationFileName = getFilename(servoID,
 		SERVO_DRIVER_SERVO_ENABLE_FILE);
 		char data[16];
-
+		std::cout << "12" << std::endl;
 		std::cout << "setServoEnable  servoID=" << servoID << " value=" << value
 				<< " operationFileName=" << operationFileName << std::endl;
 
 		int file = open(operationFileName, O_WRONLY);
-		if (file == -1)
+		if (file <0)
 		{
 			std::cout << "MotionServer setServoEnable: failed to open  "
 					<< operationFileName << std::endl;
 		}
+		std::cout << "13" << std::endl;
 		/* Keep the value */
 		servoEnableBuffer[servoID] = value; //todo configuration file parser
 		sprintf(data, "%d", value);
+
+		std::cout << "14" << std::endl;
 		int ret = write(file, data, strlen(data));
+		std::cout << "15" << std::endl;
 		if (ret == -1)
 		{
 			std::cout
@@ -154,9 +169,13 @@ void test::ApfFpgaServo::setServoEnable(int servoID, int value)
 			printf("Error can't open servo %c\nHave you run modprobe servo ?\n", servoID);
 						exit(1);
 		}
+		std::cout << "16" << std::endl;
 		close(file);
+		std::cout << "17" << std::endl;
 		delete operationFileName;
-		this->unlock();
+		std::cout << "18" << std::endl;
+		//this->unlock();
+		std::cout << "19" << std::endl;
 	}
 }
 
@@ -173,7 +192,7 @@ void test::ApfFpgaServo::setServoOffset(int servoID, int value)
 	}
 	else
 	{
-		this->lock();
+		//this->lock();
 		char* operationFileName = getFilename(servoID,
 		SERVO_DRIVER_SERVO_OFFSET_FILE);
 		char data[16];
@@ -196,7 +215,7 @@ void test::ApfFpgaServo::setServoOffset(int servoID, int value)
 		}
 		close(file);
 		delete operationFileName;
-		this->unlock();
+		//this->unlock();
 	}
 }
 
@@ -213,7 +232,7 @@ void test::ApfFpgaServo::setServoPosition(int servoID, int value)
 	}
 	else
 	{
-		this->lock();
+		//this->lock();
 		char* operationFileName = getFilename(servoID,
 		SERVO_DRIVER_SERVO_POSITION_FILE);
 		char data[16];
@@ -242,7 +261,7 @@ void test::ApfFpgaServo::setServoPosition(int servoID, int value)
 			close(file);
 		}
 		delete operationFileName;
-		this->unlock();
+		//this->unlock();
 	}
 }
 
@@ -280,7 +299,7 @@ int test::ApfFpgaServo::getServoCurrentPosition(int servoID)
 	}
 	else
 	{
-		this->lock();
+		//this->lock();
 		char* operationFileName = getFilename(servoID,
 		SERVO_DRIVER_SERVO_CURRENT_POS);
 		int intValue = 0;
@@ -310,7 +329,7 @@ int test::ApfFpgaServo::getServoCurrentPosition(int servoID)
 					<< std::endl;
 		}
 		delete operationFileName;
-		this->unlock();
+		//this->unlock();
 
 		result = intValue;
 	}

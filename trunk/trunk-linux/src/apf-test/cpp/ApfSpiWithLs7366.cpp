@@ -51,7 +51,7 @@ void test::ApfSpiWithLs7366::run(int, char*[])
 	RightEnc->initialize(0x00, 0x00); //x4 and 4 bytes
 	usleep(1000);
 
-	for (int i = 0; i < 20000; i++)
+	for (int i = 0; i < 200; i++)
 	{
 
 		usleep(5000);

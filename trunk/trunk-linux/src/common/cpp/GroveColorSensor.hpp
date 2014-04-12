@@ -8,6 +8,7 @@
 
 #include "ARobotElement.hpp"
 #include "LoggerFactory.hpp"
+#include <stdint.h>
 
 #define     GROVE_COLOR_DEFAULT_ADDRESS    0x39 // Address of the grove Color Sensor 0x39
 

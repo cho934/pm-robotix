@@ -20,22 +20,23 @@
 #include "GpioPort.hpp"
 #include "Utils.hpp"
 #include "Mutex.hpp"
+#include "../../common/cpp/ServoMotorDxlConstant.hpp"
 
 using namespace MyUtil;
-
+/*
 #define Tx_MODE                     		1
 #define Rx_MODE                     		0
 #define AX12_MAX_SERVOS 			30
 #define AX12_BUFFER_SIZE    		32
 
-/** EEPROM AREA **/
+//EEPROM AREA
 #define AX_MODEL_NUMBER_L   		0 //0x00#define AX_MODEL_NUMBER_H 		1 //0x01#define AX_VERSION             			2 //0x02#define AX_ID                       		3 //0x03#define AX_BAUD_RATE             		4 //0x04#define AX_RETURN_DELAY_TIME  	5 //0x05#define AX_CW_ANGLE_LIMIT_L       	6 //0x06#define AX_CW_ANGLE_LIMIT_H      	7 //0x07#define AX_CCW_ANGLE_LIMIT_L     	8 //0x08#define AX_CCW_ANGLE_LIMIT_H   	9 //0x09#define AX_SYSTEM_DATA2         	10 //0x0a#define AX_LIMIT_TEMPERATURE   	11 //0x0b#define AX_DOWN_LIMIT_VOLTAGE  	12 //0x0c#define AX_UP_LIMIT_VOLTAGE       	13 //0x0d#define AX_MAX_TORQUE_L          	14 //0x0e#define AX_MAX_TORQUE_H          	15 //0x0f#define AX_RETURN_LEVEL             16 //0x10#define AX_ALARM_LED                	17
 #define AX_ALARM_SHUTDOWN      	18
 #define AX_OPERATING_MODE    		19 //0x13#define AX_DOWN_CALIBRATION_L 	20
 #define AX_DOWN_CALIBRATION_H  	21
 #define AX_UP_CALIBRATION_L       	22
 #define AX_UP_CALIBRATION_H      	23
-/** RAM AREA **/
+//RAM AREA
 #define AX_TORQUE_ENABLE        			24 //0x018#define AX_LED                      				25
 #define AX_CW_COMPLIANCE_MARGIN  	26 //0x01a#define AX_CCW_COMPLIANCE_MARGIN  	27
 #define AX_CW_COMPLIANCE_SLOPE    	28
@@ -49,12 +50,12 @@ using namespace MyUtil;
 #define AX_PRESENT_VOLTAGE          		42 //0x2a#define AX_PRESENT_TEMPERATURE      	43 //0x2b#define AX_REGISTERED_INSTRUCTION   	44 //0x2c#define AX_PAUSE_TIME               			45
 #define AX_MOVING                   			46
 #define AX_LOCK                     				47 //0x2f#define AX_PUNCH_L                  			48 //0x30#define AX_PUNCH_H                  			49 //0x31
-/** Status Return Levels **/
+// Status Return Levels
 #define AX_RETURN_NONE          	0
 #define AX_RETURN_READ              1
 #define AX_RETURN_ALL               	2
 
-/** Instruction Set **/
+//Instruction Set
 #define AX_PING                     		1
 #define AX_READ_DATA                	2
 #define AX_WRITE_DATA               	3
@@ -63,7 +64,7 @@ using namespace MyUtil;
 #define AX_RESET                    		6
 #define AX_SYNC_WRITE               	131
 
-/** Error Levels **/
+// Error Levels
 #define ERR_NONE                    	0
 #define ERR_VOLTAGE                 	1
 #define ERR_ANGLE_LIMIT             	2
@@ -73,8 +74,7 @@ using namespace MyUtil;
 #define ERR_OVERLOAD                	32
 #define ERR_INSTRUCTION             64
 
-/** AX-S1 **/
-/*
+//AX-S1
  #define AX_LEFT_IR_DATA             26
  #define AX_CENTER_IR_DATA           27
  #define AX_RIGHT_IR_DATA            28
@@ -85,7 +85,7 @@ using namespace MyUtil;
  #define AX_BUZZER_INDEX             40
  */
 
-#define DxlGetTemperature(id) (dynamixel.getCommand(id, AX_PRESENT_TEMPERATURE, 1))
+#define DxlGetTemperature(id) (dynamixel.getCommand(id, AX_PRESENT_TEMP, 1))
 #define DxlGetVoltage(id) (dynamixel.getCommand(id, AX_PRESENT_VOLTAGE, 1))
 #define DxlGetPos(id) (dynamixel.getCommand(id, AX_PRESENT_POSITION_L, 2))
 #define DxlGetBaud(id) (dynamixel.getCommand(id, AX_BAUD_RATE, 1))
