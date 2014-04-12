@@ -31,7 +31,6 @@ pmx::ServoMotorDxl::ServoMotorDxl()
 	}
 	setRX();
 	usleep(2000);
-
 }
 
 pmx::ServoMotorDxl::~ServoMotorDxl()
