@@ -8,7 +8,6 @@
 #include <cstdlib>
 #include <unistd.h>
 #include "ApfUartWithAX12.hpp"
-//#include "Dynamixel.hpp"
 
 void test::ApfUartWithAX12::run(int, char*[])
 {
@@ -31,18 +30,19 @@ void test::ApfUartWithAX12::run(int, char*[])
 		//int v2 = rand() % 100 + 1;     // v2 in the range 1 to 100 //2147483647
 		v2 = (rand() % 600) + 200;     // v2 in the range 200 to 800
 
-		data = DxlGetAxLed(idAX12);
-		std::cout << "Led=" << data << std::endl;
 
 		DxlSetAxLedOn(idAX12);
+		data = DxlGetAxLed(idAX12);
+		std::cout << "Led=" << data << std::endl;
 
 		std::cout << "Go Position=" << v2 << std::endl;
 		DxlSetPos(idAX12, v2);
-		data = DxlGetAxLed(idAX12);
-		std::cout << "Led=" << data << std::endl;
-		usleep(1000000);
+
+		usleep(2000000);
 
 		DxlSetAxLedOff(idAX12);
+		data = DxlGetAxLed(idAX12);
+		std::cout << "Led=" << data << std::endl;
 
 		volt = DxlGetVoltage(idAX12);
 		std::cout << "volt=" << volt << std::endl;
@@ -65,13 +65,12 @@ void test::ApfUartWithAX12::run(int, char*[])
 		data = DxlGetMaxTorque(idAX12);
 		std::cout << "max torque=" << reinterpret_cast<void*>(data) << std::endl;
 
-
-
-
 		pos = DxlGetPos(idAX12);
 		std::cout << "Last Position=" << pos << std::endl;
 
-		usleep(1000000);
+		usleep(2000000);
+		std::cout << "------" << std::endl;
+		std::cout << std::endl;
 
 	}
 

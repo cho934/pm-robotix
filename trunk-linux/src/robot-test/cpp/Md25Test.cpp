@@ -8,7 +8,7 @@
 
 void robottest::Md25Test::run(int, char *[])
 {
-	logger().info() << "-------------------------------------------------------------------------------" << utils::end;
+	logger().info() << "--------------------" << utils::end;
 	logger().info() << "Md25Test - Go" << utils::end;
 
 

@@ -36,7 +36,7 @@ Dynamixel::Dynamixel()
 		printf("Serial port opened\n");
 	}
 	setRX();
-	usleep(1000);
+	usleep(2000);
 
 }
 
@@ -141,8 +141,9 @@ void Dynamixel::setCommand(int idAX12, int regstart, int data, int nb2Write)
 		}
 	}
 
+
+	usleep(2000);
 	unlock();
-	usleep(1000);
 	//return data;
 }
 
@@ -238,7 +239,7 @@ long Dynamixel::getCommand(int idAX12, int regstart, int readLength)
 			}
 
 		}
-		usleep(1000);
+		usleep(2000);
 		unlock();
 		return receiveddata;
 	}

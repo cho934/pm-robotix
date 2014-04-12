@@ -8,7 +8,7 @@
 
 void robottest::GroveColorTest::run(int, char *[])
 {
-	logger().info() << "-------------------------------------------------------------------------------" << utils::end;
+	logger().info() << "----------------------------------------------" << utils::end;
 	logger().info() << "GroveColorTest - Retrieve colors" << utils::end;
 
 	uint8_t TCS3414values[4]; // [Clear,Red,Green,Blue]

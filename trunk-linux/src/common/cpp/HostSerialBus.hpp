@@ -1,33 +1,35 @@
-/*
- * SerialPort.h
- *
- *  Created on: Jun 20, 2011
- *      Author: jose
+/*!
+ * \file
+ * \brief Définition de la classe HostSerialBus, gestion du bus serial 2 pour APF9328.
  */
 
-#ifndef HOSTSERIALBUS_H_
-#define HOSTSERIALBUS_H_
+#ifndef HOSTSERIALBUS_HPP
+#define HOSTSERIALBUS_HPP
 
 #include <stdio.h>
 #include <termios.h>
 #include <fcntl.h>
 #include <unistd.h>
 
-class HostSerialBus {
+namespace utils
+{
+
+class HostSerialBus
+{
 private:
-	 int fileDescriptor;
+	int fileDescriptor_;
 
-   public:
-	 int connect ();
-	 int connect (const char * device);
-	 void disconnect(void);
+public:
+	int connect();
+	int connect(const char * device);
+	void disconnect(void);
 
-	 int sendArray(unsigned char *buffer, int len);
-	 int getArray (unsigned char *buffer, int len);
+	int sendArray(unsigned char *buffer, int len);
+	int getArray(unsigned char *buffer, int len);
 
-	 int bytesToRead();
-	 void clear();
+	int bytesToRead();
+	void clear();
 };
+}
 
-
-#endif /* SERIALPORT_H_ */
+#endif

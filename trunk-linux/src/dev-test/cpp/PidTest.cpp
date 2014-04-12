@@ -24,7 +24,7 @@ test::PidTest::testComputePIDForP()
         if(result != i)
         {
             fail("Pid non fonctionnel pour kP=1, kI=0, kD=0");
-            logger().info() << "valeur : " << result << " au lieu de " << i << utils::end;
+            logger().debug() << "valeur : " << result << " au lieu de " << i << utils::end;
         }
     }
 }
@@ -37,21 +37,21 @@ test::PidTest::testComputePIDForI()
     if(result1 != 10)
     {
         fail("Pid non fonctionnel pour kP=0, kI=1, kD=0");
-        logger().info() << "valeur : " << result1 << " au lieu de 10" << utils::end;
+        logger().debug() << "valeur : " << result1 << " au lieu de 10" << utils::end;
     }
 
     double result2 = pid.ComputePID(0);
     if(result2 != 10)
     {
         fail("Pid non fonctionnel pour kP=0, kI=1, kD=0");
-        logger().info() << "valeur : " << result2 << " au lieu de 10" << utils::end;
+        logger().debug() << "valeur : " << result2 << " au lieu de 10" << utils::end;
     }
 
     double result3 = pid.ComputePID(-10);
     if(result3 != 0)
     {
         fail("Pid non fonctionnel pour kP=0, kI=1, kD=0");
-        logger().info() << "valeur : " << result3 << " au lieu de 0" << utils::end;
+        logger().debug() << "valeur : " << result3 << " au lieu de 0" << utils::end;
     }
 }
 
@@ -63,28 +63,28 @@ test::PidTest::testComputePIDForD()
     if(result1 != 10)
     {
         fail("Pid non fonctionnel pour kP=0, kI=1, kD=0");
-        logger().info() << "valeur : " << result1 << " au lieu de 10" << utils::end;
+        logger().debug() << "valeur : " << result1 << " au lieu de 10" << utils::end;
     }
 
     double result2 = pid.ComputePID(0);
     if(result2 != -10)
     {
         fail("Pid non fonctionnel pour kP=0, kI=1, kD=0");
-        logger().info() << "valeur : " << result2 << " au lieu de -10" << utils::end;
+        logger().debug() << "valeur : " << result2 << " au lieu de -10" << utils::end;
     }
 
     double result3 = pid.ComputePID(10);
     if(result3 != 10)
     {
         fail("Pid non fonctionnel pour kP=0, kI=1, kD=0");
-        logger().info() << "valeur : " << result3 << " au lieu de 10" << utils::end;
+        logger().debug() << "valeur : " << result3 << " au lieu de 10" << utils::end;
     }
 }
 
 void
 test::PidTest::suite()
 {
-    logger().info() << "PidTest : Go" << utils::end;
+    logger().debug() << "PidTest : Go" << utils::end;
     testGetters();
     testComputePIDForP();
     testComputePIDForI();

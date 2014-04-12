@@ -31,7 +31,7 @@ void utils::HostI2cBus::open()
 	}
 }
 
-void utils::HostI2cBus::close(void)
+void utils::HostI2cBus::close_i2c(void)
 {
 	if (opened_ == 1)
 	{
@@ -51,20 +51,19 @@ void utils::HostI2cBus::close(void)
 
 void utils::HostI2cBus::setSlave(uint8_t slaveAddr)
 {
-	printf("setSlave1\n");
 	if (opened_ == 1)
 	{
 		int err = as_i2c_set_slave_addr(device_, slaveAddr);
 		printf("err= %d\n", err);
 		if (err < 0)
 		{
-			printf("setSlave2\n");
+
 			std::ostringstream msg;
 			msg << "Error HostI2cBus::setSlave, can't set slave n°" << slaveAddr << "("
 					<< reinterpret_cast<void*>(slaveAddr) << "), is the slave connected ?";
 			throw new I2cException(msg.str());
 		}
-		printf("setSlave3\n");
+
 		usleep(5000); //TODO ?fréq i2c à 100kHz : attente de l'application complète de la trame
 	}
 	else

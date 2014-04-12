@@ -9,7 +9,7 @@
 #include <iostream>
 #include <as_devices/as_gpio.h>
 #include "../../common/cpp/Exception.hpp"
-#include "../../common/cpp/Mutex.hpp"
+
 
 namespace utils
 {
@@ -30,7 +30,7 @@ public:
 	}
 };
 
-class HostGpioPort: utils::Mutex
+class HostGpioPort
 {
 private:
 	struct as_gpio_device *device_;

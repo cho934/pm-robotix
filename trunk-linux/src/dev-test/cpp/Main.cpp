@@ -7,8 +7,7 @@
 #include <iostream>
 
 
-//#include "ARobotElementTest.hpp"
-//#include "ActionManagerTest.hpp"
+#include "ActionManagerTest.hpp"
 
 #include "LoggerTest.hpp"
 #include "ConfigurationTest.hpp"
@@ -50,10 +49,10 @@ int main() {
         suite.addTest(new ChronometerTest());*/
         suite.addTest(new PidTest());
         suite.addTest(new PositionTest());
+        suite.addTest(new ActionManagerTest());
 
 
-    /*
-    suite.addTest(new ActionManagerTest());
+    /*//TODO add tests
     suite.addTest(new ARobotElementTest());
 	suite.addTest(new AAutomateStateTest());
     suite.addTest(new AutomateTest());

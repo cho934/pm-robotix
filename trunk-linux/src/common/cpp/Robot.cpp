@@ -6,7 +6,6 @@
 #include <iostream>
 #include "Robot.hpp"
 #include "Exception.hpp"
-//#include "LedIndicator.hpp"
 #include "HostI2cBus.hpp"
 #include "HostSpiBus.hpp"
 
@@ -17,13 +16,13 @@ pmx::Robot::Robot()
 		  ledBar_(*this),
 		  md25_(*this),
 		  encoderLeft_(*this,'B', 17),
-		  encoderRight_(*this,'D', 31)
-//, irSensorsGroup_(*this),
+		  encoderRight_(*this,'D', 31),
+		  servoTest_(*this, 0),
+		  irSensorsGroup_(*this)
 {
 
 	//Led indicator initialisation
 	pmx::LedIndicator::instance().reset();
-
 
 }
 
@@ -58,7 +57,7 @@ void pmx::Robot::stop()
 	logger().info("Stop");
 
 	//close I2C
-	utils::HostI2cBus::instance().close();
+	utils::HostI2cBus::instance().close_i2c();
 
 	//close SPI
 	utils::HostSpiBus::instance().close();

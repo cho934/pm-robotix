@@ -92,6 +92,11 @@ public:
 	 */
 	long getSpeed();
 
+	unsigned long long as_spi_msg_pmx(int aFd,
+	                              unsigned long long aMsg,
+	                              size_t aLen,
+	                              uint32_t aSpeed);
+
 };
 }
 

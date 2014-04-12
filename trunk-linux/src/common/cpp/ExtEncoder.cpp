@@ -16,9 +16,9 @@ pmx::ExtEncoder::ExtEncoder(pmx::Robot & robot, char slave_select_port_letter, i
 {
 	gpio_ = new utils::HostGpioPort();
 
-	lock();
+	//lock();
 
-	logger().debug() << "ss_port_ " << ss_port_<< " ss_pin_ " << ss_pin_ << utils::end;
+	logger().debug() << "ss_port_=" << ss_port_<< " ss_pin_=" << ss_pin_ << utils::end;
 	try
 	{
 		gpio_->openIoctl(ss_port_, ss_pin_);
@@ -42,19 +42,23 @@ pmx::ExtEncoder::ExtEncoder(pmx::Robot & robot, char slave_select_port_letter, i
 
 	ss_pin_set(1);
 	logger().debug() << "ss_pin_set(1); ok "  << utils::end;
+
 	try
 	{
+		logger().debug() << "test0003 "  << utils::end;
 		utils::HostSpiBus::instance().open();
 		long speed = utils::HostSpiBus::instance().getSpeed();
 		std::cout << " Encoder spi speed = " << speed << std::endl;
+		logger().debug() << "test0004 "  << utils::end;
 	} catch (utils::Exception * e)
 	{
 		logger().error() << "Exception ExtEncoder::ExtEncoder: " << e->what() << utils::end;
 	}
-	unlock();
-
+	//unlock();
+	logger().debug() << "test0005 "  << utils::end;
 	//init MDR0  and MDR1
 	this->initialize(0x00, 0x00); //x4 and 4 bytes
+	logger().debug() << "test0006 "  << utils::end;
 	usleep(1000);
 
 }

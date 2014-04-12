@@ -58,7 +58,7 @@ namespace test
          */
         inline virtual void suite()
         {
-            logger().info() << "PositionTest : Go" << utils::end;
+            logger().debug() << "PositionTest : Go" << utils::end;
             testPosition();
             testRotate();
         }

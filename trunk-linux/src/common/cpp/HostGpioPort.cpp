@@ -140,7 +140,7 @@ void utils::HostGpioPort::checkIf(int value)
 		}
 		break;
 	default:
-		throw new HostGpioException("Error gpio check, port not yet defined");
+		throw new HostGpioException("--Error gpio check, port not yet defined");
 	}
 	if (err == 1)
 	{
@@ -169,7 +169,7 @@ void utils::HostGpioPort::setData(int value)
 		utils::HostGpioPort::portD_opened_[pin_number_] = value;
 		break;
 	default:
-		throw new HostGpioException("Error gpio setData, port not yet defined");
+		throw new HostGpioException("---Error gpio setData, port not yet defined");
 	}
 }
 

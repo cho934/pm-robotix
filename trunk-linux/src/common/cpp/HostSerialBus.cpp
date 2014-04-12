@@ -1,8 +1,6 @@
-/*
- * SerialPort.cpp
- *
- *  Created on: Jun 20, 2011
- *      Author: jose
+/*!
+ * \file
+ * \brief Implémentation de la classe HostSerialBus.
  */
 
 #include <string.h>
@@ -10,13 +8,13 @@
 
 #include "HostSerialBus.hpp"
 
-int HostSerialBus::connect()
+int utils::HostSerialBus::connect()
 {
 	return connect("//dev//ttySMX1");
 }
 
-int HostSerialBus::connect(const char *device)
-{ //TODO add baud
+int utils::HostSerialBus::connect(const char *device)
+{
 	struct termios terminalAttributes;
 
 	/*
@@ -28,7 +26,7 @@ int HostSerialBus::connect(const char *device)
 	 * When possible, the file is opened in nonblocking mode
 	 *
 	 */
-	fileDescriptor = open(device, O_RDWR | O_NOCTTY | O_NDELAY | O_FSYNC);
+	fileDescriptor_ = open(device, O_RDWR | O_NOCTTY | O_NDELAY | O_FSYNC);
 
 	// clear terminalAttributes data
 	memset(&terminalAttributes, 0, sizeof(struct termios));
@@ -79,7 +77,7 @@ int HostSerialBus::connect(const char *device)
 	 * the change occurs immediately
 	 */
 
-	tcsetattr(fileDescriptor, TCSANOW, &terminalAttributes);
+	tcsetattr(fileDescriptor_, TCSANOW, &terminalAttributes);
 
 	/*
 	 * http://linux.die.net/man/3/tcflush
@@ -88,26 +86,26 @@ int HostSerialBus::connect(const char *device)
 	 * flushes data received but not read.
 	 */
 
-	tcflush(fileDescriptor, TCOFLUSH);
-	tcflush(fileDescriptor, TCIFLUSH);
+	tcflush(fileDescriptor_, TCOFLUSH);
+	tcflush(fileDescriptor_, TCIFLUSH);
 
-	return fileDescriptor;
+	return fileDescriptor_;
 }
 
-void HostSerialBus::disconnect(void)
+void utils::HostSerialBus::disconnect(void)
 {
-	close(fileDescriptor);
+	close(fileDescriptor_);
 	printf("\nPort 1 has been CLOSED and %d is the file description\n",
-			fileDescriptor);
+			fileDescriptor_);
 }
 
-int HostSerialBus::sendArray(unsigned char *buffer, int len)
+int utils::HostSerialBus::sendArray(unsigned char *buffer, int len)
 {
-	int n = write(fileDescriptor, buffer, len);
+	int n = write(fileDescriptor_, buffer, len);
 	return n;
 }
 
-int HostSerialBus::getArray(unsigned char *buffer, int len)
+int utils::HostSerialBus::getArray(unsigned char *buffer, int len)
 {
 	int n = 0;
 	for (int i = 0; i < 1000; i++) //tempo to wait data in the buffer
@@ -120,20 +118,20 @@ int HostSerialBus::getArray(unsigned char *buffer, int len)
 			usleep(10);
 		}
 	}
-	n = read(fileDescriptor, buffer, len);
+	n = read(fileDescriptor_, buffer, len);
 	return n;
 }
 
-void HostSerialBus::clear()
+void utils::HostSerialBus::clear()
 {
-	tcflush(fileDescriptor, TCIFLUSH);
-	tcflush(fileDescriptor, TCOFLUSH);
+	tcflush(fileDescriptor_, TCIFLUSH);
+	tcflush(fileDescriptor_, TCOFLUSH);
 }
 
-int HostSerialBus::bytesToRead()
+int utils::HostSerialBus::bytesToRead()
 {
 	int bytes = 0;
-	ioctl(fileDescriptor, FIONREAD, &bytes);
+	ioctl(fileDescriptor_, FIONREAD, &bytes);
 
 	return bytes;
 }

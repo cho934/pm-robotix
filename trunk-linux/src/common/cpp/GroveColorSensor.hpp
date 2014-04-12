@@ -6,8 +6,8 @@
 #ifndef PMX_GROVECOLORSENSOR_HPP
 #define PMX_GROVECOLORSENSOR_HPP
 
-#include "../../common/cpp/ARobotElement.hpp"
-#include "../../common/cpp/LoggerFactory.hpp"
+#include "ARobotElement.hpp"
+#include "LoggerFactory.hpp"
 
 #define     GROVE_COLOR_DEFAULT_ADDRESS    0x39 // Address of the grove Color Sensor 0x39
 
