@@ -114,7 +114,7 @@ public:
 	/*!
 	 * \brief Close i2c.
 	 */
-	void close();
+	void close_i2c();
 
 private:
 	/*!

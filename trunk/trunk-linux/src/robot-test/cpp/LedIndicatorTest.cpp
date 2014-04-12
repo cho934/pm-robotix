@@ -1,6 +1,6 @@
 /*!
  * \file
- * \brief Implémentation de la classe GroveColorTest.
+ * \brief Implémentation de la classe LedIndicatorTest.
  */
 
 #include "LedIndicatorTest.hpp"

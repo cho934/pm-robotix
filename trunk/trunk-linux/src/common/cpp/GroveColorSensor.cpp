@@ -5,7 +5,7 @@
 
 #include <math.h>
 #include "GroveColorSensor.hpp"
-#include "../../common/cpp/HostI2cBus.hpp"
+#include "HostI2cBus.hpp"
 
 pmx::GroveColorSensor::GroveColorSensor(pmx::Robot & robot)
 		: ARobotElement(robot), connected_(false), integrationtime_(12), loopdelay_(12), percentageEnabled_(false), compensateEnabled_(

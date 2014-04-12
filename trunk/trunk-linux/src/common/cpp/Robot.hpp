@@ -16,6 +16,8 @@
 #include "LedBar.hpp"
 #include "Md25.hpp"
 #include "ExtEncoder.hpp"
+#include "ServoMotorStdObject.hpp"
+#include "IrSensorsGroup.hpp"
 
 namespace pmx
 {
@@ -81,6 +83,16 @@ private:
 	 * \brief Encoder Right;.
 	 */
 	pmx::ExtEncoder encoderRight_;
+
+	/*!
+	 * \brief Servomotor standard de test.
+	 */
+	pmx::ServoMotorStdObject servoTest_;
+
+	/*!
+	 * \brief Groupe de détecteur IR.
+	 */
+	pmx::IrSensorsGroup irSensorsGroup_;
 
 public:
 
@@ -162,7 +174,7 @@ public:
 	 * \brief Cette methode retourne le codeur gauche.
 	 * \return encoderLeft_.
 	 */
-	inline pmx::ExtEncoder & EncoderLeft()
+	inline pmx::ExtEncoder & encoderLeft()
 	{
 		return encoderLeft_;
 	}
@@ -171,10 +183,30 @@ public:
 	 * \brief Cette methode retourne le codeur droit.
 	 * \return encoderRight_.
 	 */
-	inline pmx::ExtEncoder & EncoderRight()
+	inline pmx::ExtEncoder & encoderRight()
 	{
 		return encoderRight_;
 	}
+
+	/*!
+	 * \brief Cette methode retourne le servomotor test.
+	 * \return servoTest_.
+	 */
+	inline pmx::ServoMotorStdObject & servoTest()
+	{
+		return servoTest_;
+	}
+
+	/*!
+	 * \brief Cette methode retourne le groupe de détecteur IR.
+	 * \return irSensorsGroup_.
+	 */
+	inline pmx::IrSensorsGroup & irSensorsGroup()
+	{
+		return irSensorsGroup_;
+	}
+
+
 
 	/*!
 	 * \brief Ajout d'une action.

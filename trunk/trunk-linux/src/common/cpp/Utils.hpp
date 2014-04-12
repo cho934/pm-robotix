@@ -1,7 +1,7 @@
 
 
-#ifndef UTILS_UTILS_H_
-#define UTILS_UTILS_H_
+#ifndef UTILS_UTILS_HPP
+#define UTILS_UTILS_HPP
 
 #include <string>
 #include <sstream>

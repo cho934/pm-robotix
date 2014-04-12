@@ -8,7 +8,7 @@
 
 void robottest::ExtEncoderTest::run(int, char *[])
 {
-	logger().info() << "-------------------------------------------------" << utils::end;
+	logger().info() << "-----------------------------" << utils::end;
 	logger().info() << "ExtEncoderTest - Go" << utils::end;
 
 	try
@@ -20,18 +20,18 @@ void robottest::ExtEncoderTest::run(int, char *[])
 
 		pmx::Robot robot;
 
-		robot.EncoderLeft().clearCounter();
-		robot.EncoderRight().clearCounter();
+		robot.encoderLeft().clearCounter();
+		robot.encoderRight().clearCounter();
 
 		for (int i = 0; i < 20000; i++)
 		{
 			usleep(5000);
 
-			counterL = robot.EncoderLeft().readCounter();
-			statusL = robot.EncoderLeft().readStatus();
+			counterL = robot.encoderLeft().readCounter();
+			statusL = robot.encoderLeft().readStatus();
 
-			counterR = robot.EncoderRight().readCounter();
-			statusR = robot.EncoderRight().readStatus();
+			counterR = robot.encoderRight().readCounter();
+			statusR = robot.encoderRight().readStatus();
 
 			std::cout << "counterL = " << counterL << " ------ counterR = " << counterR << "----- statusL  = "
 					<< reinterpret_cast<void*>(statusL) << "------statusR  = " << reinterpret_cast<void*>(statusR)

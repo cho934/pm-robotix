@@ -5,6 +5,9 @@
 #echo -n 10011000111100111111111110000000 > /proc/driver/gpio/portDdir
 #echo -n 02200111000010000000000000000000 > /proc/driver/gpio/portDirq
 
+#initialisation SPI (second canal)
+modprobe spidev
+
 #initialisation ADC pour GP2D12
 modprobe max1027
 export ADC_SPI="spi1.0"
@@ -27,8 +30,7 @@ imxregs IFDR 0x17
 #identification des devices
 i2cdetect -y -a 0
 
-modprobe spidev
-
+#Serial Speed
 stty -F /dev/ttySMX1 115200
 stty -F /dev/ttySMX1 speed
 

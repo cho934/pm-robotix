@@ -19,7 +19,7 @@ pmx::LedBarAction::LedBarAction(pmx::LedBar & ledBar, pmx::LedBarActionName acti
 	chrono_.start();
 }
 
-bool pmx::LedBarAction::execute() //IRobotOut * out
+bool pmx::LedBarAction::execute()
 {
 	//logger().debug() << "execute()" << utils::end;
 
