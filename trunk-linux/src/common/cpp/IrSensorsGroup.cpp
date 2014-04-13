@@ -3,9 +3,12 @@
  * \brief Implémentation de la classe IrSensorsGroup.
  */
 
-#include <cmath>
 #include "IrSensorsGroup.hpp"
-#include "Robot.hpp"
+
+#include <unistd.h>
+
+#include "Chronometer.hpp"
+#include "Logger.hpp"
 
 pmx::IrSensorsGroup::IrSensorsGroup(pmx::Robot & robot)
 		: ARobotElement(robot), timerIrSensorGroup_(PERIOD_IR, 0, this),
@@ -21,7 +24,6 @@ pmx::IrSensorsGroup::IrSensorsGroup(pmx::Robot & robot)
 
 void pmx::IrSensorsGroup::startTimer()
 {
-	//printf(" Thread IrSensorsGroup Start. \n");
 	this->timerIrSensorGroup_.start();
 }
 
@@ -48,7 +50,6 @@ void pmx::IrSensorsGroup::onTimer(utils::Chronometer chrono)
 	logger().debug() << "onTimer : " << chrono.getElapsedTimeInMilliSec() << " ms R=" << this->irRight_.distanceMm()
 			<< " mm C=" << this->irCenter_.distanceMm() << " mm L=" << this->irLeft_.distanceMm() << " mm RC="
 			<< this->irRearCenter_.distanceMm() << " mm" << utils::end;
-
 }
 
 void pmx::IrSensorsGroup::onTimerEnd(utils::Chronometer chrono)
@@ -65,5 +66,4 @@ void pmx::IrSensorsGroup::getValue(pmx::IrSensor * irSensor)
 	double distMm = 0.0;
 	distMm = irSensor->getDistance();
 	logger().debug() << "getValue: " << distMm << "mm" << utils::end;
-
 }

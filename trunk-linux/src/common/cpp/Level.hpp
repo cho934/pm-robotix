@@ -128,6 +128,6 @@ namespace utils
             return value_ == level.value_;
         }
     };
-};
+}
 
 #endif

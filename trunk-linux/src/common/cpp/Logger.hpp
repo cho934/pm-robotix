@@ -374,6 +374,6 @@ namespace utils
      * fonctionnalité que std::endl est basée.
      */
     void end(utils::Logger::LoggerBuffer & buffer);
-};
+}
 
 #endif

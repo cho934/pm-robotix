@@ -7,9 +7,8 @@
 #define	PMX_IRSENSOR_HPP
 
 #include "ARobotElement.hpp"
-#include "Macro.hpp"
-#include "IAction.hpp"
 #include "LoggerFactory.hpp"
+#include "Macro.hpp"
 
 namespace pmx
 {

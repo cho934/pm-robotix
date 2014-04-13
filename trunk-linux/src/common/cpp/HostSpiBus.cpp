@@ -3,12 +3,12 @@
  * \brief Implémentation de la classe HostSpiBus.
  */
 
-#include <iostream>
-#include <sstream>
-
 #include "HostSpiBus.hpp"
+
+#include <as_devices/as_spi.h>
 #include <linux/spi/spidev.h>
 #include <sys/ioctl.h>
+#include <cstring>
 
 utils::HostSpiBus::HostSpiBus()
 		: fd_(0), opened_(0)

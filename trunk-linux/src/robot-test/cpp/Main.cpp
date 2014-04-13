@@ -14,6 +14,7 @@
 #include "ExtEncoderTest.hpp"
 #include "ServoMotorStdTest.hpp"
 #include "IrSensorsGroupTest.hpp"
+#include "ServoMotorDxlTest.hpp"
 
 /*!
  * \brief Méthode principale pour le lancement des tests sur le robot.
@@ -38,6 +39,7 @@ int main(int argc, char** argv)
 	manager.add(new robottest::ExtEncoderTest());
 	manager.add(new robottest::ServoMotorStdTest());
 	manager.add(new robottest::IrSensorsGroupTest());
+	manager.add(new robottest::ServoMotorDxlTest());
 
 	if (argc == 1)
 	{

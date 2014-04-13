@@ -3,9 +3,11 @@
  * \brief Implémentation de la classe HostAdcPort.
  */
 
-#include <iostream>
-#include <sstream>
 #include "HostAdcPort.hpp"
+
+#include <as_devices/as_max1027_3_3.h>
+//#include <cstdio>
+//#include <cstdlib>
 
 utils::HostAdcPort::HostAdcPort()
 		: max1027_device_(NULL), opened_(0)
@@ -64,7 +66,7 @@ void utils::HostAdcPort::close(void)
 
 int utils::HostAdcPort::readTemp(void)
 {
-	int temp=0;
+	int temp = 0;
 	int ret = as_max1027_read_temperature_mC(max1027_device_, &temp);
 	if (ret < 0)
 	{
@@ -76,6 +78,7 @@ int utils::HostAdcPort::readTemp(void)
 void utils::HostAdcPort::setAverage(int ave) //4, 8, 16, 32
 {
 	int ret = as_max1027_set_averaging_3_3(max1027_device_, ave);
+
 	if (ret < 0)
 	{
 		throw new AdcException("Error HostAdcPort::close, can't set averaging on max1027 !");

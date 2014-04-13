@@ -7,11 +7,11 @@
 #ifndef PMX_LEDINDICATOR_HPP
 #define PMX_LEDINDICATOR_HPP
 
-#include <string>
-
-#include "Macro.hpp"
+#include "Exception.hpp"
 #include "HostGpioPort.hpp"
+#include "Logger.hpp"
 #include "LoggerFactory.hpp"
+#include "Macro.hpp"
 
 namespace pmx
 {

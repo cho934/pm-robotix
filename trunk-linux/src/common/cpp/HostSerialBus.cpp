@@ -3,10 +3,13 @@
  * \brief Implémentation de la classe HostSerialBus.
  */
 
+#include "HostSerialBus.hpp"
+
+#include <fcntl.h>
 #include <string.h>
 #include <sys/ioctl.h>
-
-#include "HostSerialBus.hpp"
+#include <termios.h>
+#include <unistd.h>
 
 int utils::HostSerialBus::connect()
 {
@@ -27,6 +30,9 @@ int utils::HostSerialBus::connect(const char *device)
 	 *
 	 */
 	fileDescriptor_ = open(device, O_RDWR | O_NOCTTY | O_NDELAY | O_FSYNC);
+
+	if (fileDescriptor_ < 0)
+		throw new HostSerialException("Error HostSerialBus::connect, can't connect with open function");
 
 	// clear terminalAttributes data
 	memset(&terminalAttributes, 0, sizeof(struct termios));
@@ -95,14 +101,17 @@ int utils::HostSerialBus::connect(const char *device)
 void utils::HostSerialBus::disconnect(void)
 {
 	close(fileDescriptor_);
-	printf("\nPort 1 has been CLOSED and %d is the file description\n",
-			fileDescriptor_);
 }
 
 int utils::HostSerialBus::sendArray(unsigned char *buffer, int len)
 {
-	int n = write(fileDescriptor_, buffer, len);
-	return n;
+	int err = write(fileDescriptor_, buffer, len);
+	if (err < 0 || err != len)
+	{
+		//std::cout << "ERROR setInfo serial_.sendArray()" << err << std::endl;
+		throw new HostSerialException("ERROR setInfo serial_.sendArray()");
+	}
+	return err;
 }
 
 int utils::HostSerialBus::getArray(unsigned char *buffer, int len)
@@ -131,7 +140,9 @@ void utils::HostSerialBus::clear()
 int utils::HostSerialBus::bytesToRead()
 {
 	int bytes = 0;
-	ioctl(fileDescriptor_, FIONREAD, &bytes);
+	int err = ioctl(fileDescriptor_, FIONREAD, &bytes);
+	if (err < 0)
+		throw new HostSerialException("Error HostSerialBus::bytesToRead on ioctl");
 
 	return bytes;
 }

@@ -1,6 +1,6 @@
 /*!
  * \file
- * \brief Définition de la classe ServoMotorObject (example avec 3 positions + freewheeling).
+ * \brief Définition de la classe ServoMotorDxlObject.
  */
 
 #ifndef PMX_SERVOMOTORDXLOBJECT_HPP
@@ -17,9 +17,8 @@
 namespace pmx
 {
 
-
 /*!
- * \brief Cette classe représente l'un des servomoteurs fonctionnant en 3 positions du robot.
+ * \brief Cette classe représente un objet example avec un ax12.
  *
  */
 class ServoMotorDxlObject: public ARobotElement
@@ -34,7 +33,11 @@ private:
 		return instance;
 	}
 
-	pmx::ServoMotorDxl * servo1_;
+	//pmx::ServoMotorDxl * servo1_;
+	/*!
+	 * \brief Brochage du servomoteur.
+	 */
+	int id_;
 
 	/*!
 	 * \brief Position de la pince; 0:fermée; 1:ouverte.
@@ -45,11 +48,6 @@ private:
 	 * \brief Permet de stopper l'action et qu'elle se termine à la prochaine itération.
 	 */
 	bool actionStopped_;
-
-	/*!
-	 * \brief Brochage du servomoteur.
-	 */
-	//int id_;
 
 	/*!
 	 * \brief Angle minimum (en millisecond).
@@ -76,7 +74,7 @@ public:
 	/*!
 	 * \brief Constructeur de la classe.
 	 */
-	ServoMotorDxlObject(pmx::Robot & robot, int servoId);
+	ServoMotorDxlObject(pmx::Robot & robot);
 
 	/*!
 	 * \brief Destructeur de la classe.
@@ -85,13 +83,12 @@ public:
 	{
 	}
 
-
 	inline int id() const
 	{
 		//return servo1_->getServoId();
 		//TODO
+		return 0;
 	}
-
 
 	inline void stop(bool value)
 	{
@@ -137,9 +134,6 @@ public:
 	{
 		this->valMax_ = max;
 	}
-
-
-
 
 	void turnMin();
 

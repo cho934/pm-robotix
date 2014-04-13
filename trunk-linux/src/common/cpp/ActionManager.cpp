@@ -15,8 +15,6 @@ void pmx::ActionManager::execute()
 {
 	logger().info("ActionManager is started");
 
-	//pmx::IRobotOut * out = pmx::RobotInOutFactory::instance()->robotOut();
-
 	int size = 0;
 	while (!stop_)
 	{
