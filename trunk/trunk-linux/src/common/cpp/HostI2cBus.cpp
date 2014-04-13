@@ -3,9 +3,11 @@
  * \brief Implémentation de la classe HostI2cBus.
  */
 
-#include <iostream>
-#include <sstream>
 #include "HostI2cBus.hpp"
+
+#include <as_devices/as_i2c.h>
+#include <sstream>
+
 
 utils::HostI2cBus::HostI2cBus()
 		: device_(NULL), opened_(0)

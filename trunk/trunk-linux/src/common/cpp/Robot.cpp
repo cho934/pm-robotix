@@ -8,6 +8,8 @@
 #include "Exception.hpp"
 #include "HostI2cBus.hpp"
 #include "HostSpiBus.hpp"
+#include "HostAdcPort.hpp"
+
 
 pmx::Robot::Robot()
 		: base_(*this),
@@ -18,11 +20,26 @@ pmx::Robot::Robot()
 		  encoderLeft_(*this,'B', 17),
 		  encoderRight_(*this,'D', 31),
 		  servoTest_(*this, 0),
+		  servoDxlTest_(*this),
 		  irSensorsGroup_(*this)
 {
 
 	//Led indicator initialisation
 	pmx::LedIndicator::instance().reset();
+/*
+	//SPI
+	utils::HostSpiBus::instance().open();
+
+	//I2C
+	utils::HostI2cBus::instance().open();
+
+	//adc
+	utils::HostAdcPort::instance().open();
+*/
+	//uart
+	long baud = pmx::ServoMotorDxl::instance().dxlGetBaud(7);
+	logger().debug() << "baud dxl n°7= " << baud << utils::end;
+
 
 }
 

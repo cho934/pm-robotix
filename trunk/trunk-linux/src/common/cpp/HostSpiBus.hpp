@@ -6,10 +6,10 @@
 #ifndef HOSTSPIBUS_HPP
 #define HOSTSPIBUS_HPP
 
-#include <iostream>
-#include <as_devices/as_spi.h>
-#include "../../common/cpp/Exception.hpp"
-#include "../../common/cpp/Mutex.hpp"
+#include <string>
+
+#include "Exception.hpp"
+#include "Mutex.hpp"
 
 #define CLOCKSPEED 6000000
 #define APF9328_SPI "/dev/spidev1.1"

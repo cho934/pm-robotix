@@ -6,9 +6,12 @@
 #ifndef HOSTADCPORT_HPP
 #define HOSTADCPORT_HPP
 
-#include <as_devices/as_max1027_3_3.h>
-#include "../../common/cpp/Exception.hpp"
-#include "../../common/cpp/Mutex.hpp"
+#include <string>
+
+#include "Exception.hpp"
+#include "Mutex.hpp"
+
+struct as_max1027_device;
 
 namespace utils
 {

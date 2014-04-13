@@ -18,9 +18,9 @@ void robottest::ServoMotorStdTest::run(int, char *[])
 		//TODO Problem with extEncoder and SPI !!!
 
 		robot.servoTest().turnMin();
-
+		sleep(1);
 		robot.servoTest().turnMax();
-
+		sleep(1);
 
 		robot.stop();
 

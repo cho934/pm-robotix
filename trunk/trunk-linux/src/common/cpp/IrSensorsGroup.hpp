@@ -6,10 +6,8 @@
 #ifndef PMX_IRSENSORSGROUP_HPP
 #define	PMX_IRSENSORSGROUP_HPP
 
-#include "ARobotElement.hpp"
 #include "IrSensor.hpp"
-#include "Macro.hpp"
-#include "IAction.hpp"
+#include "ITimerListener.hpp"
 #include "LoggerFactory.hpp"
 #include "Timer.hpp"
 

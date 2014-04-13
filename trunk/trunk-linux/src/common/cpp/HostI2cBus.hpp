@@ -3,12 +3,15 @@
  * \brief Définition de la classe HostI2cBus, gestion du bus i2c pour APF9328.
  */
 
-#ifndef HOSTI2CBUS_H_
-#define HOSTI2CBUS_H_
+#ifndef HOSTI2CBUS_HPP
+#define HOSTI2CBUS_HPP
 
-#include <as_devices/as_i2c.h>
-#include "../../common/cpp/Exception.hpp"
-#include "../../common/cpp/Mutex.hpp"
+#include <string>
+
+#include "Exception.hpp"
+#include "Mutex.hpp"
+
+struct as_i2c_device;
 
 namespace utils
 {

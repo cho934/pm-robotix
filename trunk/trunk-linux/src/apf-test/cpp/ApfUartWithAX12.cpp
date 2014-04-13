@@ -8,6 +8,8 @@
 #include <cstdlib>
 #include <unistd.h>
 #include "ApfUartWithAX12.hpp"
+#include "../../common/cpp/ServoMotorDxlConstant.hpp"
+
 
 void test::ApfUartWithAX12::run(int, char*[])
 {
@@ -31,7 +33,9 @@ void test::ApfUartWithAX12::run(int, char*[])
 		v2 = (rand() % 600) + 200;     // v2 in the range 200 to 800
 
 
-		DxlSetAxLedOn(idAX12);
+		dynamixel.setCommand(idAX12, AX_LED, 1, 1);
+
+		//DxlSetAxLedOn(idAX12);
 		data = DxlGetAxLed(idAX12);
 		std::cout << "Led=" << data << std::endl;
 

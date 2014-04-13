@@ -18,6 +18,7 @@
 #include "ExtEncoder.hpp"
 #include "ServoMotorStdObject.hpp"
 #include "IrSensorsGroup.hpp"
+#include "ServoMotorDxlObject.hpp"
 
 namespace pmx
 {
@@ -88,6 +89,11 @@ private:
 	 * \brief Servomotor standard de test.
 	 */
 	pmx::ServoMotorStdObject servoTest_;
+
+	/*!
+	 * \brief Servomotor ax12 de test.
+	 */
+	pmx::ServoMotorDxlObject servoDxlTest_;
 
 	/*!
 	 * \brief Groupe de détecteur IR.
@@ -198,6 +204,16 @@ public:
 	}
 
 	/*!
+	 * \brief Cette methode retourne le servomotor test.
+	 * \return servoTest_.
+	 */
+	inline pmx::ServoMotorDxlObject & servoDxlTest()
+	{
+		return servoDxlTest_;
+	}
+
+
+	/*!
 	 * \brief Cette methode retourne le groupe de détecteur IR.
 	 * \return irSensorsGroup_.
 	 */
@@ -205,8 +221,6 @@ public:
 	{
 		return irSensorsGroup_;
 	}
-
-
 
 	/*!
 	 * \brief Ajout d'une action.

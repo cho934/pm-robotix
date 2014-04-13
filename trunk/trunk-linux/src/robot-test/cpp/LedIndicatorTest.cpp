@@ -8,7 +8,7 @@
 
 void robottest::LedIndicatorTest::run(int, char *[])
 {
-	logger().info() << "-------------------------------------------------------------------------------" << utils::end;
+	logger().info() << "-----------------------------------------------" << utils::end;
 	logger().info() << "LedIndicatorTest - Blink Led board" << utils::end;
 
 	try
