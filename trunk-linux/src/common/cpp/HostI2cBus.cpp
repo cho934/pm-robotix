@@ -8,7 +8,6 @@
 #include <as_devices/as_i2c.h>
 #include <sstream>
 
-
 utils::HostI2cBus::HostI2cBus()
 		: device_(NULL), opened_(0)
 {
@@ -88,13 +87,11 @@ int utils::HostI2cBus::readRegValue(uint8_t slave_addr, uint8_t reg, uint8_t* da
 			{
 				unlock();
 				throw new I2cException("Error HostI2cBus::readRegValue, WRITE error !");
-				//std::cout << "as_i2c_read_reg_byte: reg " << (int) reg << " WRITE error!" << std::endl;
 			}
 			if (ret == -2)
 			{
 				unlock();
 				throw new I2cException("Error HostI2cBus::readRegValue, READ error !");
-				//std::cout << "as_i2c_read_reg_byte: reg " << (int) reg << " READ error!" << std::endl;
 			}
 			unlock();
 			throw new I2cException("Error HostI2cBus::readRegValue, i2c error !");
@@ -123,11 +120,42 @@ int utils::HostI2cBus::writeRegValue(uint8_t slave_addr, uint8_t reg, uint8_t va
 	{
 		unlock();
 		throw new I2cException("Error HostI2cBus::writeRegValue, i2c error !");
-		//std::cout << "as_i2c_write_reg_byte: reg=" << (int) reg << " val=" << (int) value << " !" << std::endl;
 	}
 
 	//TODO usleep(1000); //fréq i2c à 100kHz : attente de l'application complète de la trame
 
+	unlock();
+	return result;
+}
+
+int utils::HostI2cBus::readI2cSize(uint8_t slave_addr, char *buf, size_t size)
+{
+	lock();
+	int ret = 0;
+
+	setSlave(slave_addr);
+	ret = as_i2c_read(device_, (unsigned char*) buf, size);
+	if (ret < 0)
+	{
+		unlock();
+		throw new I2cException("Error HostI2cBus::readI2cSize, i2c read error !");
+	}
+	unlock();
+	return ret;
+}
+
+int utils::HostI2cBus::writeI2cSize(uint8_t slave_addr, const char *buf, size_t size)
+{
+	lock();
+	int result = 0;
+
+	setSlave(slave_addr);
+	result = as_i2c_write(device_, (unsigned char*) buf, size);
+	if (result < 0)
+	{
+		unlock();
+		throw new I2cException("Error HostI2cBus::writeI2cSize, i2c write error !");
+	}
 	unlock();
 	return result;
 }

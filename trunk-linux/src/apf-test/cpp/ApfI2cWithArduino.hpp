@@ -60,6 +60,6 @@ namespace test
 		int writeI2CSize(struct as_i2c_device *aDev, const char *buf, size_t size);
 		int readI2CSize(struct as_i2c_device *aDev, char *buf, size_t size);
     };
-};
+}
 
 #endif
