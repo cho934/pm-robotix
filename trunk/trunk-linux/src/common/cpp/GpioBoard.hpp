@@ -42,7 +42,7 @@ class GpioBoard: public ARobotElement
 private:
 
 	/*!
-	 * \brief Retourne le \ref Logger associé à la classe \ref GroveColorSensor.
+	 * \brief Retourne le \ref Logger associé à la classe \ref GpioBoard.
 	 */
 	static const utils::Logger & logger()
 	{

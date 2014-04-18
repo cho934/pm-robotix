@@ -59,7 +59,7 @@ size_t len;
     unsigned char buf_read[64];
 
     int status=0;
-    int i;
+
 
     msg = aMsg;
     len = aLen;
@@ -72,7 +72,7 @@ size_t len;
         len = sizeof(buf) - 1;
     }
 
-    for (i=len; i>0; i--)
+    for (int i=len; i>0; i--)
     {
         buf[i-1] = msg & 0x01;
         msg = msg >> 1;
@@ -92,7 +92,7 @@ size_t len;
     }
 
     msg = msg | buf_read[0];
-    for (i=1; i<len; i++)
+    for (int i=1; i<(int)len; i++)
     {
         msg = msg << 1;
         msg = msg | buf_read[i];

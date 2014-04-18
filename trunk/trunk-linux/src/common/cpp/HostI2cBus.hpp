@@ -109,6 +109,12 @@ public:
 	 */
 	int writeRegValue(uint8_t slave_addr, uint8_t reg, uint8_t value);
 
+
+	int readI2cSize(uint8_t slave_addr, char *buf, size_t size);
+
+	int writeI2cSize(uint8_t slave_addr, const char *buf, size_t size);
+
+
 	/*!
 	 * \brief Open i2c.
 	 */

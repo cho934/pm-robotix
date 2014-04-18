@@ -19,6 +19,7 @@
 #include "ServoMotorStdObject.hpp"
 #include "IrSensorsGroup.hpp"
 #include "ServoMotorDxlObject.hpp"
+#include "ArduinoBoard.hpp"
 
 namespace pmx
 {
@@ -99,6 +100,11 @@ private:
 	 * \brief Groupe de détecteur IR.
 	 */
 	pmx::IrSensorsGroup irSensorsGroup_;
+
+	/*!
+	 * \brief Connexion Arduino par I2C.
+	 */
+	pmx::ArduinoBoard arduinoBoard_;
 
 public:
 
@@ -212,7 +218,6 @@ public:
 		return servoDxlTest_;
 	}
 
-
 	/*!
 	 * \brief Cette methode retourne le groupe de détecteur IR.
 	 * \return irSensorsGroup_.
@@ -220,6 +225,15 @@ public:
 	inline pmx::IrSensorsGroup & irSensorsGroup()
 	{
 		return irSensorsGroup_;
+	}
+
+	/*!
+	 * \brief Cette methode retourne l'objet Arduino.
+	 * \return arduinoBoard_.
+	 */
+	inline pmx::ArduinoBoard & arduinoBoard()
+	{
+		return arduinoBoard_;
 	}
 
 	/*!

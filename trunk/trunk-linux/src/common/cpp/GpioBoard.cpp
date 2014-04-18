@@ -4,8 +4,7 @@
  */
 
 #include "GpioBoard.hpp"
-#include "../../common/cpp/HostI2cBus.hpp"
-#include "../../common/cpp/HostI2cBus.hpp"
+#include "HostI2cBus.hpp"
 
 pmx::GpioBoard::GpioBoard(pmx::Robot & robot)
 		: ARobotElement(robot), connected_(false)
