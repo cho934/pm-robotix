@@ -3,9 +3,8 @@
  * \brief Implémentation de la classe Md25.
  */
 
-//#include <stdlib.h>
 #include "Md25.hpp"
-#include "../../common/cpp/HostI2cBus.hpp"
+#include "HostI2cBus.hpp"
 
 pmx::Md25::Md25(pmx::Robot & robot)
 		: ARobotElement(robot), connected_(false)
@@ -43,7 +42,7 @@ pmx::Md25::Md25(pmx::Robot & robot)
 
 int pmx::Md25::getSoftwareVersion(void)
 {
-	uint8_t val = 0;
+	uchar val = 0;
 	try
 	{
 		////int err = utils::HostI2cBus::instance().readRegisterbyte(MD25_SOFTWAREVER_REG, &val);
@@ -57,7 +56,7 @@ int pmx::Md25::getSoftwareVersion(void)
 
 float pmx::Md25::getBatteryVolts(void)
 {
-	uint8_t val = 0;
+	uchar val = 0;
 	try
 	{
 		////int err = utils::HostI2cBus::instance().readRegisterbyte(MD25_VOLTAGE_REG, &val);
@@ -71,7 +70,7 @@ float pmx::Md25::getBatteryVolts(void)
 
 int pmx::Md25::getAccelerationRate()
 {
-	uint8_t val = 0;
+	uchar val = 0;
 	try
 	{
 		////int err = utils::HostI2cBus::instance().readRegisterbyte(MD25_ACCELRATE_REG, &val);
@@ -85,7 +84,7 @@ int pmx::Md25::getAccelerationRate()
 
 int pmx::Md25::getMotor1Speed(void)
 {
-	uint8_t val = 0;
+	uchar val = 0;
 	try
 	{
 		////int err = utils::HostI2cBus::instance().readRegisterbyte(MD25_SPEED1_REG, &val);
@@ -99,7 +98,7 @@ int pmx::Md25::getMotor1Speed(void)
 
 int pmx::Md25::getMotor2Speed(void)
 {
-	uint8_t val = 0;
+	uchar val = 0;
 	try
 	{
 		////int err = utils::HostI2cBus::instance().readRegisterbyte(MD25_SPEED2_REG, &val);
@@ -113,7 +112,7 @@ int pmx::Md25::getMotor2Speed(void)
 
 int pmx::Md25::getMotor1Current(void)
 {
-	uint8_t val = 0;
+	uchar val = 0;
 	try
 	{
 		////int err = utils::HostI2cBus::instance().readRegisterbyte(MD25_CURRENT1_REG, &val);
@@ -127,7 +126,7 @@ int pmx::Md25::getMotor1Current(void)
 
 int pmx::Md25::getMotor2Current(void)
 {
-	uint8_t val = 0;
+	uchar val = 0;
 	try
 	{
 		////int err = utils::HostI2cBus::instance().readRegisterbyte(MD25_CURRENT2_REG, &val);
@@ -141,7 +140,7 @@ int pmx::Md25::getMotor2Current(void)
 
 int pmx::Md25::getMode(void)
 {
-	uint8_t val = 0;
+	uchar val = 0;
 	try
 	{
 		////int err = utils::HostI2cBus::instance().readRegisterbyte(MD25_MODE_REG, &val);
@@ -159,12 +158,12 @@ int pmx::Md25::getNbErrors(void)
 	return 0;
 }
 
-int pmx::Md25::getEncoder(long *pvalue, int MD25Register)
+int pmx::Md25::getEncoder(long *pvalue, uchar MD25Register)
 {
-	uint8_t encoder2 = 0;
-	uint8_t encoder5 = 0;
-	uint8_t encoder4 = 0;
-	uint8_t encoder3 = 0;
+	uchar encoder2 = 0;
+	uchar encoder5 = 0;
+	uchar encoder4 = 0;
+	uchar encoder3 = 0;
 	int err = 0;
 	try
 	{
@@ -190,7 +189,7 @@ int pmx::Md25::getEncoder(long *pvalue, int MD25Register)
 	return err;
 }
 
-long pmx::Md25::ensureGetEncoder(long last, int MD25Register)
+long pmx::Md25::ensureGetEncoder(long last, uchar MD25Register)
 {
 	long value = 0;
 	int err = getEncoder(&value, MD25Register);
@@ -214,7 +213,7 @@ long pmx::Md25::ensureGetEncoder(long last, int MD25Register)
 	return last;
 }
 
-void pmx::Md25::setMode(int mode)
+void pmx::Md25::setMode(uchar mode)
 {
 	try
 	{
@@ -227,7 +226,7 @@ void pmx::Md25::setMode(int mode)
 	}
 }
 
-void pmx::Md25::setAccelerationRate(int rate)
+void pmx::Md25::setAccelerationRate(uchar rate)
 {
 	try
 	{
@@ -239,7 +238,7 @@ void pmx::Md25::setAccelerationRate(int rate)
 	}
 }
 
-void pmx::Md25::setCommand(int command)
+void pmx::Md25::setCommand(uchar command)
 {
 	try
 	{
@@ -257,7 +256,7 @@ void pmx::Md25::setSpeedRegisters(int speed_1, int speed_2)
 	ensureSetSpeed(speed_2, MD25_SPEED2_REG);
 }
 
-void pmx::Md25::ensureSetSpeed(int speed, int reg)
+void pmx::Md25::ensureSetSpeed(int speed, uchar reg)
 {
 	int err = setSpeedReg(speed, reg);
 	if (err != 0)
@@ -273,9 +272,9 @@ void pmx::Md25::ensureSetSpeed(int speed, int reg)
 	}
 }
 
-int pmx::Md25::setSpeedReg(int speed, int reg)
+int pmx::Md25::setSpeedReg(int speed, uchar reg)
 {
-	uint8_t read;
+	uchar read;
 	//int err = 0;
 	try
 	{
@@ -324,9 +323,9 @@ int pmx::Md25::setSpeedReg(int speed, int reg)
 	//}
 }
 
-int pmx::Md25::stopMotor(int reg)
+int pmx::Md25::stopMotor(uchar reg)
 {
-	int ret;
+	int nb_err=0;
 	switch (current_mode_)
 	{
 	case MD25_MODE_0:
@@ -338,6 +337,7 @@ int pmx::Md25::stopMotor(int reg)
 		} catch (utils::Exception * e)
 		{
 			logger().error() << "Exception Md25::stopMotor mode 1:" << e->what() << utils::end;
+			nb_err++;
 		}
 		break;
 	case MD25_MODE_1:
@@ -349,10 +349,11 @@ int pmx::Md25::stopMotor(int reg)
 		} catch (utils::Exception * e)
 		{
 			logger().error() << "Exception Md25::stopMotor mode3:" << e->what() << utils::end;
+			nb_err++;
 		}
 		break;
 	}
-	return ret;
+	return nb_err;
 }
 
 int pmx::Md25::stopMotors(void)
@@ -395,7 +396,7 @@ int pmx::Md25::stopMotors(void)
 	return 0;
 }
 
-void pmx::Md25::write_i2c(int command, int value)
+void pmx::Md25::write_i2c(uchar command, uchar value)
 {
 	try
 	{
@@ -407,11 +408,11 @@ void pmx::Md25::write_i2c(int command, int value)
 	}
 }
 
-int pmx::Md25::read_i2c(int command)
+int pmx::Md25::read_i2c(uchar command)
 {
 	try
 	{
-		uint8_t receivedVal = 0;
+		uchar receivedVal = 0;
 		utils::HostI2cBus::instance().readRegValue(MD25_DEFAULT_ADDRESS, command, &receivedVal);
 		return receivedVal;
 
