@@ -6,6 +6,8 @@
 #include <iostream>
 #include <sstream>
 #include <as_devices/as_gpio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "HostGpioPort.hpp"
 

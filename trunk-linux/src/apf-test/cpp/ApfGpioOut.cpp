@@ -3,14 +3,17 @@
  * \brief Implémentation de la classe ApfGpioOut, Clignotement d'une sortie (ou pad) de la carte DevLightV2.
  */
 
-#include <iostream>
+#include "ApfGpioOut.hpp"
+
+//#include <linux/ppdev.h>
+#include <unistd.h>
+#include <cstdlib>
 #include <cstring>
-#include <linux/ppdev.h>
+#include <iostream>
+#include <string>
 
 #include "../../common/cpp/Exception.hpp"
 #include "GpioPort.hpp"
-
-#include "ApfGpioOut.hpp"
 
 void test::ApfGpioOut::run(int argc, char *argv[])
 {

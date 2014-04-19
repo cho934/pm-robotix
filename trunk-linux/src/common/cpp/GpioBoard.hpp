@@ -9,8 +9,9 @@
 #ifndef PMX_GPIOBOARD_HPP
 #define PMX_GPIOBOARD_HPP
 
-#include "../../common/cpp/ARobotElement.hpp"
-#include "../../common/cpp/LoggerFactory.hpp"
+#include "ARobotElement.hpp"
+#include "LoggerFactory.hpp"
+#include <stdint.h>
 
 //  with no jumpers the full address is   1 0 0 1 1 1    1 0 0 A2 A1 A0  0x27 is the default address for the DFR0013 board with no jumpers.
 // 0x27 is default address for the DFR0013 board with no jumpers.

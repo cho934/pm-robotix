@@ -46,10 +46,10 @@ int main() {
         suite.addTest(new PointerListTest());
 
         // tests unitaires normaux
-        suite.addTest(new ChronometerTest());*/
+        suite.addTest(new ChronometerTest());
         suite.addTest(new PidTest());
         suite.addTest(new PositionTest());
-        suite.addTest(new ActionManagerTest());
+        suite.addTest(new ActionManagerTest());*/
 
 
     /*//TODO add tests

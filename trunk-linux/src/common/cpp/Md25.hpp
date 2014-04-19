@@ -17,8 +17,8 @@
 #ifndef 	PMX_MD25_HPP
 #define	PMX_MD25_HPP
 
-#include "../../common/cpp/ARobotElement.hpp"
-#include "../../common/cpp/LoggerFactory.hpp"
+#include "ARobotElement.hpp"
+#include "LoggerFactory.hpp"
 //#include <cmath>
 
 #define     MD25_DEFAULT_ADDRESS    0x58 // Address of the MD25 (= 0xB0 >> 1) i.e. 0x58 as a 7 bit address for the wire lib
@@ -73,7 +73,7 @@ private:
 	/*!
 	 * \brief Mode courant utilisé par la carte MD25 (MODE1).
 	 */
-	uint8_t current_mode_;
+	int current_mode_;
 
 	/*!
 	 * \brief Retourne le \ref Logger associé à la classe \ref Md25.
@@ -114,7 +114,7 @@ public:
 	 * \param value         32-bit signed long value of current encoder value for channel 1 or 2.
 	 * \param MD25Register  Choose MD25_ENCODER1_REG ou MD25_ENCODER2_REG.
 	 */
-	int getEncoder(long* value, uint8_t MD25Register);
+	int getEncoder(long* value, int MD25Register);
 
 	/*!
 	 * \brief Read encoder for channel 1 or 2.
@@ -123,7 +123,7 @@ public:
 	 * \param last          Last value of current encoder.
 	 * \param MD25Register  Choose MD25_ENCODER1_REG ou MD25_ENCODER2_REG.
 	 */
-	long ensureGetEncoder(long last, uint8_t MD25Register);
+	long ensureGetEncoder(long last, int MD25Register);
 
 	/*!
 	 * \brief Read current software version.
@@ -193,14 +193,14 @@ public:
 	 *
 	 * \param   mode     value (0, 1, 2, or 3)
 	 */
-	void setMode(uint8_t mode);
+	void setMode(int mode);
 
 	/*!
 	 * \brief set acceleration rate.
 	 *
 	 * \param   rate   acceleration rate
 	 */
-	void setAccelerationRate(uint8_t rate);
+	void setAccelerationRate(int rate);
 
 	/*!
 	 * \brief send command to command register.
@@ -213,7 +213,7 @@ public:
 	 * MD25_DISABLE_TIMEOUT            0x32
 	 * MD25_ENABLE_TIMEOUT             0x33
 	 */
-	void setCommand(uint8_t command);
+	void setCommand(int command);
 
 	/*!
 	 * \brief set speed registers for both channels.
@@ -223,14 +223,14 @@ public:
 	 * \param   speed_1   speed register for channel 1  (-128->127)
 	 * \param   speed_2   speed register for channel 2  (-128->127)
 	 */
-	void setSpeedRegisters(uint8_t speed_1, uint8_t speed_2);
+	void setSpeedRegisters(int speed_1, int speed_2);
 
 	/*!
 	 * \brief ensure (2 times) to set speed register for channel 1 or 2.
 	 * \param speed >0 (MD25 mode0) => 0-128-255
 	 *
 	 */
-	void ensureSetSpeed(uint8_t speed, uint8_t reg);
+	void ensureSetSpeed(int speed, int reg);
 
 	/*!
 	 * \brief set speed register for channel 1 or 2.
@@ -241,14 +241,14 @@ public:
 	 * \param   speed   speed register for channel  (-128->127)
 	 * \param   MD25_SPEED1_REG or MD25_SPEED2_REG
 	 */
-	int setSpeedReg(uint8_t speed, uint8_t reg);
+	int setSpeedReg(int speed, int reg);
 
 	/*!
 	 * \brief switch motor (1 or 2) off.
 	 *
 	 * \param   MD25_SPEED1_REG or MD25_SPEED2_REG
 	 */
-	int stopMotor(uint8_t reg);
+	int stopMotor(int reg);
 
 	/*!
 	 * \brief switch both motors off.
@@ -257,9 +257,9 @@ public:
 
 private:
 
-	void write_i2c(uint8_t command, uint8_t value);
+	void write_i2c(int command, int value);
 
-	uint8_t read_i2c(uint8_t command);
+	int read_i2c(int command);
 
 };
 }

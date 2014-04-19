@@ -6,8 +6,8 @@
 #ifndef PMX_ARDUINOBOARD_HPP
 #define PMX_ARDUINOBOARD_HPP
 
-#include "LoggerFactory.hpp"
 #include "ARobotElement.hpp"
+#include "LoggerFactory.hpp"
 
 #define ARDUINOBOARD_ADDR	 0x2A  // (0x2A = 42)
 

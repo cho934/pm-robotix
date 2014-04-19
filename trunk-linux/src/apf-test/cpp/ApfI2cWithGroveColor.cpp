@@ -3,12 +3,20 @@
  * \brief Implémentation de la classe ApfI2cWithGroveColor concernant l'utilisation du détecteur Grove TSC3414.
  */
 
-#include <iostream>
-#include <math.h>
-#include <as_devices/as_i2c.h>
+
 #include "ApfI2cWithGroveColor.hpp"
 
-uint8_t TCS3414values[4]; // [Clear,Red,Green,Blue]
+#include <as_devices/as_i2c.h>
+#include <unistd.h>
+#include <cmath>
+//#include <cstdint>
+#include <cstdio>
+#include <iostream>
+
+
+
+
+int TCS3414values[4]; // [Clear,Red,Green,Blue]
 float TCS3414medium[4]; // [Clear,Red,Green,Blue]
 float TCS3414mediate[4]; // [Clear,Red,Green,Blue]
 float ColorTemperature = 0;
@@ -21,15 +29,17 @@ bool debug = false; //change to true if you want to see the various debug serial
 bool percentageEnabled = false; //enable/disable the percentage mode
 bool compensateEnabled = false; //enable/disable color compensation of the sensor sensitivity per color
 
-void test::ApfI2cWithGroveColor::run(int, char*[])
+void ApfI2cWithGroveColor::run(int, char*[])
 {
+
 	std::cout
 			<< "APF : Use I2C on devLightV2 (As_devices) with Grove Color Sensor"
 			<< std::endl;
 	int value;
 	int initialized = 0;
 
-	struct as_i2c_device *i2c_bus = 0;
+
+	struct as_i2c_device *i2c_bus= 0;
 	int i2c_id = 0; //Bus I2C sur la carte APF9328
 
 	printf("Open i2c bus\n");
@@ -77,14 +87,13 @@ void test::ApfI2cWithGroveColor::run(int, char*[])
  * Private Methods
  */
 
-int test::ApfI2cWithGroveColor::readRegisterbyte(struct as_i2c_device *aDev,
-		uint8_t reg, uint8_t* data)
+int ApfI2cWithGroveColor::readRegisterbyte(struct as_i2c_device *aDev,	int reg, int* data)
 {
 	lock();
 	int ret = 0;
 	//ret = as_i2c_read_reg(fd_, adr, reg, data, 1); //return 0 on success, -1 on write error (\e reg byte), -2 on read error.
 
-	ret = as_i2c_read_reg(aDev, reg, data, 1);
+	ret = as_i2c_read_reg(aDev, (uint8_t)reg, (uint8_t*)data, 1);
 	if (ret < 0)
 	{
 		//errorCount_++;
@@ -104,12 +113,12 @@ int test::ApfI2cWithGroveColor::readRegisterbyte(struct as_i2c_device *aDev,
 	return ret;
 }
 
-int test::ApfI2cWithGroveColor::writeRegisterbyte(struct as_i2c_device *aDev,
-		uint8_t reg, uint8_t value)
+int ApfI2cWithGroveColor::writeRegisterbyte(struct as_i2c_device *aDev, uchar reg, uchar value)
 {
 	//logger().error() << "as_i2c_write_reg_byte: adr=" << (int) adr << utils::end;
 	lock();
 	int result = 0;
+
 	//result = as_i2c_write_reg_byte(fd_, adr, reg, value);
 	result = as_i2c_write_reg_byte(aDev, reg, value);
 
@@ -131,11 +140,11 @@ int test::ApfI2cWithGroveColor::writeRegisterbyte(struct as_i2c_device *aDev,
 }
 
 /*** Gets the blue sensor value and returns an unsigned int ***/
-uint8_t test::ApfI2cWithGroveColor::TSC3414Blue(struct as_i2c_device *aDev)
+int ApfI2cWithGroveColor::TSC3414Blue(struct as_i2c_device *aDev)
 {
 
-	uint8_t blueLow = 0;
-	uint8_t blueHigh = 0;
+	int blueLow = 0;
+	int blueHigh = 0;
 	int ret = 0;
 	ret = readRegisterbyte(aDev, 0x94, &blueLow); //read Clear register
 	ret = readRegisterbyte(aDev, 0x95, &blueHigh); //read Clear register
@@ -148,11 +157,11 @@ uint8_t test::ApfI2cWithGroveColor::TSC3414Blue(struct as_i2c_device *aDev)
 }
 
 /*** Gets the green sensor value and returns an unsigned int ***/
-uint8_t test::ApfI2cWithGroveColor::TSC3414Green(struct as_i2c_device *aDev)
+int ApfI2cWithGroveColor::TSC3414Green(struct as_i2c_device *aDev)
 {
 
-	uint8_t greenLow = 0;
-	uint8_t greenHigh = 0;
+	int greenLow = 0;
+	int greenHigh = 0;
 	int ret = 0;
 	ret = readRegisterbyte(aDev, 0x90, &greenLow); //read Clear register
 	ret = readRegisterbyte(aDev, 0x91, &greenHigh); //read Clear register
@@ -166,11 +175,11 @@ uint8_t test::ApfI2cWithGroveColor::TSC3414Green(struct as_i2c_device *aDev)
 }
 
 /*** Gets the red sensor value and returns an unsigned int ***/
-uint8_t test::ApfI2cWithGroveColor::TSC3414Red(struct as_i2c_device *aDev)
+int ApfI2cWithGroveColor::TSC3414Red(struct as_i2c_device *aDev)
 {
 
-	uint8_t redLow = 0;
-	uint8_t redHigh = 0;
+	int redLow = 0;
+	int redHigh = 0;
 	int ret = 0;
 	ret = readRegisterbyte(aDev, 0x92, &redLow); //read Clear register
 	ret = readRegisterbyte(aDev, 0x93, &redHigh); //read Clear register
@@ -183,11 +192,11 @@ uint8_t test::ApfI2cWithGroveColor::TSC3414Red(struct as_i2c_device *aDev)
 }
 
 /*** Gets the clear sensor value and returns an unsigned int ***/
-uint8_t test::ApfI2cWithGroveColor::TSC3414Clear(struct as_i2c_device *aDev)
+int ApfI2cWithGroveColor::TSC3414Clear(struct as_i2c_device *aDev)
 {
 
-	uint8_t clearLow = 0;
-	uint8_t clearHigh = 0;
+	int clearLow = 0;
+	int clearHigh = 0;
 	int ret = 0;
 	ret = readRegisterbyte(aDev, 0x96, &clearLow); //read Clear register
 	ret = readRegisterbyte(aDev, 0x97, &clearHigh); //read Clear register
@@ -204,8 +213,7 @@ uint8_t test::ApfI2cWithGroveColor::TSC3414Clear(struct as_i2c_device *aDev)
  * Sensor read functions - retrieves the RGBW raw sensor values
  * ======================================================
  */
-void test::ApfI2cWithGroveColor::TSC3414All(struct as_i2c_device *aDev,
-		uint8_t allcolors[])
+void ApfI2cWithGroveColor::TSC3414All(struct as_i2c_device *aDev, int allcolors[])
 {
 	uint8_t white = TSC3414Clear(aDev);
 	uint8_t green = TSC3414Green(aDev);
@@ -225,8 +233,7 @@ void test::ApfI2cWithGroveColor::TSC3414All(struct as_i2c_device *aDev,
  * Turns on the sensor and sets integration time
  * ======================================================
  */
-void test::ApfI2cWithGroveColor::TCS3414Start(struct as_i2c_device *aDev,
-		int delay1, int delay2)
+void ApfI2cWithGroveColor::TCS3414Start(struct as_i2c_device *aDev, int delay1, int delay2)
 {
 
 	int ret = 0;
@@ -238,11 +245,11 @@ void test::ApfI2cWithGroveColor::TCS3414Start(struct as_i2c_device *aDev,
 	usleep(delay1 * 1000); //14
 
 	// Request confirmation //0011 1001
-	uint8_t receivedVal; //0001 (ADC valid) 0001 (Power on)
+	int receivedVal; //0001 (ADC valid) 0001 (Power on)
 	ret = readRegisterbyte(aDev, 0x39, &receivedVal);
 
 	// Request ID //0011 1001
-	uint8_t ID;
+	int ID;
 	//0x84 1000 0100 //get information from ID register (04h)
 	ret = readRegisterbyte(aDev, 0x84, &ID);
 	//0001 0000 (first byte == 0001 (TCS: 3413,3414,3415,3416) or 0000 (TCS: 3404).
@@ -285,8 +292,7 @@ void test::ApfI2cWithGroveColor::TCS3414Start(struct as_i2c_device *aDev,
 }
 
 /*** Keeps a running average of 4 values per color. ***/
-void test::ApfI2cWithGroveColor::calculateMedium(float med[], uint8_t value[],
-		float divider)
+void ApfI2cWithGroveColor::calculateMedium(float med[], int value[], 	float divider)
 {
 	for (int i = 0; i < 4; i++)
 	{
@@ -295,8 +301,7 @@ void test::ApfI2cWithGroveColor::calculateMedium(float med[], uint8_t value[],
 }
 
 /*** calculates percentages for R,G,B channels, if enabled.  ***/
-void test::ApfI2cWithGroveColor::makePercentage(uint8_t allcolors[],
-		float allmedium[])
+void ApfI2cWithGroveColor::makePercentage(int allcolors[], 	float allmedium[])
 { //makes every color a percentage, 100% is the average of the previous 4 values before this is entered.
 	for (int i = 0; i < 4; i++)
 	{
@@ -305,7 +310,7 @@ void test::ApfI2cWithGroveColor::makePercentage(uint8_t allcolors[],
 }
 
 //compensateEnabled = false; //enable/disable color compensation of the sensor sensitivity per color
-void test::ApfI2cWithGroveColor::colorCompensator(uint8_t allcolors[])
+void ApfI2cWithGroveColor::colorCompensator(int allcolors[])
 {
 	allcolors[2] = (int) (allcolors[2] * 1.3125); //green
 	allcolors[3] = (int) (allcolors[2] * 1.5973); //blue
@@ -317,7 +322,7 @@ void test::ApfI2cWithGroveColor::colorCompensator(uint8_t allcolors[])
 
 /*** takes the raw values from the sensors and converts them to
  Correlated Color Temperature.  Returns a float with CCT ***/
-float test::ApfI2cWithGroveColor::CCTCalc(uint8_t allcolors[])
+float ApfI2cWithGroveColor::CCTCalc(int allcolors[])
 {
 	float TCS3414tristimulus[3]; // [tri X, tri Y, tri Z]
 	float TCS3414chromaticityCoordinates[2]; //chromaticity coordinates // [x, y]
@@ -352,7 +357,7 @@ float test::ApfI2cWithGroveColor::CCTCalc(uint8_t allcolors[])
 	return CCT;
 }
 
-void test::ApfI2cWithGroveColor::TCS3414Loop(struct as_i2c_device *aDev)
+void ApfI2cWithGroveColor::TCS3414Loop(struct as_i2c_device *aDev)
 {
 	//getSerialCommands(); //to be able to receive commands
 
@@ -385,7 +390,7 @@ void test::ApfI2cWithGroveColor::TCS3414Loop(struct as_i2c_device *aDev)
 
 }
 
-void test::ApfI2cWithGroveColor::CMD(int delayTime)
+void ApfI2cWithGroveColor::CMD(int delayTime)
 {
 
 	if (percentageEnabled)

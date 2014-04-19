@@ -112,8 +112,8 @@
 
 
 
-namespace test
-{
+//namespace test
+//{
     /*!
      * \brief Effectue un test pour contrôler la carte de motorisation MD25..
      */
@@ -160,8 +160,6 @@ namespace test
 		float getBatteryVolts(struct as_i2c_device *aDev);
 
 
-
-
         /*!
 		 * \brief Read a byte from the given register. Private Methods.
 		 *
@@ -171,7 +169,7 @@ namespace test
 		 *
 		 * \return return 0 on success, -1 on write error (\e reg byte), -2 on read error.
 		 */
-		int readRegisterbyte(struct as_i2c_device *aDev, uint8_t reg, uint8_t* data);
+		int readRegisterbyte(struct as_i2c_device *aDev, unsigned char reg, unsigned char *data);
 
 		/*!
 		 * \brief Write a byte to the I2C given register. Private Methods.
@@ -182,11 +180,9 @@ namespace test
 		 *
 		 * \return 0 on success, -1 on error.
 		 */
-		int writeRegisterbyte(struct as_i2c_device *aDev, uint8_t reg, uint8_t value);
-
-
+		int writeRegisterbyte(struct as_i2c_device *aDev, unsigned char reg, unsigned char value);
 
     };
-};
+//}
 
 #endif

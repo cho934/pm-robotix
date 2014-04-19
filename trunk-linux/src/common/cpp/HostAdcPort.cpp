@@ -6,8 +6,7 @@
 #include "HostAdcPort.hpp"
 
 #include <as_devices/as_max1027_3_3.h>
-//#include <cstdio>
-//#include <cstdlib>
+
 
 utils::HostAdcPort::HostAdcPort()
 		: max1027_device_(NULL), opened_(0)
@@ -47,11 +46,6 @@ void utils::HostAdcPort::close(void)
 	if (opened_ == 1)
 	{
 		int ret = as_max1027_close(max1027_device_);
-		if (ret < 0)
-		{
-			printf("Error on closing max1027\n");
-			exit(1);
-		}
 		if (ret < 0)
 		{
 			throw new AdcException("Error HostAdcPort::close, can't close max1027 !");

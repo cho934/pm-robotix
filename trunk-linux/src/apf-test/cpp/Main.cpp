@@ -40,8 +40,8 @@ int main(int argc, char** argv)
     manager.add(new test::ApfAdcIn());
     manager.add(new test::ApfDacOut());
     manager.add(new test::ApfFpgaServo());
-    manager.add(new test::ApfI2cWithGroveColor());
-    manager.add(new test::ApfI2cWithMd25());
+    manager.add(new ApfI2cWithGroveColor());
+    manager.add(new ApfI2cWithMd25());
     manager.add(new test::ApfSpiWithLs7366());
     manager.add(new test::ApfUartWithAX12());
     manager.add(new test::ApfI2cWithArduino());

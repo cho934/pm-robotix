@@ -5,6 +5,7 @@
 
 #include "HostI2cBus.hpp"
 
+#include <stdint.h>
 #include <as_devices/as_i2c.h>
 #include <sstream>
 
@@ -55,7 +56,6 @@ void utils::HostI2cBus::setSlave(uint8_t slaveAddr)
 	if (opened_ == 1)
 	{
 		int err = as_i2c_set_slave_addr(device_, slaveAddr);
-		printf("err= %d\n", err);
 		if (err < 0)
 		{
 
