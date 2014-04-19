@@ -3,9 +3,13 @@
  * \brief Implémentation de la classe GroveColorSensor concernant l'utilisation du détecteur Grove TSC3414.
  */
 
-#include <math.h>
 #include "GroveColorSensor.hpp"
+
+#include <unistd.h>
+#include <cmath>
+
 #include "HostI2cBus.hpp"
+#include "Logger.hpp"
 
 pmx::GroveColorSensor::GroveColorSensor(pmx::Robot & robot)
 		: ARobotElement(robot), connected_(false), integrationtime_(12), loopdelay_(12), percentageEnabled_(false), compensateEnabled_(
@@ -48,10 +52,10 @@ pmx::GroveColorSensor::GroveColorSensor(pmx::Robot & robot)
 }
 
 /*** Gets the blue sensor value and returns an unsigned int ***/
-uint8_t pmx::GroveColorSensor::TSC3414Blue()
+uchar pmx::GroveColorSensor::TSC3414Blue()
 {
-	uint8_t blueLow = 0;
-	uint8_t blueHigh = 0;
+	uchar blueLow = 0;
+	uchar blueHigh = 0;
 	if (connected_)
 	{
 		try
@@ -72,10 +76,10 @@ uint8_t pmx::GroveColorSensor::TSC3414Blue()
 }
 
 /*** Gets the green sensor value and returns an unsigned int ***/
-uint8_t pmx::GroveColorSensor::TSC3414Green()
+uchar pmx::GroveColorSensor::TSC3414Green()
 {
-	uint8_t greenLow = 0;
-	uint8_t greenHigh = 0;
+	uchar greenLow = 0;
+	uchar greenHigh = 0;
 	if (connected_)
 	{
 		try
@@ -96,10 +100,10 @@ uint8_t pmx::GroveColorSensor::TSC3414Green()
 }
 
 /*** Gets the red sensor value and returns an unsigned int ***/
-uint8_t pmx::GroveColorSensor::TSC3414Red()
+uchar pmx::GroveColorSensor::TSC3414Red()
 {
-	uint8_t redLow = 0;
-	uint8_t redHigh = 0;
+	uchar redLow = 0;
+	uchar redHigh = 0;
 	if (connected_)
 	{
 		try
@@ -119,10 +123,10 @@ uint8_t pmx::GroveColorSensor::TSC3414Red()
 }
 
 /*** Gets the clear sensor value and returns an unsigned int ***/
-uint8_t pmx::GroveColorSensor::TSC3414Clear()
+uchar pmx::GroveColorSensor::TSC3414Clear()
 {
-	uint8_t clearLow = 0;
-	uint8_t clearHigh = 0;
+	uchar clearLow = 0;
+	uchar clearHigh = 0;
 	if (connected_)
 	{
 		try
@@ -147,12 +151,12 @@ uint8_t pmx::GroveColorSensor::TSC3414Clear()
  * Sensor read functions - retrieves the RGBW raw sensor values
  * ======================================================
  */
-void pmx::GroveColorSensor::TSC3414All(uint8_t allcolors[])
+void pmx::GroveColorSensor::TSC3414All(uchar allcolors[])
 {
-	uint8_t white = TSC3414Clear();
-	uint8_t green = TSC3414Green();
-	uint8_t red = TSC3414Red();
-	uint8_t blue = TSC3414Blue();
+	uchar white = TSC3414Clear();
+	uchar green = TSC3414Green();
+	uchar red = TSC3414Red();
+	uchar blue = TSC3414Blue();
 
 	allcolors[0] = white;
 	allcolors[1] = red;
@@ -183,12 +187,12 @@ void pmx::GroveColorSensor::TCS3414Initialize(int delay1, int delay2)
 			usleep(delay1 * 1000);				//14
 
 			// Request confirmation //0011 1001
-			uint8_t receivedVal;				//0001 (ADC valid) 0001 (Power on)
+			uchar receivedVal;				//0001 (ADC valid) 0001 (Power on)
 			//ret = utils::HostI2cBus::instance().readRegisterbyte(0x39, &receivedVal);
 			receivedVal = read_i2c(0x39);
 
 			// Request ID //0011 1001
-			uint8_t ID;
+			uchar ID;
 			//0x84 1000 0100 //get information from ID register (04h)
 			//ret = utils::HostI2cBus::instance().readRegisterbyte(0x84, &ID);
 			ID = read_i2c(0x84);
@@ -239,7 +243,7 @@ void pmx::GroveColorSensor::TCS3414Initialize(int delay1, int delay2)
 }
 
 /*** Keeps a running average of 4 values per color. ***/
-void pmx::GroveColorSensor::calculateMedium(float med[], uint8_t value[], float divider)
+void pmx::GroveColorSensor::calculateMedium(float med[], uchar value[], float divider)
 {
 	for (int i = 0; i < 4; i++)
 	{
@@ -248,7 +252,7 @@ void pmx::GroveColorSensor::calculateMedium(float med[], uint8_t value[], float 
 }
 
 /*** calculates percentages for R,G,B channels, if enabled.  ***/
-void pmx::GroveColorSensor::makePercentage(uint8_t allcolors[], float allmedium[])
+void pmx::GroveColorSensor::makePercentage(uchar allcolors[], float allmedium[])
 { //makes every color a percentage, 100% is the average of the previous 4 values before this is entered.
 	for (int i = 0; i < 4; i++)
 	{
@@ -257,7 +261,7 @@ void pmx::GroveColorSensor::makePercentage(uint8_t allcolors[], float allmedium[
 }
 
 //compensateEnabled = false; //enable/disable color compensation of the sensor sensitivity per color
-void pmx::GroveColorSensor::colorCompensator(uint8_t allcolors[])
+void pmx::GroveColorSensor::colorCompensator(uchar allcolors[])
 {
 	allcolors[2] = (int) (allcolors[2] * 1.3125); //green
 	allcolors[3] = (int) (allcolors[2] * 1.5973); //blue
@@ -269,7 +273,7 @@ void pmx::GroveColorSensor::colorCompensator(uint8_t allcolors[])
 
 /*** takes the raw values from the sensors and converts them to
  Correlated Color Temperature.  Returns a float with CCT ***/
-float pmx::GroveColorSensor::CCTCalc(uint8_t allcolors[])
+float pmx::GroveColorSensor::CCTCalc(uchar allcolors[])
 {
 	float TCS3414tristimulus[3]; // [tri X, tri Y, tri Z]
 	float TCS3414chromaticityCoordinates[2]; //chromaticity coordinates // [x, y]
@@ -297,7 +301,7 @@ float pmx::GroveColorSensor::CCTCalc(uint8_t allcolors[])
 }
 
 // [Clear,Red,Green,Blue]
-uint8_t * pmx::GroveColorSensor::TCS3414GetValues()
+uchar * pmx::GroveColorSensor::TCS3414GetValues()
 {
 	float ColorTemperature = 0;
 
@@ -353,7 +357,7 @@ void pmx::GroveColorSensor::CMD(int delayTime)
 	usleep(delayTime * 1000);
 }
 
-void pmx::GroveColorSensor::write_i2c(uint8_t command, uint8_t value)
+void pmx::GroveColorSensor::write_i2c(uchar command, uchar value)
 {
 	try
 	{
@@ -365,11 +369,11 @@ void pmx::GroveColorSensor::write_i2c(uint8_t command, uint8_t value)
 	}
 }
 
-uint8_t pmx::GroveColorSensor::read_i2c(uint8_t command)
+uchar pmx::GroveColorSensor::read_i2c(uchar command)
 {
 	try
 	{
-		uint8_t receivedVal = 0;
+		uchar receivedVal = 0;
 		utils::HostI2cBus::instance().readRegValue(GROVE_COLOR_DEFAULT_ADDRESS, command, &receivedVal);
 		return receivedVal;
 

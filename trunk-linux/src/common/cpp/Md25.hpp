@@ -19,7 +19,8 @@
 
 #include "ARobotElement.hpp"
 #include "LoggerFactory.hpp"
-//#include <cmath>
+#include "Macro.hpp"
+
 
 #define     MD25_DEFAULT_ADDRESS    0x58 // Address of the MD25 (= 0xB0 >> 1) i.e. 0x58 as a 7 bit address for the wire lib
 
@@ -114,7 +115,7 @@ public:
 	 * \param value         32-bit signed long value of current encoder value for channel 1 or 2.
 	 * \param MD25Register  Choose MD25_ENCODER1_REG ou MD25_ENCODER2_REG.
 	 */
-	int getEncoder(long* value, int MD25Register);
+	int getEncoder(long* value, uchar MD25Register);
 
 	/*!
 	 * \brief Read encoder for channel 1 or 2.
@@ -123,7 +124,7 @@ public:
 	 * \param last          Last value of current encoder.
 	 * \param MD25Register  Choose MD25_ENCODER1_REG ou MD25_ENCODER2_REG.
 	 */
-	long ensureGetEncoder(long last, int MD25Register);
+	long ensureGetEncoder(long last, uchar MD25Register);
 
 	/*!
 	 * \brief Read current software version.
@@ -193,14 +194,14 @@ public:
 	 *
 	 * \param   mode     value (0, 1, 2, or 3)
 	 */
-	void setMode(int mode);
+	void setMode(uchar mode);
 
 	/*!
 	 * \brief set acceleration rate.
 	 *
 	 * \param   rate   acceleration rate
 	 */
-	void setAccelerationRate(int rate);
+	void setAccelerationRate(uchar rate);
 
 	/*!
 	 * \brief send command to command register.
@@ -213,7 +214,7 @@ public:
 	 * MD25_DISABLE_TIMEOUT            0x32
 	 * MD25_ENABLE_TIMEOUT             0x33
 	 */
-	void setCommand(int command);
+	void setCommand(uchar command);
 
 	/*!
 	 * \brief set speed registers for both channels.
@@ -230,7 +231,7 @@ public:
 	 * \param speed >0 (MD25 mode0) => 0-128-255
 	 *
 	 */
-	void ensureSetSpeed(int speed, int reg);
+	void ensureSetSpeed(int speed, uchar reg);
 
 	/*!
 	 * \brief set speed register for channel 1 or 2.
@@ -241,14 +242,14 @@ public:
 	 * \param   speed   speed register for channel  (-128->127)
 	 * \param   MD25_SPEED1_REG or MD25_SPEED2_REG
 	 */
-	int setSpeedReg(int speed, int reg);
+	int setSpeedReg(int speed, uchar reg);
 
 	/*!
 	 * \brief switch motor (1 or 2) off.
-	 *
+	 * \return 	nb d'erreur
 	 * \param   MD25_SPEED1_REG or MD25_SPEED2_REG
 	 */
-	int stopMotor(int reg);
+	int stopMotor(uchar reg);
 
 	/*!
 	 * \brief switch both motors off.
@@ -257,9 +258,9 @@ public:
 
 private:
 
-	void write_i2c(int command, int value);
+	void write_i2c(uchar command, uchar value);
 
-	int read_i2c(int command);
+	int read_i2c(uchar command);
 
 };
 }

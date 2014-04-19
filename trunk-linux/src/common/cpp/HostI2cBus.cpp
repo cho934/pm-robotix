@@ -5,9 +5,10 @@
 
 #include "HostI2cBus.hpp"
 
-#include <stdint.h>
 #include <as_devices/as_i2c.h>
+#include <unistd.h>
 #include <sstream>
+
 
 utils::HostI2cBus::HostI2cBus()
 		: device_(NULL), opened_(0)
@@ -51,7 +52,7 @@ void utils::HostI2cBus::close_i2c(void)
 	}
 }
 
-void utils::HostI2cBus::setSlave(uint8_t slaveAddr)
+void utils::HostI2cBus::setSlave(uchar slaveAddr)
 {
 	if (opened_ == 1)
 	{
@@ -73,7 +74,7 @@ void utils::HostI2cBus::setSlave(uint8_t slaveAddr)
 	}
 }
 
-int utils::HostI2cBus::readRegValue(uint8_t slave_addr, uint8_t reg, uint8_t* data)
+int utils::HostI2cBus::readRegValue(uchar slave_addr, uchar reg, uchar* data)
 {
 	if (opened_ == 1)
 	{
@@ -108,7 +109,7 @@ int utils::HostI2cBus::readRegValue(uint8_t slave_addr, uint8_t reg, uint8_t* da
 	}
 }
 
-int utils::HostI2cBus::writeRegValue(uint8_t slave_addr, uint8_t reg, uint8_t value)
+int utils::HostI2cBus::writeRegValue(uchar slave_addr, uchar reg, uchar value)
 {
 	lock();
 	int result = 0;
@@ -128,7 +129,7 @@ int utils::HostI2cBus::writeRegValue(uint8_t slave_addr, uint8_t reg, uint8_t va
 	return result;
 }
 
-int utils::HostI2cBus::readI2cSize(uint8_t slave_addr, char *buf, size_t size)
+int utils::HostI2cBus::readI2cSize(uchar slave_addr, char *buf, size_t size)
 {
 	lock();
 	int ret = 0;
@@ -144,7 +145,7 @@ int utils::HostI2cBus::readI2cSize(uint8_t slave_addr, char *buf, size_t size)
 	return ret;
 }
 
-int utils::HostI2cBus::writeI2cSize(uint8_t slave_addr, const char *buf, size_t size)
+int utils::HostI2cBus::writeI2cSize(uchar slave_addr, const char *buf, size_t size)
 {
 	lock();
 	int result = 0;

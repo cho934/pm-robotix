@@ -6,9 +6,11 @@
 #ifndef PMX_GROVECOLORSENSOR_HPP
 #define PMX_GROVECOLORSENSOR_HPP
 
+#include <stdint.h>
+
 #include "ARobotElement.hpp"
 #include "LoggerFactory.hpp"
-#include <stdint.h>
+#include "Macro.hpp"
 
 #define     GROVE_COLOR_DEFAULT_ADDRESS    0x39 // Address of the grove Color Sensor 0x39
 
@@ -39,7 +41,7 @@ private:
 	bool percentageEnabled_; //enable/disable the percentage mode
 	bool compensateEnabled_; //enable/disable color compensation of the sensor sensitivity per color
 
-	uint8_t TCS3414values_[4]; // [Clear,Red,Green,Blue]
+	uchar TCS3414values_[4]; // [Clear,Red,Green,Blue]
 	float TCS3414medium_[4]; // [Clear,Red,Green,Blue]
 	float TCS3414mediate_[4]; // [Clear,Red,Green,Blue]
 
@@ -82,36 +84,36 @@ private:
 	/*!
 	 * \brief retrieve all colors.
 	 */
-	void TSC3414All(uint8_t allcolors[]);
-	uint8_t TSC3414Red();
-	uint8_t TSC3414Green();
-	uint8_t TSC3414Blue();
-	uint8_t TSC3414Clear();
+	void TSC3414All(uchar allcolors[]);
+	uchar TSC3414Red();
+	uchar TSC3414Green();
+	uchar TSC3414Blue();
+	uchar TSC3414Clear();
 
 	/*!
 	 * \brief Keeps a running average of 4 values per color.
 	 */
-	void calculateMedium(float med[], uint8_t value[], float divider);
+	void calculateMedium(float med[], uchar value[], float divider);
 
 	/*!
 	 * \brief calculates percentages for R,G,B channels, if enabled.
 	 */
-	void makePercentage(uint8_t allcolors[], float allmedium[]);
+	void makePercentage(uchar allcolors[], float allmedium[]);
 
 	/*!
 	 * \brief enable/disable color compensation of the sensor sensitivity per color.
 	 */
-	void colorCompensator(uint8_t allcolors[]);
+	void colorCompensator(uchar allcolors[]);
 
 	/*!
 	 * \brief takes the raw values from the sensors and converts them to
 	 Correlated Color Temperature.  Returns a float with CCT.
 	 */
-	float CCTCalc(uint8_t allcolors[]);
+	float CCTCalc(uchar allcolors[]);
 
-	void write_i2c(uint8_t command, uint8_t value);
+	void write_i2c(uchar command, uchar value);
 
-	uint8_t read_i2c(uint8_t command);
+	uchar read_i2c(uchar command);
 
 };
 }

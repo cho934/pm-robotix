@@ -6,8 +6,11 @@
 #ifndef HOSTI2CBUS_HPP
 #define HOSTI2CBUS_HPP
 
-#include <stdint.h>
+#include <stddef.h>
+#include <string>
+
 #include "Exception.hpp"
+#include "Macro.hpp"
 #include "Mutex.hpp"
 
 struct as_i2c_device;
@@ -96,7 +99,7 @@ public:
 	 *
 	 * \return return 0 on success, -1 on write error (\e reg byte), -2 on read error.
 	 */
-	int readRegValue(uint8_t slave_addr, uint8_t reg, uint8_t* data);
+	int readRegValue(uchar slave_addr, uchar reg, uchar* data);
 
 	/*!
 	 * \brief Write a byte to the I2C given register.
@@ -106,12 +109,12 @@ public:
 	 *
 	 * \return 0 on success, -1 on error.
 	 */
-	int writeRegValue(uint8_t slave_addr, uint8_t reg, uint8_t value);
+	int writeRegValue(uchar slave_addr, uchar reg, uchar value);
 
 
-	int readI2cSize(uint8_t slave_addr, char *buf, size_t size);
+	int readI2cSize(uchar slave_addr, char *buf, size_t size);
 
-	int writeI2cSize(uint8_t slave_addr, const char *buf, size_t size);
+	int writeI2cSize(uchar slave_addr, const char *buf, size_t size);
 
 
 	/*!
@@ -129,7 +132,7 @@ private:
 	 * \brief Set the slave by his address.
 	 * \param   slaveAddr	slave address.
 	 */
-	void setSlave(uint8_t slaveAddr);
+	void setSlave(uchar slaveAddr);
 
 };
 }
