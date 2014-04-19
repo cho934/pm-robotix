@@ -17,5 +17,6 @@ utils::LoggerFactory::initialize() {
 	    // -------------------------------------------------
 
 	    //this->add(utils::Level::DEBUG, "test::ThreadTest", "console");
+	    this->add(utils::Level::DEBUG, "test::IaTest", "console");
 
 }
