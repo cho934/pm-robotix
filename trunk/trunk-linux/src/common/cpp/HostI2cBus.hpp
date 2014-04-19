@@ -6,8 +6,7 @@
 #ifndef HOSTI2CBUS_HPP
 #define HOSTI2CBUS_HPP
 
-#include <string>
-
+#include <stdint.h>
 #include "Exception.hpp"
 #include "Mutex.hpp"
 

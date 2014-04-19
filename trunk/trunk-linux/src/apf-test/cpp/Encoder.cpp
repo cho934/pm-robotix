@@ -178,8 +178,7 @@ char Encoder::spiTransfer(char data) //volatile
 	 };
 	 return SPDR;                    // return the received byte*/
 
-	unsigned long long result = as_spi_msg(spi_fd_, (unsigned long long) data, 8,
-			6000000);
+	unsigned long long result = as_spi_msg(spi_fd_, (unsigned long long) data, 8, 6000000);
 
 	return result;
 

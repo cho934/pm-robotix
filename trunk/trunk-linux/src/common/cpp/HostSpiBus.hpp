@@ -10,6 +10,7 @@
 
 #include "Exception.hpp"
 #include "Mutex.hpp"
+#include <stdint.h>
 
 #define CLOCKSPEED 6000000
 #define APF9328_SPI "/dev/spidev1.1"

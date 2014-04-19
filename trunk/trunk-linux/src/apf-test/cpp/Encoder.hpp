@@ -4,10 +4,12 @@
 #ifndef Encoder_h
 #define Encoder_h
 
-#include "../../common/cpp/Mutex.hpp"
-
 #include <as_devices/as_gpio.h>
 #include <as_devices/as_spi.h>
+#include <cstdio>
+#include <cstdlib>
+
+#include "../../common/cpp/Mutex.hpp"
 
 // define some LS7366R Op-codes
 #define CLEAR_COUNTER 32 //=0x20

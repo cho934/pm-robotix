@@ -159,7 +159,7 @@ int pmx::Md25::getNbErrors(void)
 	return 0;
 }
 
-int pmx::Md25::getEncoder(long *pvalue, uint8_t MD25Register)
+int pmx::Md25::getEncoder(long *pvalue, int MD25Register)
 {
 	uint8_t encoder2 = 0;
 	uint8_t encoder5 = 0;
@@ -190,7 +190,7 @@ int pmx::Md25::getEncoder(long *pvalue, uint8_t MD25Register)
 	return err;
 }
 
-long pmx::Md25::ensureGetEncoder(long last, uint8_t MD25Register)
+long pmx::Md25::ensureGetEncoder(long last, int MD25Register)
 {
 	long value = 0;
 	int err = getEncoder(&value, MD25Register);
@@ -214,7 +214,7 @@ long pmx::Md25::ensureGetEncoder(long last, uint8_t MD25Register)
 	return last;
 }
 
-void pmx::Md25::setMode(uint8_t mode)
+void pmx::Md25::setMode(int mode)
 {
 	try
 	{
@@ -227,7 +227,7 @@ void pmx::Md25::setMode(uint8_t mode)
 	}
 }
 
-void pmx::Md25::setAccelerationRate(uint8_t rate)
+void pmx::Md25::setAccelerationRate(int rate)
 {
 	try
 	{
@@ -239,7 +239,7 @@ void pmx::Md25::setAccelerationRate(uint8_t rate)
 	}
 }
 
-void pmx::Md25::setCommand(uint8_t command)
+void pmx::Md25::setCommand(int command)
 {
 	try
 	{
@@ -251,13 +251,13 @@ void pmx::Md25::setCommand(uint8_t command)
 	}
 }
 
-void pmx::Md25::setSpeedRegisters(uint8_t speed_1, uint8_t speed_2)
+void pmx::Md25::setSpeedRegisters(int speed_1, int speed_2)
 {
 	ensureSetSpeed(speed_1, MD25_SPEED1_REG);
 	ensureSetSpeed(speed_2, MD25_SPEED2_REG);
 }
 
-void pmx::Md25::ensureSetSpeed(uint8_t speed, uint8_t reg)
+void pmx::Md25::ensureSetSpeed(int speed, int reg)
 {
 	int err = setSpeedReg(speed, reg);
 	if (err != 0)
@@ -273,7 +273,7 @@ void pmx::Md25::ensureSetSpeed(uint8_t speed, uint8_t reg)
 	}
 }
 
-int pmx::Md25::setSpeedReg(uint8_t speed, uint8_t reg)
+int pmx::Md25::setSpeedReg(int speed, int reg)
 {
 	uint8_t read;
 	//int err = 0;
@@ -324,7 +324,7 @@ int pmx::Md25::setSpeedReg(uint8_t speed, uint8_t reg)
 	//}
 }
 
-int pmx::Md25::stopMotor(uint8_t reg)
+int pmx::Md25::stopMotor(int reg)
 {
 	int ret;
 	switch (current_mode_)
@@ -395,7 +395,7 @@ int pmx::Md25::stopMotors(void)
 	return 0;
 }
 
-void pmx::Md25::write_i2c(uint8_t command, uint8_t value)
+void pmx::Md25::write_i2c(int command, int value)
 {
 	try
 	{
@@ -407,7 +407,7 @@ void pmx::Md25::write_i2c(uint8_t command, uint8_t value)
 	}
 }
 
-uint8_t pmx::Md25::read_i2c(uint8_t command)
+int pmx::Md25::read_i2c(int command)
 {
 	try
 	{

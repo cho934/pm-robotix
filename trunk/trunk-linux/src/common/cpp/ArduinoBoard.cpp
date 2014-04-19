@@ -5,9 +5,12 @@
 
 #include "ArduinoBoard.hpp"
 
+#include <unistd.h>
+
 #include "Exception.hpp"
 #include "HostI2cBus.hpp"
-#include "Mutex.hpp"
+
+
 
 pmx::ArduinoBoard::ArduinoBoard(pmx::Robot & robot)
 		: ARobotElement(robot), connected_(false)

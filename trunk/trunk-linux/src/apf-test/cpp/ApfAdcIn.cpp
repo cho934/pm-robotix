@@ -5,12 +5,12 @@
 
 #include <iostream>
 #include <cmath>
-/*#include <string>
+#include <string>
 #include <cstdio>
 
 #include <cstdlib>
 #include <unistd.h>
-*/
+
 
 #include <as_devices/as_max1027_3_3.h>
 #include "ApfAdcIn.hpp"

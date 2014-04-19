@@ -28,6 +28,7 @@
 #include <fstream>
 #include <iostream>
 #include <unistd.h>
+#include "Macro.hpp"
 
 using namespace std;
 

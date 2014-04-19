@@ -7,6 +7,11 @@
 #define PMX_MACRO_HPP
 
 /*!
+ * \brief Type de données : unsigned char 0->255.
+ */
+typedef unsigned char uchar;
+
+/*!
  * \brief Type de données : unsigned int.
  */
 typedef unsigned int uint;
