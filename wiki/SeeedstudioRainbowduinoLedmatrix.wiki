@@ -40,9 +40,15 @@ pour Rainbowduino V3, utiliser "Auduino DuoMilanove with Atmaga 328"
 installer le driver Arduino (pont USB vers UART): http://arduino.cc/en/Guide/Windows#toc4
 
 
-== Premier code ==
-Affichage de texte de façon autonome:
+== Code ==
+http://pm-robotix.googlecode.com/svn/trunk/trunk-arduino/src/RainbowduinoV3/
+
+- Affichage de texte de façon autonome
+Le texte peut être mis à jour par I2C
+
 http://pm-robotix.googlecode.com/svn/trunk/trunk-arduino/src/RainbowduinoV3/drawCharPmRobotix/drawCharPmRobotix.ino
 
+- Exemple de master I2C (arduino)
+http://pm-robotix.googlecode.com/svn/trunk/trunk-arduino/src/RainbowduinoV3/i2cMaster/i2cMaster.ino
 
 Retour sur DevStart
