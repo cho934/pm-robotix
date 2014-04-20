@@ -6,10 +6,12 @@ Retour sur DevStart
 
 == Matériel ==
 
-- Rainbowduino LED driver platform - Atmega 328 (Rainbowduino V3.0)
+* Rainbowduino LED driver platform - Atmega 328 (Rainbowduino V3.0)
+
 http://www.seeedstudio.com/depot/rainbowduino-led-driver-platform-atmega-328-p-371.html
 
-- 8x8 RGB LED Dot Matrix - Compatible with Rainbowduino
+* 8x8 RGB LED Dot Matrix - Compatible with Rainbowduino
+
 http://www.seeedstudio.com/depot/60mm-square-88-led-matrix-super-bright-rgb-p-113.html?cPath=163_165
 
 
@@ -43,12 +45,14 @@ installer le driver Arduino (pont USB vers UART): http://arduino.cc/en/Guide/Win
 == Code ==
 http://pm-robotix.googlecode.com/svn/trunk/trunk-arduino/src/RainbowduinoV3/
 
-- Affichage de texte de façon autonome
+* Affichage de texte de façon autonome
+
 Le texte peut être mis à jour par I2C
 
 http://pm-robotix.googlecode.com/svn/trunk/trunk-arduino/src/RainbowduinoV3/drawCharPmRobotix/drawCharPmRobotix.ino
 
-- Exemple de master I2C (arduino)
+* Exemple de master I2C (arduino)
+
 http://pm-robotix.googlecode.com/svn/trunk/trunk-arduino/src/RainbowduinoV3/i2cMaster/i2cMaster.ino
 
 Retour sur DevStart
