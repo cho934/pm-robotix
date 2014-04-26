@@ -22,7 +22,8 @@ pmx::Robot::Robot()
 		  servoTest_(*this, 0),
 		  servoDxlTest_(*this),
 		  irSensorsGroup_(*this),
-		  arduinoBoard_(*this)
+		  arduinoBoard_(*this),
+		  gpioBoard_(*this)
 {
 
 	//Led indicator initialisation

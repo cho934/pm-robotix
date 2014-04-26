@@ -17,6 +17,7 @@
 #include "ServoMotorDxlTest.hpp"
 #include "ArduinoTest.hpp"
 #include "Md25Test.hpp"
+#include "GpioBoardTest.hpp"
 
 /*!
  * \brief Méthode principale pour le lancement des tests sur le robot.
@@ -44,6 +45,7 @@ int main(int argc, char** argv)
 	manager.add(new robottest::ServoMotorDxlTest());
 	manager.add(new robottest::ArduinoTest());
 	manager.add(new robottest::Md25Test());
+	manager.add(new robottest::GpioBoardTest());
 
 	if (argc == 1)
 	{

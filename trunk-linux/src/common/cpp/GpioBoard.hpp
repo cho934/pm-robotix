@@ -11,12 +11,12 @@
 
 #include "ARobotElement.hpp"
 #include "LoggerFactory.hpp"
-#include <stdint.h>
+#include "Macro.hpp"
 
 //  with no jumpers the full address is   1 0 0 1 1 1    1 0 0 A2 A1 A0  0x27 is the default address for the DFR0013 board with no jumpers.
 // 0x27 is default address for the DFR0013 board with no jumpers.
 // 0x20 is address for the DFR0013 board with all jumpers.
-#define GPIOBOARD_PCA9555		 0x27
+#define GPIOBOARD_PCA9555		 0x20
 
 
 // COMMAND BYTE TO REGISTER RELATIONSHIP FROM PCA9555 DATA SHEET
@@ -79,11 +79,11 @@ public:
 	void setValueP0(int port, int pin, int value);
 	void setOnP0(int pin);
 	void setOffP0(int pin);
-
-private:
 	void setup();
-	void write_i2c(int command, int value);
-	uint8_t read_i2c(uint8_t command);
+private:
+
+	void write_i2c(uchar command, uchar value);
+	uchar read_i2c(uchar command);
 
 };
 }

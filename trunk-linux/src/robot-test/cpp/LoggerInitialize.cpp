@@ -23,6 +23,8 @@ void utils::LoggerFactory::initialize()
 	add(utils::Level::INFO, "robottest::IrSensorsGroupTest", "console");
 	add(utils::Level::INFO, "robottest::ServoMotorDxlTest", "console");
 	add(utils::Level::INFO, "robottest::Md25Test", "console");
+	add(utils::Level::INFO, "robottest::ArduinoTest", "console");
+	add(utils::Level::INFO, "robottest::GpioBoardTest", "console");
 
 	add(utils::Level::DEBUG, "pmx::Robot", "console");
 	//add(utils::Level::DEBUG, "pmx::GroveColorSensor", "console");
