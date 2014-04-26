@@ -23,6 +23,15 @@
 
 namespace pmx
 {
+
+/*!
+ * \brief Enumération du mode de programmation.
+ */
+enum RobotMode
+{
+	ROBOTMATCHES, ROBOTHOMOLOGATION
+};
+
 /*!
  * \brief Cette classe représente le robot.
  *
@@ -60,6 +69,11 @@ private:
 	 * \brief Couleur du robot.
 	 */
 	pmx::RobotColor myColor_;
+
+	/*!
+	 * \brief Mode de match (matches ou homologation).
+	 */
+	pmx::RobotMode runMode_;
 
 	/*!
 	 * \brief GroveColorSensor.
@@ -234,6 +248,22 @@ public:
 	inline pmx::ArduinoBoard & arduinoBoard()
 	{
 		return arduinoBoard_;
+	}
+
+	/*!
+	 * \brief Retourne le mode de match du robot.
+	 */
+	inline pmx::RobotMode myRunningMode() const
+	{
+		return runMode_;
+	}
+
+	/*!
+	 * \brief Enregistre le mode de match du robot.
+	 */
+	inline void runMode(pmx::RobotMode mode)
+	{
+		this->runMode_ = mode;
 	}
 
 	/*!

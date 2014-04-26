@@ -16,6 +16,7 @@
 #include "IrSensorsGroupTest.hpp"
 #include "ServoMotorDxlTest.hpp"
 #include "ArduinoTest.hpp"
+#include "Md25Test.hpp"
 
 /*!
  * \brief Méthode principale pour le lancement des tests sur le robot.
@@ -42,6 +43,7 @@ int main(int argc, char** argv)
 	manager.add(new robottest::IrSensorsGroupTest());
 	manager.add(new robottest::ServoMotorDxlTest());
 	manager.add(new robottest::ArduinoTest());
+	manager.add(new robottest::Md25Test());
 
 	if (argc == 1)
 	{

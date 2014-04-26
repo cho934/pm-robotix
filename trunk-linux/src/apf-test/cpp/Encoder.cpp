@@ -223,6 +223,7 @@ unsigned long Encoder::readCounter(void)
 		data = this->spiTransfer(0x00);
 		returnVal = returnVal * 255 + data;
 	}
+	//TODO ss_pin_set(1); //release device ?
 	unlock();
 	return returnVal;
 }

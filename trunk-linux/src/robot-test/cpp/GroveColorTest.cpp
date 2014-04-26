@@ -6,36 +6,52 @@
 #include "GroveColorTest.hpp"
 #include "../../common/cpp/Robot.hpp"
 
-void robottest::GroveColorTest::run(int, char *[])
+void robottest::GroveColorTest::run(int argc, char *argv[])
 {
+	int nb = 0;
+	int timeSpan = 100;
+
+	if (argc < 3)
+	{
+		std::cout << "USAGE: ROBOT_TEST " << argv[1] << " [nbOfTests] [option TimeSpan=100ms by default]" << std::endl;
+	}
+
+	if (argc > 2)
+	{
+		nb = atoi(argv[2]);
+	}
+	else
+	{
+		std::cout << "[nbOfTests] : " << std::flush;
+		std::cin >> nb;
+	}
+
+	if (argc > 3)
+	{
+		timeSpan = atoi(argv[3]);
+	}
+
 	logger().info() << "----------------------------------------------" << utils::end;
 	logger().info() << "GroveColorTest - Retrieve colors" << utils::end;
 
-	uint8_t TCS3414values[4]; // [Clear,Red,Green,Blue]
-	try
+	pmx::Robot robot;
+
+	for (int i = 0; i < nb; i++)
 	{
-		pmx::Robot robot;
+		robot.groveColorSensor().TCS3414GetColor();
 
-		if (robot.groveColorSensor().isConnected())
-		{
+		logger().info() << "Illumin: " << (int)robot.groveColorSensor().TCS3414tristimulus()[1]
+		         << " \tx: " 	<< (float)robot.groveColorSensor().TCS3414chromaticityCoordinates()[0]
+		         << " \ty: " << (float)robot.groveColorSensor().TCS3414chromaticityCoordinates()[1]
+		         << " \tRed: " << (int)robot.groveColorSensor().TCS3414values()[1]
+		         << " \tGreen: " << (int)robot.groveColorSensor().TCS3414values()[2]
+		         << " \tBlue:  " << (int)robot.groveColorSensor().TCS3414values()[3]
+				 << " \tCCT:  " << (int)robot.groveColorSensor().CCT() << " K"
+				 << " \tClear: " << (int)robot.groveColorSensor().TCS3414values()[0]
 
-			for (int i = 0; i < 4; i++)
-			{
-				robot.groveColorSensor().TCS3414GetValues();
+				 << utils::end;
 
-				logger().info() << "Clear: " << (int) TCS3414values[0] << " \tRed: " << (int) TCS3414values[1]
-						<< " \tGreen: " << (int) TCS3414values[2] << " \tBlue:  " << (int) TCS3414values[3]
-						<< utils::end;
-				usleep(500000);
-			}
-		}
-		else
-		{
-			logger().info() << "groveColorSensor not connected !" << utils::end;
-		}
-	} catch (utils::Exception * e)
-	{
-		logger().error() << "Exception : " << e->what() << utils::end;
+		usleep(timeSpan * 1000);
 	}
 
 	logger().info() << "End of RobotTest." << utils::end;

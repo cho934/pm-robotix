@@ -10,17 +10,19 @@
 #include "Exception.hpp"
 #include "HostI2cBus.hpp"
 
-
-
 pmx::ArduinoBoard::ArduinoBoard(pmx::Robot & robot)
 		: ARobotElement(robot), connected_(false)
 {
 	try
 	{
-		utils::HostI2cBus::instance().open();
-	} catch (utils::Exception * e)
+		utils::HostI2cBus::instance().open(); //TODO close it by the robot destructor
+		connected_ = true;
+	} catch (utils::I2cException * e)
 	{
-		logger().error() << "Exception open: " << e->what() << utils::end;
+		logger().error() << "Exception open(): " << e->what() << utils::end;
+	} catch (utils::I2cWarning * e)
+	{
+		logger().debug() << "Warning open(): " << e->what() << utils::end;
 	}
 }
 
@@ -64,16 +66,16 @@ void pmx::ArduinoBoard::launchCmd(const char command[3], const char action[10])
 int pmx::ArduinoBoard::readI2c_1Byte()
 {
 	char buf[2];
-	lock();
+
 	utils::HostI2cBus::instance().readI2cSize(ARDUINOBOARD_ADDR, buf, 1);
-	unlock();
+
 	return buf[0];
 }
 
 void pmx::ArduinoBoard::writeI2c_3Bytes(const char *buf)
 {
-	lock();
+
 	utils::HostI2cBus::instance().writeI2cSize(ARDUINOBOARD_ADDR, buf, 3);
-	unlock();
+
 }
 

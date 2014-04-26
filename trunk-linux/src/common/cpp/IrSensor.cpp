@@ -11,7 +11,6 @@
 #include "HostAdcPort.hpp"
 #include "Logger.hpp"
 
-
 pmx::IrSensor::IrSensor(pmx::Robot & robot, ushort adcPin, int type)
 		: ARobotElement(robot), adcPin_(adcPin), type_(type), voltage_(0), distanceMm_(9999.0)
 {
@@ -19,9 +18,12 @@ pmx::IrSensor::IrSensor(pmx::Robot & robot, ushort adcPin, int type)
 	{
 		utils::HostAdcPort::instance().open();
 
-	} catch (utils::Exception * e)
+	} catch (utils::AdcException * e)
 	{
 		logger().error() << "Exception IrSensor init: " << e->what() << utils::end;
+	} catch (utils::AdcWarning * e)
+	{
+		logger().debug() << "Exception IrSensor init: " << e->what() << utils::end;
 	}
 	try
 	{
@@ -30,7 +32,7 @@ pmx::IrSensor::IrSensor(pmx::Robot & robot, ushort adcPin, int type)
 
 	} catch (utils::Exception * e)
 	{
-		logger().error() << "Exception IrSensor init: " << e->what() << utils::end;
+		logger().error() << "Exception IrSensor init readTemp: " << e->what() << utils::end;
 	}
 
 }
@@ -70,7 +72,7 @@ int pmx::IrSensor::getDistance()
 	{
 		distanceMm_ = 9999.0;
 	}
-	return (int)distanceMm_;
+	return (int) distanceMm_;
 }
 
 double pmx::IrSensor::gp2Convert(int type, int value)

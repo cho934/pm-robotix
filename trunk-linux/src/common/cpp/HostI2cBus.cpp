@@ -66,7 +66,7 @@ void utils::HostI2cBus::setSlave(uchar slaveAddr)
 			throw new I2cException(msg.str());
 		}
 
-		usleep(5000); //TODO ?fréq i2c à 100kHz : attente de l'application complète de la trame
+		//usleep(5000); //TODO ?fréq i2c à 100kHz : attente de l'application complète de la trame
 	}
 	else
 	{

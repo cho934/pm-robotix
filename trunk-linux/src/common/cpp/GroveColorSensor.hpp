@@ -45,6 +45,10 @@ private:
 	float TCS3414medium_[4]; // [Clear,Red,Green,Blue]
 	float TCS3414mediate_[4]; // [Clear,Red,Green,Blue]
 
+	float TCS3414tristimulus_[3]; // [tri X, tri Y, tri Z]
+	float TCS3414chromaticityCoordinates_[2]; //chromaticity coordinates // [x, y]
+	float colorTemperature_; //the color temperature, using the algorithm in the TCS3414 datasheet
+
 public:
 
 	/*!
@@ -71,9 +75,39 @@ public:
 	void TCS3414Initialize(int delay1, int delay2);
 
 	/*!
-	 * \brief Get the color values [Clear,Red,Green,Blue]
+	 * \brief Calculate the color values [Clear,Red,Green,Blue]
 	 */
-	uint8_t* TCS3414GetValues();
+	uchar* TCS3414GetColor();
+
+	/*!
+	 * \brief Get coordinates [tri X, tri Y, tri Z]
+	 */
+	float* TCS3414tristimulus()
+	{
+		return TCS3414tristimulus_;
+	}
+	/*!
+	 * \brief Get chromaticity coordinates // [x, y]
+	 */
+	float* TCS3414chromaticityCoordinates()
+	{
+		return TCS3414chromaticityCoordinates_;
+	}
+	/*!
+	 * \brief Get the color temperature, using the algorithm in the TCS3414 datasheet
+	 */
+	float CCT()
+	{
+		return colorTemperature_;
+	}
+
+	/*!
+	 * \brief Get the colors
+	 */
+	uchar*  TCS3414values()
+	{
+		return TCS3414values_;
+	}
 
 private:
 	/*!
@@ -85,9 +119,21 @@ private:
 	 * \brief retrieve all colors.
 	 */
 	void TSC3414All(uchar allcolors[]);
+	/*!
+	 * \brief retrieve red color.
+	 */
 	uchar TSC3414Red();
+	/*!
+	 * \brief retrieve green color.
+	 */
 	uchar TSC3414Green();
+	/*!
+	 * \brief retrieve blue color.
+	 */
 	uchar TSC3414Blue();
+	/*!
+	 * \brief retrieve clear color.
+	 */
 	uchar TSC3414Clear();
 
 	/*!
@@ -106,13 +152,19 @@ private:
 	void colorCompensator(uchar allcolors[]);
 
 	/*!
-	 * \brief takes the raw values from the sensors and converts them to
-	 Correlated Color Temperature.  Returns a float with CCT.
+	 * \brief Takes the raw values from the sensors and converts them to Correlated Color Temperature.
+	 * \return Returns a float with CCT.
 	 */
 	float CCTCalc(uchar allcolors[]);
 
+	/*!
+	 * \brief write a command on i2c with automatic slave address.
+	 */
 	void write_i2c(uchar command, uchar value);
 
+	/*!
+	 * \brief read using a command on i2c abd using automatic slave address.
+	 */
 	uchar read_i2c(uchar command);
 
 };

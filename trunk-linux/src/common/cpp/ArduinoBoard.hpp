@@ -16,7 +16,7 @@ namespace pmx
 /*!
  * \brief Implementation to communicate with an arduino.
  */
-class ArduinoBoard: public ARobotElement, utils::Mutex
+class ArduinoBoard: public ARobotElement
 {
 private:
 

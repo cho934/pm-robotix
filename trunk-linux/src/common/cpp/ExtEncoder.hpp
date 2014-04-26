@@ -81,7 +81,7 @@ public:
 	/*
 	 * \brief Method for getting number of counts.
 	 */
-	unsigned long readCounter(void);
+	unsigned long long readCounter(void);
 
 	/*
 	 * \brief Method for determining the status of the IC.
@@ -99,7 +99,7 @@ public:
 	void clearStatus(void);
 
 private:
-	char spiTransfer(char data);
+	unsigned long long spiTransfer(char data);
 	void ss_pin_set(int value);
 
 };

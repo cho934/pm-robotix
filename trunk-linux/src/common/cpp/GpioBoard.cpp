@@ -12,9 +12,13 @@ pmx::GpioBoard::GpioBoard(pmx::Robot & robot)
 	try
 	{
 		utils::HostI2cBus::instance().open(); //TODO close it by the robot destructor
-	} catch (utils::Exception * e)
+		connected_ = true;
+	} catch (utils::I2cException * e)
 	{
 		logger().error() << "Exception open: " << e->what() << utils::end;
+	} catch (utils::I2cWarning * e)
+	{
+		logger().debug() << "Exception open: " << e->what() << utils::end;
 	}
 	/*
 	 try

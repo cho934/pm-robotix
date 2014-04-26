@@ -34,7 +34,7 @@ class HostGpioPort
 {
 private:
 	struct as_gpio_device *device_;
-	int fd_; //pour ioctl
+	int fd_gpio_; //pour ioctl
 	char port_letter_;
 	int pin_number_;
 	static int* portA_opened_;

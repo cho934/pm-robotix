@@ -22,23 +22,23 @@ tsh()
 
 robottest()
 {
-	scp PMXArmadeusBinaries/ROBOT_TEST root@192.168.7.253:/pmx/robot_test
+	scp PMXArmadeusBinaries/ROBOT_TEST root@192.168.7.253:/pmx/ROBOT_TEST
 }
 
 pmx()
 {
     ssh root@192.168.7.253 "killall pmx"
-	scp PMXArmadeusBinaries/PMX root@192.168.7.253:/pmx/pmx
+	scp PMXArmadeusBinaries/PMX root@192.168.7.253:/pmx/PMX
 }
 
 devtest()
 {
-	scp PMXArmadeusBinaries/DEV_TEST root@192.168.7.253:/pmx/dev_test
+	scp PMXArmadeusBinaries/DEV_TEST root@192.168.7.253:/pmx/DEV_TEST
 }
 
 apftest()
 {
-	scp PMXArmadeusBinaries/APF_TEST root@192.168.7.253:/pmx/apf_test
+	scp PMXArmadeusBinaries/APF_TEST root@192.168.7.253:/pmx/APF_TEST
 }
 
 recupcsvhost()

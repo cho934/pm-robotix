@@ -22,14 +22,15 @@ void utils::LoggerFactory::initialize()
 	add(utils::Level::INFO, "robottest::ExtEncoderTest", "console");
 	add(utils::Level::INFO, "robottest::IrSensorsGroupTest", "console");
 	add(utils::Level::INFO, "robottest::ServoMotorDxlTest", "console");
+	add(utils::Level::INFO, "robottest::Md25Test", "console");
 
 	add(utils::Level::DEBUG, "pmx::Robot", "console");
 	//add(utils::Level::DEBUG, "pmx::GroveColorSensor", "console");
-	add(utils::Level::DEBUG, "pmx::ActionManager", "console");
+	//add(utils::Level::DEBUG, "pmx::ActionManager", "console");
 	//add(utils::Level::DEBUG, "pmx::ExtEncoder", "console");
 	//add(utils::Level::DEBUG, "pmx::IrSensor", "console");
 	//add(utils::Level::DEBUG, "pmx::IrSensorsGroup", "console");
-	add(utils::Level::DEBUG, "pmx::ServoMotorDxlObject", "console");
+	//add(utils::Level::DEBUG, "pmx::ServoMotorDxlObject", "console");
 	//add(utils::Level::DEBUG, "pmx::ServoMotorDxl", "console");
 
 
