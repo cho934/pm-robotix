@@ -4,7 +4,11 @@
  */
 
 #include "GpioBoard.hpp"
+
+#include <unistd.h>
+
 #include "HostI2cBus.hpp"
+
 
 pmx::GpioBoard::GpioBoard(pmx::Robot & robot)
 		: ARobotElement(robot), connected_(false)
@@ -13,6 +17,7 @@ pmx::GpioBoard::GpioBoard(pmx::Robot & robot)
 	{
 		utils::HostI2cBus::instance().open(); //TODO close it by the robot destructor
 		connected_ = true;
+
 	} catch (utils::I2cException * e)
 	{
 		logger().error() << "Exception open: " << e->what() << utils::end;
@@ -20,17 +25,7 @@ pmx::GpioBoard::GpioBoard(pmx::Robot & robot)
 	{
 		logger().debug() << "Exception open: " << e->what() << utils::end;
 	}
-	/*
-	 try
-	 {
-	 utils::HostI2cBus::instance().setSlave(GPIOBOARD_PCA9555);
-	 connected_ = true;
-	 } catch (utils::Exception * e)
-	 {
-	 //deactivate the device if not connected
-	 connected_ = false;
-	 logger().error() << "Exception setSlave: " << e->what() << utils::end;
-	 }*/
+
 }
 
 void pmx::GpioBoard::setup()
@@ -69,7 +64,35 @@ int pmx::GpioBoard::getValue()
 	return 0;
 }
 
-void pmx::GpioBoard::write_i2c(int command, int value)
+
+void pmx::GpioBoard::write_i2c(uchar command, uchar value)
+{
+	try
+	{
+		utils::HostI2cBus::instance().writeRegValue(GPIOBOARD_PCA9555, command, value);
+
+	} catch (utils::Exception * e)
+	{
+		logger().error() << "Exception GroveColorSensor::write_i2c: " << e->what() << utils::end;
+	}
+}
+
+uchar pmx::GpioBoard::read_i2c(uchar command)
+{
+	uchar receivedVal = 0;
+	try
+	{
+		utils::HostI2cBus::instance().readRegValue(GPIOBOARD_PCA9555, command, &receivedVal);
+
+	} catch (utils::Exception * e)
+	{
+		logger().error() << "Exception GroveColorSensor::read_i2c: " << e->what() << utils::end;
+	}
+	return receivedVal;
+}
+
+/*
+void pmx::GpioBoard::write_i2c(uchar command, uchar value)
 {
 	try
 	{
@@ -81,7 +104,7 @@ void pmx::GpioBoard::write_i2c(int command, int value)
 	}
 }
 
-uint8_t pmx::GpioBoard::read_i2c(uint8_t command)
+uint8_t pmx::GpioBoard::read_i2c(uchar command)
 {
 	try
 	{
@@ -95,4 +118,4 @@ uint8_t pmx::GpioBoard::read_i2c(uint8_t command)
 	}
 	return 0;
 }
-
+*/

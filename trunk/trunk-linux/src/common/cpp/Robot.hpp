@@ -20,6 +20,7 @@
 #include "IrSensorsGroup.hpp"
 #include "ServoMotorDxlObject.hpp"
 #include "ArduinoBoard.hpp"
+#include "GpioBoard.hpp"
 
 namespace pmx
 {
@@ -119,6 +120,11 @@ private:
 	 * \brief Connexion Arduino par I2C.
 	 */
 	pmx::ArduinoBoard arduinoBoard_;
+
+	/*!
+	 * \brief Connexion Gpio par I2C.
+	 */
+	pmx::GpioBoard gpioBoard_;
 
 public:
 
@@ -248,6 +254,15 @@ public:
 	inline pmx::ArduinoBoard & arduinoBoard()
 	{
 		return arduinoBoard_;
+	}
+
+	/*!
+	 * \brief Cette methode retourne l'objet GpioBoard.
+	 * \return gpioBoard_.
+	 */
+	inline pmx::GpioBoard & gpioBoard()
+	{
+		return gpioBoard_;
 	}
 
 	/*!

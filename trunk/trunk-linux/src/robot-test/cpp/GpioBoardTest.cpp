@@ -3,11 +3,11 @@
  * \brief Implémentation de la classe ArduinoTest.
  */
 
-#include "ArduinoTest.hpp"
+#include "GpioBoardTest.hpp"
 #include "../../common/cpp/Robot.hpp"
 #include "../../common/cpp/LoggerFactory.hpp"
 
-void robottest::ArduinoTest::run(int argc, char *argv[])
+void robottest::GpioBoardTest::run(int argc, char *argv[])
 {
 	int nb = 0;
 	int timeSpan = 100;
@@ -33,25 +33,21 @@ void robottest::ArduinoTest::run(int argc, char *argv[])
 	}
 
 	logger().info() << "-----------------------------------------------" << utils::end;
-	logger().info() << "ArduinoTest - Communicate with the arduino board" << utils::end;
+	logger().info() << "GpioBoardTest - " << utils::end;
 
 	pmx::Robot robot;
 
+	robot.gpioBoard().setup();
+
 	for (int i = 0; i < nb; i++)
 	{
-		// drive some arduino tests
+		// drive some gpioboard tests
+		logger().info() << "P0 ON" << utils::end;
+		robot.gpioBoard().setOnP0(0);
+		usleep(timeSpan*1000);
 
-		robot.arduinoBoard().launchCmd("L11", "LED1 on");
-		logger().info() << "L11" << "LED1 on" << utils::end;
-		usleep(timeSpan*1000);
-		robot.arduinoBoard().launchCmd("L10", "LED1 off");
-		logger().info() << "L10" << "LED1 off" << utils::end;
-		usleep(timeSpan*1000);
-		robot.arduinoBoard().launchCmd("L21", "LED2 on");
-		logger().info() << "L21" << "LED2 on" << utils::end;
-		usleep(timeSpan*1000);
-		robot.arduinoBoard().launchCmd("L20", "LED2 off");
-		logger().info() << "L20" << "LED2 off" << utils::end;
+		logger().info() << "P0 OFF" << utils::end;
+		robot.gpioBoard().setOffP0(0);
 		usleep(timeSpan*1000);
 	}
 
