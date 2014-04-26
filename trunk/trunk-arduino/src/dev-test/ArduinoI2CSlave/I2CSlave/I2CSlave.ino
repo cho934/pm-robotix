@@ -59,7 +59,7 @@ Lesser General Public License for more details.
 Commander commander = Commander();
 
 // pin setup
-int led1pin = 2;
+int led1pin = 13;
 int led2pin = 3;
 
 // other vars
