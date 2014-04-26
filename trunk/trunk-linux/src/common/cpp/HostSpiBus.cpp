@@ -11,7 +11,7 @@
 #include <cstring>
 
 utils::HostSpiBus::HostSpiBus()
-		: fd_(0), opened_(0)
+		: fd_spi_(0), opened_(0)
 {
 }
 
@@ -19,8 +19,8 @@ void utils::HostSpiBus::open(void)
 {
 	const char *aSpidev_name = APF9328_SPI;
 	unsigned char *d = (unsigned char*) aSpidev_name;
-	fd_ = as_spi_open(d);
-	if (fd_ < 0)
+	fd_spi_ = as_spi_open(d);
+	if (fd_spi_ < 0)
 
 	{
 		throw new HostSpiException("Error HostI2cBus::open, can't open SPI \nHave you run modprobe spidev ?");
@@ -29,19 +29,19 @@ void utils::HostSpiBus::open(void)
 
 void utils::HostSpiBus::close(void)
 {
-	as_spi_close(fd_);
+	as_spi_close(fd_spi_);
 }
 
 long utils::HostSpiBus::getSpeed(void)
 {
-	long speed = as_spi_get_speed(fd_);
+	long speed = as_spi_get_speed(fd_spi_);
 	return speed;
 }
 
-char utils::HostSpiBus::spiTransfer(char data)
+unsigned long long utils::HostSpiBus::spiTransfer(char data)
 {
 	//unsigned long long result =0;
-	unsigned long long result = as_spi_msg_pmx(fd_, (unsigned long long) data, 8, CLOCKSPEED);
+	unsigned long long  result = as_spi_msg_pmx(fd_spi_, (unsigned long long) data, 8, CLOCKSPEED);
 	return result;
 }
 

@@ -89,9 +89,9 @@ void pmx::ExtEncoder::initialize(int setup_mdr0, int setup_mdr1)
 	ss_pin_set(0);
 	this->spiTransfer(WRITE_MODE0);
 	this->spiTransfer((char) setup_mdr0);
-	ss_pin_set(1);
-
-	ss_pin_set(0);
+	//ss_pin_set(1);
+	//usleep(1000);
+	//ss_pin_set(0);
 	this->spiTransfer(WRITE_MODE1);
 	this->spiTransfer((char) setup_mdr1);
 	ss_pin_set(1);
@@ -101,7 +101,7 @@ void pmx::ExtEncoder::initialize(int setup_mdr0, int setup_mdr1)
 /*!
  Used for transferring all data along the SPI
  */
-char pmx::ExtEncoder::spiTransfer(char data)
+unsigned long long pmx::ExtEncoder::spiTransfer(char data)
 {
 	unsigned long long result = utils::HostSpiBus::instance().spiTransfer(data);
 	return result;
@@ -134,18 +134,22 @@ void pmx::ExtEncoder::clearStatus(void)
 /*!
  Used for reading the counter
  */
-unsigned long pmx::ExtEncoder::readCounter(void)
+unsigned long long pmx::ExtEncoder::readCounter(void)
 {
+	readStatus(); //read status before read otherwise it doesn't work
+
 	lock();
-	unsigned char data;
-	unsigned long returnVal = 0;
+	unsigned long long data;
+	unsigned long long returnVal = 0;
 	ss_pin_set(0);
 	this->spiTransfer(READ_COUNTER);
+
 	for (char i = this->counterSize; i > 0; i--)
 	{
 		data = this->spiTransfer(0x00);
 		returnVal = returnVal * 255 + data;
 	}
+	ss_pin_set(1); //release device
 	unlock();
 	return returnVal;
 }

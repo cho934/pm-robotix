@@ -11,11 +11,16 @@ pmx::Md25::Md25(pmx::Robot & robot)
 {
 	try
 	{
-		utils::HostI2cBus::instance().open();
-	} catch (utils::Exception * e)
+		utils::HostI2cBus::instance().open(); //TODO close it by the robot destructor
+		connected_ = true;
+	} catch (utils::I2cException * e)
 	{
 		logger().error() << "Exception open: " << e->what() << utils::end;
+	} catch (utils::I2cWarning * e)
+	{
+		logger().debug() << "Exception open: " << e->what() << utils::end;
 	}
+
 	/*
 	 try
 	 {
@@ -28,8 +33,8 @@ pmx::Md25::Md25(pmx::Robot & robot)
 	 logger().error() << "Exception setSlave: " << e->what() << utils::end;
 	 }
 	 */
-	setMode(current_mode_);
 
+	//setMode(current_mode_);
 	/*
 	 //test de la valeur de batterie
 	 float bat = getBatteryVolts();
@@ -325,7 +330,7 @@ int pmx::Md25::setSpeedReg(int speed, uchar reg)
 
 int pmx::Md25::stopMotor(uchar reg)
 {
-	int nb_err=0;
+	int nb_err = 0;
 	switch (current_mode_)
 	{
 	case MD25_MODE_0:
@@ -404,7 +409,7 @@ void pmx::Md25::write_i2c(uchar command, uchar value)
 
 	} catch (utils::Exception * e)
 	{
-		logger().error() << "Exception GroveColorSensor::write_i2c: " << e->what() << utils::end;
+		logger().error() << "Exception Md25::write_i2c: " << e->what() << utils::end;
 	}
 }
 
@@ -418,7 +423,7 @@ int pmx::Md25::read_i2c(uchar command)
 
 	} catch (utils::Exception * e)
 	{
-		logger().error() << "Exception GroveColorSensor::read_i2c: " << e->what() << utils::end;
+		logger().error() << "Exception Md25::read_i2c: " << e->what() << utils::end;
 	}
 	return 0;
 }

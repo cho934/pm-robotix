@@ -51,7 +51,7 @@ public:
 
 private:
 
-	int fd_;
+	int fd_spi_;
 
 	/*!
 	 * \brief true if the SPI bus is opened.
@@ -76,7 +76,7 @@ public:
 	 * \brief Method for talking to IC over SPI.
 	 * Used for transferring all data along the SPI
 	 */
-	char spiTransfer(char data);
+	unsigned long long spiTransfer(char data);
 
 	/*!
 	 * \brief Open SPI.

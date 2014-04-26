@@ -85,20 +85,25 @@ void robottest::IrSensorsGroupTest::run(int argc, char *argv[])
 		{
 			logger().info() << " irLeft    :"
 					//<< " Volt: " << robot.irSensorsGroup().irLeft().voltage()
+					<< " pin:" << robot.irSensorsGroup().irLeft().adcPin()
 					<< " Dist: " << robot.irSensorsGroup().irLeft().distanceMm() << " mm "
 					<< (robot.irSensorsGroup().irLeft().distanceMm() > 300 ? " MAX " : "") << utils::end;
 
 			logger().info() << " irCenter  :"
 					//<< " Volt: " << robot.irSensorsGroup().irCenter().voltage()
+					<< " pin:" << robot.irSensorsGroup().irCenter().adcPin()
 					<< " Dist: " << robot.irSensorsGroup().irCenter().distanceMm() << " mm "
 					<< (robot.irSensorsGroup().irCenter().distanceMm() > 1500 ? " MAX " : "") << utils::end;
 
 			logger().info() << " irRight   :"
 					//<< " Volt: " << robot.irSensorsGroup().irRight().voltage()
+					<< " pin:" << robot.irSensorsGroup().irRight().adcPin()
 					<< " Dist: " << robot.irSensorsGroup().irRight().distanceMm() << " mm "
 					<< (robot.irSensorsGroup().irRight().distanceMm() > 300 ? " MAX " : "") << utils::end;
-			logger().info() << " irRearCenter   :"
+
+			logger().info() << " irRearC   :"
 					//<< " Volt: " << robot.irSensorsGroup().irRearCenter().voltage()
+					<< " pin:" << robot.irSensorsGroup().irRearCenter().adcPin()
 					<< " Dist: " << robot.irSensorsGroup().irRearCenter().distanceMm() << " mm "
 					<< (robot.irSensorsGroup().irRearCenter().distanceMm() > 300 ? " MAX " : "") << utils::end;
 

@@ -9,7 +9,6 @@
 #include <cmath>
 
 #include "HostI2cBus.hpp"
-#include "Logger.hpp"
 
 pmx::GroveColorSensor::GroveColorSensor(pmx::Robot & robot)
 		: ARobotElement(robot), connected_(false), integrationtime_(12), loopdelay_(12), percentageEnabled_(false), compensateEnabled_(
@@ -18,37 +17,16 @@ pmx::GroveColorSensor::GroveColorSensor(pmx::Robot & robot)
 	try
 	{
 		utils::HostI2cBus::instance().open(); //TODO close it by the robot destructor
-	} catch (utils::Exception * e)
+		connected_ = true;
+	} catch (utils::I2cException * e)
 	{
 		logger().error() << "Exception open: " << e->what() << utils::end;
+	} catch (utils::I2cWarning * e)
+	{
+		logger().debug() << "Exception open: " << e->what() << utils::end;
 	}
-	/*
-	 try
-	 {
-	 utils::HostI2cBus::instance().setSlave(GROVE_COLOR_DEFAULT_ADDRESS);
-	 connected_ = true;
-	 } catch (utils::Exception * e)
-	 {
-	 //deactivate the device if not connected
-	 connected_ = false;
-	 logger().error() << "Exception setSlave: " << e->what() << utils::end;
-	 }*/
-	/*
-	 try
-	 {
-	 // Request confirmation //0011 1001
-	 uint8_t receivedVal; //0001 (ADC valid) 0001 (Power on)
-	 int ret = utils::HostI2cBus::instance().readRegisterbyte(0x39, &receivedVal);
-	 logger().debug() << "receivedVal: " << receivedVal << utils::end;
-	 logger().debug() << "ret: " << ret << utils::end;
-	 } catch (utils::Exception * e)
-	 {
-	 //deactivate the device if not connected
-	 connected_ = false;
-	 logger().error() << "Exception setSlave: " << e->what() << utils::end;
-	 }*/
 
-	TCS3414Initialize(10, 100);
+	TCS3414Initialize(10, 100); 	//initialize the grove sensor
 }
 
 /*** Gets the blue sensor value and returns an unsigned int ***/
@@ -60,8 +38,6 @@ uchar pmx::GroveColorSensor::TSC3414Blue()
 	{
 		try
 		{
-			////ret = utils::HostI2cBus::instance().readRegisterbyte(0x94, &blueLow); //read Clear register
-			////ret = utils::HostI2cBus::instance().readRegisterbyte(0x95, &blueHigh); //read Clear register
 			blueLow = read_i2c(0x94);
 			blueHigh = read_i2c(0x95);
 
@@ -84,8 +60,6 @@ uchar pmx::GroveColorSensor::TSC3414Green()
 	{
 		try
 		{
-			////ret = utils::HostI2cBus::instance().readRegisterbyte(0x90, &greenLow); //read Clear register
-			////ret = utils::HostI2cBus::instance().readRegisterbyte(0x91, &greenHigh); //read Clear register
 			greenLow = read_i2c(0x90);
 			greenHigh = read_i2c(0x91);
 
@@ -108,8 +82,6 @@ uchar pmx::GroveColorSensor::TSC3414Red()
 	{
 		try
 		{
-			////ret = utils::HostI2cBus::instance().readRegisterbyte(0x92, &redLow); //read Clear register
-			////ret = utils::HostI2cBus::instance().readRegisterbyte(0x93, &redHigh); //read Clear register
 			redLow = read_i2c(0x92);
 			redHigh = read_i2c(0x93);
 			logger().debug() << "redLow: " << (int) redLow << " \tredHigh: " << (int) redHigh << utils::end;
@@ -131,8 +103,6 @@ uchar pmx::GroveColorSensor::TSC3414Clear()
 	{
 		try
 		{
-			////ret = utils::HostI2cBus::instance().readRegisterbyte(0x96, &clearLow); //read Clear register
-			////ret = utils::HostI2cBus::instance().readRegisterbyte(0x97, &clearHigh); //read Clear register
 			clearLow = read_i2c(0x96);
 			clearHigh = read_i2c(0x97);
 
@@ -162,7 +132,6 @@ void pmx::GroveColorSensor::TSC3414All(uchar allcolors[])
 	allcolors[1] = red;
 	allcolors[2] = green;
 	allcolors[3] = blue;
-	//returns all colors;
 }
 
 /*
@@ -181,20 +150,17 @@ void pmx::GroveColorSensor::TCS3414Initialize(int delay1, int delay2)
 			//slave address: 0011 1001
 			//0x80 1000 0000 //write to Control register
 			//0x01 0000 0001 //Turn the device on (does not enable ADC yet)
-			////ret = utils::HostI2cBus::instance().writeRegisterbyte(0x80, 0x01);
 			write_i2c(0x80, 0x01);
 
 			usleep(delay1 * 1000);				//14
 
 			// Request confirmation //0011 1001
 			uchar receivedVal;				//0001 (ADC valid) 0001 (Power on)
-			//ret = utils::HostI2cBus::instance().readRegisterbyte(0x39, &receivedVal);
 			receivedVal = read_i2c(0x39);
 
 			// Request ID //0011 1001
 			uchar ID;
 			//0x84 1000 0100 //get information from ID register (04h)
-			//ret = utils::HostI2cBus::instance().readRegisterbyte(0x84, &ID);
 			ID = read_i2c(0x84);
 			//0001 0000 (first byte == 0001 (TCS: 3413,3414,3415,3416) or 0000 (TCS: 3404).
 
@@ -211,19 +177,16 @@ void pmx::GroveColorSensor::TCS3414Initialize(int delay1, int delay2)
 			if (integrationtime_ == 12)
 			{
 				//0000 0000 //set free running INTEG_MODE and integration time to 12ms
-				////ret = utils::HostI2cBus::instance().writeRegisterbyte(0x81, 0x00);
 				write_i2c(0x81, 0x00);
 			}
 			else if (integrationtime_ == 100)
 			{
 				//0000 0001 //set free running INTEG_MODE and integration time to 100ms
-				////ret = utils::HostI2cBus::instance().writeRegisterbyte(0x81, 0x01);
 				write_i2c(0x81, 0x01);
 			}
 			else if (integrationtime_ == 400)
 			{
 				//0000 0010 //set free running INTEG_MODE and integration time to 400ms
-				//ret = utils::HostI2cBus::instance().writeRegisterbyte(0x81, 0x02);
 				write_i2c(0x81, 0x02);
 			}
 			else
@@ -232,7 +195,6 @@ void pmx::GroveColorSensor::TCS3414Initialize(int delay1, int delay2)
 			}
 
 			//0000 0011 //Enable ADC_EN (needed to allow integration every 100ms)
-			////ret = utils::HostI2cBus::instance().writeRegisterbyte(0x80, 0x03);
 			write_i2c(0x80, 0x03);
 		} catch (utils::Exception * e)
 		{
@@ -275,36 +237,31 @@ void pmx::GroveColorSensor::colorCompensator(uchar allcolors[])
  Correlated Color Temperature.  Returns a float with CCT ***/
 float pmx::GroveColorSensor::CCTCalc(uchar allcolors[])
 {
-	float TCS3414tristimulus[3]; // [tri X, tri Y, tri Z]
-	float TCS3414chromaticityCoordinates[2]; //chromaticity coordinates // [x, y]
-
 	//calculate tristimulus values (chromaticity coordinates)
 	//The tristimulus Y value represents the illuminance of our source
-	TCS3414tristimulus[0] = (-0.14282 * allcolors[1]) + (1.54924 * allcolors[2]) + (-0.95641 * allcolors[3]);		//X
-	TCS3414tristimulus[1] = (-0.32466 * allcolors[1]) + (1.57837 * allcolors[2]) + (-0.73191 * allcolors[3]);//Y // = Illuminance
-	TCS3414tristimulus[2] = (-0.68202 * allcolors[1]) + (0.77073 * allcolors[2]) + (0.56332 * allcolors[3]);		//Z
+	TCS3414tristimulus_[0] = (-0.14282 * allcolors[1]) + (1.54924 * allcolors[2]) + (-0.95641 * allcolors[3]);		//X
+	TCS3414tristimulus_[1] = (-0.32466 * allcolors[1]) + (1.57837 * allcolors[2]) + (-0.73191 * allcolors[3]);		//Y // = Illuminance
+	TCS3414tristimulus_[2] = (-0.68202 * allcolors[1]) + (0.77073 * allcolors[2]) + (0.56332 * allcolors[3]);		//Z
 
-	float XYZ = TCS3414tristimulus[0] + TCS3414tristimulus[1] + TCS3414tristimulus[2];
+	float XYZ = TCS3414tristimulus_[0] + TCS3414tristimulus_[1] + TCS3414tristimulus_[2];
 
 	//calculate the chromaticiy coordinates
-	TCS3414chromaticityCoordinates[0] = TCS3414tristimulus[0] / XYZ;		//x
-	TCS3414chromaticityCoordinates[1] = TCS3414tristimulus[1] / XYZ;		//y
+	TCS3414chromaticityCoordinates_[0] = TCS3414tristimulus_[0] / XYZ;		//x
+	TCS3414chromaticityCoordinates_[1] = TCS3414tristimulus_[1] / XYZ;		//y
 
-	float n = (TCS3414chromaticityCoordinates[0] - 0.3320) / (0.1858 - TCS3414chromaticityCoordinates[1]);
+	float n = (TCS3414chromaticityCoordinates_[0] - 0.3320) / (0.1858 - TCS3414chromaticityCoordinates_[1]);
 
 	float CCT = ((449 * pow(n, 3)) + (3525 * pow(n, 2)) + (6823.3 * n) + 5520.33);
 
-	logger().debug() << "Illuminance: " << TCS3414tristimulus[1] << " \tx: " << TCS3414chromaticityCoordinates[0]
-			<< " \ty: " << TCS3414chromaticityCoordinates[1] << " \tCCT:  " << CCT << " K" << utils::end;
+	logger().debug() << "Illuminance: " << TCS3414tristimulus_[1] << " \tx: " << TCS3414chromaticityCoordinates_[0]
+			<< " \ty: " << TCS3414chromaticityCoordinates_[1] << " \tCCT:  " << CCT << " K" << utils::end;
 
 	return CCT;
 }
 
 // [Clear,Red,Green,Blue]
-uchar * pmx::GroveColorSensor::TCS3414GetValues()
+uchar* pmx::GroveColorSensor::TCS3414GetColor()
 {
-	float ColorTemperature = 0;
-
 	//gets the raw values from the sensors and writes it to TCS3414values[]
 	TSC3414All(TCS3414values_);
 
@@ -312,11 +269,11 @@ uchar * pmx::GroveColorSensor::TCS3414GetValues()
 	if (compensateEnabled_)
 		colorCompensator(TCS3414values_);
 
-	//keeps a running average from the last 4 values per color.
+	//TODO keeps a running average from the last 4 values per color.
 	calculateMedium(TCS3414mediate_, TCS3414values_, 4.0);
 
 	//calculates the color temperature, using the algorithm in the TCS3414 datasheet
-	ColorTemperature = CCTCalc(TCS3414values_);
+	colorTemperature_ = CCTCalc(TCS3414values_);
 
 	//displays percentage values, if enabled.
 	if (percentageEnabled_)
@@ -371,15 +328,14 @@ void pmx::GroveColorSensor::write_i2c(uchar command, uchar value)
 
 uchar pmx::GroveColorSensor::read_i2c(uchar command)
 {
+	uchar receivedVal = 0;
 	try
 	{
-		uchar receivedVal = 0;
 		utils::HostI2cBus::instance().readRegValue(GROVE_COLOR_DEFAULT_ADDRESS, command, &receivedVal);
-		return receivedVal;
 
 	} catch (utils::Exception * e)
 	{
 		logger().error() << "Exception GroveColorSensor::read_i2c: " << e->what() << utils::end;
 	}
-	return 0;
+	return receivedVal;
 }
