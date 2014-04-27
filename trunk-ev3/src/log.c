@@ -16,7 +16,7 @@ static int log_closed = 0;
 
 void initLog(int leftTicksPerM, int rightTicksPerM, float encoderDist) {
 	lCount = 0;
-	l = malloc(sizeof(char*) * 1000);
+	l = (char **) calloc(1000, sizeof(char*));
 	logFile = fopen("log.txt", "w");
 	if (logFile == NULL) {
 		printf("Unable to create log file\n");
@@ -47,7 +47,7 @@ void flushLog() {
 	free(l);
 	//
 	lCount = 0;
-	l = malloc(sizeof(char*) * 1000);
+	l = (char **) calloc(1000, sizeof(char*));
 }
 void closeLog() {
 	if (log_closed == 0) {
@@ -64,7 +64,7 @@ void log_status(long timeInMillis, long lEndcoder, long rEncoder, int lPower,
 		printf("initLog error, exiting");
 		exit(2);
 	}
-	char *str = malloc(sizeof(char) * 200);
+	char *str = (char *) calloc(200, sizeof(char));
 	sprintf(str, "%ld,%ld,%ld,%d,%d,%d,%d,%d,%d,%f,%f,%f", timeInMillis,
 			lEndcoder, rEncoder, lPower, rPower, ord0, ord1, current0, current1,
 			x, y, theta);
