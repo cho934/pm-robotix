@@ -9,17 +9,20 @@
 #define IA_H_
 
 #include <cstdlib>
-
 #include <stdio.h>
 
-#define N  100
+void initialize(int color);
+void executeNextAction();
+void takeNewDecision();
 
-
-
-
-void Imprimer (int n);
-
-
-
+void executeMoveAction(float x, float y, float a);
+void executeWaitAction(float time);
+void executeSpecificAction(float actionType);
+float getPosX();
+float getPosY();
+float getPosA();
+void updateOponentsValues();
+float getTimeRemaining();
+float getTimeForMove(float X, float Y, float A, float targetX, float targetY, float targetZ);
 
 #endif /* IA_H_ */
