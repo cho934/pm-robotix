@@ -23,16 +23,24 @@ int rPower;
 static const char MOTOR_PORT_RIGHT = 0x04;
 static const char MOTOR_PORT_LEFT = 0x02;
 
-
 static int motor_file;
 static int iic_device_file;
 static int analog_file;
+// Internal encode
+static int encoder_file;
+static long offsetTachoLeft;
+static long offsetTachoRight;
 
 static ANALOG *pAnalog;
 static IIC *pIic;
-
+static MOTORDATA *pMotorData;
 #define HTANGLE_MODE_CALIBRATE              0x43
 #define HTANGLE_MODE_RESET                  0x52
+
+// MOTORS
+// puissance minimale applicable pour que les 2 moteurs soient en rotation
+#define MINIMAL_MOTOR_POWER 10
+
 void robot_resetSensors() {
 
 	IICDAT IicDat;
@@ -65,6 +73,11 @@ void robot_resetSensors() {
 	}
 	printf("robot_resetSensors (return_code %d) status %d\n", r, IicDat.Result);
 
+	offsetTachoLeft = 0;
+	offsetTachoRight = 0;
+	offsetTachoLeft = robot_getLeftInternalCounter();
+	offsetTachoRight = robot_getRightInternalCounter();
+
 }
 long robot_getLeftExternalCounter();
 long robot_getRightExternalCounter();
@@ -72,6 +85,21 @@ void robot_init() {
 	struct timeval te;
 	gettimeofday(&te, NULL); // get current time
 	timeOffset = (te.tv_sec * 1000LL + te.tv_usec / 1000);
+
+	// Internal counters
+	//Open the device file asscoiated to the motor encoders
+	if ((encoder_file = open(MOTOR_DEVICE_NAME, O_RDWR | O_SYNC)) == -1) {
+		printf("robot_init : internal counter init error\n");
+		exit(1);
+	}
+
+	pMotorData = (MOTORDATA*) mmap(0, sizeof(MOTORDATA) * vmOUTPUTS,
+	PROT_READ | PROT_WRITE, MAP_FILE | MAP_SHARED, encoder_file, 0);
+	if (pMotorData == MAP_FAILED) {
+		printf("robot_init : internal counter map error\n");
+		exit(1);
+	}
+
 	//
 	// external step counter
 	//
@@ -171,7 +199,6 @@ void robot_init() {
 		left = robot_getLeftExternalCounter();
 		right = robot_getRightExternalCounter();
 	}
-
 }
 void robot_dispose() {
 	int result;
@@ -251,12 +278,19 @@ void robot_stopMotorLeft() {
 }
 void robot_setMotorRightSpeed(int speed) {
 	printf("robot_setMotorRightSpeed REAL %d\n", speed);
+	if (speed > 0) {
+		speed += MINIMAL_MOTOR_POWER;
+	}
+	if (speed > 100) {
+		speed = 100;
+	}
 
-	//DEFINE VARIABLES
+	// Adjusted speed because motors are not identical
+	if (speed > 0)
+		speed--;
+
 	char motor_command[3];
-	//ACTUATE MOTORS
-	// All motor operations use the first command byte to indicate the type of operation
-	// and the second one to indicate the motor(s) port(s)
+
 	motor_command[0] = opOUTPUT_POWER;
 	motor_command[1] = MOTOR_PORT_RIGHT;
 	// Set the motor desired speed 0 to 100
@@ -270,7 +304,12 @@ void robot_setMotorRightSpeed(int speed) {
 }
 void robot_setMotorLeftSpeed(int speed) {
 	printf("robot_setMotorLeftSpeed REAL %d\n", speed);
-
+	if (speed > 0) {
+		speed += MINIMAL_MOTOR_POWER;
+	}
+	if (speed > 100) {
+		speed = 100;
+	}
 	//DEFINE VARIABLES
 	char motor_command[3];
 	//ACTUATE MOTORS
@@ -324,10 +363,11 @@ long robot_getRightExternalCounter() {
 }
 
 long robot_getLeftInternalCounter() {
-	return 0;
+	return pMotorData[1].TachoSensor - offsetTachoLeft;
 }
+
 long robot_getRightInternalCounter() {
-	return 0;
+	return pMotorData[2].TachoSensor - offsetTachoRight;
 }
 
 // Contact sensors
@@ -341,6 +381,22 @@ int robot_isButton1Pressed() {
 		return TRUE;
 	}
 	return FALSE;
+}
+
+int robot_isEmergencyPressed() {
+	int buttonPort = SENSOR_PORT_1;
+	unsigned char v =
+			(unsigned char) pAnalog->Pin1[buttonPort][pAnalog->Actual[buttonPort]];
+	if (v < 225) {
+		printf("Pressed\n");
+		return TRUE;
+	}
+	return FALSE;
+}
+void robot_waitStart() {
+	while (robot_isEmergencyPressed()) {
+		usleep(100);
+	}
 }
 
 #endif

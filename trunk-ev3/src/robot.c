@@ -8,6 +8,7 @@
 #include <sys/time.h>
 #include "robot.h"
 
+int running = 1;
 
 int robot_getLeftPower() {
 	return lPower;
@@ -23,3 +24,11 @@ long currentTimeInMillis() {
 	return (long) (milliseconds - timeOffset);
 }
 
+int robot_isRunning() {
+	if (running > 0) {
+		if (robot_isEmergencyPressed()) {
+			running = 0;
+		}
+	}
+	return running;
+}
