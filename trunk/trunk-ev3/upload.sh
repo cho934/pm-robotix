@@ -1,5 +1,5 @@
 #!/usr/bin/expect
-spawn scp /home/maillard/EV3/workspace/EV3/Debug/EV3 root@192.168.2.240:/mnt/ramdisk
+spawn scp /home/maillard/EV3/workspace/EV3/DebugEV3/EV3 root@192.168.2.240:/mnt/ramdisk
 expect {
 password: {
 send "\r";

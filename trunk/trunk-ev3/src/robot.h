@@ -4,6 +4,7 @@
 extern long long timeOffset;
 extern int lPower;
 extern int rPower;
+extern int running;
 
 long currentTimeInMillis();
 
@@ -28,5 +29,10 @@ long robot_getLeftInternalCounter();
 long robot_getRightInternalCounter();
 
 int robot_isButton1Pressed();
+
+int robot_isRunning();
+int robot_isEmergencyPressed();
+
+void robot_waitStart();
 
 #endif

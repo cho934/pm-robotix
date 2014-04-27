@@ -61,33 +61,48 @@ void encoder_SetResolution(uint32 leftTicksPerM, uint32 rightTicksPerM) {
 
 static int32 lastLeft = 0;
 static int32 lastRight = 0;
+static int useExternalEncoders = 0;
+
+long encoder_getLeftCounter() {
+	if (useExternalEncoders) {
+		return robot_getLeftExternalCounter();
+	}
+	return robot_getLeftInternalCounter();
+}
+long encoder_getRightCounter() {
+	if (useExternalEncoders) {
+		return robot_getRightExternalCounter();
+	}
+	return robot_getRightInternalCounter();
+}
+
 void encoder_ReadSensor(int32 *dLeft, int32 *dRight, int32 *dAlpha,
 int32 *dDelta) {
 
 	static int32 left, right;
 
-	//read encoder
+//read encoder
 
-	left = robot_getLeftExternalCounter();
-	right = robot_getRightExternalCounter();
+	left = encoder_getLeftCounter();
+	right = encoder_getRightCounter();
 	printf("encoder.c encoder_ReadSensor l:%d r:%d\n", left, right);
-	//convert units and save position
+//convert units and save position
 	left *= leftEncoderRatio;
 	right *= rightEncoderRatio;
 
-	//compute delta for left wheel
+//compute delta for left wheel
 	*dLeft = left - lastLeft;
 	lastLeft = left;
-	//verify left encoder overflow
-	//CORRECT_DELTA_OVERFLOW(*dLeft, MAX_ENCODER_ABS_VTOPS);
+//verify left encoder overflow
+//CORRECT_DELTA_OVERFLOW(*dLeft, MAX_ENCODER_ABS_VTOPS);
 
-	//compute delta for right wheel
+//compute delta for right wheel
 	*dRight = right - lastRight;
 	lastRight = right;
-	//verify right encoder overflow
-	//CORRECT_DELTA_OVERFLOW(*dRight, MAX_ENCODER_ABS_VTOPS);
+//verify right encoder overflow
+//CORRECT_DELTA_OVERFLOW(*dRight, MAX_ENCODER_ABS_VTOPS);
 
-	//compute alpha and delta displacement
+//compute alpha and delta displacement
 	*dAlpha = (*dRight - *dLeft) / 2;
 	*dDelta = (*dRight + *dLeft) / 2;
 

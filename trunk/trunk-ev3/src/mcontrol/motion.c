@@ -80,8 +80,8 @@ void path_TriggerWaypoint(TRAJ_STATE state);
 long loopDelayInMillis;
 
 void configurePID() {
-	pid_Config(motors[ALPHA_DELTA][ALPHA_MOTOR].PIDSys, 0.0000020f, 0.0f,
-			0.00f);
+	pid_Config(motors[ALPHA_DELTA][ALPHA_MOTOR].PIDSys, 0.0020f, 0.0f,
+			0.000020f);
 
 	pid_Config(motors[ALPHA_DELTA][DELTA_MOTOR].PIDSys, 0.00080f, 0,
 			0.0f /*0.000001f*/);
@@ -134,13 +134,13 @@ void motion_Destroy() {
 
 }
 void signalEndOfTraj() {
-	printf("signalEndOfTraj %d\n",nextWaypoint.type);
+	printf("signalEndOfTraj %d\n", nextWaypoint.type);
 	if (motionCommand.cmdType == POSITION_COMMAND) {
 		motion_FreeMotion();
 	}
 
 	if (nextWaypoint.type == WP_END_OF_TRAJ) {
-		printf("signalEndOfTraj path_TriggerWaypoint\n" );
+		printf("signalEndOfTraj path_TriggerWaypoint\n");
 		path_TriggerWaypoint(TRAJ_OK);
 	}
 	exit(0);
@@ -319,8 +319,8 @@ void *motion_ITTask(void *p_arg) {
 				fin1 = GetStepOrder(&motionCommand.cmd.stepCmd[1], &ord1);
 				break;
 			}
-			log_status(currentTimeInMillis(), robot_getLeftExternalCounter(),
-					robot_getRightExternalCounter(), robot_getLeftPower(),
+			log_status(currentTimeInMillis(), encoder_getLeftCounter(),
+					encoder_getRightCounter(), robot_getLeftPower(),
 					robot_getRightPower(), ord0, ord1,
 					motors[motionCommand.mcType][0].lastPos,
 					motors[motionCommand.mcType][1].lastPos, p.x, p.y, p.theta);

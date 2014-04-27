@@ -88,5 +88,10 @@ long robot_getRightInternalCounter() {
 int robot_isButton1Pressed() {
 	return 0;
 }
-
+int robot_isEmergencyPressed() {
+	return 0;
+}
+void robot_waitStart() {
+	// nothing to do here :)
+}
 #endif

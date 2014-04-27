@@ -67,8 +67,8 @@ void testExternalCounters(int seconds, int enableMotors) {
 				robot_getLeftExternalCounter(),
 				robot_getRightExternalCounter());
 		printf("Counters from start : left: %ld  right: %ld\n",
-				lStart - robot_getLeftExternalCounter(),
-				rStart - robot_getRightExternalCounter());
+				robot_getLeftExternalCounter() - lStart,
+				robot_getRightExternalCounter() - rStart);
 		usleep(1000 * 1000);
 	}
 	if (enableMotors > 0) {
@@ -88,7 +88,62 @@ void testExternalCounters(int seconds, int enableMotors) {
 	printf("END\n");
 
 }
+void testInternalCounters(int seconds, int enableMotors) {
 
+	robot_init();
+	if (enableMotors > 0) {
+		robot_startMotors();
+	}
+	int speed = 0;
+	//PROCESS SENSOR DATA
+	long lStart = robot_getLeftInternalCounter();
+	long rStart = robot_getRightInternalCounter();
+	long lP = lStart;
+	long rP = rStart;
+	// Boucle principale
+	int i;
+	for (i = 0; i < seconds; i++) {
+		if (enableMotors > 0) {
+			// Update la vitesse
+			robot_setMotorRightSpeed(speed);
+			robot_setMotorLeftSpeed(speed);
+			if (speed < 100 && i % 20) {
+				speed++;
+			}
+		}
+		long robotGetLeftInternalCounter = robot_getLeftInternalCounter();
+		long robotGetRightInternalCounter = robot_getRightInternalCounter();
+		printf("Current power: %d , counters: left: %ld right: %ld\n", speed,
+				robotGetLeftInternalCounter, robotGetRightInternalCounter);
+		printf(
+				"Counters from start : left: %ld  right: %ld  Delta: %ld %ld -> %ld\n",
+				robotGetLeftInternalCounter - lStart,
+				robotGetRightInternalCounter - rStart,
+				robotGetLeftInternalCounter - lP,
+				robotGetRightInternalCounter - rP,
+				(robotGetLeftInternalCounter - lP)
+						- (robotGetRightInternalCounter - rP));
+		usleep(1000 * 1000);
+		lP = robotGetLeftInternalCounter;
+		rP = robotGetRightInternalCounter;
+	}
+	if (enableMotors > 0) {
+		printf("Motors stopped\n");
+		robot_setMotorRightSpeed(0);
+		robot_setMotorLeftSpeed(0);
+	}
+	printf("Waiting 1s\n");
+	sleep(1);
+	printf("Current speed: %d , counters: left: %ld right: %ld\n", speed,
+			robot_getLeftInternalCounter(), robot_getRightInternalCounter());
+	printf("Counters from start : left: %ld  right: %ld\n",
+			lStart - robot_getLeftInternalCounter(),
+			rStart - robot_getRightInternalCounter());
+
+	robot_dispose();
+	printf("END\n");
+
+}
 void init(int lResolution, int rResolution, float dist, int startAsserv) {
 	robot_init();
 	encoder_SetDist(dist);
@@ -148,7 +203,6 @@ void testEncoders() {
 	}
 }
 
-
 int main(int argc, const char* argv[]) {
 #ifdef SIMULATED
 	printf("Simulation mode enabled\n");
@@ -173,7 +227,13 @@ int main(int argc, const char* argv[]) {
 		printf(
 				"- avance et affiche les codeurs externes 5s :  EV3 test2   5\n");
 		printf(
+				"- avance et affiche les codeurs internes 5s :  EV3 test3   5\n");
+		printf(
 				"- avance pour reglage PID sur 300mm :          EV3 pidAD 300\n");
+		printf(
+				"- test de l'attente de départ  :               EV3 waitstart\n");
+		printf(
+				"- test de l'arret d'urgence  :                 EV3 emergency\n");
 		return 0;
 	}
 	if (strcmp(argv[1], "test0") == 0) {
@@ -202,6 +262,10 @@ int main(int argc, const char* argv[]) {
 			init(lRes, rRes, dist, 0);
 			int secs = atoi(argv[2]);
 			testExternalCounters(secs, 1);
+		} else if (strcmp(argv[1], "test3") == 0) {
+			init(lRes, rRes, dist, 0);
+			int secs = atoi(argv[2]);
+			testInternalCounters(secs, 1);
 		} else if (strcmp(argv[1], "pidAD") == 0) {
 			int mm = atoi(argv[2]);
 			init(lRes, rRes, dist, 1);
@@ -209,6 +273,17 @@ int main(int argc, const char* argv[]) {
 			float meters = mm / 1000.0f;
 			motion_StepOrderAD(cmd, 0.0f, meters / valueVTops, 5);
 			launchAndEndAfterCmd(cmd);
+		} else if (strcmp(argv[1], "waitstart") == 0) {
+			init(lRes, rRes, dist, 0);
+			printf("Waiting for start signal\n");
+			robot_waitStart();
+			printf("Robot started\n");
+		} else if (strcmp(argv[1], "emergency") == 0) {
+			printf("Waiting for emergency signal\n");
+			while (robot_isRunning()>0) {
+				usleep(100);
+			}
+			printf("Emergency detected\n");
 		} else {
 			printf("Commande %s inconnue\n", argv[1]);
 		}
