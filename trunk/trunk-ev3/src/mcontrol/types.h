@@ -15,6 +15,7 @@
 #define int16 short
 #define int32 int
 #define BOOL int
+typedef int boolean;
 #define EXPORTED_FUNCTION
 #ifndef NULL
 	#define NULL 0
