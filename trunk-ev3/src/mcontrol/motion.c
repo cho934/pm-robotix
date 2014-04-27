@@ -271,15 +271,14 @@ void *motion_ITTask(void *p_arg) {
 		updateMotor(&motors[LEFT_RIGHT][RIGHT_MOTOR], dRight);
 		updateMotor(&motors[ALPHA_DELTA][ALPHA_MOTOR], dAlpha);
 		updateMotor(&motors[ALPHA_DELTA][DELTA_MOTOR], dDelta);
-
+		double dSpeed0 = 0;
+		double dSpeed1 = 0;
 		//order and pwm computation
 		switch (RobotMotionState) {
 		case TRAJECTORY_RUNNING:
 			//lock motionCommand
 			pthread_mutex_lock(&mtxMotionCommand);
 
-			double dSpeed0 = 0;
-			double dSpeed1 = 0;
 			if (motionCommand.mcType == LEFT_RIGHT) {
 				dSpeed0 = dLeft;
 				dSpeed1 = dRight;

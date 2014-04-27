@@ -174,7 +174,7 @@ void launchAndEndAfterCmd(RobotCommand* cmd) {
 }
 
 void motionLine(int mm) {
-	RobotCommand* cmd = malloc(sizeof(RobotCommand));
+	RobotCommand* cmd = (RobotCommand*)malloc(sizeof(RobotCommand));
 	float meters = mm / 1000.0f;
 	motion_Line(cmd, meters);
 	printf("Loading line command for %d mm (%f meters)\n", mm, meters);
@@ -183,7 +183,7 @@ void motionLine(int mm) {
 }
 
 void motionRotate(int degres) {
-	RobotCommand* cmd = malloc(sizeof(RobotCommand));
+	RobotCommand* cmd = (RobotCommand*) malloc(sizeof(RobotCommand));
 	float rad = (degres * M_PI) / 180.0;
 	// 90 cms
 	motion_Rotate(cmd, rad);
@@ -269,7 +269,7 @@ int main(int argc, const char* argv[]) {
 		} else if (strcmp(argv[1], "pidAD") == 0) {
 			int mm = atoi(argv[2]);
 			init(lRes, rRes, dist, 1);
-			RobotCommand* cmd = malloc(sizeof(RobotCommand));
+			RobotCommand* cmd = (RobotCommand*) malloc(sizeof(RobotCommand));
 			float meters = mm / 1000.0f;
 			motion_StepOrderAD(cmd, 0.0f, meters / valueVTops, 5);
 			launchAndEndAfterCmd(cmd);

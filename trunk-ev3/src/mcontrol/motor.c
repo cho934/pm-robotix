@@ -27,6 +27,7 @@
 #include "motor.h"
 #include "motor_PID.h"
 #include <stdio.h>
+MOTOR motors[MAX_MOTION_CONTROL_TYPE_NUMBER][MOTOR_PER_TYPE];
 
 void initMotor(MOTOR *motor) {
 	printf("motor.c initMotor\n");
@@ -38,7 +39,7 @@ void initMotor(MOTOR *motor) {
 	for (i = 0; i < MOTOR_SPEED_PERIOD_NB; i++) {
 		motor->prevPos[i] = 0;
 	}
-	printf("motor.c initMotor PID id:%d\n",motor->PIDSys);
+	printf("motor.c initMotor PID id:%d\n", motor->PIDSys);
 }
 
 void motors_ConfigAllIMax(int32 imax) {
