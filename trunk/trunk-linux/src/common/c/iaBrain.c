@@ -6,6 +6,7 @@
  */
 #include "iaBrain.h"
 #include "ia.h"
+#include  "iaActionManager.h"
 
 
 // -----------------
@@ -20,6 +21,8 @@ static float coefTime = 1;
 static float coefReward = 1;
 static float coefRisk = 0;
 
+
+
 void iaBrainInitialise(int color, iaActionListElement* currentActionsPile) {
 	// Initialize decisions list
 	iaBrainAddSpearsDecisions(color);
@@ -32,9 +35,24 @@ void iaBrainInitialise(int color, iaActionListElement* currentActionsPile) {
 }
 
 void iaBrainAddSpearsDecisions(int color) {
+
 	iaDecision* mammothRed = iaBrainAddDecision();
 	mammothRed->active = 1;
 	mammothRed->reward = 10;
+	mammothRed->startPointX = 150.0;
+	mammothRed->startPointY = 150.0;
+	mammothRed->startPointA = 90.0;
+	mammothRed->risk = 1.0;
+	mammothRed->actionsTime = 10.0;
+
+	iaDecision* mammothBlue = iaBrainAddDecision();
+	mammothBlue->active = 1;
+	mammothBlue->reward = 10;
+	mammothBlue->startPointX = 250.0;
+	mammothBlue->startPointY = 50.0;
+	mammothBlue->startPointA = 90.0;
+	mammothBlue->risk = 1.0;
+	mammothBlue->actionsTime = 10.0;
 }
 
 void iaBrainAddFireDecisions(int color) {
@@ -78,9 +96,15 @@ void iaBrainComputeNewDecision(iaActionListElement* currentActionsPile){
 	}
 	if (optimalIndex > -1) {
 		//Move to coordinates, compute move
-		//TODO
+		iaAction* moveAction = iaActionManagerGenerateNewAction(
+				iaActionTypeMoveToCoord,
+				iaDecisions[optimalIndex].startPointX,
+				iaDecisions[optimalIndex].startPointY,
+				iaDecisions[optimalIndex].startPointA
+				);
+		iaActionManagerAddActionAtEnd(moveAction, currentActionsPile);
 		//Add pile for actions
-		//iaActionManagerAddActionsAtEnd(iaDecisions[optimalIndex]->actionsList, currentActionsPile);
+		iaActionManagerAddActionsAtEnd(iaDecisions[optimalIndex].actionsList, currentActionsPile);
 	}
 }
 
