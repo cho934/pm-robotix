@@ -9,28 +9,34 @@ int rPower;
 #include <sys/mman.h>
 #include <sys/ioctl.h>
 #include <sys/time.h>
+#include <string.h>
 #include "../robot.h"
 #include "lms2012.h"
-
+#include "d_lcd.h"
 // Sensors
 #define SENSOR_PORT_1 0
 #define SENSOR_PORT_2 1
 #define SENSOR_PORT_3 2
 #define SENSOR_PORT_4 3
 
+static LCD my_lcd;
 // A = 0x01, B = 0x02, C = 0x04, D = 0x08
 // AC = 0x05
 static const char MOTOR_PORT_RIGHT = 0x04;
 static const char MOTOR_PORT_LEFT = 0x02;
 
+static int ui_file;
 static int motor_file;
 static int iic_device_file;
 static int analog_file;
+static int uart_file;
 // Internal encode
 static int encoder_file;
 static long offsetTachoLeft;
 static long offsetTachoRight;
 
+static UI *pButtons;
+static UART *pUART;
 static ANALOG *pAnalog;
 static IIC *pIic;
 static MOTORDATA *pMotorData;
@@ -62,7 +68,7 @@ void robot_resetSensors() {
 	while (IicDat.Result) {
 		r = ioctl(iic_device_file, IIC_SETUP, &IicDat);
 	}
-	printf("robot_resetSensors (return_code %d) status %d\n", r, IicDat.Result);
+	//printf("robot_resetSensors (return_code %d) status %d\n", r, IicDat.Result);
 
 	//
 	IicDat.Port = SENSOR_PORT_3;
@@ -71,7 +77,7 @@ void robot_resetSensors() {
 		r = ioctl(iic_device_file, IIC_SETUP, &IicDat);
 
 	}
-	printf("robot_resetSensors (return_code %d) status %d\n", r, IicDat.Result);
+	//printf("robot_resetSensors (return_code %d) status %d\n", r, IicDat.Result);
 
 	offsetTachoLeft = 0;
 	offsetTachoRight = 0;
@@ -105,7 +111,7 @@ void robot_init() {
 	//
 
 	if ((iic_device_file = open(IIC_DEVICE_NAME, O_RDWR | O_SYNC)) == -1) {
-		printf("Failed to open IIC device\n");
+		printf("robot_init : failed to open IIC device\n");
 		exit(1);
 	}
 	pIic = (IIC*) mmap(0, sizeof(IIC), PROT_READ | PROT_WRITE,
@@ -161,7 +167,32 @@ void robot_init() {
 	printf(
 			"robot_init : IIC device is ready for right counter (return_code %d) %d\n",
 			r, IicDat.Result);
+//
+	// IR
+	//
+	//Open the device file
+	if ((uart_file = open(UART_DEVICE_NAME, O_RDWR | O_SYNC)) == -1) {
+		printf("robot_init : failed to open uart device\n");
+		exit(1);
+	}
+	//Map kernel device to be used at the user space level
+	pUART = (UART*) mmap(0, sizeof(UART), PROT_READ | PROT_WRITE,
+	MAP_FILE | MAP_SHARED, uart_file, 0);
+	if (pUART == MAP_FAILED) {
+		printf("robot_init : mapping uart device failed\n");
+		exit(1);
+	}
 
+	//SPECIAL CONFIGURATION
+	//Set IR as remote control
+	char IR_SENSOR_TYPE = 33;
+	int IR_PROX = 0;
+	DEVCON DevCon; // Configuration parameters
+	DevCon.Mode[SENSOR_PORT_4] = IR_PROX;
+	DevCon.Connection[SENSOR_PORT_4] = CONN_INPUT_UART;
+	DevCon.Type[SENSOR_PORT_4] = IR_SENSOR_TYPE; //This instruction has no effect in the code
+	r = ioctl(uart_file, UART_SET_CONN, &DevCon);
+	printf("robot_init : IR is ready (%d)\n", r);
 	//
 	// Contact sensors
 	//
@@ -179,6 +210,23 @@ void robot_init() {
 	printf("robot_init : contact sensors ready (%d)\n", analog_file);
 	printf("robot_init : done \n");
 	usleep(100 * 1000);
+
+	//
+	// ui (for buttons)
+	//
+
+	if ((ui_file = open(UI_DEVICE_NAME, O_RDWR | O_SYNC)) == -1) {
+		printf("robot_init : failed to open ui device\n");
+		exit(1);
+	}
+	pButtons = (UI*) mmap(0, sizeof(UI), PROT_READ | PROT_WRITE,
+	MAP_FILE | MAP_SHARED, ui_file, 0);
+	if (pButtons == MAP_FAILED) {
+		printf("robot_init : failed to map ui device\n");
+		exit(1);
+	}
+	printf("robot_init : buttons ready (%d)\n", ui_file);
+
 	//
 	// Open the device file associated to the motor controlers
 	//
@@ -199,6 +247,10 @@ void robot_init() {
 		left = robot_getLeftExternalCounter();
 		right = robot_getRightExternalCounter();
 	}
+
+	//Initialize and clear screen
+	dLcdInit(my_lcd.Lcd);
+	LCDClear(my_lcd.Lcd);
 }
 void robot_dispose() {
 	int result;
@@ -214,6 +266,11 @@ void robot_dispose() {
 	if (result != 0) {
 		printf("robot_init : error closing analog_file\n");
 	}
+	result = close(ui_file);
+	if (result != 0) {
+		printf("robot_init : error closing ui_file\n");
+	}
+	dLcdExit();
 }
 
 // Motors commands
@@ -388,7 +445,7 @@ int robot_isEmergencyPressed() {
 	unsigned char v =
 			(unsigned char) pAnalog->Pin1[buttonPort][pAnalog->Actual[buttonPort]];
 	if (v < 225) {
-		printf("Pressed\n");
+		//printf("Pressed\n");
 		return TRUE;
 	}
 	return FALSE;
@@ -397,6 +454,46 @@ void robot_waitStart() {
 	while (robot_isEmergencyPressed()) {
 		usleep(100);
 	}
+}
+int robot_isDetectingObstacle() {
+	int IR_REMOTE_CONTROL_CHANNEL = 0;
+	int dist =
+			(unsigned char) pUART->Raw[SENSOR_PORT_4][pUART->Actual[SENSOR_PORT_4]][IR_REMOTE_CONTROL_CHANNEL];
+
+//	printf("IR Remote Button: %d\n", dist);
+
+	return dist < 30;
+}
+void robot_displayText(int line, char* text) {
+	dLcdDrawText(my_lcd.Lcd, FG_COLOR, 2, 20 * (line + 1), NORMAL_FONT,
+			(signed char *) text);
+	dLcdUpdate(&my_lcd);
+}
+
+int robot_isButtonPressed(int button) {
+	if (button < 0) {
+		button = 0;
+	}
+	if (button >= BUTTONS) {
+		button = BUTTONS - 1;
+	}
+	return pButtons->Pressed[button];
+}
+
+void robot_setLedStatus(int status) {
+	if (status < 0) {
+		status = 0;
+	}
+	if (status >= LEDPATTERNS) {
+		status = LEDPATTERNS - 1;
+	}
+
+	//The first byte determines the color or pattern as specified in  bytecodes.h -> LEDPATTERN
+	//The second byte (LED number) is not currently being used by the device driver, but is needed
+	char led_command[2] = { 0, 0 };
+	//The kernel driver will subtract a '0' offset before using the Color/Pattern instruction (see d_ui.c)
+	led_command[0] = '0' + status;
+	write(ui_file, led_command, 2);
 }
 
 #endif

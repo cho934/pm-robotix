@@ -94,4 +94,16 @@ int robot_isEmergencyPressed() {
 void robot_waitStart() {
 	// nothing to do here :)
 }
+int robot_isDetectingObstacle() {
+	return 0;
+}
+void robot_displayText(int line, char* text) {
+	printf("%d : %s\n",line,text);
+}
+int robot_isButtonPressed(int button) {
+	return 0;
+}
+void robot_setLedStatus(int status) {
+	printf("LED STATUS : %d\n",status);
+}
 #endif

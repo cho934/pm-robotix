@@ -15,9 +15,14 @@
 #include "mcontrol/global.h"
 #include "mcontrol/path_manager.h"
 
-void test() {
+void debug(const char *str) {
+	FILE *logFile = fopen("/mnt/card/hello.txt", "w");
+	fprintf(logFile,"%s", str);
+	fprintf(logFile, "--\r\n");
+	fclose(logFile);
+}
 
-	robot_init();
+void test() {
 
 	robot_startMotors();
 
@@ -90,7 +95,6 @@ void testExternalCounters(int seconds, int enableMotors) {
 }
 void testInternalCounters(int seconds, int enableMotors) {
 
-	robot_init();
 	if (enableMotors > 0) {
 		robot_startMotors();
 	}
@@ -145,12 +149,17 @@ void testInternalCounters(int seconds, int enableMotors) {
 
 }
 void init(int lResolution, int rResolution, float dist, int startAsserv) {
+	debug("b");
 	robot_init();
+	debug("c");
 	encoder_SetDist(dist);
 	encoder_SetResolution(lResolution, rResolution);
+	debug("d");
 	initLog(lResolution, rResolution, dist);
+	debug("e");
 	printf("Encoders resolution: %d %d , distance: %f\n", lResolution,
 			rResolution, dist);
+	debug("f");
 	if (startAsserv > 0) {
 		motion_Init();
 	}
@@ -174,7 +183,7 @@ void launchAndEndAfterCmd(RobotCommand* cmd) {
 }
 
 void motionLine(int mm) {
-	RobotCommand* cmd = (RobotCommand*)malloc(sizeof(RobotCommand));
+	RobotCommand* cmd = (RobotCommand*) malloc(sizeof(RobotCommand));
 	float meters = mm / 1000.0f;
 	motion_Line(cmd, meters);
 	printf("Loading line command for %d mm (%f meters)\n", mm, meters);
@@ -203,6 +212,37 @@ void testEncoders() {
 	}
 }
 
+void mainProgram() {
+	debug("a");
+
+	int lRes = 3800;
+	int rRes = 3800;
+	float dist = 0.128f;
+	init(lRes, rRes, dist, 0);
+
+	robot_startMotors();
+
+	printf("SET SPEED TO 20\n");
+
+	robot_setMotorRightSpeed(20);
+	robot_setMotorLeftSpeed(20);
+
+	sleep(1);
+	robot_setMotorRightSpeed(-40);
+	robot_setMotorLeftSpeed(-40);
+	sleep(1);
+
+	printf("SET SPEED TO 0\n");
+	robot_setMotorRightSpeed(0);
+	robot_setMotorLeftSpeed(0);
+	sleep(1);
+
+	robot_stopMotorLeft();
+	robot_stopMotorRight();
+	robot_dispose();
+
+}
+
 int main(int argc, const char* argv[]) {
 #ifdef SIMULATED
 	printf("Simulation mode enabled\n");
@@ -212,6 +252,9 @@ int main(int argc, const char* argv[]) {
 	int i;
 	for (i = 0; i < argc; i++) {
 		printf("arg %d: %s\n", i, argv[i]);
+	}
+	if (argc == 1) {
+		mainProgram();
 	}
 	if (argc != 3) {
 		printf("Utilisation : EV3 commande parametre\n");
@@ -231,9 +274,11 @@ int main(int argc, const char* argv[]) {
 		printf(
 				"- avance pour reglage PID sur 300mm :          EV3 pidAD 300\n");
 		printf(
-				"- test de l'attente de départ  :               EV3 waitstart\n");
+				"- test de l'attente de départ 1 fois :         EV3 waitstart 1\n");
 		printf(
-				"- test de l'arret d'urgence  :                 EV3 emergency\n");
+				"- test de l'arret d'urgence 20s :              EV3 emergency 20s\n");
+		printf(
+				"- test de la detection 5s :                    EV3 test_detect 5\n");
 		return 0;
 	}
 	if (strcmp(argv[1], "test0") == 0) {
@@ -266,6 +311,16 @@ int main(int argc, const char* argv[]) {
 			init(lRes, rRes, dist, 0);
 			int secs = atoi(argv[2]);
 			testInternalCounters(secs, 1);
+		} else if (strcmp(argv[1], "test_detect") == 0) {
+			int nb = atoi(argv[2]);
+			init(lRes, rRes, dist, 0);
+			//int secs = atoi(argv[2]);
+			//testInternalCounters(secs, 1);
+			int i = 0;
+			for (i = 0; i < nb; i++) {
+				printf("detect at :%d\n", robot_isDetectingObstacle());
+				sleep(1);
+			}
 		} else if (strcmp(argv[1], "pidAD") == 0) {
 			int mm = atoi(argv[2]);
 			init(lRes, rRes, dist, 1);
@@ -280,7 +335,7 @@ int main(int argc, const char* argv[]) {
 			printf("Robot started\n");
 		} else if (strcmp(argv[1], "emergency") == 0) {
 			printf("Waiting for emergency signal\n");
-			while (robot_isRunning()>0) {
+			while (robot_isRunning() > 0) {
 				usleep(100);
 			}
 			printf("Emergency detected\n");
