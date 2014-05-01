@@ -35,4 +35,10 @@ int robot_isEmergencyPressed();
 
 void robot_waitStart();
 
+int robot_isDetectingObstacle();
+void robot_displayText(int line, char* text);
+void robot_setLedStatus(int status);
+
+int robot_isButtonPressed(int button);
+
 #endif

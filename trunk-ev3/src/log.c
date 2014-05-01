@@ -17,7 +17,7 @@ static int log_closed = 0;
 void initLog(int leftTicksPerM, int rightTicksPerM, float encoderDist) {
 	lCount = 0;
 	l = (char **) calloc(1000, sizeof(char*));
-	logFile = fopen("log.txt", "w");
+	logFile = fopen("/mnt/card/log.txt", "w");
 	if (logFile == NULL) {
 		printf("Unable to create log file\n");
 	}
