@@ -59,6 +59,10 @@ void takeNewDecision() {
 	iaBrainComputeNewDecision(currentActionsPile);
 }
 
+void detectOponent(float posX, float posY) {
+
+}
+
 // ------------------------
 // -- IA -> ROBOT --
 // ------------------------
@@ -88,14 +92,14 @@ void executeSpecificAction(float actionType) {
  * current X position, regarding 0,0 the blue corner
  */
 float getPosX() {
-
+	return 0;
 }
 
 /**
  * current Y position, regarding 0,0 the blue corner
  */
 float getPosY() {
-
+	return 0;
 }
 
 
@@ -103,7 +107,7 @@ float getPosY() {
  * Current position Alpha, regarding to blue position
  */
 float getPosA() {
-
+	return 0;
 }
 
 
@@ -111,7 +115,7 @@ float getPosA() {
  * Remaining time in secs
  */
 float getTimeRemaining() {
-
+	return 0;
 }
 
 /**
@@ -120,5 +124,5 @@ float getTimeRemaining() {
  *   to execute the action, move from X, Y, A, to targetX, targetY, targetA
  */
 float getTimeForMove(float X, float Y, float A, float targetX, float targetY, float targetZ) {
-
+	return 0;
 }
