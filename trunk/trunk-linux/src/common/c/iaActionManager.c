@@ -5,12 +5,12 @@
  *      Author: pmx
  */
 #include "iaActionManager.h"
-
-#include <stdlib.h>
+#include "iaLogger.h"
 
 
 iaActionListElement* iaActionManagerAddActionAtEnd(iaAction* actionToAdd, iaActionListElement* pile) {
-	if (actionToAdd != NULL) {
+	printf("iaActionManagerAddActionAtEnd\n");
+	if (actionToAdd) {
 		/* Creating List element */
 		iaActionListElement* newElement = (iaActionListElement*)malloc(sizeof(iaActionListElement));
 
@@ -20,16 +20,16 @@ iaActionListElement* iaActionManagerAddActionAtEnd(iaAction* actionToAdd, iaActi
 
 		return iaActionManagerAddActionsAtEnd(newElement, pile);
 	} else {
+		printf("action to add null\n");
 		return pile;
 	}
 }
 
 iaActionListElement* iaActionManagerAddActionsAtEnd(iaActionListElement* actionsToAdd, iaActionListElement* pile) {
-	if (actionsToAdd != NULL) {
-		if(pile == NULL) {
-			/* If no list exist, just return the new one */
-			return actionsToAdd;
-		} else {
+	printf("iaActionManagerAddActionsAtEnd\n");
+	if (actionsToAdd) {
+		if(pile) {
+			iaActionManagerDisplayActionsPile(pile);
 			/* Find the last element of the list */
 			iaActionListElement* temp=pile;
 			while(temp->next != NULL) {
@@ -38,34 +38,42 @@ iaActionListElement* iaActionManagerAddActionsAtEnd(iaActionListElement* actions
 			/* Add the new one */
 			temp->next = actionsToAdd;
 			return pile;
+		} else {
+			/* If no list exist, just return the new one */
+			printf("current pile is null\n");
+			return actionsToAdd;
 		}
 	} else {
+		printf("action to add is null\n");
 		return pile;
 	}
 }
 
 iaAction* iaActionManagerGetNextAction(iaActionListElement* pile) {
-	if(pile == NULL) {
+	printf("iaActionManagerGetNextAction\n");
+	if(pile) {
+		return pile->action;
+	} else {
 		/* If no list exist, just return the new one */
 		return NULL;
-	} else {
-		return pile->action;
 	}
 }
 
 iaActionListElement* iaActionManagerPop(iaActionListElement* pile) {
-	if(pile == NULL) {
-		/* If no list exist, just return the new one */
-		return NULL;
-	} else {
+	printf("iaActionManagerPop\n");
+	if(pile) {
 		iaActionListElement* newPile = pile->next;
 		free(pile);
 		return newPile;
+	} else {
+		/* If no list exist, just return the new one */
+		return NULL;
 	}
 }
 
 iaActionListElement* iaActionManagerEmpty(iaActionListElement* pile) {
-	while(pile != NULL) {
+	printf("iaActionManagerEmpty\n");
+	while(pile) {
 		/* If no list exist, just return the new one */
 		pile = iaActionManagerPop(pile);
 	}
@@ -83,4 +91,20 @@ iaAction* iaActionManagerGenerateNewAction(int type, float param1, float param2,
 
 void iaActionManagerClearAction(iaAction* action) {
 	free(action);
+}
+
+
+void iaActionManagerDisplayActionsPile(iaActionListElement* pile) {
+	iaLogDebug("- Current decisions pile:");
+	iaActionListElement* currentActionsPileToDisplay = pile;
+	iaLogDebug("A");
+	while (currentActionsPileToDisplay) {
+		iaLogDebug("B");
+		iaAction* action = currentActionsPileToDisplay->action;
+		iaLogDebug("C");
+		printf("    Action: %i [%f, %f, %f]\n", action->type, action->param1, action->param2, action->param3);
+		iaLogDebug("D");
+		currentActionsPileToDisplay = currentActionsPileToDisplay->next;
+		iaLogDebug("E");
+	}
 }

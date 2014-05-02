@@ -4,6 +4,8 @@
  * Provides interface methods between the robot and the artificial intelligence.
  * All of these methods have to be adapted to each robot.
  *
+ * Test ia
+ *
  * Robot must only use these methods
  *
  *  Created on: 18 Apr 2014
@@ -12,41 +14,49 @@
 #include "ia.h"
 #include "iaBrain.h"
 #include "iaActionManager.h"
+#include "iaLogger.h"
 
 // ------------------------
 // -- ROBOT -> IA --
 // ------------------------
 
-static iaActionListElement* currentActionsPile;
+static iaActionListElement* currentActionsPile = NULL;
 
 /**
  * Initializes robot. To call at the beginning, before launch
  */
-void initialize(int color) {
+void iaInitialize(int color) {
+	iaLogDebug("iaInitialize");
 	iaBrainInitialise(color, currentActionsPile);
 }
 
 /**
  * Execute next action, relelases hand after execution
  */
-void executeNextAction() {
+void iaExecuteNextAction() {
+	iaLogDebug("iaExecuteNextAction");
 	iaAction* action = iaActionManagerGetNextAction(currentActionsPile);
+	currentActionsPile = iaActionManagerPop(currentActionsPile);
 	if (action == NULL) {
-		takeNewDecision();
+		iaLogDebug("no next action, taking new decision");
+		iaTakeNewDecision();
 		action = iaActionManagerGetNextAction(currentActionsPile);
+		currentActionsPile = iaActionManagerPop(currentActionsPile);
 	}
 	if (action != NULL) {
 		if (action->type == iaActionTypeWait) {
-			executeWaitAction(action->param1);
+			iaExecuteWaitAction(action->param1);
 		} else if (action->type == iaActionTypeMoveToCoord) {
-			executeMoveAction(action->param1, action->param2, action->param3);
+			iaExecuteMoveAction(action->param1, action->param2, action->param3);
 		} else if (action->type == iaActionTypeAction) {
-			executeSpecificAction(action->param1);
+			if (iaExecuteSpecificAction((int)(action->param1)) == 1) {
+				iaBrainDecisionFinished();
+			}
 		}
 		iaActionManagerClearAction(action);
 		currentActionsPile = iaActionManagerPop(currentActionsPile);
 		if (currentActionsPile == NULL) {
-			takeNewDecision();
+			iaTakeNewDecision();
 		}
 	}
 
@@ -55,11 +65,16 @@ void executeNextAction() {
 /**
  * Ask for new actions pile demending on new position
  */
-void takeNewDecision() {
-	iaBrainComputeNewDecision(currentActionsPile);
+void iaTakeNewDecision() {
+	iaLogDebug("iaTakeNewDecision");
+	iaActionManagerEmpty(currentActionsPile);
+	currentActionsPile = iaBrainComputeNewDecision();
 }
 
-void detectOponent(float posX, float posY) {
+
+
+void iaDetectOponent(float posX, float posY) {
+	iaLogDebug("iaDetectOponent");
 
 }
 
@@ -70,35 +85,53 @@ void detectOponent(float posX, float posY) {
 /**
  * Move to X, Y, A position
  */
-void executeMoveAction(float x, float y, float a) {
+void iaExecuteMoveAction(float x, float y, float a) {
+	iaLogDebug("iaExecuteMoveAction");
 
 }
 
 /**
  * Wait for *time* ms
  */
-void executeWaitAction(float time) {
+void iaExecuteWaitAction(float time) {
+	iaLogDebug("iaExecuteWaitAction");
 
 }
 
 /**
  * Execute the action designed by actionType:
  */
-void executeSpecificAction(float actionType) {
+int iaExecuteSpecificAction(int actionType) {
+	iaLogDebug("iaExecuteSpecificAction");
+	// Return 0 if failed, 1 otherwise
+	switch (actionType) {
+		case 1:
+			return iaLaunchSpear();
+			break;
+		default:
+			break;
+	}
+}
 
+int iaLaunchSpear() {
+	iaLogDebug("iaLaunchSpear");
+	// Se mettre en position
+	// Envoyer la balle vers le mammouth
+	// Eventuellement reculer pour se dégager
+	return 0;
 }
 
 /**
  * current X position, regarding 0,0 the blue corner
  */
-float getPosX() {
+float iaGetPosX() {
 	return 0;
 }
 
 /**
  * current Y position, regarding 0,0 the blue corner
  */
-float getPosY() {
+float iaGetPosY() {
 	return 0;
 }
 
@@ -106,7 +139,7 @@ float getPosY() {
 /**
  * Current position Alpha, regarding to blue position
  */
-float getPosA() {
+float iaGetPosA() {
 	return 0;
 }
 
@@ -114,7 +147,8 @@ float getPosA() {
 /**
  * Remaining time in secs
  */
-float getTimeRemaining() {
+float iaGetTimeRemaining() {
+	iaLogDebug("iaGetTimeRemaining");
 	return 0;
 }
 
@@ -123,6 +157,8 @@ float getTimeRemaining() {
  * This must be the approximate (and optimal) time took by the robot
  *   to execute the action, move from X, Y, A, to targetX, targetY, targetA
  */
-float getTimeForMove(float X, float Y, float A, float targetX, float targetY, float targetZ) {
+float iaGetTimeForMove(float X, float Y, float A, float targetX, float targetY, float targetA) {
+	iaLogDebug("iaGetTimeForMove");
+	printf("%f %f %f --> %f %f %f", X, Y, A, targetX, targetY, targetA);
 	return 0;
 }

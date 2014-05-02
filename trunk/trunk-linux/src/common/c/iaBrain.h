@@ -19,7 +19,8 @@ struct iaDecision {
     float startPointY;
     float startPointA;
     int active;
-    iaActionListElement* actionsList;
+    //iaActionListElement* actionsList;
+    int idSpecificAction;
     float actionsTime;
     float risk;
     int reward;
@@ -32,11 +33,14 @@ void iaBrainAddFireDecisions(int color);
 void iaBrainAddFunnyActionDecisions(int color);
 void iaBrainAddSherriesDecisions(int color);
 void iaBrainAddStoreSherriesDecisions(int color);
+void iaBrainDisplayDecisionsPile();
 iaDecision* iaBrainAddDecision();
 
 // Main
-void iaBrainComputeNewDecision(iaActionListElement* currentActionsPile);
-float valueOfDecision(iaDecision* decision);
+iaActionListElement* iaBrainComputeNewDecision();
+void iaBrainDecisionFinished();
+float iaBrainValueOfDecision(iaDecision* decision);
+float iaBrainComputeMoveDecision(float originX, float originY, float originA, float targetX, float targetY, float targetA);
 
 
 #endif /* IABRAIN_H_ */

@@ -9,6 +9,7 @@
 #define IAACTIONMANAGER_H_
 
 #include <cstdlib>
+#include <stdlib.h>
 
 static int iaActionTypeWait = 0; // 1:time(ms), 2:-, 3:-
 static int iaActionTypeMoveToCoord = 1; // 1:X, 2:Y, 3:A
@@ -35,4 +36,5 @@ iaActionListElement* iaActionManagerPop(iaActionListElement* pile);
 iaActionListElement* iaActionManagerEmpty(iaActionListElement* pile);
 iaAction* iaActionManagerGenerateNewAction(int type, float param1, float param2, float param3);
 void iaActionManagerClearAction(iaAction* action);
+void iaActionManagerDisplayActionsPile(iaActionListElement* pile);
 #endif /* IAACTIONMANAGER_H_ */
