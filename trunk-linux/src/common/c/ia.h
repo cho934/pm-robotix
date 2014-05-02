@@ -11,18 +11,21 @@
 #include <cstdlib>
 #include <stdio.h>
 
-void initialize(int color);
-void executeNextAction();
-void takeNewDecision();
+void iaInitialize(int color);
+void iaExecuteNextAction();
+void iaTakeNewDecision();
 
-void executeMoveAction(float x, float y, float a);
-void executeWaitAction(float time);
-void executeSpecificAction(float actionType);
-float getPosX();
-float getPosY();
-float getPosA();
-void updateOponentsValues();
-float getTimeRemaining();
-float getTimeForMove(float X, float Y, float A, float targetX, float targetY, float targetZ);
+void iaExecuteMoveAction(float x, float y, float a);
+void iaExecuteWaitAction(float time);
+int iaExecuteSpecificAction(int actionType);
+float iaGetPosX();
+float iaGetPosY();
+float iaGetPosA();
+void iaUpdateOponentsValues();
+float iaGetTimeRemaining();
+float iaGetTimeForMove(float X, float Y, float A, float targetX, float targetY, float targetA);
+
+// Specific actions
+int iaLaunchSpear();
 
 #endif /* IA_H_ */

@@ -5,7 +5,7 @@
  *      Author: pmx
  */
 
-
+#include "iaLogger.h"
 
 void iaLog(char log[]) {
 
@@ -13,7 +13,8 @@ void iaLog(char log[]) {
 
 
 void iaLogDebug(char debug[]) {
-
+	printf(debug);
+	printf("\n");
 }
 
 

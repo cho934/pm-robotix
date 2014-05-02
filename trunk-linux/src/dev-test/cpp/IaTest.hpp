@@ -50,9 +50,9 @@ public:
 	virtual void suite();
 
 	/*!
-	 * \brief Test des getters de la classe \ref utils::PID.
+	 * \brief Test de la pile d'actions
 	 */
-	void testcho();
+	void testPileManagement();
 };
 }
 

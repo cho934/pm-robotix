@@ -8,12 +8,17 @@
 void test::IaTest::suite()
 {
 	logger().debug() << "IaTest : Go" << utils::end;
-	testcho();
+	testPileManagement();
 
 }
 
-void test::IaTest::testcho()
+void test::IaTest::testPileManagement()
 {
-
-	Imprimer(2);
+	iaInitialize(0);
+	iaExecuteNextAction();
+	iaExecuteNextAction();
+	iaExecuteNextAction();
+	iaExecuteNextAction();
+	iaExecuteNextAction();
+	iaExecuteNextAction();
 }
