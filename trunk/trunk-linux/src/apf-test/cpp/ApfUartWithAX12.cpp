@@ -32,9 +32,7 @@ void test::ApfUartWithAX12::run(int, char*[])
 		//int v2 = rand() % 100 + 1;     // v2 in the range 1 to 100 //2147483647
 		v2 = (rand() % 600) + 200;     // v2 in the range 200 to 800
 
-
-		dynamixel.setCommand(idAX12, AX_LED, 1, 1);
-
+		/*
 		//DxlSetAxLedOn(idAX12);
 		data = DxlGetAxLed(idAX12);
 		std::cout << "Led=" << data << std::endl;
@@ -44,16 +42,16 @@ void test::ApfUartWithAX12::run(int, char*[])
 
 		usleep(2000000);
 
-		DxlSetAxLedOff(idAX12);
+		//DxlSetAxLedOff(idAX12);
 		data = DxlGetAxLed(idAX12);
 		std::cout << "Led=" << data << std::endl;
-
+*/
 		volt = DxlGetVoltage(idAX12);
 		std::cout << "volt=" << volt << std::endl;
 
 		temp = DxlGetTemperature(idAX12);
 		std::cout << "temp=" << temp << std::endl;
-
+/*
 		data = DxlGetBaud(idAX12);
 		std::cout << "baud=" << reinterpret_cast<void*>(data) << std::endl;
 
@@ -72,7 +70,7 @@ void test::ApfUartWithAX12::run(int, char*[])
 		pos = DxlGetPos(idAX12);
 		std::cout << "Last Position=" << pos << std::endl;
 
-		usleep(2000000);
+		usleep(2000000);*/
 		std::cout << "------" << std::endl;
 		std::cout << std::endl;
 

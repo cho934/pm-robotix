@@ -32,7 +32,9 @@ using namespace pmx;
 int main(int argc, char** argv) {
     const utils::Logger& logger = utils::LoggerFactory::logger("main");
 
-    Robot robot;
+    pmx::Robot &robot = pmx::Robot::instance();
+
+    pmx::LedIndicator::instance().reset();
 
     int mode = 0;
     //prise en compte des arguments
@@ -42,15 +44,15 @@ int main(int argc, char** argv) {
     if (argc > 1) {
         mode = atoi(argv[1]);
         if (mode == 1) {
-            robot.runMode(pmx::ROBOTHOMOLOGATION);
+        	robot.runMode(pmx::ROBOTHOMOLOGATION);
             logger.info() << "MODE HOMOLOGATION" << utils::end;
         }else if (mode == 0) {
-            robot.runMode(pmx::ROBOTMATCHES);
+        	robot.runMode(pmx::ROBOTMATCHES);
             logger.info() << "MODE MATCHES" << utils::end;
         }
 
     }else {
-        robot.runMode(pmx::ROBOTHOMOLOGATION);
+    	robot.runMode(pmx::ROBOTHOMOLOGATION);
         logger.info() << "Default:MODE HOMOLOGATION" << utils::end;
     }
 

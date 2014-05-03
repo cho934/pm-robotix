@@ -22,7 +22,7 @@
 							<option id="cdt.managedbuild.option.gnu.cross.prefix.724154962" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix"/>
 							<option id="cdt.managedbuild.option.gnu.cross.path.123754800" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path"/>
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.888332146" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
-							<builder id="cdt.managedbuild.builder.gnu.cross.2147291633" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" superClass="cdt.managedbuild.builder.gnu.cross"/>
+							<builder arguments="" command="make" id="cdt.managedbuild.builder.gnu.cross.2147291633" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" superClass="cdt.managedbuild.builder.gnu.cross"/>
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.1566446966" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
 								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.option.optimization.level.1563623468" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.debugging.level.633132998" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
@@ -30,7 +30,6 @@
 									<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/target/packages/"/>
 									<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/buildroot/build_armv4t/staging_dir/usr/include"/>
 									<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/buildroot/build_armv4t/staging_dir/usr/lib/gcc/arm-linux-uclibcgnueabi/4.2.1/include"/>
-									<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/target/packages"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1246466422" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
@@ -62,6 +61,54 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<folderInfo id="cdt.managedbuild.config.gnu.cross.exe.debug.545711704.116638196.970354519" name="/" resourcePath="src">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.cross.base.1367090702" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.base" unusedChildren="">
+							<option id="cdt.managedbuild.option.gnu.cross.prefix.724154962.1189223165" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix.724154962"/>
+							<option id="cdt.managedbuild.option.gnu.cross.path.123754800.1436905952" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path.123754800"/>
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.2068467902" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler.1566446966">
+								<option id="gnu.c.compiler.option.include.paths.1939902997" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/target/packages/"/>
+									<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/buildroot/build_armv4t/staging_dir/usr/include"/>
+									<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/buildroot/build_armv4t/staging_dir/usr/lib/gcc/arm-linux-uclibcgnueabi/4.2.1/include"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ARM/src/common/c/mcontrol}&quot;"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1789985059" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.2092535122" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler.994393329">
+								<option id="gnu.cpp.compiler.option.include.paths.225807430" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/target/packages"/>
+									<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/buildroot/build_armv4t/staging_dir/usr/include"/>
+									<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/buildroot/build_armv4t/staging_dir/usr/lib/gcc/arm-linux-uclibcgnueabi/4.2.1/include"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ARM/src/common/c/mcontrol}&quot;"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1809589733" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.795475598" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker.1729303204"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.1952805170" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker.1056276498"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.archiver.1769841466" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver.1430776020"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.assembler.439262637" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler.586394412">
+								<option id="gnu.both.asm.option.include.paths.1439906519" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/buildroot/build_armv4t/staging_dir/usr/include"/>
+									<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/buildroot/build_armv4t/staging_dir/usr/lib/gcc/arm-linux-uclibcgnueabi/4.2.1/include"/>
+									<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/target/packages"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ARM/src/common/c/mcontrol}&quot;"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1807816516" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<fileInfo id="cdt.managedbuild.config.gnu.cross.exe.debug.545711704.116638196.12922445" name="ccbase.c" rcbsApplicability="disable" resourcePath="src/common/c/ccbase.c" toolsToInvoke="cdt.managedbuild.tool.gnu.cross.c.compiler.1566446966.746011718">
+						<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.1566446966.746011718" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler.1566446966">
+							<option id="gnu.c.compiler.option.include.paths.1706370865" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+								<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/target/packages/"/>
+								<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/buildroot/build_armv4t/staging_dir/usr/include"/>
+								<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/buildroot/build_armv4t/staging_dir/usr/lib/gcc/arm-linux-uclibcgnueabi/4.2.1/include"/>
+								<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ARM/src/common/c/mcontrol}&quot;"/>
+							</option>
+							<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1572480026" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+						</tool>
+					</fileInfo>
 					<sourceEntries>
 						<entry excluding="src/todo|sh|todo_" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
@@ -91,7 +138,7 @@
 							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.base.7878632" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.base">
 								<option id="gnu.cpp.compiler.option.optimization.level.1078362539" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.debugging.level.540160079" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
-								<option id="gnu.cpp.compiler.option.include.paths.1709570559" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath"/>
+								<option id="gnu.cpp.compiler.option.include.paths.1709570559" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths"/>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1284859035" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="SIMULATED"/>
 								</option>
@@ -100,7 +147,7 @@
 							<tool id="cdt.managedbuild.tool.gnu.c.compiler.base.1589632374" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.base">
 								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.option.optimization.level.1145521936" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.debugging.level.490436491" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
-								<option id="gnu.c.compiler.option.include.paths.2123617374" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath"/>
+								<option id="gnu.c.compiler.option.include.paths.2123617374" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.670486961" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.linker.base.1285138070" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.base"/>
@@ -118,7 +165,7 @@
 								<outputType id="cdt.managedbuild.tool.gnu.cpp.linker.output.1464342862" outputPrefix="x86" superClass="cdt.managedbuild.tool.gnu.cpp.linker.output"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.assembler.base.1446800389" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.base">
-								<option id="gnu.both.asm.option.include.paths.63686590" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath"/>
+								<option id="gnu.both.asm.option.include.paths.63686590" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths"/>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.2002306375" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
 						</toolChain>
@@ -231,7 +278,7 @@
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.877047443" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
 							<builder buildPath="${workspace_loc:/ARM}/APF-TEST2" id="cdt.managedbuild.builder.gnu.cross.1266553138" keepEnvironmentInBuildfile="false" name="Gnu Make Builder" superClass="cdt.managedbuild.builder.gnu.cross"/>
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.121747902" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
-								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.option.optimization.level.823290844" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" valueType="enumerated"/>
+								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.option.optimization.level.823290844" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" value="gnu.c.optimization.level.more" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.debugging.level.679096174" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.misc.other.123264710" name="Other flags" superClass="gnu.c.compiler.option.misc.other" useByScannerDiscovery="false" value="-c -fmessage-length=0" valueType="string"/>
 								<option id="gnu.c.compiler.option.include.paths.552317901" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
@@ -260,6 +307,7 @@
 									<listOptionValue builtIn="false" value="pthread"/>
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="as_devices"/>
 								</option>
+								<option id="gnu.cpp.link.option.strip.1121227539" name="Omit all symbol information (-s)" superClass="gnu.cpp.link.option.strip" value="true" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1599112698" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -307,10 +355,10 @@
 		<configuration configurationName="Armadeus">
 			<resource resourceType="PROJECT" workspacePath="/ARM"/>
 		</configuration>
-		<configuration configurationName="Dev Test x86">
+		<configuration configurationName="APF-TEST2">
 			<resource resourceType="PROJECT" workspacePath="/ARM"/>
 		</configuration>
-		<configuration configurationName="APF-TEST2">
+		<configuration configurationName="Dev Test x86">
 			<resource resourceType="PROJECT" workspacePath="/ARM"/>
 		</configuration>
 		<configuration configurationName="Debug">

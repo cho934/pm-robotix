@@ -31,9 +31,10 @@ pmx::GpioBoard::GpioBoard(pmx::Robot & robot)
 void pmx::GpioBoard::setup()
 {
 	write_i2c(CONFIG_P0, 0x00); //defines all pins on Port0 are outputs
-	write_i2c(CONFIG_P1, 0x00); //defines all pins on Port1 are outputs
 	write_i2c(OUT_P0, 0x00); //clears all relays
-	write_i2c(OUT_P1, 0x00); //clears all relays
+
+	write_i2c(CONFIG_P1, 0xFF); //defines all pins on Port1 are inputs
+	//write_i2c(IN_P1, 0x00); //clears all relays
 	usleep(PAUSE);
 }
 
@@ -59,39 +60,15 @@ void pmx::GpioBoard::setOffP0(int pin) // 0 à 7
 	setValueP0(OUT_P0, pin, 0);
 }
 
-int pmx::GpioBoard::getValue()
+uchar pmx::GpioBoard::getValueP1(int pin)
 {
-	return 0;
+	uchar in = read_i2c(IN_P1);
+	logger().debug() << "getValueP1 in1=" << reinterpret_cast<void*>(in) << utils::end;
+	uchar intmp = (in << pin) & 0x01;
+	logger().debug() << "getValueP1 in2=" << reinterpret_cast<void*>(intmp) << utils::end;
+	return intmp;
 }
 
-
-void pmx::GpioBoard::write_i2c(uchar command, uchar value)
-{
-	try
-	{
-		utils::HostI2cBus::instance().writeRegValue(GPIOBOARD_PCA9555, command, value);
-
-	} catch (utils::Exception * e)
-	{
-		logger().error() << "Exception GroveColorSensor::write_i2c: " << e->what() << utils::end;
-	}
-}
-
-uchar pmx::GpioBoard::read_i2c(uchar command)
-{
-	uchar receivedVal = 0;
-	try
-	{
-		utils::HostI2cBus::instance().readRegValue(GPIOBOARD_PCA9555, command, &receivedVal);
-
-	} catch (utils::Exception * e)
-	{
-		logger().error() << "Exception GroveColorSensor::read_i2c: " << e->what() << utils::end;
-	}
-	return receivedVal;
-}
-
-/*
 void pmx::GpioBoard::write_i2c(uchar command, uchar value)
 {
 	try
@@ -104,18 +81,18 @@ void pmx::GpioBoard::write_i2c(uchar command, uchar value)
 	}
 }
 
-uint8_t pmx::GpioBoard::read_i2c(uchar command)
+uchar pmx::GpioBoard::read_i2c(uchar command)
 {
+	uchar receivedVal = 0;
 	try
 	{
-		uint8_t receivedVal = 0;
 		utils::HostI2cBus::instance().readRegValue(GPIOBOARD_PCA9555, command, &receivedVal);
-		return receivedVal;
 
 	} catch (utils::Exception * e)
 	{
 		logger().error() << "Exception GpioBoard::read_i2c: " << e->what() << utils::end;
 	}
-	return 0;
+	return receivedVal;
 }
-*/
+
+

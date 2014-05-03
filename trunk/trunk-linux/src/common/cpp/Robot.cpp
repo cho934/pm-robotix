@@ -19,7 +19,7 @@ pmx::Robot::Robot()
 		  md25_(*this),
 		  encoderLeft_(*this,'B', 17),
 		  encoderRight_(*this,'D', 31),
-		  servoTest_(*this, 0),
+		  //servoTest_(*this, 0),
 		  servoDxlTest_(*this),
 		  irSensorsGroup_(*this),
 		  arduinoBoard_(*this),
@@ -29,9 +29,10 @@ pmx::Robot::Robot()
 	//Led indicator initialisation
 	pmx::LedIndicator::instance().reset();
 
+
 	//serial DXL
-	long baud = pmx::ServoMotorDxl::instance().dxlGetBaud(7);
-	logger().debug() << "baud dxl n°7= " << baud << utils::end;
+	//long baud = pmx::ServoMotorDxl::instance().dxlGetBaud(7);
+	//logger().debug() << "baud dxl n°7= " << baud << utils::end;
 
 
 }

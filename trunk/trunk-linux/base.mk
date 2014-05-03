@@ -12,13 +12,13 @@ XENO=/media/Armadeus/armadeus-3.4/buildroot/project_build_armv4t/apf9328/root/us
 ifeq ($(wildcard $(XENO)), )
     CXX = g++
     INCLUDE = /usr
-    CXXFLAGS_EXTRA = -DSIMU -I$(DEVSIMU)/$(CPPSOURCE) -I$(DEVSIMU)/$(CSOURCE)
-    LDFLAGS_EXTRA = -lrt ../../build/dev-simu/*.o
+    CXXFLAGS_EXTRA = -O2 -DSIMU -I$(DEVSIMU)/$(CPPSOURCE) -I$(DEVSIMU)/$(CSOURCE)
+    LDFLAGS_EXTRA = -s -lrt ../../build/dev-simu/*.o
 else
     CXX = arm-linux-uclibcgnueabi-g++
     INCLUDE = $(XENO)
-    CXXFLAGS_EXTRA = -ggdb -I$(INCLUDE)/include/native -I$(INCLUDE)/include/rtdm
-    LDFLAGS_EXTRA = -ggdb -lnative -lrtdm -las_devices -Xlinker $(INCLUDE)/lib/libnative.a $(INCLUDE)/lib/librtdm.a
+    CXXFLAGS_EXTRA =  -O2 -I$(INCLUDE)/include/native -I$(INCLUDE)/include/rtdm
+    LDFLAGS_EXTRA =  -s -lnative -lrtdm -las_devices -Xlinker $(INCLUDE)/lib/libnative.a $(INCLUDE)/lib/librtdm.a
 endif
 
 # Folder for intermediate files
@@ -45,7 +45,7 @@ CFILES =  $(notdir $(wildcard $(CSOURCE)/*.c))
 OBJ = $(addprefix $(BUILD)/,$(CPPFILES:.cpp=.o)) $(addprefix $(BUILD)/,$(CFILES:.c=.o))
 
 # Default compiler variables
-CXXFLAGS = -W -Wall -g -ggdb -I$(COMMON)/$(CPPSOURCE) -I$(INCLUDE)/include $(CXXFLAGS_EXTRA)
+CXXFLAGS = -W -Wall -I$(COMMON)/$(CPPSOURCE) -I$(COMMON)/$(CSOURCE) -I$(INCLUDE)/include $(CXXFLAGS_EXTRA)
 
 LDFLAGS = -lpthread -L$(INCLUDE)/lib -Xlinker -rpath $(INCLUDE)/lib $(LDFLAGS_EXTRA)
 
@@ -58,7 +58,7 @@ all : $(TARGET) $(OBJ)
 ifdef TARGET
 $(TARGET): common dev-simu resource $(OBJ)
 	@$(CXX) -o $@ $(OBJ) ../../build/common/*.o $(LDFLAGS)
-
+    
 common: dev-simu
 	@(cd $(COMMON) && $(MAKE))
 
@@ -88,7 +88,7 @@ $(BUILD)/%.d: $(CPPSOURCE)/%.cpp
 	@mkdir -p $(BUILD)
 	@$(CXX) -MM -MT '$(@:.d=.o) $@' -o $@ $< -I$(COMMON)/$(CPPSOURCE) -I$(COMMON)/$(CSOURCE)
 
-$(BUILD)/%.d: $(CPPSOURCE)/%.c
+$(BUILD)/%.d: $(CSOURCE)/%.c
 	@mkdir -p $(BUILD)
 	@$(CXX) -MM -MT '$(@:.d=.o) $@' -o $@ $< -I$(COMMON)/$(CPPSOURCE) -I$(COMMON)/$(CSOURCE)
 

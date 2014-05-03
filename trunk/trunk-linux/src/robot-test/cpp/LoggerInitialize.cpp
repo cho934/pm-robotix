@@ -32,8 +32,9 @@ void utils::LoggerFactory::initialize()
 	//add(utils::Level::DEBUG, "pmx::ExtEncoder", "console");
 	//add(utils::Level::DEBUG, "pmx::IrSensor", "console");
 	//add(utils::Level::DEBUG, "pmx::IrSensorsGroup", "console");
-	//add(utils::Level::DEBUG, "pmx::ServoMotorDxlObject", "console");
-	//add(utils::Level::DEBUG, "pmx::ServoMotorDxl", "console");
+	add(utils::Level::DEBUG, "pmx::ServoMotorDxlObject", "console");
+	add(utils::Level::DEBUG, "pmx::ServoMotorDxl", "console");
+	add(utils::Level::DEBUG, "pmx::GpioBoard", "console");
 
 
 }

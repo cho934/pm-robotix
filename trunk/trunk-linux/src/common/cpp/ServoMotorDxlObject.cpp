@@ -12,14 +12,42 @@ pmx::ServoMotorDxlObject::ServoMotorDxlObject(pmx::Robot & robot)
 	logger().debug() << "ServoMotorDxlObject::ServoMotorDxlObject()" << utils::end;
 
 	//initialise 1 seul servo pour cet objet.
-	long temp = pmx::ServoMotorDxl::instance().dxlGetTemperature(id_);
-	logger().info() << "Temperature dxl n°" << id_ << " =" << temp << utils::end;
+	//long temp = pmx::ServoMotorDxl::instance().dxlGetTemperature(id_);
+	//logger().info() << "Temperature dxl n°" << id_ << " =" << temp << utils::end;
 
+}
+
+void pmx::ServoMotorDxlObject::displayInfos()
+{
+	logger().debug() << "displayInfos" << utils::end;
+
+	long int data = 0;
+
+	pmx::ServoMotorDxl::instance().dxlSetAxLedOn(id_);
+
+
+	data = pmx::ServoMotorDxl::instance().dxlGetBaud(id_);
+	logger().debug() << "dxlGetBaud = " << data << utils::end;
+	data = pmx::ServoMotorDxl::instance().dxlGetTemperature(id_);
+	logger().debug() << "dxlGetTemp = " << data << utils::end;
+	data = pmx::ServoMotorDxl::instance().dxlGetAxLed(id_);
+	logger().debug() << "dxlGetAxLed = " << data << utils::end;
+	data = pmx::ServoMotorDxl::instance().dxlGetVoltage(id_);
+	logger().debug() << "dxlGetVolta = " << data << utils::end;
+	data = pmx::ServoMotorDxl::instance().dxlGetPos(id_);
+	logger().debug() << "dxlGetPos = " << data << utils::end;
+
+
+
+	pmx::ServoMotorDxl::instance().dxlSetAxLedOff(id_);
+
+	usleep(100000);
 }
 
 void pmx::ServoMotorDxlObject::turnMin()
 {
 	logger().debug() << "turn min" << utils::end;
+
 	int finished = 0;
 	long moving = 0;
 	pmx::ServoMotorDxl::instance().dxlSetPos(id_, 100);

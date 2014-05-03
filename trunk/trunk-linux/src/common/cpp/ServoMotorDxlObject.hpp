@@ -139,6 +139,8 @@ public:
 
 	void turnMax();
 
+	void displayInfos();
+
 };
 
 }

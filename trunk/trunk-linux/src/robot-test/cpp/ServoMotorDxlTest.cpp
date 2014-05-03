@@ -34,19 +34,24 @@ void robottest::ServoMotorDxlTest::run(int argc, char *argv[])
 	logger().info() << "------------------------------------" << utils::end;
 	logger().info() << "ServoMotorDxlTest - AX12" << utils::end;
 
-	pmx::Robot robot;
+	pmx::Robot &robot = pmx::Robot::instance();
 
 	for (int i = 0; i < nb; i++)
 	{
+		//logger().info() << "displayInfos" << utils::end;
+		robot.servoDxlTest().displayInfos();
 
+		//usleep(timeSpan * 1000);
+/*
 		logger().info() << "turnMin" << utils::end;
 		robot.servoDxlTest().turnMin();
-		usleep(timeSpan*1000);
+
+		usleep(timeSpan * 1000);
 
 		logger().info() << "turnMax" << utils::end;
 		robot.servoDxlTest().turnMax();
-		usleep(timeSpan*1000);
-
+		usleep(timeSpan * 1000);
+*/
 	}
 
 	robot.stop();
