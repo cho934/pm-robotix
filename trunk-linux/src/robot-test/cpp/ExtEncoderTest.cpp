@@ -45,23 +45,37 @@ void robottest::ExtEncoderTest::run(int argc, char *argv[])
 		long long right = 0;
 		long long left = 0;
 
-		pmx::Robot robot;
+		pmx::Robot &robot = pmx::Robot::instance();
 
 		robot.encoderLeft().clearCounter();
 		robot.encoderRight().clearCounter();
 
 		for (int i = 0; i < nb; i++)
 		{
-			usleep(timeSpan*1000);
+			usleep(timeSpan * 1000);
 
 			counterL = robot.encoderLeft().readCounter();
 			counterR = robot.encoderRight().readCounter();
+			if (counterL > 4244897280 / 2)
+			{
+				left = -(((long long) 4244897280) - counterL);
+			}
+			else
+			{
+				left = counterL;
+			}
+			if (counterR > 4244897280 / 2)
+			{
+				right = -(((long long) 4244897280) - counterR);
+			}
+			else
+			{
+				right = counterR;
+			}
+			right = -right;
 
-			right = right + (counterR - counterRold);
-			left = left + (counterL - counterLold);
-
-			std::cout << "left = " << left << " ------ right = " << right << "    left = " << counterL
-					<< " ------ right = " << counterR
+			std::cout << "left = " << left << " ------ right = " << right << "    counterL = " << counterL
+					<< " ------ counterR = " << counterR
 
 					//<< "----- statusL  = "
 					//<< reinterpret_cast<void*>(statusL) << "------statusR  = " << reinterpret_cast<void*>(statusR)
