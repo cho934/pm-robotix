@@ -13,6 +13,9 @@ int rPower;
 #include "../robot.h"
 #include "lms2012.h"
 #include "d_lcd.h"
+#include "../mcontrol/motion.h"
+
+
 // Sensors
 #define SENSOR_PORT_1 0
 #define SENSOR_PORT_2 1
@@ -251,6 +254,9 @@ void robot_init() {
 	//Initialize and clear screen
 	dLcdInit(my_lcd.Lcd);
 	LCDClear(my_lcd.Lcd);
+	robot_startMotors();
+
+	//sleep(3);
 }
 void robot_dispose() {
 	int result;
@@ -495,5 +501,8 @@ void robot_setLedStatus(int status) {
 	led_command[0] = '0' + status;
 	write(ui_file, led_command, 2);
 }
-
+void robot_initPID() {
+	motion_configureAlphaPID(0.0005f, 0.00001f, 0.000000f);
+	motion_configureDeltaPID(0.00080f, 0.0f, 0.0f);
+}
 #endif

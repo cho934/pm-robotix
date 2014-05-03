@@ -28,6 +28,7 @@
 #define _ENCODER_H_
 
 #include "types.h"
+extern int useExternalEncoders;
 
 //! Initialisation
 void encoder_Init(void);

@@ -8,7 +8,7 @@
 #include <sys/ioctl.h>
 #include <sys/time.h>
 #include "../robot.h"
-
+#include "../mcontrol/motion.h"
 /**
  * SIMULATION
  **/
@@ -106,4 +106,10 @@ int robot_isButtonPressed(int button) {
 void robot_setLedStatus(int status) {
 	printf("LED STATUS : %d\n",status);
 }
+void robot_initPID() {
+	motion_configureAlphaPID(0.0002400f, 0.001f, 0.000000f);
+	//motion_configureDeltaPID(0.0002950f, 0.0f, 0.000001f);
+	motion_configureDeltaPID(0.0003000f, 0.0001f, 0.000000f);
+}
+
 #endif
