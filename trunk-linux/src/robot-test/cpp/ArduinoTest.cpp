@@ -35,7 +35,7 @@ void robottest::ArduinoTest::run(int argc, char *argv[])
 	logger().info() << "-----------------------------------------------" << utils::end;
 	logger().info() << "ArduinoTest - Communicate with the arduino board" << utils::end;
 
-	pmx::Robot robot;
+	pmx::Robot &robot = pmx::Robot::instance();
 
 	for (int i = 0; i < nb; i++)
 	{

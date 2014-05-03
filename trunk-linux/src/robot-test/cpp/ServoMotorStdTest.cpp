@@ -11,23 +11,17 @@ void robottest::ServoMotorStdTest::run(int, char *[])
 	logger().info() << "--------------------------------------------" << utils::end;
 	logger().info() << "ServoMotorStdTest - Test servo" << utils::end;
 
-	try
-	{
-		pmx::Robot robot;
+	pmx::Robot &robot = pmx::Robot::instance();
 
-		//TODO Problem with extEncoder and SPI !!!
+	//TODO Problem with extEncoder and SPI !!!
 
-		robot.servoTest().turnMin();
-		sleep(1);
-		robot.servoTest().turnMax();
-		sleep(1);
+	//robot.servoTest().turnMin();
+	sleep(1);
+	//robot.servoTest().turnMax();
+	sleep(1);
 
-		robot.stop();
+	robot.stop();
 
-	} catch (utils::Exception * e)
-	{
-		logger().error() << "Exception : " << e->what() << utils::end;
-	}
 	logger().info() << "End of RobotTest." << utils::end;
 }
 

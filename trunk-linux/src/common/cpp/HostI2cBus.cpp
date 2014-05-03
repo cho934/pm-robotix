@@ -98,7 +98,7 @@ int utils::HostI2cBus::readRegValue(uchar slave_addr, uchar reg, uchar* data)
 			throw new I2cException("Error HostI2cBus::readRegValue, i2c error !");
 		}
 
-		//TODO usleep(1000); //fréq i2c à 100kHz : attente de l'application complète de la trame
+		usleep(1000); //fréq i2c à 100kHz : attente de l'application complète de la trame
 
 		unlock();
 		return ret;
@@ -123,7 +123,7 @@ int utils::HostI2cBus::writeRegValue(uchar slave_addr, uchar reg, uchar value)
 		throw new I2cException("Error HostI2cBus::writeRegValue, i2c error !");
 	}
 
-	//TODO usleep(1000); //fréq i2c à 100kHz : attente de l'application complète de la trame
+	 usleep(1000); //fréq i2c à 100kHz : attente de l'application complète de la trame
 
 	unlock();
 	return result;

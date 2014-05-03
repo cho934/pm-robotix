@@ -33,7 +33,7 @@ pmx::ServoMotorDxl::ServoMotorDxl()
 	{
 		logger().error() << "Exception on serial: " << e->what() << utils::end;
 	}
-	setRX();
+	setTX();
 
 	usleep(2000);
 }
@@ -91,7 +91,8 @@ void pmx::ServoMotorDxl::setCommand(int id, int regstart, int data, int nb2Write
 	{
 		err = serial_.sendArray(buffer, n);
 		//Wait the command to be sent
-		while (chrono.getElapsedTimeInMicroSec() < ((1000000 / 115200 * 12 * n))) //waitTimeForResponseUs
+		//while (chrono.getElapsedTimeInMicroSec() < ((1000000 / 115200 * 12 * n))) //waitTimeForResponseUs
+		while (chrono.getElapsedTimeInMicroSec() < ((1000000  * 12 * n) / 115200)) //waitTimeForResponseUs
 		{
 			//pas de usleep : cela va décaler le setTX de 200us
 		}
@@ -99,7 +100,7 @@ void pmx::ServoMotorDxl::setCommand(int id, int regstart, int data, int nb2Write
 		err = serial_.getArray(bufferIn, 6); //status=6
 	} catch (utils::Exception * e)
 	{
-		setRX();
+		//setRX();
 		logBf(buffer, n);
 		logger().error() << "Exception on setCommand, data not send : " << e->what() << utils::end;
 	}
@@ -149,8 +150,8 @@ void pmx::ServoMotorDxl::setCommand(int id, int regstart, int data, int nb2Write
 		}
 	}
 
-	usleep(4000);
-
+	//usleep(4000);
+	setTX();
 	unlock();
 }
 
@@ -163,18 +164,21 @@ long pmx::ServoMotorDxl::getCommand(int id, int regstart, int readLength)
 	cleanBuffers();
 	int n = createReadDataBuffer(id, regstart, readLength);
 	chrono.start();
-	setTX(); //halfduplex transmit //No log until setRX !!
+	//logger().error() << "avec="<< ((1000000* 12 * n) / 115200 ) -60 << utils::end;
+	//logger().error() << "sans="<< ((1000000 / 115200 * 12 * n) + 20) << utils::end;
+
+	//setTX(); //halfduplex transmit //No log until setRX !!
 	try
 	{
 		err = serial_.sendArray(buffer, n);
 		//Wait the command to be sent
-		while (chrono.getElapsedTimeInMicroSec() < ((1000000 / 115200 * 12 * n) + 20)) //waitTimeForResponseUs
+		while (chrono.getElapsedTimeInMicroSec() < ((1000000 * 12 * n) / 115200)) //waitTimeForResponseUs
 		{
 		} //pas de usleep : cela va décaler le setTX de 200us
 		setRX(); //halfduplex receive
 	} catch (utils::Exception * e)
 	{
-		setRX(); //halfduplex receive
+		//setRX(); //halfduplex receive
 		logBf(buffer, n);
 		logger().error() << "Exception on setCommand, data not send : " << e->what() << utils::end;
 		unlock();
@@ -267,10 +271,13 @@ long pmx::ServoMotorDxl::getCommand(int id, int regstart, int readLength)
 		logBf(buffer, n); //Log
 		logBf(bufferIn, 6); //Log
 		logger().error() << utils::end;
+		//	exit(0);
 	}
 
-	usleep(4000);
+	//usleep(4000); //minimum time to wait before new transaction
+	setTX();
 	unlock();
+
 	return receiveddata;
 }
 

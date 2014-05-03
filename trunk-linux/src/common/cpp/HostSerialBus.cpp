@@ -10,6 +10,7 @@
 #include <sys/ioctl.h>
 #include <termios.h>
 #include <unistd.h>
+#include <iostream>
 
 int utils::HostSerialBus::connect()
 {
@@ -105,29 +106,45 @@ void utils::HostSerialBus::disconnect(void)
 
 int utils::HostSerialBus::sendArray(unsigned char *buffer, int len)
 {
+	tcdrain(fileDescriptor_);
 	int err = write(fileDescriptor_, buffer, len);
+
 	if (err < 0 || err != len)
 	{
 		//std::cout << "ERROR setInfo serial_.sendArray()" << err << std::endl;
 		throw new HostSerialException("ERROR setInfo serial_.sendArray()");
 	}
+	//tcflush(fileDescriptor_, TCOFLUSH);
+	//tcflush(fileDescriptor_, TCIFLUSH);
 	return err;
 }
 
 int utils::HostSerialBus::getArray(unsigned char *buffer, int len)
 {
 	int n = 0;
+	int readOk = false;
 	for (int i = 0; i < 1000; i++) //tempo to wait data in the buffer
 	{
 		n = bytesToRead();
 		if (n >= len)
+		{
+			readOk=true;
+			if(n>len){
+				std::cout << "utils::HostSerialBus::getArray warning by to read  " << n << " instead of  "<<len <<std::endl;
+			}
 			break;
+		}
 		else
 		{
-			usleep(10);
+			usleep(50);
 		}
 	}
+	if (!readOk)
+	{
+		std::cout << "utils::HostSerialBus::getArray giving up " << n << " instead of  " << len << std::endl;
+	}
 	n = read(fileDescriptor_, buffer, len);
+
 	return n;
 }
 

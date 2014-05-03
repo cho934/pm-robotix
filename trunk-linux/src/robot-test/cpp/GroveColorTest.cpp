@@ -34,7 +34,7 @@ void robottest::GroveColorTest::run(int argc, char *argv[])
 	logger().info() << "----------------------------------------------" << utils::end;
 	logger().info() << "GroveColorTest - Retrieve colors" << utils::end;
 
-	pmx::Robot robot;
+	pmx::Robot &robot = pmx::Robot::instance();
 
 	for (int i = 0; i < nb; i++)
 	{

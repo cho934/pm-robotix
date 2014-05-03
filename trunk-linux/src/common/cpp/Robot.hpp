@@ -16,7 +16,7 @@
 #include "LedBar.hpp"
 #include "Md25.hpp"
 #include "ExtEncoder.hpp"
-#include "ServoMotorStdObject.hpp"
+//#include "ServoMotorStdObject.hpp"
 #include "IrSensorsGroup.hpp"
 #include "ServoMotorDxlObject.hpp"
 #include "ArduinoBoard.hpp"
@@ -41,6 +41,14 @@ enum RobotMode
  */
 class Robot: public IInitialized
 {
+public:
+
+	static Robot & instance()
+	{
+		static Robot instance;
+		return instance;
+	}
+
 private:
 
 	/*!
@@ -51,6 +59,7 @@ private:
 		static const utils::Logger & instance = utils::LoggerFactory::logger("pmx::Robot");
 		return instance;
 	}
+
 	/*!
 	 * \brief Assure la gestion des actions du robot.
 	 */
@@ -104,7 +113,7 @@ private:
 	/*!
 	 * \brief Servomotor standard de test.
 	 */
-	pmx::ServoMotorStdObject servoTest_;
+	//pmx::ServoMotorStdObject servoTest_;
 
 	/*!
 	 * \brief Servomotor ax12 de test.
@@ -126,7 +135,6 @@ private:
 	 */
 	pmx::GpioBoard gpioBoard_;
 
-public:
 
 	/*!
 	 * \brief Constructeur de la classe.
@@ -140,6 +148,7 @@ public:
 	{
 	}
 
+public:
 	/*!
 	 * \brief Cette méthode retourne l'objet de manipulation de la base
 	 * roulante du robot.
@@ -224,10 +233,10 @@ public:
 	 * \brief Cette methode retourne le servomotor test.
 	 * \return servoTest_.
 	 */
-	inline pmx::ServoMotorStdObject & servoTest()
-	{
-		return servoTest_;
-	}
+//	inline pmx::ServoMotorStdObject & servoTest()
+//	{
+//		return servoTest_;
+//	}
 
 	/*!
 	 * \brief Cette methode retourne le servomotor test.
