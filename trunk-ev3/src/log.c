@@ -11,13 +11,17 @@
 
 static int lCount;
 static char **l;
-static FILE *logFile;
+static FILE *logFile = NULL;
 static int log_closed = 0;
 
 void initLog(int leftTicksPerM, int rightTicksPerM, float encoderDist) {
 	lCount = 0;
-	l = (char **) calloc(1000, sizeof(char*));
+	l = (char **) calloc(1000*1000, sizeof(char*));
+#ifdef SIMULATED
+	logFile = fopen("log.txt", "w");
+#else
 	logFile = fopen("/mnt/card/log.txt", "w");
+#endif
 	if (logFile == NULL) {
 		printf("Unable to create log file\n");
 	}
@@ -70,7 +74,7 @@ void log_status(long timeInMillis, long lEndcoder, long rEncoder, int lPower,
 			x, y, theta);
 	l[lCount] = str;
 	lCount++;
-	if (lCount >= 100) {
-		flushLog();
+	if (lCount >= 1000) {
+//		flushLog();
 	}
 }

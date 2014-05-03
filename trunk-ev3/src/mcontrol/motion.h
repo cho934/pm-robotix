@@ -1,21 +1,21 @@
 /*******************************************************************************
-* ClubElek Robot motion control software for Eurobot 2007
-* Copyright (C) 2006-2007 ClubElek
-*
-* This program is free software; you can redistribute it and/or
-* modify it under the terms of the GNU General Public License
-* as published by the Free Software Foundation; either version 2
-* of the License, or (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*******************************************************************************/
+ * ClubElek Robot motion control software for Eurobot 2007
+ * Copyright (C) 2006-2007 ClubElek
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *******************************************************************************/
 //! \file motion.h
 //! \author Julien Rouviere <gmail address : julien.rouviere@...>
 //! \author ClubElek <http://clubelek.insa-lyon.fr>
@@ -30,20 +30,22 @@
 #include "types.h"
 #include "robot_trajectory.h"
 
-typedef enum
-{
+typedef enum {
 	TRAJECTORY_RUNNING,
-	
+
 	ASSISTED_HANDLING,
-	
-	FREE_MOTION,
-	DISABLE_PID,
+
+	FREE_MOTION, DISABLE_PID,
 } MOTION_STATE;
 
 extern MOTION_STATE RobotMotionState;
 void checkRobotCommand(RobotCommand *cmd);
 //! Load motion control module
 void motion_Init(void);
+void motion_configureAlphaPID(float p, float i, float d);
+void motion_configureDeltaPID(float p, float i, float d);
+void motion_configureLeftPID(float p, float i, float d);
+void motion_configureRightPID(float p, float i, float d);
 
 //! Stop motion control for a moment
 void motion_FreeMotion(void);

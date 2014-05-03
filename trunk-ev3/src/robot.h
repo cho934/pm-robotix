@@ -40,5 +40,7 @@ void robot_displayText(int line, char* text);
 void robot_setLedStatus(int status);
 
 int robot_isButtonPressed(int button);
+void robot_initPID();
+
 
 #endif

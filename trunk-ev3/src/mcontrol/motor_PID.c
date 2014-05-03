@@ -72,7 +72,7 @@ void signalErrorOverflow(PID_SYSTEM system) {
 	}
 }
 
-int SampleTime = 30; //30 millisec
+int SampleTime = 10; //30 millisec
 double outMin = -100.0f;
 double outMax = 100.0f;
 

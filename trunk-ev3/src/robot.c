@@ -7,6 +7,7 @@
 
 #include <sys/time.h>
 #include "robot.h"
+#include "mcontrol/motion.h"
 
 int running = 1;
 
@@ -32,3 +33,4 @@ int robot_isRunning() {
 	}
 	return running;
 }
+

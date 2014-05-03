@@ -79,19 +79,19 @@ void path_TriggerWaypoint(TRAJ_STATE state);
 
 long loopDelayInMillis;
 
-void configurePID() {
-	pid_Config(motors[ALPHA_DELTA][ALPHA_MOTOR].PIDSys, 0.0020f, 0.0f,
-			0.000020f);
-
-	pid_Config(motors[ALPHA_DELTA][DELTA_MOTOR].PIDSys, 0.00080f, 0,
-			0.0f /*0.000001f*/);
-
-	pid_Config(motors[LEFT_RIGHT][LEFT_MOTOR].PIDSys, 75, 0, 1);
-	pid_Config(motors[LEFT_RIGHT][RIGHT_MOTOR].PIDSys, 75, 5, 1);
-
-	motors_ConfigAllIMax(90000);
-
+void motion_configureAlphaPID(float p, float i, float d) {
+	pid_Config(motors[ALPHA_DELTA][ALPHA_MOTOR].PIDSys, p, i, d);
 }
+void motion_configureDeltaPID(float p, float i, float d) {
+	pid_Config(motors[ALPHA_DELTA][DELTA_MOTOR].PIDSys, p, i, d);
+}
+void motion_configureLeftPID(float p, float i, float d) {
+	pid_Config(motors[LEFT_RIGHT][LEFT_MOTOR].PIDSys, p, i, d);
+}
+void motion_configureRightPID(float p, float i, float d) {
+	pid_Config(motors[LEFT_RIGHT][RIGHT_MOTOR].PIDSys, p, i, d);
+}
+
 void motion_Init() {
 	int i, j;
 	RobotMotionState = DISABLE_PID;
@@ -106,7 +106,7 @@ void motion_Init() {
 			initMotor(&motors[i][j]);
 		}
 	}
-	configurePID();
+
 	encoder_Init();
 
 	motion_FreeMotion();
@@ -143,7 +143,7 @@ void signalEndOfTraj() {
 		printf("signalEndOfTraj path_TriggerWaypoint\n");
 		path_TriggerWaypoint(TRAJ_OK);
 	}
-	exit(0);
+
 }
 
 void motion_FreeMotion() {
@@ -378,8 +378,10 @@ void *motion_ITTask(void *p_arg) {
 
 		long stopTime = currentTimeInMillis();
 		long duration = stopTime - startTime;
-		if (duration < loopDelayInMillis && duration > 0) {
-			usleep(1000 * (loopDelayInMillis - duration));
+		if (duration < loopDelayInMillis && duration >= 0) {
+			__useconds_t d = 1000 * (loopDelayInMillis - duration);
+			usleep(d);
+			//
 		}
 
 	}
