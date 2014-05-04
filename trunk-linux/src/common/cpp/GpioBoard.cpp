@@ -13,9 +13,10 @@
 pmx::GpioBoard::GpioBoard(pmx::Robot & robot)
 		: ARobotElement(robot), connected_(false)
 {
+	/*
 	try
 	{
-		utils::HostI2cBus::instance().open(); //TODO close it by the robot destructor
+		utils::HostI2cBus::instance("GpioBoard::GpioBoard").open(); //TODO close it by the robot destructor
 		connected_ = true;
 
 	} catch (utils::I2cException * e)
@@ -24,7 +25,7 @@ pmx::GpioBoard::GpioBoard(pmx::Robot & robot)
 	} catch (utils::I2cWarning * e)
 	{
 		logger().debug() << "Exception open: " << e->what() << utils::end;
-	}
+	}*/
 
 }
 
@@ -73,7 +74,7 @@ void pmx::GpioBoard::write_i2c(uchar command, uchar value)
 {
 	try
 	{
-		utils::HostI2cBus::instance().writeRegValue(GPIOBOARD_PCA9555, command, value);
+		utils::HostI2cBus::instance("GpioBoard::write_i2c").writeRegValue(GPIOBOARD_PCA9555, command, value);
 
 	} catch (utils::Exception * e)
 	{
@@ -86,7 +87,7 @@ uchar pmx::GpioBoard::read_i2c(uchar command)
 	uchar receivedVal = 0;
 	try
 	{
-		utils::HostI2cBus::instance().readRegValue(GPIOBOARD_PCA9555, command, &receivedVal);
+		utils::HostI2cBus::instance("GpioBoard::read_i2c").readRegValue(GPIOBOARD_PCA9555, command, &receivedVal);
 
 	} catch (utils::Exception * e)
 	{

@@ -23,7 +23,7 @@ void utils::HostSpiBus::open(void)
 	if (fd_spi_ < 0)
 
 	{
-		throw new HostSpiException("Error HostI2cBus::open, can't open SPI \nHave you run modprobe spidev ?");
+		throw new HostSpiException("Error HostSpiException::open, can't open SPI \nHave you run modprobe spidev ?");
 	}
 }
 
@@ -87,7 +87,7 @@ size_t len;
     status = ioctl(aFd, SPI_IOC_MESSAGE(1), xfer);
     if (status < 0) {
         //ERROR("SPI_IOC_MESSAGE");
-        throw new HostSpiException("Error HostI2cBus::as_spi_msg_pmx, SPI_IOC_MESSAGE");
+        throw new HostSpiException("Error HostSpiException::as_spi_msg_pmx, SPI_IOC_MESSAGE");
         return 0;
     }
 

@@ -13,6 +13,7 @@
 pmx::ArduinoBoard::ArduinoBoard(pmx::Robot & robot)
 		: ARobotElement(robot), connected_(false)
 {
+	/*
 	try
 	{
 		utils::HostI2cBus::instance().open(); //TODO close it by the robot destructor
@@ -23,7 +24,7 @@ pmx::ArduinoBoard::ArduinoBoard(pmx::Robot & robot)
 	} catch (utils::I2cWarning * e)
 	{
 		logger().debug() << "Warning open(): " << e->what() << utils::end;
-	}
+	}*/
 }
 
 // function for launch command
@@ -67,7 +68,7 @@ int pmx::ArduinoBoard::readI2c_1Byte()
 {
 	char buf[2];
 
-	utils::HostI2cBus::instance().readI2cSize(ARDUINOBOARD_ADDR, buf, 1);
+	utils::HostI2cBus::instance("ArduinoBoard::readI2c_1Byte").readI2cSize(ARDUINOBOARD_ADDR, buf, 1);
 
 	return buf[0];
 }
@@ -75,7 +76,7 @@ int pmx::ArduinoBoard::readI2c_1Byte()
 void pmx::ArduinoBoard::writeI2c_3Bytes(const char *buf)
 {
 
-	utils::HostI2cBus::instance().writeI2cSize(ARDUINOBOARD_ADDR, buf, 3);
+	utils::HostI2cBus::instance("ArduinoBoard::writeI2c_3Bytes").writeI2cSize(ARDUINOBOARD_ADDR, buf, 3);
 
 }
 

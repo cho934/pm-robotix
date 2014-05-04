@@ -7,8 +7,6 @@
 #include "Robot.hpp"
 #include "Exception.hpp"
 #include "HostI2cBus.hpp"
-//#include "HostSpiBus.hpp"
-//#include "HostAdcPort.hpp"
 
 
 pmx::Robot::Robot()
@@ -68,7 +66,7 @@ void pmx::Robot::stop()
 	logger().info("Stop");
 
 	//close I2C
-	utils::HostI2cBus::instance().close_i2c();
+	utils::HostI2cBus::instance("Robot::stop").close_i2c();
 
 	//close SPI
 	utils::HostSpiBus::instance().close();

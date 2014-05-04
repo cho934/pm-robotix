@@ -20,7 +20,7 @@ pmx: build/pmx-match-main
 # Build the functional tests package
 robot-test: build/robot-test
 	@(cd src/robot-test && make)
-	#expect ./m robottest
+	expect ./msend robottest
 	
 # Build the unit tests package
 apf-test: build/apf-test

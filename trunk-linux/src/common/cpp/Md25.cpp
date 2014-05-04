@@ -4,15 +4,17 @@
  */
 
 #include "Md25.hpp"
+
 #include "HostI2cBus.hpp"
+#include "Exception.hpp"
 
 pmx::Md25::Md25(pmx::Robot & robot)
 		: ARobotElement(robot), connected_(false)
 {
+
 	try
 	{
-		utils::HostI2cBus::instance().open(); //TODO close it by the robot destructor
-		connected_ = true;
+		utils::HostI2cBus::instance("Md25::Md25").open(); //TODO close it by the robot destructo
 	} catch (utils::I2cException * e)
 	{
 		logger().error() << "Exception open: " << e->what() << utils::end;
@@ -21,18 +23,21 @@ pmx::Md25::Md25(pmx::Robot & robot)
 		logger().debug() << "Exception open: " << e->what() << utils::end;
 	}
 
-	/*
-	 try
-	 {
-	 utils::HostI2cBus::instance().setSlave(MD25_DEFAULT_ADDRESS);
-	 connected_ = true;
-	 } catch (utils::Exception * e)
-	 {
-	 //deactivate the device if not connected
-	 connected_ = false;
-	 logger().error() << "Exception setSlave: " << e->what() << utils::end;
-	 }
-	 */
+	try
+	{
+
+		logger().debug() << "soft test go " << utils::end;
+		int soft = getSoftwareVersion();
+		logger().debug() << "soft=" << soft << utils::end;
+
+		if (soft == 3)
+			connected_ = true;
+
+
+	} catch (utils::Exception * e)
+	{
+		logger().error() << "I2cException init getSoftwareVersion: MD25 NOT CONNECTED !!!" << e->what() << utils::end;
+	}
 
 	//setMode(current_mode_);
 	/*
@@ -48,19 +53,24 @@ pmx::Md25::Md25(pmx::Robot & robot)
 int pmx::Md25::getSoftwareVersion(void)
 {
 	uchar val = 0;
-	try
-	{
+	//try
+	//{
 		////int err = utils::HostI2cBus::instance().readRegisterbyte(MD25_SOFTWAREVER_REG, &val);
 		val = read_i2c(MD25_SOFTWAREVER_REG);
-	} catch (utils::Exception * e)
-	{
-		logger().error() << "Exception Md25::getSoftwareVersion: " << e->what() << utils::end;
-	}
+	//} catch (utils::Exception * e)
+	//{
+	//	logger().error() << "Exception Md25::getSoftwareVersion: " << e->what() << utils::end;
+	//}
 	return val;
 }
 
 float pmx::Md25::getBatteryVolts(void)
 {
+	if (!connected_)
+	{
+		logger().error() << "Md25::getBatteryVolts : MD25 NOT CONNECTED (return 0)" << utils::end;
+		return 0.0;
+	}
 	uchar val = 0;
 	try
 	{
@@ -69,6 +79,7 @@ float pmx::Md25::getBatteryVolts(void)
 	} catch (utils::Exception * e)
 	{
 		logger().error() << "Exception Md25::getBatteryVolts: " << e->what() << utils::end;
+		val = 0;
 	}
 	return (float) val / 10.0;
 }
@@ -405,7 +416,7 @@ void pmx::Md25::write_i2c(uchar command, uchar value)
 {
 	try
 	{
-		utils::HostI2cBus::instance().writeRegValue(MD25_DEFAULT_ADDRESS, command, value);
+		utils::HostI2cBus::instance("Md25::write_i2c").writeRegValue(MD25_DEFAULT_ADDRESS, command, value);
 
 	} catch (utils::Exception * e)
 	{
@@ -415,16 +426,18 @@ void pmx::Md25::write_i2c(uchar command, uchar value)
 
 int pmx::Md25::read_i2c(uchar command)
 {
-	try
-	{
+	//try
+	//{
 		uchar receivedVal = 0;
-		utils::HostI2cBus::instance().readRegValue(MD25_DEFAULT_ADDRESS, command, &receivedVal);
+		utils::HostI2cBus::instance("Md25::read_i2c").readRegValue(MD25_DEFAULT_ADDRESS, command, &receivedVal);
 		return receivedVal;
 
-	} catch (utils::Exception * e)
-	{
-		logger().error() << "Exception Md25::read_i2c: " << e->what() << utils::end;
-	}
-	return 0;
+	//} catch (utils::Exception * e)
+	//{
+	//	throw e;
+		//logger().error() << "Exception Md25::read_i2c: " << e->what() << utils::end;
+		//return -1;
+	//}
+	//return 0;
 }
 

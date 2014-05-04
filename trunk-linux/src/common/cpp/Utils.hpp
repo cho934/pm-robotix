@@ -10,6 +10,7 @@
 #include <unistd.h>
 #include "Macro.hpp"
 
+
 using namespace std;
 
 namespace utils
@@ -20,6 +21,7 @@ typedef unsigned char byte;
 class Utils
 {
 public:
+
 	static byte checkSumatory(byte data[], int length)
 	{
 		uint cs = 0;
