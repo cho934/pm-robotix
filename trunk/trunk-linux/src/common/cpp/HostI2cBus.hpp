@@ -7,11 +7,86 @@
 #define HOSTI2CBUS_HPP
 
 #include <stddef.h>
+//#include <cstdio>
+#include <iostream>
 #include <string>
 
 #include "Exception.hpp"
 #include "Macro.hpp"
 #include "Mutex.hpp"
+
+/*
+extern "C"
+{
+
+extern void * __libc_stack_end;
+
+struct backtrace_frame_t
+{
+    void * fp;
+    void * sp;
+    void * lr;
+    void * pc;
+};
+
+
+int backtracetest(void ** array, int size)
+{
+    void * top_frame_p;
+    void * current_frame_p;
+    struct backtrace_frame_t * frame_p;
+    int frame_count;
+
+    top_frame_p = __builtin_frame_address(0);
+    current_frame_p = top_frame_p;
+    frame_p = (struct backtrace_frame_t*)((void**)(current_frame_p)-3);
+    frame_count = 0;
+
+    if (__builtin_return_address(0) != frame_p->lr)
+    {
+        fprintf(stderr, "backtrace error: __builtin_return_address(0) != frame_p->lr\n");
+        return frame_count;
+    }
+
+    if (current_frame_p != NULL
+        && current_frame_p > (void*)&frame_count
+        && current_frame_p < __libc_stack_end)
+    {
+        while (frame_count < size
+               && current_frame_p != NULL
+               && current_frame_p > (void*)&frame_count
+               && current_frame_p < __libc_stack_end)
+        {
+            frame_p = (struct backtrace_frame_t*)((void**)(current_frame_p)-3);
+            array[frame_count] = frame_p->lr;
+            frame_count++;
+            current_frame_p = frame_p->fp;
+        }
+    }
+
+    return frame_count;
+}
+
+
+static inline void printStackTrace()
+{
+  printf( "stack trace:\n");
+
+  // storage array for stack trace address data
+  void* addrlist[63+1];
+
+  // retrieve current stack addresses
+  int addrlen = backtracetest( addrlist, sizeof( addrlist ) / sizeof( void* ));
+
+  if ( addrlen == 0 )
+  {
+     printf( "  \n" );
+     return;
+  }
+
+}
+
+}*/
 
 struct as_i2c_device;
 
@@ -27,11 +102,15 @@ public:
 	I2cException(const std::string & message)
 			: Exception(message)
 	{
+		std::cout << "I2cException=====" <<message << std::endl;
+
 	}
 
 	virtual ~ I2cException() throw ()
 	{
 	}
+
+
 };
 
 class I2cWarning: public Exception
@@ -51,14 +130,16 @@ class HostI2cBus: public utils::Mutex
 {
 public:
 
+
 	/*!
 	 * \brief Cette méthode statique retourne l'instance unique de la classe HostI2cBus.
 	 * \return L'instance unique de la classe.
 	 *
 	 */
-	static HostI2cBus & instance()
+	static HostI2cBus & instance(std::string str)
 	{
 		static HostI2cBus instance;
+		std::cout << "HostI2cBus & instance : " <<str << std::endl;
 		return instance;
 	}
 private:
@@ -115,7 +196,6 @@ public:
 	int readI2cSize(uchar slave_addr, char *buf, size_t size);
 
 	int writeI2cSize(uchar slave_addr, const char *buf, size_t size);
-
 
 	/*!
 	 * \brief Open i2c.

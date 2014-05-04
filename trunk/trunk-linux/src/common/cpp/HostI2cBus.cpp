@@ -6,8 +6,11 @@
 #include "HostI2cBus.hpp"
 
 #include <as_devices/as_i2c.h>
+#include <stdlib.h>
 #include <unistd.h>
+#include <cstdio>
 #include <sstream>
+
 
 
 utils::HostI2cBus::HostI2cBus()
@@ -160,3 +163,5 @@ int utils::HostI2cBus::writeI2cSize(uchar slave_addr, const char *buf, size_t si
 	unlock();
 	return result;
 }
+
+

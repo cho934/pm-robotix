@@ -17,7 +17,7 @@ ifeq ($(wildcard $(XENO)), )
 else
     CXX = arm-linux-uclibcgnueabi-g++
     INCLUDE = $(XENO)
-    CXXFLAGS_EXTRA =  -O2 -I$(INCLUDE)/include/native -I$(INCLUDE)/include/rtdm
+    CXXFLAGS_EXTRA =  -O2 -I$(INCLUDE)/include/native -I$(INCLUDE)/include/rtdm 
     LDFLAGS_EXTRA =  -s -lnative -lrtdm -las_devices -Xlinker $(INCLUDE)/lib/libnative.a $(INCLUDE)/lib/librtdm.a
 endif
 

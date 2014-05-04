@@ -14,9 +14,11 @@ pmx::GroveColorSensor::GroveColorSensor(pmx::Robot & robot)
 		: ARobotElement(robot), connected_(false), integrationtime_(12), loopdelay_(12), percentageEnabled_(false), compensateEnabled_(
 				false)
 {
+	/*
 	try
 	{
 		utils::HostI2cBus::instance().open(); //TODO close it by the robot destructor
+		TCS3414Initialize(10, 100); 	//initialize the grove sensor
 		connected_ = true;
 	} catch (utils::I2cException * e)
 	{
@@ -25,8 +27,8 @@ pmx::GroveColorSensor::GroveColorSensor(pmx::Robot & robot)
 	{
 		logger().debug() << "Exception open: " << e->what() << utils::end;
 	}
+*/
 
-	TCS3414Initialize(10, 100); 	//initialize the grove sensor
 }
 
 /*** Gets the blue sensor value and returns an unsigned int ***/
@@ -318,7 +320,7 @@ void pmx::GroveColorSensor::write_i2c(uchar command, uchar value)
 {
 	try
 	{
-		utils::HostI2cBus::instance().writeRegValue(GROVE_COLOR_DEFAULT_ADDRESS, command, value);
+		utils::HostI2cBus::instance("GroveColorSensor::write_i2c").writeRegValue(GROVE_COLOR_DEFAULT_ADDRESS, command, value);
 
 	} catch (utils::Exception * e)
 	{
@@ -331,7 +333,7 @@ uchar pmx::GroveColorSensor::read_i2c(uchar command)
 	uchar receivedVal = 0;
 	try
 	{
-		utils::HostI2cBus::instance().readRegValue(GROVE_COLOR_DEFAULT_ADDRESS, command, &receivedVal);
+		utils::HostI2cBus::instance("GroveColorSensor::read_i2c").readRegValue(GROVE_COLOR_DEFAULT_ADDRESS, command, &receivedVal);
 
 	} catch (utils::Exception * e)
 	{

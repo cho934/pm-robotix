@@ -123,7 +123,7 @@ int utils::HostSerialBus::getArray(unsigned char *buffer, int len)
 {
 	int n = 0;
 	int readOk = false;
-	for (int i = 0; i < 1000; i++) //tempo to wait data in the buffer
+	for (int i = 0; i < 200; i++) //tempo to wait data in the buffer
 	{
 		n = bytesToRead();
 		if (n >= len)
@@ -136,7 +136,7 @@ int utils::HostSerialBus::getArray(unsigned char *buffer, int len)
 		}
 		else
 		{
-			usleep(50);
+			usleep(10);
 		}
 	}
 	if (!readOk)

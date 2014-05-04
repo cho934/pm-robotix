@@ -91,8 +91,9 @@ void robottest::Md25Test::run(int argc, char *argv[])
 	pmx::Robot &robot = pmx::Robot::instance();
 
 	bat = robot.md25().getBatteryVolts();
-	soft = robot.md25().getSoftwareVersion();
+	//soft = robot.md25().getSoftwareVersion();
 	logger().info() << "bat  = " << bat << " soft = " << soft << utils::end;
+	/*
 	if(1)
 		return;
 	utils::Chronometer chrono;
@@ -146,7 +147,7 @@ void robottest::Md25Test::run(int argc, char *argv[])
 
 	logger().info() << "MD25:getEncoder1: " << encoder1 << " getEncoder2: " << encoder2 << utils::end;
 	logger().info() << "Arrived : dist(tick)=" << dist << " dist(mm)= " << dist << utils::end;
-
+*/
 	logger().info() << "End of RobotTest." << utils::end;
 }
 
