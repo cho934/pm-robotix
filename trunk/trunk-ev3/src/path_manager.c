@@ -28,6 +28,7 @@
 #include "motion.h"
 #include <semaphore.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 WAYPOINT nextWaypoint;
 static BOOL waitingSemaphore;
@@ -86,9 +87,10 @@ TRAJ_STATE path_WaitWaypoint() {
 }
 
 TRAJ_STATE path_WaitEndOfTrajectory() {
-	WAYPOINT eot;
-	eot.type = WP_END_OF_TRAJ;
-	path_SetNextWaypoint(&eot);
+	WAYPOINT *eot = (WAYPOINT *) calloc(1, sizeof(WAYPOINT));
+	eot->type = WP_END_OF_TRAJ;
+	eot->threshold = 0;
+	path_SetNextWaypoint(eot);
 
 	return path_WaitWaypoint();
 }
