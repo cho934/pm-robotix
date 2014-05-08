@@ -8,7 +8,7 @@
 #include <sys/ioctl.h>
 #include <sys/time.h>
 #include "../robot.h"
-#include "../mcontrol/motion.h"
+#include "../motion.h"
 /**
  * SIMULATION
  **/

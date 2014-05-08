@@ -9,12 +9,13 @@
 
 #include "robot.h"
 #include "ccbase.h"
-#include "mcontrol/motion.h"
-#include "mcontrol/encoder.h"
+#include "motion.h"
+#include "encoder.h"
 #include "log.h"
-#include "mcontrol/global.h"
-#include "mcontrol/path_manager.h"
-#include "mcontrol/robot_unitConversion.h"
+#include "ia.h"
+#include "global.h"
+#include "path_manager.h"
+#include "robot_unitConversion.h"
 void debug(const char *str) {
 #ifdef SIMULATED
 	printf("DEBUG: %s\n",str);
@@ -48,6 +49,26 @@ void test() {
 
 	sleep(2);
 
+}
+void obj1() {
+	cc_goToZone("zone 2");
+
+}
+void obj2() {
+	cc_goToZone("zone 3");
+}
+void testIA() {
+	ia_createZone("zone 1", 0, 0, 100, 100, 50, 50, 45);
+	ia_createZone("zone 2", 1000, 1000, 100, 100, 50, 50, 0);
+	ia_createZone("zone 3", 2000, 0, 100, 100, 50, 50, 90);
+
+	ia_setPath("zone 1", "zone 2", 600, 600);
+	ia_setPath("zone 1", "zone 3", 700, 600);
+	ia_setPath("zone 2", "zone 3", 800, 600);
+
+	ia_addAction("objectif 1", &obj1);
+	ia_addAction("objectif 2", &obj2);
+	ia_start();
 }
 
 void testExternalCounters(int seconds, int enableMotors) {
@@ -336,7 +357,7 @@ int main(int argc, const char* argv[]) {
 	if (argc == 1) {
 		test();
 	}
-	if (argc == 1) {
+	if (argc > 1) {
 		printf("Utilisation : EV3 commande parametre\n");
 		printf("Examples:\n");
 		printf(
@@ -369,7 +390,8 @@ int main(int argc, const char* argv[]) {
 				"- test de la detection 5s :                    EV3 test_detect 5\n");
 		printf(
 				"- fait carré de 500mm :                        EV3 square 500\n");
-		return 0;
+		printf("- test ia :                                    EV3 testIA 0\n");
+
 	}
 	if (strcmp(argv[1], "test0") == 0) {
 		test();
@@ -478,6 +500,9 @@ int main(int argc, const char* argv[]) {
 				usleep(100);
 			}
 			printf("Emergency detected\n");
+		} else if (strcmp(argv[1], "testIA") == 0) {
+			init(lRes, rRes, dist, 1);
+			testIA();
 		} else {
 			printf("Commande %s inconnue\n", argv[1]);
 		}

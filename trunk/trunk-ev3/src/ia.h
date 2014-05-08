@@ -37,13 +37,15 @@ typedef struct {
 
 void ia_start();
 
-void ia_createZone(char* name, float minX, float minY, float width,
+void ia_createZone(const char* name, float minX, float minY, float width,
 		float height, float startX, float startY, float startAngle);
-ZONE* ia_getZone(char* zoneName);
+ZONE* ia_getZone(const char* zoneName);
 ZONE* ia_getZoneAt(float x, float y);
 ZONE* ia_getNearestZoneFrom(float x, float y);
 
-void ia_setPath(char* zone1Name, char* zone2Name, float x, float y);
+void ia_setPath(const char* zone1Name, const char* zone2Name, float x, float y);
 ZONE_PATH* ia_getZonePath(ZONE *z1, ZONE *z2);
+
+void ia_addAction(const char* name, RobotAction action);
 
 #endif /* IA_H_ */

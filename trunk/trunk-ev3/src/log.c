@@ -4,7 +4,7 @@
  *  Created on: Feb 25, 2014
  *      Author: maillard
  */
-#include "mcontrol/global.h"
+#include "global.h"
 #include "log.h"
 #include <stdio.h>
 #include <stdlib.h>
