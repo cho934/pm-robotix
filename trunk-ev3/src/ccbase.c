@@ -14,7 +14,7 @@
 #include <sys/mman.h>
 #include <sys/ioctl.h>
 #include "robot.h"
-
+#include "ia.h"
 #include "mcontrol/motion.h"
 #include "mcontrol/encoder.h"
 #include "mcontrol/robot_odometry.h"
@@ -127,4 +127,18 @@ boolean cc_collisionOccured() {
 
 void cc_setMirrorCoordinates(boolean b) {
 
+}
+void cc_goToZone(char *zoneName) {
+	ZONE* z = ia_getZone(zoneName);
+	printf("%s %d : goToZone %s\n", __FUNCTION__, __LINE__, zoneName);
+	if (z == NULL) {
+		printf("%s %d : unable to get zone %s\n", __FUNCTION__, __LINE__,
+				zoneName);
+	} else {
+		ZONE *zCurrent = ia_getNearestZoneFrom(cc_getX(), cc_getY());
+		ZONE_PATH *path = ia_getZonePath(zCurrent, z);
+		cc_moveForwardTo(path->x, path->y);
+		// Move to destination
+		cc_moveForwardAndRotateTo(z->startX, z->startY, z->startAngle);
+	}
 }

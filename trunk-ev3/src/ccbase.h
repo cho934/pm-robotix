@@ -34,4 +34,6 @@ boolean cc_collisionOccured();
 
 void cc_setMirrorCoordinates(boolean b);
 
+void cc_goToZone(char *zoneName);
+
 #endif
