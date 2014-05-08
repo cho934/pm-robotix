@@ -8,7 +8,7 @@
 #ifndef CCBASE_H_
 #define CCBASE_H_
 
-#include "mcontrol/types.h"
+#include "global.h"
 // if distance <0, move backward
 void cc_move(float distanceInMM);
 
@@ -34,6 +34,6 @@ boolean cc_collisionOccured();
 
 void cc_setMirrorCoordinates(boolean b);
 
-void cc_goToZone(char *zoneName);
+void cc_goToZone(const char *zoneName);
 
 #endif

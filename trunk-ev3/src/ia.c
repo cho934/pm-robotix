@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "ccbase.h"
 
 int _zones_count = 0;
 ZONE* _zones[100];
@@ -19,7 +20,7 @@ ZONE_PATH* _zones_path[100];
 int _actions_count = 0;
 ACTIONS* _actions[200];
 
-void ia_addAction(char* name, RobotAction action) {
+void ia_addAction(const char* name, RobotAction action) {
 	ACTIONS *a = (ACTIONS*) calloc(1, sizeof(ACTIONS));
 	strcpy(a->name, name);
 	a->action = action;
@@ -27,7 +28,7 @@ void ia_addAction(char* name, RobotAction action) {
 	_actions_count++;
 }
 
-void ia_createZone(char* name, float minX, float minY, float width,
+void ia_createZone(const char* name, float minX, float minY, float width,
 		float height, float startX, float startY, float startAngle) {
 	ZONE *z = (ZONE*) calloc(1, sizeof(ZONE));
 	z->minX = minX;
@@ -49,7 +50,7 @@ void ia_printZone(ZONE *z) {
 }
 void ia_checkZones() {
 	if (_zones_count <= 0) {
-		printf("%s %d : Error : no zones defined\n", __FUNCTION__,
+		printf("%s (line %d) : Error : no zones defined\n", __FUNCTION__,
 		__LINE__);
 		exit(2);
 	}
@@ -58,12 +59,13 @@ void ia_checkZones() {
 	for (i = 0; i < _zones_count; i++) {
 		ZONE *z = _zones[i];
 		if (z->width <= 0) {
-			printf("%s %d : Error : negative width for zone %s\n", __FUNCTION__,
-			__LINE__, z->name);
+			printf("%s (line %d) : Error : negative width for zone %s\n",
+					__FUNCTION__,
+					__LINE__, z->name);
 			exit(2);
 		}
 		if (z->height <= 0) {
-			printf("%s %d : Error : negative height for zone %s\n",
+			printf("%s (line %d) : Error : negative height for zone %s\n",
 					__FUNCTION__,
 					__LINE__, z->name);
 			exit(2);
@@ -74,15 +76,16 @@ void ia_checkZones() {
 				ZONE *z2 = _zones[j];
 				ZONE_PATH* p = ia_getZonePath(z, z2);
 				if (p == NULL) {
-					printf("%s %d : Error path from %s and %s\n", __FUNCTION__,
-					__LINE__, z->name, z2->name);
+					printf("%s (line %d) : Error : no path from %s and %s\n",
+							__FUNCTION__,
+							__LINE__, z->name, z2->name);
 					exit(2);
 				}
 			}
 		}
 	}
 }
-void ia_setPath(char* zone1Name, char* zone2Name, float x, float y) {
+void ia_setPath(const char* zone1Name, const char* zone2Name, float x, float y) {
 	ZONE_PATH *zp = (ZONE_PATH*) calloc(1, sizeof(ZONE_PATH));
 	zp->z1 = ia_getZone(zone1Name);
 	zp->z2 = ia_getZone(zone2Name);
@@ -106,7 +109,7 @@ ZONE_PATH* ia_getZonePath(ZONE *z1, ZONE *z2) {
 void ia_start() {
 	ia_checkZones();
 	if (_actions_count <= 0) {
-		printf("%s %d : Error : no actions defined\n", __FUNCTION__,
+		printf("%s (line %d) : Error : no actions defined\n", __FUNCTION__,
 		__LINE__);
 		exit(2);
 	}
@@ -114,13 +117,17 @@ void ia_start() {
 	int i = 0;
 	for (i = 0; i < _actions_count; i++) {
 		ACTIONS *z = _actions[i];
-		printf("ia is executing actions %d : %s\n", i, z->name);
+		printf("\n== ia is executing actions [%d/%d] : %s\n", i+1,_actions_count, z->name);
+		printf("state before actions : %s : (%f,%f) %f\n", z->name, cc_getX(),
+				cc_getY(), cc_getThetaInDegree());
 		(*z->action)();
+		printf("state after actions : %s : (%f,%f) %f\n", z->name, cc_getX(),
+				cc_getY(), cc_getThetaInDegree());
 	}
 
 }
 
-ZONE* ia_getZone(char* zoneName) {
+ZONE* ia_getZone(const char* zoneName) {
 	int i = 0;
 	for (i = 0; i < _zones_count; i++) {
 		ZONE *z = _zones[i];

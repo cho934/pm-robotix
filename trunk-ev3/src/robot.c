@@ -7,7 +7,7 @@
 
 #include <sys/time.h>
 #include "robot.h"
-#include "mcontrol/motion.h"
+#include "motion.h"
 
 int running = 1;
 

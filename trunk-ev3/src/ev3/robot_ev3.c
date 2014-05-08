@@ -13,8 +13,7 @@ int rPower;
 #include "../robot.h"
 #include "lms2012.h"
 #include "d_lcd.h"
-#include "../mcontrol/motion.h"
-
+#include "../motion.h"
 
 // Sensors
 #define SENSOR_PORT_1 0
