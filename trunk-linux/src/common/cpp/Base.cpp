@@ -3,14 +3,16 @@
  * \brief Implémentation de la classe Base.
  */
 
+#include "Base.hpp"
+
 #include <cmath>
 #include <string>
-#include "Base.hpp"
-#include "Robot.hpp"
-#include "MotorLocation.hpp"
-/*#include "MotorWithMd25.hpp"
-#include "OdometryPositionManager.hpp"*/
-#include "SvgWriter.hpp"
+
+#include "../c/ccbase.h"
+#include "Logger.hpp"
+#include "RobotColor.hpp"
+
+//#include "SvgWriter.hpp"
 
 pmx::Base::Base(pmx::Robot & robot) : ARobotElement(robot),
 /*motorLeft_(robot, pmx::MLEFT),
@@ -162,6 +164,8 @@ pmx::Base::reset()
 void
 pmx::Base::moveD(int d, int yGap) //d est signé
 {
+
+	cc_move(d);
     /*//logger().debug() << "moveD" << utils::end;
 
     this->printPosition("moveD start");

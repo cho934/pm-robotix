@@ -1,31 +1,51 @@
 /*
  * ia.h
  *
- *  Created on: 18 Apr 2014
- *      Author: pmx
+ *  Created on: May 8, 2014
+ *      Author: maillard
  */
 
 #ifndef IA_H_
 #define IA_H_
 
-#include <cstdlib>
-#include <stdio.h>
+typedef void (*RobotAction)(void);
 
-void iaInitialize(int color);
-void iaExecuteNextAction();
-void iaTakeNewDecision();
+typedef struct {
+	char name[400];
+	// in mm
+	float minX;
+	float minY;
+	float width;
+	float height;
+	float startX;
+	float startY;
+	// in degrees
+	float startAngle;
+} ZONE;
 
-void iaExecuteMoveAction(float x, float y, float a);
-void iaExecuteWaitAction(float time);
-int iaExecuteSpecificAction(int actionType);
-float iaGetPosX();
-float iaGetPosY();
-float iaGetPosA();
-void iaUpdateOponentsValues();
-float iaGetTimeRemaining();
-float iaGetTimeForMove(float X, float Y, float A, float targetX, float targetY, float targetA);
+typedef struct {
+	ZONE *z1;
+	ZONE *z2;
+	float x;
+	float y;
+} ZONE_PATH;
 
-// Specific actions
-int iaLaunchSpear();
+typedef struct {
+	char name[400];
+	RobotAction action;
+} ACTIONS;
+
+void ia_start();
+
+void ia_createZone(const char* name, float minX, float minY, float width,
+		float height, float startX, float startY, float startAngle);
+ZONE* ia_getZone(const char* zoneName);
+ZONE* ia_getZoneAt(float x, float y);
+ZONE* ia_getNearestZoneFrom(float x, float y);
+
+void ia_setPath(const char* zone1Name, const char* zone2Name, float x, float y);
+ZONE_PATH* ia_getZonePath(ZONE *z1, ZONE *z2);
+
+void ia_addAction(const char* name, RobotAction action);
 
 #endif /* IA_H_ */

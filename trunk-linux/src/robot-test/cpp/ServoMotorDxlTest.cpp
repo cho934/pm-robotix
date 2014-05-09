@@ -4,7 +4,13 @@
  */
 
 #include "ServoMotorDxlTest.hpp"
+
+#include <cstdlib>
+#include <iostream>
+
+#include "../../common/cpp/Logger.hpp"
 #include "../../common/cpp/Robot.hpp"
+#include "../../common/cpp/ServoMotorDxlObject.hpp"
 
 void robottest::ServoMotorDxlTest::run(int argc, char *argv[])
 {

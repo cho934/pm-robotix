@@ -12,28 +12,42 @@
 
 pmx::GroveColorSensor::GroveColorSensor(pmx::Robot & robot)
 		: ARobotElement(robot), connected_(false), integrationtime_(12), loopdelay_(12), percentageEnabled_(false), compensateEnabled_(
-				false)
+				false), colorTemperature_(false)
 {
-	/*
+}
+
+void pmx::GroveColorSensor::init()
+{
 	try
 	{
-		utils::HostI2cBus::instance().open(); //TODO close it by the robot destructor
-		TCS3414Initialize(10, 100); 	//initialize the grove sensor
-		connected_ = true;
-	} catch (utils::I2cException * e)
-	{
-		logger().error() << "Exception open: " << e->what() << utils::end;
-	} catch (utils::I2cWarning * e)
-	{
-		logger().debug() << "Exception open: " << e->what() << utils::end;
-	}
-*/
+		//open i2c and setslave
+		grovei2c_.open(GROVE_COLOR_DEFAULT_ADDRESS);
 
+		// Request ID to test if TCS3414 is connected
+		uchar ID;
+		//0x84 1000 0100 //get information from ID register (04h)
+		ID = read_i2c(0x84); //ID 0001 0000 (first byte == 0001 (TCS: 3413,3414,3415,3416) or 0000 (TCS: 3404).
+		if (ID == 17) //0000 0001 || 0001 0001
+		{
+			logger().debug() << "TCS3414 is now ON : id=" << (int) ID << utils::end;
+			connected_ = true;
+			TCS3414Setup(10, 100); 	//setup and enable the grove sensor
+		}
+		else
+		{
+			logger().error() << "init() : TCS3414 is now OFF, ID=" << (int) ID  << " not eq 17 !"<< utils::end;
+		}
+	} catch (utils::Exception * e)
+	{
+		logger().error() << "init()::Exception - GroveColorSensor NOT CONNECTED !!! (ID test) " //<< e->what()
+				<< utils::end;
+	}
 }
 
 /*** Gets the blue sensor value and returns an unsigned int ***/
 uchar pmx::GroveColorSensor::TSC3414Blue()
 {
+	logger().debug() << "conected=" << connected_ << utils::end;
 	uchar blueLow = 0;
 	uchar blueHigh = 0;
 	if (connected_)
@@ -142,7 +156,7 @@ void pmx::GroveColorSensor::TSC3414All(uchar allcolors[])
  * Turns on the sensor and sets integration time
  * ======================================================
  */
-void pmx::GroveColorSensor::TCS3414Initialize(int delay1, int delay2)
+void pmx::GroveColorSensor::TCS3414Setup(int delay1, int delay2)
 {
 	CMD(0); //log
 	if (connected_)
@@ -159,21 +173,21 @@ void pmx::GroveColorSensor::TCS3414Initialize(int delay1, int delay2)
 			// Request confirmation //0011 1001
 			uchar receivedVal;				//0001 (ADC valid) 0001 (Power on)
 			receivedVal = read_i2c(0x39);
+			/*
+			 // Request ID //0011 1001
+			 uchar ID;
+			 //0x84 1000 0100 //get information from ID register (04h)
+			 ID = read_i2c(0x84);
+			 //0001 0000 (first byte == 0001 (TCS: 3413,3414,3415,3416) or 0000 (TCS: 3404).
 
-			// Request ID //0011 1001
-			uchar ID;
-			//0x84 1000 0100 //get information from ID register (04h)
-			ID = read_i2c(0x84);
-			//0001 0000 (first byte == 0001 (TCS: 3413,3414,3415,3416) or 0000 (TCS: 3404).
-
-			if (ID == 1 || ID == 17)
-			{ //0000 0001 || 0001 0001
-				logger().debug() << "TCS3414 is now ON" << utils::end;
-			}
-			else
-			{
-				logger().debug() << "TCS3414 is now OFF" << utils::end;
-			}
+			 if (ID == 1 || ID == 17)
+			 { //0000 0001 || 0001 0001
+			 logger().debug() << "TCS3414 is now ON" << utils::end;
+			 }
+			 else
+			 {
+			 logger().debug() << "TCS3414 is now OFF" << utils::end;
+			 }*/
 
 			//Write to Timing (integration) register
 			if (integrationtime_ == 12)
@@ -242,7 +256,7 @@ float pmx::GroveColorSensor::CCTCalc(uchar allcolors[])
 	//calculate tristimulus values (chromaticity coordinates)
 	//The tristimulus Y value represents the illuminance of our source
 	TCS3414tristimulus_[0] = (-0.14282 * allcolors[1]) + (1.54924 * allcolors[2]) + (-0.95641 * allcolors[3]);		//X
-	TCS3414tristimulus_[1] = (-0.32466 * allcolors[1]) + (1.57837 * allcolors[2]) + (-0.73191 * allcolors[3]);		//Y // = Illuminance
+	TCS3414tristimulus_[1] = (-0.32466 * allcolors[1]) + (1.57837 * allcolors[2]) + (-0.73191 * allcolors[3]);//Y // = Illuminance
 	TCS3414tristimulus_[2] = (-0.68202 * allcolors[1]) + (0.77073 * allcolors[2]) + (0.56332 * allcolors[3]);		//Z
 
 	float XYZ = TCS3414tristimulus_[0] + TCS3414tristimulus_[1] + TCS3414tristimulus_[2];
@@ -318,26 +332,12 @@ void pmx::GroveColorSensor::CMD(int delayTime)
 
 void pmx::GroveColorSensor::write_i2c(uchar command, uchar value)
 {
-	try
-	{
-		utils::HostI2cBus::instance("GroveColorSensor::write_i2c").writeRegValue(GROVE_COLOR_DEFAULT_ADDRESS, command, value);
-
-	} catch (utils::Exception * e)
-	{
-		logger().error() << "Exception GroveColorSensor::write_i2c: " << e->what() << utils::end;
-	}
+	grovei2c_.writeRegValue(GROVE_COLOR_DEFAULT_ADDRESS, command, value);
 }
 
 uchar pmx::GroveColorSensor::read_i2c(uchar command)
 {
 	uchar receivedVal = 0;
-	try
-	{
-		utils::HostI2cBus::instance("GroveColorSensor::read_i2c").readRegValue(GROVE_COLOR_DEFAULT_ADDRESS, command, &receivedVal);
-
-	} catch (utils::Exception * e)
-	{
-		logger().error() << "Exception GroveColorSensor::read_i2c: " << e->what() << utils::end;
-	}
+	grovei2c_.readRegValue(GROVE_COLOR_DEFAULT_ADDRESS, command, &receivedVal);
 	return receivedVal;
 }

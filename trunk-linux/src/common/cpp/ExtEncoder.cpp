@@ -14,51 +14,39 @@
 pmx::ExtEncoder::ExtEncoder(pmx::Robot & robot, char slave_select_port_letter, int slave_select_pin)
 		: ARobotElement(robot), ss_port_(slave_select_port_letter), ss_pin_(slave_select_pin)
 {
-	gpio_ = new utils::HostGpioPort();
-
-	//lock();
-
-	logger().debug() << "ss_port_=" << ss_port_<< " ss_pin_=" << ss_pin_ << utils::end;
 	try
 	{
+		gpio_ = new utils::HostGpioPort();
+
+		logger().debug() << "ss_port_=" << ss_port_ << " ss_pin_=" << ss_pin_ << utils::end;
+
 		gpio_->openIoctl(ss_port_, ss_pin_);
-	} catch (utils::Exception * e)
-	{
-		logger().error() << "Exception ExtEncoder::ExtEncoder: " << e->what() << utils::end;
-	}
 
-	try
-	{
 		gpio_->setDirIoctl(1);
-	} catch (utils::Exception * e)
-	{
-		logger().error() << "Exception ExtEncoder::ExtEncoder: " << e->what() << utils::end;
-	}
 
-	this->counterSize = 4; //n-byte counter
-	this->prevStatus = 0; //status register from previous read
-	this->prevCount = 0; //count from previous read
-	this->prevDiff = 0; //difference in coundt from previous read
+		this->counterSize = 4; //n-byte counter
+		this->prevStatus = 0; //status register from previous read
+		this->prevCount = 0; //count from previous read
+		this->prevDiff = 0; //difference in coundt from previous read
 
-	ss_pin_set(1);
-	logger().debug() << "ss_pin_set(1); ok "  << utils::end;
+		ss_pin_set(1);
+		logger().debug() << "ss_pin_set(1); ok " << utils::end;
 
-	try
-	{
-		logger().debug() << "test0003 "  << utils::end;
+		logger().debug() << "test0003 " << utils::end;
 		utils::HostSpiBus::instance().open();
 		long speed = utils::HostSpiBus::instance().getSpeed();
 		std::cout << " Encoder spi speed = " << speed << std::endl;
-		logger().debug() << "test0004 "  << utils::end;
+		logger().debug() << "test0004 " << utils::end;
+
+		logger().debug() << "test0005 " << utils::end;
+		//init MDR0  and MDR1
+		this->initialize(0x00, 0x00); //x4 and 4 bytes
+		logger().debug() << "test0006 " << utils::end;
+
 	} catch (utils::Exception * e)
 	{
 		logger().error() << "Exception ExtEncoder::ExtEncoder: " << e->what() << utils::end;
 	}
-	//unlock();
-	logger().debug() << "test0005 "  << utils::end;
-	//init MDR0  and MDR1
-	this->initialize(0x00, 0x00); //x4 and 4 bytes
-	logger().debug() << "test0006 "  << utils::end;
 	usleep(1000);
 
 }
@@ -89,9 +77,7 @@ void pmx::ExtEncoder::initialize(int setup_mdr0, int setup_mdr1)
 	ss_pin_set(0);
 	this->spiTransfer(WRITE_MODE0);
 	this->spiTransfer((char) setup_mdr0);
-	//ss_pin_set(1);
-	//usleep(1000);
-	//ss_pin_set(0);
+
 	this->spiTransfer(WRITE_MODE1);
 	this->spiTransfer((char) setup_mdr1);
 	ss_pin_set(1);

@@ -11,43 +11,45 @@
 
 namespace robottest
 {
-    /*!
-     * \brief Effectue un test de clignotement des LEDs du tableau d'affichage.
-     */
-    class LedIndicatorTest : public pmx::ConsoleUnitTest
-    {
-    private:
+/*!
+ * \brief Effectue un test de clignotement des LEDs du tableau d'affichage.
+ */
+class LedIndicatorTest: public pmx::ConsoleUnitTest
+{
+private:
 
-        /*!
-         * \brief Retourne le \ref Logger associé à la classe \ref LedIndicatorTest.
-         */
-        static inline const utils::Logger & logger()
-        {
-            static const utils::Logger & instance = utils::LoggerFactory::logger("robottest::LedIndicatorTest");
-            return instance;
-        }
+	/*!
+	 * \brief Retourne le \ref Logger associé à la classe \ref LedIndicatorTest.
+	 */
+	static inline const utils::Logger & logger()
+	{
+		static const utils::Logger & instance = utils::LoggerFactory::logger("robottest::LedIndicatorTest");
+		return instance;
+	}
 
-    public:
+public:
 
-        /*!
-         * \brief Constructeur de la classe.
-         */
-        LedIndicatorTest() : pmx::ConsoleUnitTest("LedIndicatorTest : Blink Led board directly")
-        {
-        }
+	/*!
+	 * \brief Constructeur de la classe.
+	 */
+	LedIndicatorTest()
+			: pmx::ConsoleUnitTest("LedIndicatorTest : Blink Led board directly")
+	{
+	}
 
-        /*!
-         * \brief Destructeur de la classe.
-         */
-        virtual ~LedIndicatorTest()
-        {
-        }
+	/*!
+	 * \brief Destructeur de la classe.
+	 */
+	virtual ~LedIndicatorTest()
+	{
+	}
 
-        /*!
-         * \brief Execute le test.
-         */
-        virtual void run(int argc, char *argv[]);
-    };
+	/*!
+	 * \brief Execute le test.
+	 */
+	virtual void run(int argc, char *argv[]);
 };
+}
+
 
 #endif

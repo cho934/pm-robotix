@@ -3,7 +3,13 @@
  * \brief Implémentation de la classe Md25Test.
  */
 
+#include "../../common/cpp/Md25.hpp"
 #include "Md25Test.hpp"
+
+#include <cstdlib>
+#include <iostream>
+
+#include "../../common/cpp/Logger.hpp"
 #include "../../common/cpp/Robot.hpp"
 
 void robottest::Md25Test::run(int argc, char *argv[])

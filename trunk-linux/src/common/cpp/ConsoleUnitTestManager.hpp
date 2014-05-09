@@ -54,7 +54,7 @@ namespace pmx
         /*!
          * \brief Affiche un menu de sélection des tests.
          */
-        void run();
+        void run(char *argv0);
         
         /*!
          * \brief Détermine un test a lancer en fonction des paramètres
@@ -71,7 +71,7 @@ namespace pmx
          * \param argv
          *        Tableau d'argument.
          */
-        void executeTest(uint nTest);
+        void executeTest(uint nTest, char* argv0);
         void executeTest(uint nTest, int argc, char *argv[]);
     };
 }

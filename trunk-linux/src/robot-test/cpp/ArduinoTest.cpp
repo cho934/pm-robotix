@@ -4,8 +4,15 @@
  */
 
 #include "ArduinoTest.hpp"
+
+#include <stdlib.h>
+#include <unistd.h>
+#include <iostream>
+
+#include "../../common/cpp/ArduinoBoard.hpp"
+#include "../../common/cpp/Logger.hpp"
+//#include "../../common/cpp/LoggerFactory.hpp"
 #include "../../common/cpp/Robot.hpp"
-#include "../../common/cpp/LoggerFactory.hpp"
 
 void robottest::ArduinoTest::run(int argc, char *argv[])
 {
@@ -41,16 +48,16 @@ void robottest::ArduinoTest::run(int argc, char *argv[])
 	{
 		// drive some arduino tests
 
-		robot.arduinoBoard().launchCmd("L11", "LED1 on");
+		robot.arduinoBoardMega().launchCmd("L11", "LED1 on");
 		logger().info() << "L11" << "LED1 on" << utils::end;
 		usleep(timeSpan*1000);
-		robot.arduinoBoard().launchCmd("L10", "LED1 off");
+		robot.arduinoBoardMega().launchCmd("L10", "LED1 off");
 		logger().info() << "L10" << "LED1 off" << utils::end;
 		usleep(timeSpan*1000);
-		robot.arduinoBoard().launchCmd("L21", "LED2 on");
+		robot.arduinoBoardMega().launchCmd("L21", "LED2 on");
 		logger().info() << "L21" << "LED2 on" << utils::end;
 		usleep(timeSpan*1000);
-		robot.arduinoBoard().launchCmd("L20", "LED2 off");
+		robot.arduinoBoardMega().launchCmd("L20", "LED2 off");
 		logger().info() << "L20" << "LED2 off" << utils::end;
 		usleep(timeSpan*1000);
 	}

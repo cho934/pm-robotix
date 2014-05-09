@@ -98,17 +98,6 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
-					<fileInfo id="cdt.managedbuild.config.gnu.cross.exe.debug.545711704.116638196.12922445" name="ccbase.c" rcbsApplicability="disable" resourcePath="src/common/c/ccbase.c" toolsToInvoke="cdt.managedbuild.tool.gnu.cross.c.compiler.1566446966.746011718">
-						<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.1566446966.746011718" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler.1566446966">
-							<option id="gnu.c.compiler.option.include.paths.1706370865" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
-								<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/target/packages/"/>
-								<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/buildroot/build_armv4t/staging_dir/usr/include"/>
-								<listOptionValue builtIn="false" value="/media/Armadeus/armadeus-3.4/buildroot/build_armv4t/staging_dir/usr/lib/gcc/arm-linux-uclibcgnueabi/4.2.1/include"/>
-								<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ARM/src/common/c/mcontrol}&quot;"/>
-							</option>
-							<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1572480026" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
-						</tool>
-					</fileInfo>
 					<sourceEntries>
 						<entry excluding="src/todo|sh|todo_" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>

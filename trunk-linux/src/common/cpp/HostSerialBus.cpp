@@ -92,9 +92,7 @@ int utils::HostSerialBus::connect(const char *device)
 	 * flushes data written but not transmitted.
 	 * flushes data received but not read.
 	 */
-
-	tcflush(fileDescriptor_, TCOFLUSH);
-	tcflush(fileDescriptor_, TCIFLUSH);
+	clear();
 
 	return fileDescriptor_;
 }
@@ -111,11 +109,9 @@ int utils::HostSerialBus::sendArray(unsigned char *buffer, int len)
 
 	if (err < 0 || err != len)
 	{
-		//std::cout << "ERROR setInfo serial_.sendArray()" << err << std::endl;
 		throw new HostSerialException("ERROR setInfo serial_.sendArray()");
 	}
-	//tcflush(fileDescriptor_, TCOFLUSH);
-	//tcflush(fileDescriptor_, TCIFLUSH);
+
 	return err;
 }
 

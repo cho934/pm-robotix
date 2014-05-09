@@ -10,10 +10,19 @@ pmx::ServoMotorDxlObject::ServoMotorDxlObject(pmx::Robot & robot)
 		: ARobotElement(robot), id_(7), stateOpened_(0), actionStopped_(0)
 {
 	logger().debug() << "ServoMotorDxlObject::ServoMotorDxlObject()" << utils::end;
+/*
+	try
+	{
+		//initialise 1 seul servo pour cet objet.
+		long temp = pmx::ServoMotorDxl::instance().dxlGetTemperature(id_);
+		logger().info() << "Temperature dxl n°" << id_ << " =" << temp << utils::end;
+	} catch (utils::Exception * e)
+	{
 
-	//initialise 1 seul servo pour cet objet.
-	//long temp = pmx::ServoMotorDxl::instance().dxlGetTemperature(id_);
-	//logger().info() << "Temperature dxl n°" << id_ << " =" << temp << utils::end;
+		logger().error()
+				<< "ServoMotorDxlObject::ServoMotorDxlObject::Exception - ServoMotorDxlObject NOT CONNECTED !!! (dxlGetTemperature test)"
+				<< e->what() << utils::end;
+	}*/
 
 }
 
@@ -25,7 +34,6 @@ void pmx::ServoMotorDxlObject::displayInfos()
 
 	pmx::ServoMotorDxl::instance().dxlSetAxLedOn(id_);
 
-
 	data = pmx::ServoMotorDxl::instance().dxlGetBaud(id_);
 	logger().debug() << "dxlGetBaud = " << data << utils::end;
 	data = pmx::ServoMotorDxl::instance().dxlGetTemperature(id_);
@@ -36,8 +44,6 @@ void pmx::ServoMotorDxlObject::displayInfos()
 	logger().debug() << "dxlGetVolta = " << data << utils::end;
 	data = pmx::ServoMotorDxl::instance().dxlGetPos(id_);
 	logger().debug() << "dxlGetPos = " << data << utils::end;
-
-
 
 	pmx::ServoMotorDxl::instance().dxlSetAxLedOff(id_);
 

@@ -7,13 +7,18 @@
 #ifndef PMX_BASE_HPP
 #define PMX_BASE_HPP
 
-#include "Macro.hpp"
+#include <string>
+
 #include "ARobotElement.hpp"
-#include "IInitialized.hpp"
-#include "Position.hpp"
-#include "BaseWay.hpp"
 #include "BaseFlags.hpp"
+#include "BaseWay.hpp"
+#include "IInitialized.hpp"
+#include "LoggerFactory.hpp"
+//#include "Macro.hpp"
 #include "MotorLocation.hpp"
+//#include "Position.hpp"
+#include "RobotColor.hpp"
+
 /*
 #include "PositionManager.hpp"
 #include "Motor.hpp"

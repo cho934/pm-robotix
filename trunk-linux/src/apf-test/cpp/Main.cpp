@@ -50,10 +50,11 @@ int main(int argc, char** argv)
 
     if (argc == 1)
 	{
-		manager.run();
+		manager.run(argv[0]);
 	}
 	else
 	{
+		//execute directly the unit test.
 		manager.run(atoi(argv[1]), argc, argv);
 	}
 

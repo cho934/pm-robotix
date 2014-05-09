@@ -3,9 +3,16 @@
  * \brief Implémentation de la classe ArduinoTest.
  */
 
+#include "../../common/cpp/GpioBoard.hpp"
 #include "GpioBoardTest.hpp"
+
+#include <unistd.h>
+#include <cstdlib>
+#include <iostream>
+
+#include "../../common/cpp/Logger.hpp"
+//#include "../../common/cpp/LoggerFactory.hpp"
 #include "../../common/cpp/Robot.hpp"
-#include "../../common/cpp/LoggerFactory.hpp"
 
 void robottest::GpioBoardTest::run(int argc, char *argv[])
 {
@@ -37,7 +44,7 @@ void robottest::GpioBoardTest::run(int argc, char *argv[])
 
 	pmx::Robot &robot = pmx::Robot::instance();
 
-	robot.gpioBoard().setup();
+	//robot.gpioBoard().setup();
 
 	for (int i = 0; i < nb; i++)
 	{

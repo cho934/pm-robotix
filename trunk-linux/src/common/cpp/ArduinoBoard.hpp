@@ -7,9 +7,10 @@
 #define PMX_ARDUINOBOARD_HPP
 
 #include "ARobotElement.hpp"
+#include "HostI2cBus.hpp"
 #include "LoggerFactory.hpp"
 
-#define ARDUINOBOARD_ADDR	 0x2A  // (0x2A = 42)
+//#define ARDUINOBOARD_ADDR	 0x2A  // (0x2A = 42)
 
 namespace pmx
 {
@@ -31,12 +32,16 @@ private:
 
 	bool connected_;
 
+	int addr_;
+
+	utils::HostI2cBus ardui_i2c_;
+
 public:
 
 	/*!
 	 * \brief Constructeur de la classe.
 	 */
-	ArduinoBoard(pmx::Robot & robot);
+	ArduinoBoard(pmx::Robot & robot, int addr);
 
 	/*!
 	 * \brief Destructeur de la classe.
@@ -45,12 +50,14 @@ public:
 	{
 	}
 
+	void init();
+
 	bool isConnected()
 	{
 		return connected_;
 	}
 
-	void launchCmd(const char command[3], const char identifier[5]);
+	int launchCmd(const char command[3], const char identifier[5]);
 
 private:
 
