@@ -27,12 +27,12 @@ void utils::LoggerFactory::initialize()
 	add(utils::Level::INFO, "robottest::GpioBoardTest", "console");
 
 	add(utils::Level::DEBUG, "pmx::Robot", "console");
-	//add(utils::Level::DEBUG, "pmx::GroveColorSensor", "console");
+	add(utils::Level::DEBUG, "pmx::GroveColorSensor", "console");
 	//add(utils::Level::DEBUG, "pmx::ActionManager", "console");
-	//add(utils::Level::DEBUG, "pmx::ExtEncoder", "console");
+	add(utils::Level::DEBUG, "pmx::ExtEncoder", "console");
 	//add(utils::Level::DEBUG, "pmx::IrSensor", "console");
 	//add(utils::Level::DEBUG, "pmx::IrSensorsGroup", "console");
-	//add(utils::Level::DEBUG, "pmx::ServoMotorDxlObject", "console");
+	add(utils::Level::DEBUG, "pmx::ServoMotorDxlObject", "console");
 	//add(utils::Level::DEBUG, "pmx::ServoMotorDxl", "console");
 	//add(utils::Level::DEBUG, "pmx::GpioBoard", "console");
 	add(utils::Level::DEBUG, "pmx::Md25", "console");

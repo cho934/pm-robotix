@@ -10,6 +10,7 @@
 #define PMX_GPIOBOARD_HPP
 
 #include "ARobotElement.hpp"
+#include "HostI2cBus.hpp"
 #include "LoggerFactory.hpp"
 #include "Macro.hpp"
 
@@ -53,6 +54,8 @@ private:
 
 	bool connected_;
 
+	utils::HostI2cBus i2cGB_;
+
 	int port0Value_;
 	int port1Value_;
 
@@ -69,6 +72,8 @@ public:
 	virtual inline ~GpioBoard()
 	{
 	}
+
+	void init();
 
 	bool isConnected()
 	{

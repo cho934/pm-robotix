@@ -3,7 +3,15 @@
  * \brief Implémentation de la classe ExtEncoderTest.
  */
 
+#include "../../common/cpp/ExtEncoder.hpp"
 #include "ExtEncoderTest.hpp"
+
+#include <unistd.h>
+#include <cstdlib>
+#include <iostream>
+
+#include "../../common/cpp/Exception.hpp"
+#include "../../common/cpp/Logger.hpp"
 #include "../../common/cpp/Robot.hpp"
 
 void robottest::ExtEncoderTest::run(int argc, char *argv[])

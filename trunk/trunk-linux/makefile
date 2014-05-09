@@ -15,22 +15,22 @@ init: build/common PMXArmadeusBinaries
 # Build the main application
 pmx: build/pmx-match-main
 	@(cd src/pmx-match-main && make)
-	#expect ./m pmx
+	#expect ./msend pmx
 	
 # Build the functional tests package
 robot-test: build/robot-test
 	@(cd src/robot-test && make)
-	expect ./msend robottest
+	#expect ./msend robottest
 	
 # Build the unit tests package
 apf-test: build/apf-test
 	@(cd src/apf-test && make)
-	#expect ./m apttest
+	#expect ./msend apttest
 
 # Build the unit tests package
 dev-test: build/dev-test
 	@(cd src/dev-test && make)
-	#expect ./m devtest
+	#expect ./msend devtest
 
 # Generate the documentation
 doc:

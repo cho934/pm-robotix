@@ -85,9 +85,7 @@ public:
 
 	inline int id() const
 	{
-		//return servo1_->getServoId();
-		//TODO
-		return 0;
+		return id_;
 	}
 
 	inline void stop(bool value)

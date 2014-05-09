@@ -11,43 +11,45 @@
 
 namespace robottest
 {
-    /*!
-     * \brief Effectue un test.
-     */
-    class GroveColorTest : public pmx::ConsoleUnitTest
-    {
-    private:
+/*!
+ * \brief Effectue un test.
+ */
+class GroveColorTest: public pmx::ConsoleUnitTest
+{
+private:
 
-        /*!
-         * \brief Retourne le \ref Logger associé à la classe \ref GroveColorTest.
-         */
-        static inline const utils::Logger & logger()
-        {
-            static const utils::Logger & instance = utils::LoggerFactory::logger("robottest::GroveColorTest");
-            return instance;
-        }
+	/*!
+	 * \brief Retourne le \ref Logger associé à la classe \ref GroveColorTest.
+	 */
+	static inline const utils::Logger & logger()
+	{
+		static const utils::Logger & instance = utils::LoggerFactory::logger("robottest::GroveColorTest");
+		return instance;
+	}
 
-    public:
+public:
 
-        /*!
-         * \brief Constructeur de la classe.
-         */
-        GroveColorTest() : pmx::ConsoleUnitTest("GroveColorTest : get colors from Gorve sensor")
-        {
-        }
+	/*!
+	 * \brief Constructeur de la classe.
+	 */
+	GroveColorTest()
+			: pmx::ConsoleUnitTest("GroveColorTest : get colors from Gorve sensor")
+	{
+	}
 
-        /*!
-         * \brief Destructeur de la classe.
-         */
-        virtual ~GroveColorTest()
-        {
-        }
+	/*!
+	 * \brief Destructeur de la classe.
+	 */
+	virtual ~GroveColorTest()
+	{
+	}
 
-        /*!
-         * \brief Execute le test.
-         */
-        virtual void run(int argc, char *argv[]);
-    };
+	/*!
+	 * \brief Execute le test.
+	 */
+	virtual void run(int argc, char *argv[]);
 };
+}
+
 
 #endif

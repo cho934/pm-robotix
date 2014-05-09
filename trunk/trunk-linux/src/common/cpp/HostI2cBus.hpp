@@ -88,7 +88,7 @@ static inline void printStackTrace()
 
 }*/
 
-struct as_i2c_device;
+struct as_i2c_device; //to remove error: cannot convert 'utils::as_i2c_device*' to 'as_i2c_device*' for argument '1' to 'int32_t as_i2c_close(as_i2c_device*)'
 
 namespace utils
 {
@@ -103,14 +103,11 @@ public:
 			: Exception(message)
 	{
 		std::cout << "I2cException=====" <<message << std::endl;
-
 	}
 
 	virtual ~ I2cException() throw ()
 	{
 	}
-
-
 };
 
 class I2cWarning: public Exception
@@ -128,20 +125,7 @@ public:
 
 class HostI2cBus: public utils::Mutex
 {
-public:
 
-
-	/*!
-	 * \brief Cette méthode statique retourne l'instance unique de la classe HostI2cBus.
-	 * \return L'instance unique de la classe.
-	 *
-	 */
-	static HostI2cBus & instance(std::string str)
-	{
-		static HostI2cBus instance;
-		std::cout << "HostI2cBus & instance : " <<str << std::endl;
-		return instance;
-	}
 private:
 	/*!
 	 * \brief Stored i2c parameters.
@@ -153,6 +137,7 @@ private:
 	 */
 	int opened_;
 
+public:
 	/*!
 	 * \brief Constructeur de la classe.
 	 */
@@ -163,15 +148,13 @@ private:
 	 */
 	virtual ~HostI2cBus()
 	{
-		/*
-		close();
-		if (opened_ == 1)
-		{
-			throw new I2cException("Error i2c bus not closed");
-		}*/
+		close_i2c();
 	}
 
-public:
+
+
+	int isOpened(void);
+
 	/*!
 	 * \brief Read a byte from the given register.
 	 *
@@ -200,7 +183,7 @@ public:
 	/*!
 	 * \brief Open i2c.
 	 */
-	void open();
+	void open(uchar slave_addr);
 
 	/*!
 	 * \brief Close i2c.

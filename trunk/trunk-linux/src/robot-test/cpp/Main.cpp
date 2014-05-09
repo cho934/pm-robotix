@@ -4,20 +4,21 @@
  * sur le robot.
  */
 
-#include <iostream>
-#include "../../common/cpp/ConsoleUnitTestManager.hpp"
-#include "../../common/cpp/LoggerFactory.hpp"
+#include <cstdlib>
 
-#include "LedIndicatorTest.hpp"
-#include "LedBarTest.hpp"
-#include "GroveColorTest.hpp"
-#include "ExtEncoderTest.hpp"
-#include "ServoMotorStdTest.hpp"
-#include "IrSensorsGroupTest.hpp"
-#include "ServoMotorDxlTest.hpp"
+#include "../../common/cpp/ConsoleUnitTestManager.hpp"
+
 #include "ArduinoTest.hpp"
-#include "Md25Test.hpp"
+#include "ExtEncoderTest.hpp"
 #include "GpioBoardTest.hpp"
+#include "GroveColorTest.hpp"
+#include "IrSensorsGroupTest.hpp"
+#include "LedBarTest.hpp"
+#include "LedIndicatorTest.hpp"
+#include "Md25Test.hpp"
+#include "MoveTest.hpp"
+#include "ServoMotorDxlTest.hpp"
+#include "ServoMotorStdTest.hpp"
 
 /*!
  * \brief Méthode principale pour le lancement des tests sur le robot.
@@ -46,10 +47,11 @@ int main(int argc, char** argv)
 	manager.add(new robottest::ArduinoTest());
 	manager.add(new robottest::Md25Test());
 	manager.add(new robottest::GpioBoardTest());
+	manager.add(new robottest::MoveTest());
 
 	if (argc == 1)
 	{
-		manager.run();
+		manager.run(argv[0]);
 	}
 	else
 	{

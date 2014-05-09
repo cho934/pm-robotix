@@ -18,9 +18,9 @@
 #define	PMX_MD25_HPP
 
 #include "ARobotElement.hpp"
+#include "HostI2cBus.hpp"
 #include "LoggerFactory.hpp"
 #include "Macro.hpp"
-
 
 #define     MD25_DEFAULT_ADDRESS    0x58 // Address of the MD25 (= 0xB0 >> 1) i.e. 0x58 as a 7 bit address for the wire lib
 
@@ -69,10 +69,17 @@ namespace pmx
 class Md25: public ARobotElement
 {
 private:
+
+	utils::HostI2cBus md25_i2c_;
+
 	bool connected_;
 
 	/*!
-	 * \brief Mode courant utilisé par la carte MD25 (MODE1).
+	 * \brief Mode courant utilisé par la carte MD25 (MD25_MODE_x).
+	 * //   0    Skid-steer with unsigned speed values (STOP = 128)
+	 * //   1    Skid-steer with signed speed values  (STOP = 0)
+	 * //   2    Forward/turn steer with unsigned values (speed1 to control both motors, speed2 for turn)
+	 * //   3    Forward/turn steer with signed values (speed1 to control both motors, speed2 for turn)
 	 */
 	int current_mode_;
 
@@ -102,6 +109,7 @@ public:
 	 */
 	Md25(pmx::Robot & robot);
 
+	void init();
 
 	bool isConnected()
 	{

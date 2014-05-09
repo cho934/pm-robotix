@@ -101,7 +101,7 @@ int main(int argc, char** argv) {
     data->isEmpty(true);
 
     // Start the automate and wait for its return
-    Automate *automate = new Automate();
+    //Automate *automate = new Automate();
     //automate->run(robot, waitForReboot, data);
 
     logger.info() << "robot.stop();" << utils::end;

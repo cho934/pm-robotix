@@ -114,7 +114,6 @@ private:
 	 * \brief Servomotor standard de test.
 	 */
 	//pmx::ServoMotorStdObject servoTest_;
-
 	/*!
 	 * \brief Servomotor ax12 de test.
 	 */
@@ -128,13 +127,22 @@ private:
 	/*!
 	 * \brief Connexion Arduino par I2C.
 	 */
-	pmx::ArduinoBoard arduinoBoard_;
+	pmx::ArduinoBoard arduinoBoardDuemilanove_;
+
+	/*!
+	 * \brief Connexion Arduino par I2C.
+	 */
+	pmx::ArduinoBoard arduinoBoardMega_;
+
+	/*!
+	 * \brief Connexion Arduino par I2C.
+	 */
+	pmx::ArduinoBoard arduinoBoardSeeed_;
 
 	/*!
 	 * \brief Connexion Gpio par I2C.
 	 */
 	pmx::GpioBoard gpioBoard_;
-
 
 	/*!
 	 * \brief Constructeur de la classe.
@@ -146,9 +154,11 @@ private:
 	 */
 	virtual inline ~Robot()
 	{
+		logger().error() << "Robot::Destructeur" << utils::end;
 	}
 
 public:
+
 	/*!
 	 * \brief Cette méthode retourne l'objet de manipulation de la base
 	 * roulante du robot.
@@ -237,7 +247,6 @@ public:
 //	{
 //		return servoTest_;
 //	}
-
 	/*!
 	 * \brief Cette methode retourne le servomotor test.
 	 * \return servoTest_.
@@ -257,12 +266,30 @@ public:
 	}
 
 	/*!
-	 * \brief Cette methode retourne l'objet Arduino.
-	 * \return arduinoBoard_.
+	 * \brief Cette methode retourne l'objet arduinoBoardDuemilanove.
+	 * \return arduinoBoardDuemilanove_.
 	 */
-	inline pmx::ArduinoBoard & arduinoBoard()
+	inline pmx::ArduinoBoard & arduinoBoardDuemilanove()
 	{
-		return arduinoBoard_;
+		return arduinoBoardDuemilanove_;
+	}
+
+	/*!
+	 * \brief Cette methode retourne l'objet arduinoBoardDuemilanove.
+	 * \return arduinoBoardMega_.
+	 */
+	inline pmx::ArduinoBoard & arduinoBoardMega()
+	{
+		return arduinoBoardMega_;
+	}
+
+	/*!
+	 * \brief Cette methode retourne l'objet arduinoBoardDuemilanove.
+	 * \return arduinoBoardSeeed_.
+	 */
+	inline pmx::ArduinoBoard & arduinoBoardSeeed()
+	{
+		return arduinoBoardSeeed_;
 	}
 
 	/*!

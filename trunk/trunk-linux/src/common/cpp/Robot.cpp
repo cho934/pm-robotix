@@ -8,35 +8,32 @@
 #include "Exception.hpp"
 #include "HostI2cBus.hpp"
 
-
 pmx::Robot::Robot()
-		: base_(*this),
-		  myColor_(pmx::PMXNOCOLOR),
-		  groveColorSensor_(*this),
-		  ledBar_(*this),
-		  md25_(*this),
-		  encoderLeft_(*this,'B', 17),
-		  encoderRight_(*this,'D', 31),
-		  //servoTest_(*this, 0),
-		  servoDxlTest_(*this),
-		  irSensorsGroup_(*this),
-		  arduinoBoard_(*this),
-		  gpioBoard_(*this)
+		: base_(*this), myColor_(pmx::PMXNOCOLOR), runMode_(pmx::ROBOTHOMOLOGATION), groveColorSensor_(*this), ledBar_(
+				*this), md25_(*this), encoderLeft_(*this, 'B', 17), encoderRight_(*this, 'D', 31),
+		//servoTest_(*this, 0),
+		servoDxlTest_(*this), irSensorsGroup_(*this), arduinoBoardDuemilanove_(*this, 0x2A), arduinoBoardMega_(*this,
+				0x2B), arduinoBoardSeeed_(*this, 0x2C), gpioBoard_(*this)
 {
+
+	//initialize i2C components
+	groveColorSensor_.init();
+	md25_.init();
+	arduinoBoardDuemilanove_.init();
+	arduinoBoardMega_.init();
+	arduinoBoardSeeed_.init();
+	gpioBoard_.init();
 
 	//Led indicator initialisation
 	pmx::LedIndicator::instance().reset();
-
 
 	//serial DXL
 	//long baud = pmx::ServoMotorDxl::instance().dxlGetBaud(7);
 	//logger().debug() << "baud dxl n°7= " << baud << utils::end;
 
-
 }
 
-void pmx::Robot::initialize(const std::string& prefix,
-		utils::Configuration& configuration)
+void pmx::Robot::initialize(const std::string& prefix, utils::Configuration& configuration)
 {
 	logger().debug() << "initialize: " << prefix << utils::end;
 
@@ -44,8 +41,7 @@ void pmx::Robot::initialize(const std::string& prefix,
 
 void pmx::Robot::configure(const std::string & configurationFile)
 {
-	logger().debug() << "configure configurationFile=" << configurationFile
-			<< utils::end;
+	logger().debug() << "configure configurationFile=" << configurationFile << utils::end;
 
 	utils::Configuration configuration;
 	configuration.load(configurationFile);
@@ -65,18 +61,21 @@ void pmx::Robot::stop()
 {
 	logger().info("Stop");
 
-	//close I2C
-	utils::HostI2cBus::instance("Robot::stop").close_i2c();
-
 	//close SPI
 	utils::HostSpiBus::instance().close();
 
 	//TODO Close ADC, serial ?
 
-
 	this->stopDevices();
-	this->stopManagers();
-
+	logger().debug() << "before  stopManagers" << utils::end;
+	try
+	{
+		this->stopManagers();
+	} catch (Exception e)
+	{
+		logger().error() << "Exception Robot : " << e.what() << utils::end;
+	}
+	logger().debug() << "after stopManagers" << utils::end;
 }
 
 void pmx::Robot::stopDevices()
@@ -90,6 +89,9 @@ void pmx::Robot::stopDevices()
 void pmx::Robot::stopManagers()
 {
 	logger().debug("Stop managers");
+	actionManager_.stop();
+//todo Attente fin manager
+	usleep(5000);
 
 }
 
@@ -135,8 +137,7 @@ void pmx::Robot::goTo(double x, double y, BaseWay way, bool detection)
 
 }
 
-void pmx::Robot::goToTeta(double x, double y, double teta, BaseWay way,
-		bool detection)
+void pmx::Robot::goToTeta(double x, double y, double teta, BaseWay way, bool detection)
 {
 
 	/*

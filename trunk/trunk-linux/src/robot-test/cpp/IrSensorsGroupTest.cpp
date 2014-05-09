@@ -3,7 +3,15 @@
  * \brief Implémentation de la classe IrSensorsGroupTest.
  */
 
+#include "../../common/cpp/IrSensorsGroup.hpp"
 #include "IrSensorsGroupTest.hpp"
+
+#include <unistd.h>
+#include <cstdlib>
+#include <iostream>
+
+#include "../../common/cpp/Chronometer.hpp"
+#include "../../common/cpp/Logger.hpp"
 #include "../../common/cpp/Robot.hpp"
 
 void robottest::IrSensorsGroupTest::run(int argc, char *argv[])

@@ -6,13 +6,16 @@
 #ifndef PMX_GROVECOLORSENSOR_HPP
 #define PMX_GROVECOLORSENSOR_HPP
 
-#include <stdint.h>
+//#include <stdint.h>
 
 #include "ARobotElement.hpp"
+#include "HostI2cBus.hpp"
 #include "LoggerFactory.hpp"
 #include "Macro.hpp"
 
-#define     GROVE_COLOR_DEFAULT_ADDRESS    0x39 // Address of the grove Color Sensor 0x39
+#define	GROVE_COLOR_DEFAULT_ADDRESS    0x39 // Address of the grove Color Sensor 0x39
+
+#define 	REG_ID 	0x94 //Part Number /RevID
 
 namespace pmx
 {
@@ -31,6 +34,8 @@ private:
 		static const utils::Logger & instance = utils::LoggerFactory::logger("pmx::GroveColorSensor");
 		return instance;
 	}
+
+	utils::HostI2cBus grovei2c_;
 
 	bool connected_;
 
@@ -68,11 +73,12 @@ public:
 		return connected_;
 	}
 
+	void init();
+
 	/*!
-	 * \brief TCS3414 Initialization
-	 * Turns on the sensor and sets integration time.
+	 * \brief TCS3414 Turns on the sensor and sets integration time.
 	 */
-	void TCS3414Initialize(int delay1, int delay2);
+	void TCS3414Setup(int delay1, int delay2);
 
 	/*!
 	 * \brief Calculate the color values [Clear,Red,Green,Blue]
