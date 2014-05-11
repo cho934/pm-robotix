@@ -5,9 +5,9 @@
  */
 
 #include <cstdlib>
+#include <iostream>
 
 #include "../../common/cpp/ConsoleUnitTestManager.hpp"
-
 #include "ArduinoTest.hpp"
 #include "ExtEncoderTest.hpp"
 #include "GpioBoardTest.hpp"

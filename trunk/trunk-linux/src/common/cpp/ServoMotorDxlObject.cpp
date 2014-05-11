@@ -35,15 +35,15 @@ void pmx::ServoMotorDxlObject::displayInfos()
 	pmx::ServoMotorDxl::instance().dxlSetAxLedOn(id_);
 
 	data = pmx::ServoMotorDxl::instance().dxlGetBaud(id_);
-	logger().debug() << "dxlGetBaud = " << data << utils::end;
+	logger().info() << "dxlGetBaud = " << data << utils::end;
 	data = pmx::ServoMotorDxl::instance().dxlGetTemperature(id_);
-	logger().debug() << "dxlGetTemp = " << data << utils::end;
+	logger().info() << "dxlGetTemp = " << data << utils::end;
 	data = pmx::ServoMotorDxl::instance().dxlGetAxLed(id_);
-	logger().debug() << "dxlGetAxLed = " << data << utils::end;
+	logger().info() << "dxlGetAxLed = " << data << utils::end;
 	data = pmx::ServoMotorDxl::instance().dxlGetVoltage(id_);
-	logger().debug() << "dxlGetVolta = " << data << utils::end;
+	logger().info() << "dxlGetVolta = " << data << utils::end;
 	data = pmx::ServoMotorDxl::instance().dxlGetPos(id_);
-	logger().debug() << "dxlGetPos = " << data << utils::end;
+	logger().info() << "dxlGetPos = " << data << utils::end;
 
 	pmx::ServoMotorDxl::instance().dxlSetAxLedOff(id_);
 
