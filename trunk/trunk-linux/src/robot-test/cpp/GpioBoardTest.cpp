@@ -45,7 +45,10 @@ void robottest::GpioBoardTest::run(int argc, char *argv[])
 	pmx::Robot &robot = pmx::Robot::instance();
 
 	//robot.gpioBoard().setup();
-
+	int in0 = 0;
+	int in1 = 0;
+	int in2 = 0;
+	int in7 = 0;
 	for (int i = 0; i < nb; i++)
 	{
 		// drive some gpioboard tests
@@ -56,25 +59,15 @@ void robottest::GpioBoardTest::run(int argc, char *argv[])
 		logger().info() << "P0 OFF" << utils::end;
 		robot.gpioBoard().setOffP0(0);
 		usleep(timeSpan * 1000);
-	}
 
-	int in0 = 0;
-	int in1 = 0;
-	int in2 = 0;
-	int in7 = 0;
-	for (int i = 0; i < nb; i++)
-	{
 		in0 = robot.gpioBoard().getValueP1(0);
 		in1 = robot.gpioBoard().getValueP1(1);
 		in2 = robot.gpioBoard().getValueP1(2);
 		in7 = robot.gpioBoard().getValueP1(7);
-		logger().info() << " in0=" << in0 << " in1=" << in1 << " in2=" << in2 << " in7=" << in7 << utils::end;
+		logger().info() << "                in0=" << in0 << " in1=" << in1 << " in2=" << in2 << " in7=" << in7 << utils::end;
 		usleep(timeSpan * 1000);
-		in0 = 0;
-		in1 = 0;
-		in2 = 0;
-		in7 = 0;
 	}
+
 
 	logger().info() << "End of RobotTest." << utils::end;
 }

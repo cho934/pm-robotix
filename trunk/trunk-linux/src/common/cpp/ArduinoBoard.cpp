@@ -31,7 +31,7 @@ void pmx::ArduinoBoard::init()
 		}
 		else
 		{
-			logger().error() << "init() : ArduinoBoard is now OFF, ack=" << (int) ack  << " not eq 125 !"<< utils::end;
+			logger().error() << "init() : ArduinoBoard(" << addr_ << ") is now OFF, ack=" << (int) ack  << " not eq 125 !"<< utils::end;
 		}
 
 	} catch (utils::Exception * e)
@@ -46,7 +46,7 @@ int pmx::ArduinoBoard::launchCmd(const char command[3], const char action[10])
 {
 	if (!connected_)
 	{
-		logger().error() << "launchCmd() : ArduinoBoard NOT CONNECTED !" << utils::end;
+		logger().error() << "launchCmd() : ArduinoBoard(" << addr_ << ") NOT CONNECTED !" << utils::end;
 		return 0;
 	}
 
