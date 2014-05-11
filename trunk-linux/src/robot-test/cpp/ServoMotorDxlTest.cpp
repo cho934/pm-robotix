@@ -48,7 +48,7 @@ void robottest::ServoMotorDxlTest::run(int argc, char *argv[])
 		robot.servoDxlTest().displayInfos();
 
 		//usleep(timeSpan * 1000);
-/*
+
 		logger().info() << "turnMin" << utils::end;
 		robot.servoDxlTest().turnMin();
 
@@ -57,7 +57,7 @@ void robottest::ServoMotorDxlTest::run(int argc, char *argv[])
 		logger().info() << "turnMax" << utils::end;
 		robot.servoDxlTest().turnMax();
 		usleep(timeSpan * 1000);
-*/
+
 	}
 
 	robot.stop();
