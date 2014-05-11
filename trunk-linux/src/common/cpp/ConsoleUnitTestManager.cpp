@@ -31,10 +31,8 @@ void pmx::ConsoleUnitTestManager::run(char *argv0)
 
 	int nTest;
 	std::cin >> nTest;
-	if (nTest <= 99)
-		executeTest(nTest, argv0);
-	else
-		std::cout << "Ton choix est > 99!" << std::endl;
+
+	executeTest(nTest, argv0);
 }
 
 void pmx::ConsoleUnitTestManager::run(uint nTest, int argc, char *argv[])
@@ -48,27 +46,27 @@ void pmx::ConsoleUnitTestManager::executeTest(uint nTest, int argc, char *argv[]
 	{
 		tests_[nTest - 1]->run(argc, argv);
 	}
+	else
+	{
+		std::cout << "N° doit être compris entre 1 et " << tests_.size() << std::endl;
+	}
 }
 
 void pmx::ConsoleUnitTestManager::executeTest(uint nTest, char * argv0)
 {
-	char *argv[2];
-	argv[0] = "";
-	argv[1] = "";
-	char st[3]; // nTest <= 99
-
-	//transformation int to char
-	sprintf(st, "%d", nTest);
-
 	if (nTest > 0 && nTest <= tests_.size())
 	{
-		//creation du char *argv[]
-		argv[1] = (char *) malloc(strlen(st) + 1);
+		char **argv = (char**) malloc(2 * sizeof(char*));
 		argv[0] = argv0;
-		//strcpy(argv[0], argv0);
-		strcpy(argv[1], st);
+
+		argv[1] = (char *) calloc(1, 12);
+		sprintf(argv[1], "%d", nTest);
 
 		//lancement du run
 		tests_[nTest - 1]->run(1, argv);
+	}
+	else
+	{
+		std::cout << "N° doit être compris entre 1 et " << tests_.size() << std::endl;
 	}
 }

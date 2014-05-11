@@ -154,7 +154,6 @@ private:
 	 */
 	virtual inline ~Robot()
 	{
-		logger().error() << "Robot::Destructeur" << utils::end;
 	}
 
 public:

@@ -20,7 +20,7 @@ void robottest::GroveColorTest::run(int argc, char *argv[])
 	int nb = 0;
 	int timeSpan = 100;
 
-	if (argc < 2)
+	if (argc < 4)
 	{
 		std::cout << "USAGE: " << argv[0] << " " << argv[1] << " [nbOfTests] [option TimeSpan=100ms by default]" << std::endl;
 	}
