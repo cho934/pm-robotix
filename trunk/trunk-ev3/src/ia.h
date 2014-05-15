@@ -8,7 +8,9 @@
 #ifndef IA_H_
 #define IA_H_
 
-typedef void (*RobotAction)(void);
+#include "global.h"
+
+typedef boolean (*RobotAction)(void);
 
 typedef struct {
 	char name[400];
@@ -33,6 +35,7 @@ typedef struct {
 typedef struct {
 	char name[400];
 	RobotAction action;
+	boolean completed;
 } ACTIONS;
 
 void ia_start();
