@@ -50,12 +50,13 @@ void test() {
 	sleep(2);
 
 }
-void obj1() {
+boolean obj1() {
 	cc_goToZone("zone 2");
-
+	return TRUE;
 }
-void obj2() {
+boolean obj2() {
 	cc_goToZone("zone 3");
+	return TRUE;
 }
 void testIA() {
 	ia_createZone("zone 1", 0, 0, 100, 100, 50, 50, 45);
