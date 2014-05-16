@@ -13,7 +13,7 @@ pmx::Robot::Robot()
 				*this), md25_(*this), encoderLeft_(*this, 'B', 17), encoderRight_(*this, 'D', 31),
 		//servoTest_(*this, 0),
 		servoDxlTest_(*this), irSensorsGroup_(*this), arduinoBoardDuemilanove_(*this, 0x2A), arduinoBoardMega_(*this,
-				0x2B), arduinoBoardSeeed_(*this, 0x2C), gpioBoard_(*this)
+				0x2B), arduinoBoardSeeed_(*this, 0x2C), gpioBoard_(*this), lcdBoard_()
 {
 
 	//initialize i2C components
@@ -23,6 +23,8 @@ pmx::Robot::Robot()
 	arduinoBoardMega_.init();
 	arduinoBoardSeeed_.init();
 	gpioBoard_.init();
+
+	lcdBoard_.begin(16, 2);
 
 	//Led indicator initialisation
 	pmx::LedIndicator::instance().reset();

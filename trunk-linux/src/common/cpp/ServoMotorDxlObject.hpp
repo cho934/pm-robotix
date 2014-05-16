@@ -33,9 +33,13 @@ private:
 		return instance;
 	}
 
-	//pmx::ServoMotorDxl * servo1_;
 	/*!
-	 * \brief Brochage du servomoteur.
+	 * \brief tested if the servo is connected.
+	 */
+	bool connected_;
+
+	/*!
+	 * \brief ID du servomoteur.
 	 */
 	int id_;
 
@@ -138,6 +142,8 @@ public:
 	void turnMax();
 
 	void displayInfos();
+
+	void init();
 
 };
 

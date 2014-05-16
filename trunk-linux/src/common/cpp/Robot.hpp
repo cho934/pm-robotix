@@ -21,6 +21,7 @@
 #include "ServoMotorDxlObject.hpp"
 #include "ArduinoBoard.hpp"
 #include "GpioBoard.hpp"
+#include "Adafruit_RGBLCDShield.hpp"
 
 namespace pmx
 {
@@ -143,6 +144,11 @@ private:
 	 * \brief Connexion Gpio par I2C.
 	 */
 	pmx::GpioBoard gpioBoard_;
+
+	/*!
+	 * \brief Connexion LCD par I2C.
+	 */
+	Adafruit_RGBLCDShield lcdBoard_;
 
 	/*!
 	 * \brief Constructeur de la classe.
@@ -299,6 +305,16 @@ public:
 	{
 		return gpioBoard_;
 	}
+
+	/*!
+	 * \brief Cette methode retourne l'objet lcdBoard.
+	 * \return lcdBoard_.
+	 */
+	inline Adafruit_RGBLCDShield & lcdBoard()
+	{
+		return lcdBoard_;
+	}
+
 
 	/*!
 	 * \brief Retourne le mode de match du robot.

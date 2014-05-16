@@ -16,10 +16,12 @@
 #include "LedBarTest.hpp"
 #include "LedIndicatorTest.hpp"
 #include "Md25Test.hpp"
+#include "FindPIDTest.hpp"
 #include "MoveTest.hpp"
 #include "ServoMotorDxlTest.hpp"
 #include "ServoMotorStdTest.hpp"
-
+#include "ServoMotorDxlLearnTest.hpp"
+#include "LcdTest.hpp"
 /*!
  * \brief Méthode principale pour le lancement des tests sur le robot.
  *
@@ -41,12 +43,15 @@ int main(int argc, char** argv)
 	manager.add(new robottest::LedBarTest());
 	manager.add(new robottest::GroveColorTest());
 	manager.add(new robottest::ExtEncoderTest());
-	manager.add(new robottest::ServoMotorStdTest());
+	//manager.add(new robottest::ServoMotorStdTest());
 	manager.add(new robottest::IrSensorsGroupTest());
 	manager.add(new robottest::ServoMotorDxlTest());
+	manager.add(new robottest::ServoMotorDxlLearnTest());
 	manager.add(new robottest::ArduinoTest());
 	manager.add(new robottest::Md25Test());
 	manager.add(new robottest::GpioBoardTest());
+	manager.add(new robottest::LcdTest());
+	manager.add(new robottest::FindPIDTest());
 	manager.add(new robottest::MoveTest());
 
 	if (argc == 1)

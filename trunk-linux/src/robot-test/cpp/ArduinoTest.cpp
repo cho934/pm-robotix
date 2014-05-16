@@ -11,7 +11,6 @@
 
 #include "../../common/cpp/ArduinoBoard.hpp"
 #include "../../common/cpp/Logger.hpp"
-//#include "../../common/cpp/LoggerFactory.hpp"
 #include "../../common/cpp/Robot.hpp"
 
 void robottest::ArduinoTest::run(int argc, char *argv[])
