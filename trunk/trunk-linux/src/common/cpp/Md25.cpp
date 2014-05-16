@@ -5,8 +5,11 @@
 
 #include "Md25.hpp"
 
-#include "HostI2cBus.hpp"
+#include <unistd.h>
+
 #include "Exception.hpp"
+//#include "HostI2cBus.hpp"
+#include "Logger.hpp"
 
 pmx::Md25::Md25(pmx::Robot & robot)
 		: ARobotElement(robot), connected_(false), current_mode_(MD25_MODE_0)

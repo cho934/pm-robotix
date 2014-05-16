@@ -7,28 +7,46 @@
 #include "Robot.hpp"
 
 pmx::ServoMotorDxlObject::ServoMotorDxlObject(pmx::Robot & robot)
-		: ARobotElement(robot), id_(7), stateOpened_(0), actionStopped_(0)
+		: ARobotElement(robot), connected_(false), id_(7), stateOpened_(0), actionStopped_(0),
+		  valMin_(0), valMed_(0), valMax_(0), valSpeed_(0)
 {
-	logger().debug() << "ServoMotorDxlObject::ServoMotorDxlObject()" << utils::end;
-/*
+	//logger().debug() << "ServoMotorDxlObject::ServoMotorDxlObject()" << utils::end;
+}
+
+void pmx::ServoMotorDxlObject::init()
+{
+
 	try
 	{
 		//initialise 1 seul servo pour cet objet.
-		long temp = pmx::ServoMotorDxl::instance().dxlGetTemperature(id_);
-		logger().info() << "Temperature dxl n°" << id_ << " =" << temp << utils::end;
+		long temp = 0;
+		temp = pmx::ServoMotorDxl::instance().dxlGetVoltage(id_);
+		logger().debug() << "Volt dxl n°" << id_ << " =" << temp << utils::end;
+		if (temp != 0 && temp > 9 && temp < 12)
+		{
+			connected_ = true;
+		}
+		else
+		{
+			logger().error() << "init() - ServoMotorDxlObject NOT CONNECTED !!! (dxlGetVoltage test)" << utils::end;
+		}
 	} catch (utils::Exception * e)
 	{
 
-		logger().error()
-				<< "ServoMotorDxlObject::ServoMotorDxlObject::Exception - ServoMotorDxlObject NOT CONNECTED !!! (dxlGetTemperature test)"
+		logger().error() << "init()::Exception - ServoMotorDxlObject NOT CONNECTED !!! (dxlGetVoltage test)"
 				<< e->what() << utils::end;
-	}*/
+	}
 
 }
 
 void pmx::ServoMotorDxlObject::displayInfos()
 {
 	logger().debug() << "displayInfos" << utils::end;
+	if (!connected_)
+	{
+		logger().error() << "displayInfos ; (ID=" << id_ << " is NOT CONNECTED !" << utils::end;
+		return;
+	}
 
 	long int data = 0;
 
@@ -54,6 +72,12 @@ void pmx::ServoMotorDxlObject::turnMin()
 {
 	logger().debug() << "turn min" << utils::end;
 
+	if (!connected_)
+	{
+		logger().error() << "turnMin ; (ID=" << id_ << " is NOT CONNECTED !" << utils::end;
+		return;
+	}
+
 	int finished = 0;
 	long moving = 0;
 	pmx::ServoMotorDxl::instance().dxlSetPos(id_, 100);
@@ -71,6 +95,12 @@ void pmx::ServoMotorDxlObject::turnMin()
 void pmx::ServoMotorDxlObject::turnMax()
 {
 	logger().debug() << "turn max" << utils::end;
+
+	if (!connected_)
+	{
+		logger().error() << "turnMin ; (ID=" << id_ << " is NOT CONNECTED !" << utils::end;
+		return;
+	}
 
 	int finished = 0;
 	long moving = 0;

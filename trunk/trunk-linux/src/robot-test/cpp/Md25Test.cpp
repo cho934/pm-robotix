@@ -22,7 +22,7 @@ void robottest::Md25Test::run(int argc, char *argv[])
 
 	int speedR, speedL, dist, acc;
 
-	if (argc < 6)
+	if (argc < 7)
 	{
 		std::cout << "USAGE: PMX_TEST " << argv[1]
 				<< " [speedL(1)(0=>255)] [speedR(2)(0=>255)] [dist(tick)] [Acc:1,2,3,5,10] [Regulation:0,1]"
@@ -97,11 +97,9 @@ void robottest::Md25Test::run(int argc, char *argv[])
 	pmx::Robot &robot = pmx::Robot::instance();
 
 	bat = robot.md25().getBatteryVolts();
-	//soft = robot.md25().getSoftwareVersion();
+	soft = robot.md25().getSoftwareVersion();
 	logger().info() << "bat  = " << bat << " soft = " << soft << utils::end;
-	/*
-	if(1)
-		return;
+
 	utils::Chronometer chrono;
 	chrono.start();
 
@@ -153,7 +151,7 @@ void robottest::Md25Test::run(int argc, char *argv[])
 
 	logger().info() << "MD25:getEncoder1: " << encoder1 << " getEncoder2: " << encoder2 << utils::end;
 	logger().info() << "Arrived : dist(tick)=" << dist << " dist(mm)= " << dist << utils::end;
-*/
+
 	logger().info() << "End of RobotTest." << utils::end;
 }
 
