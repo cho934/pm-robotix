@@ -16,7 +16,7 @@ pmx::GroveColorSensor::GroveColorSensor(pmx::Robot & robot)
 {
 }
 
-void pmx::GroveColorSensor::init()
+void pmx::GroveColorSensor::begin()
 {
 	try
 	{

@@ -15,7 +15,7 @@ pmx::Md25::Md25(pmx::Robot & robot)
 {
 }
 
-void pmx::Md25::init()
+void pmx::Md25::begin()
 {
 	try
 	{

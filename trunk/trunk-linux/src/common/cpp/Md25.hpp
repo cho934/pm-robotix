@@ -111,7 +111,8 @@ public:
 	 */
 	Md25(pmx::Robot & robot);
 
-	void init();
+	void begin();
+
 	void setup();
 
 	bool isConnected()
