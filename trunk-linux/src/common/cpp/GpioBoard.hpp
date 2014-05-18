@@ -73,7 +73,7 @@ public:
 	{
 	}
 
-	void init();
+	void begin();
 
 	bool isConnected()
 	{

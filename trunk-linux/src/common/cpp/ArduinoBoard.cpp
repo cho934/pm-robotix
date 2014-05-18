@@ -15,7 +15,7 @@ pmx::ArduinoBoard::ArduinoBoard(pmx::Robot & robot, int addr)
 {
 }
 
-void pmx::ArduinoBoard::init()
+void pmx::ArduinoBoard::begin()
 {
 	try
 	{

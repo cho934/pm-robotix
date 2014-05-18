@@ -73,7 +73,7 @@ public:
 		return connected_;
 	}
 
-	void init();
+	void begin();
 
 	/*!
 	 * \brief TCS3414 Turns on the sensor and sets integration time.

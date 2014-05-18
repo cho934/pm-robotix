@@ -14,7 +14,7 @@ pmx::GpioBoard::GpioBoard(pmx::Robot & robot)
 {
 }
 
-void pmx::GpioBoard::init()
+void pmx::GpioBoard::begin()
 {
 	try
 	{
