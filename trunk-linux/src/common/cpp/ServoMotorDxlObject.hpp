@@ -7,12 +7,8 @@
 #define	PMX_SERVOMOTORDXLOBJECT_HPP
 
 #include "ARobotElement.hpp"
-#include "Macro.hpp"
-#include "IAction.hpp"
 #include "LoggerFactory.hpp"
-#include "Chronometer.hpp"
-#include "IInitialized.hpp"
-#include "ServoMotorDxl.hpp"
+
 
 namespace pmx
 {
@@ -25,11 +21,11 @@ class ServoMotorDxlObject: public ARobotElement
 {
 private:
 	/*!
-	 * \brief Retourne le \ref Logger associé à la classe \ref ServoMotorObject.
+	 * \brief Retourne le \ref Logger associé à la classe \ref ServoMotorDxlObject.
 	 */
 	static const utils::Logger & logger()
 	{
-		static const utils::Logger & instance = utils::LoggerFactory::logger("pmx::ServoMotorDxlObject");
+		static const utils::Logger & instance = utils::LoggerFactory::logger("pmx::ServoMotorDxlObj"); //Ne fct pas avec pmx::ServoMotorDxlObject
 		return instance;
 	}
 
@@ -143,7 +139,7 @@ public:
 
 	void displayInfos();
 
-	void init();
+	void begin();
 
 };
 

@@ -5,7 +5,8 @@
 
 #include "ServoMotorDxlTest.hpp"
 
-#include <cstdlib>
+#include <unistd.h>
+#include <stdlib.h>
 #include <iostream>
 
 #include "../../common/cpp/Logger.hpp"

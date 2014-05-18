@@ -33,7 +33,7 @@ public:
 	 * \brief Constructeur de la classe.
 	 */
 	ServoMotorDxlTest()
-			: pmx::ConsoleUnitTest("ServoMotorDxlTest : AX12")
+			: pmx::ConsoleUnitTest("ServoMotorDxlTest : tests of AX12")
 	{
 	}
 
