@@ -6,22 +6,26 @@
 #ifndef PMX_ROBOT_HPP
 #define PMX_ROBOT_HPP
 
-#include "IInitialized.hpp"
-#include "Base.hpp"
-#include "Chronometer.hpp"
-#include "RobotColor.hpp"
-#include "GroveColorSensor.hpp"
-#include "LedIndicator.hpp"
+#include <string>
+
 #include "ActionManager.hpp"
-#include "LedBar.hpp"
-#include "Md25.hpp"
-#include "ExtEncoder.hpp"
-//#include "ServoMotorStdObject.hpp"
-#include "IrSensorsGroup.hpp"
-#include "ServoMotorDxlObject.hpp"
-#include "ArduinoBoard.hpp"
-#include "GpioBoard.hpp"
 #include "Adafruit_RGBLCDShield.hpp"
+#include "ArduinoBoard.hpp"
+#include "Base.hpp"
+#include "BaseWay.hpp"
+#include "Chronometer.hpp"
+#include "ExtEncoder.hpp"
+#include "GpioBoard.hpp"
+#include "GroveColorSensor.hpp"
+//#include "IInitialized.hpp"
+#include "IrSensorsGroup.hpp"
+#include "LedBar.hpp"
+
+#include "Logger.hpp"
+#include "LoggerFactory.hpp"
+#include "Md25.hpp"
+#include "RobotColor.hpp"
+#include "ServoMotorDxlObject.hpp"
 
 namespace pmx
 {
@@ -148,7 +152,7 @@ private:
 	/*!
 	 * \brief Connexion LCD par I2C.
 	 */
-	Adafruit_RGBLCDShield lcdBoard_;
+	pmx::Adafruit_RGBLCDShield lcdBoard_;
 
 	/*!
 	 * \brief Constructeur de la classe.
@@ -310,9 +314,10 @@ public:
 	 * \brief Cette methode retourne l'objet lcdBoard.
 	 * \return lcdBoard_.
 	 */
-	inline Adafruit_RGBLCDShield & lcdBoard()
+	inline pmx::Adafruit_RGBLCDShield & lcdBoard()
 	{
 		return lcdBoard_;
+
 	}
 
 

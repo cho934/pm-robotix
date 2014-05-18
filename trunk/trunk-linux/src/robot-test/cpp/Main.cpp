@@ -16,6 +16,7 @@
 #include "LedBarTest.hpp"
 #include "LedIndicatorTest.hpp"
 #include "Md25Test.hpp"
+#include "Md25EncoderTest.hpp"
 #include "FindPIDTest.hpp"
 #include "MoveTest.hpp"
 #include "ServoMotorDxlTest.hpp"
@@ -48,9 +49,11 @@ int main(int argc, char** argv)
 	manager.add(new robottest::ServoMotorDxlTest());
 	manager.add(new robottest::ServoMotorDxlLearnTest());
 	manager.add(new robottest::ArduinoTest());
-	manager.add(new robottest::Md25Test());
 	manager.add(new robottest::GpioBoardTest());
 	manager.add(new robottest::LcdTest());
+
+	manager.add(new robottest::Md25Test());
+	manager.add(new robottest::Md25EncoderTest());
 	manager.add(new robottest::FindPIDTest());
 	manager.add(new robottest::MoveTest());
 

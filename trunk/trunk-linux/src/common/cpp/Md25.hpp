@@ -17,6 +17,8 @@
 #ifndef 	PMX_MD25_HPP
 #define	PMX_MD25_HPP
 
+#include <stdint.h>
+
 #include "ARobotElement.hpp"
 #include "HostI2cBus.hpp"
 #include "LoggerFactory.hpp"
@@ -110,6 +112,7 @@ public:
 	Md25(pmx::Robot & robot);
 
 	void init();
+	void setup();
 
 	bool isConnected()
 	{
@@ -119,11 +122,10 @@ public:
 	/*!
 	 * \brief Read encoder for channel 1 or 2.
 	 *
-	 * \return              O on success, sum of -1 on write error and  -2 on read error.
 	 * \param value         32-bit signed long value of current encoder value for channel 1 or 2.
 	 * \param MD25Register  Choose MD25_ENCODER1_REG ou MD25_ENCODER2_REG.
 	 */
-	int getEncoder(long* value, uchar MD25Register);
+	void getEncoder(long* value, uchar MD25Register);
 
 	/*!
 	 * \brief Read encoder for channel 1 or 2.
@@ -190,12 +192,7 @@ public:
 	 */
 	int getMode(void);
 
-	/*!
-	 * \brief get the errors.
-	 *
-	 * \return   return the count of errors.
-	 */
-	int getNbErrors(void);
+
 
 	/*!
 	 * \brief set system mode.
@@ -246,29 +243,30 @@ public:
 	 *
 	 * Effect of value is dependent on system mode.
 	 *
-	 * \return 0 on success, the read value on error.
 	 * \param   speed   speed register for channel  (-128->127)
 	 * \param   MD25_SPEED1_REG or MD25_SPEED2_REG
 	 */
-	int setSpeedReg(int speed, uchar reg);
+	void setSpeedReg(int speed, uchar reg);
 
 	/*!
 	 * \brief switch motor (1 or 2) off.
-	 * \return 	nb d'erreur
 	 * \param   MD25_SPEED1_REG or MD25_SPEED2_REG
 	 */
-	int stopMotor(uchar reg);
+	void stopMotor(uchar reg);
 
 	/*!
 	 * \brief switch both motors off.
 	 */
-	int stopMotors(void);
+	void stopMotors(void);
 
 private:
 
+	uchar getValue(uchar reg);
+
 	void write_i2c(uchar command, uchar value);
 
-	int read_i2c(uchar command);
+	uchar read_i2c(uchar command);
+	int read_i2c_4Bytes(uchar reg, uint8_t *data);
 
 };
 }

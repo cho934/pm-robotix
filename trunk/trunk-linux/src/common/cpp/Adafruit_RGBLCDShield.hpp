@@ -18,9 +18,11 @@
 
 //#include <inttypes.h>
 
+#include <stddef.h>
 #include <stdint.h>
 
 #include "Adafruit_MCP23017.hpp"
+#include "LoggerFactory.hpp"
 #include "Print.hpp"
 
 // commands
@@ -67,16 +69,25 @@
 #define BUTTON_RIGHT 0x02
 #define BUTTON_SELECT 0x01
 
+namespace pmx
+{
 class Adafruit_RGBLCDShield : public Print
 {
+	/*!
+		 * \brief Retourne le \ref Logger associé à la classe \ref Md25.
+		 */
+		static const utils::Logger & logger()
+		{
+			static const utils::Logger & instance = utils::LoggerFactory::logger("pmx::Adafruit_RGBLCDShield");
+			return instance;
+		}
+
+		bool connected_;
 public:
 	Adafruit_RGBLCDShield();
 	virtual ~Adafruit_RGBLCDShield()
 	{
 	}
-
-	//void init(uint8_t fourbitmode, uint8_t rs, uint8_t rw, uint8_t enable, uint8_t d0, uint8_t d1, uint8_t d2,
-	//		uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7);
 
 	void begin(uint8_t cols, uint8_t rows, uint8_t charsize = LCD_5x8DOTS);
 
@@ -131,7 +142,8 @@ private:
 	uint8_t _numlines, _currline;
 
 	uint8_t _i2cAddr;
-	Adafruit_MCP23017 _i2c;
+	pmx::Adafruit_MCP23017 _i2c;
 };
+}
 
 #endif

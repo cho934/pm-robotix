@@ -56,65 +56,29 @@ static inline uint8_t wirerecv(void)
 */
 ////////////////////////////////////////////////////////////////////////////////
 
-void Adafruit_MCP23017::begin(uint8_t addr)
+
+void pmx::Adafruit_MCP23017::begin(void)
 {
-	/*
-	 if (addr > 7)
-	 {
-	 addr = 7;
-	 }
-	 i2caddr = addr;
 
-	 WIRE.begin();
 
-	 // set defaults!
-	 WIRE.beginTransmission(MCP23017_ADDRESS | i2caddr);
-	 wiresend(MCP23017_IODIRA);
-	 wiresend(0xFF);  // all inputs on port A
-	 WIRE.endTransmission();
-
-	 WIRE.beginTransmission(MCP23017_ADDRESS | i2caddr);
-	 wiresend(MCP23017_IODIRB);
-	 wiresend(0xFF);  // all inputs on port B
-	 WIRE.endTransmission();
-
-	 */
-}
-
-void Adafruit_MCP23017::begin(void)
-{
-	//begin(0);
-
-	try
-	{
+	//try
+	//{
 		//open i2c and setslave
 		MCP_i2c_.open(MCP23017_ADDRESS);
 
 		//setup
-		/*
-		 // set defaults!
-		 WIRE.beginTransmission(MCP23017_ADDRESS | i2caddr);
-		 wiresend(MCP23017_IODIRA);
-		 wiresend(0xFF);  // all inputs on port A
-		 WIRE.endTransmission();
-
-		 WIRE.beginTransmission(MCP23017_ADDRESS | i2caddr);
-		 wiresend(MCP23017_IODIRB);
-		 wiresend(0xFF);  // all inputs on port B
-		 WIRE.endTransmission();
-		 */
 		write_i2c(MCP23017_IODIRA, 0xFF); // all inputs on port A
 		write_i2c(MCP23017_IODIRB, 0xFF); // all inputs on port B
 
-	} catch (utils::Exception * e)
+	/*} catch (utils::Exception * e)
 	{
 
 		logger().error() << "begin()::Exception - Adafruit_MCP23017 NOT CONNECTED !!! (... test) " //<< e->what()
 				<< utils::end;
-	}
+	}*/
 }
 
-void Adafruit_MCP23017::pinMode(uint8_t p, uint8_t d)
+void pmx::Adafruit_MCP23017::pinMode(uint8_t p, uint8_t d)
 {
 	uint8_t iodir;
 	uint8_t iodiraddr;
@@ -160,7 +124,7 @@ void Adafruit_MCP23017::pinMode(uint8_t p, uint8_t d)
 	write_i2c(iodiraddr, iodir);
 }
 
-uint16_t Adafruit_MCP23017::readGPIOAB()
+uint16_t pmx::Adafruit_MCP23017::readGPIOAB()
 {
 	uint16_t ba = 0;
 	uint8_t a;
@@ -186,7 +150,7 @@ uint16_t Adafruit_MCP23017::readGPIOAB()
 	return ba;
 }
 
-void Adafruit_MCP23017::writeGPIOAB(uint16_t ba)
+void pmx::Adafruit_MCP23017::writeGPIOAB(uint16_t ba)
 {
 	/*
 	 WIRE.beginTransmission(MCP23017_ADDRESS | i2caddr);
@@ -203,7 +167,7 @@ void Adafruit_MCP23017::writeGPIOAB(uint16_t ba)
 
 }
 
-void Adafruit_MCP23017::digitalWrite(uint8_t p, uint8_t d)
+void pmx::Adafruit_MCP23017::digitalWrite(uint8_t p, uint8_t d)
 {
 	uint8_t gpio;
 	uint8_t gpioaddr, olataddr;
@@ -254,7 +218,7 @@ void Adafruit_MCP23017::digitalWrite(uint8_t p, uint8_t d)
 	 WIRE.endTransmission();*/
 }
 
-void Adafruit_MCP23017::pullUp(uint8_t p, uint8_t d)
+void pmx::Adafruit_MCP23017::pullUp(uint8_t p, uint8_t d)
 {
 	uint8_t gppu;
 	uint8_t gppuaddr;
@@ -301,7 +265,7 @@ void Adafruit_MCP23017::pullUp(uint8_t p, uint8_t d)
 	 WIRE.endTransmission();*/
 }
 
-uint8_t Adafruit_MCP23017::digitalRead(uint8_t p)
+uint8_t pmx::Adafruit_MCP23017::digitalRead(uint8_t p)
 {
 	uint8_t gpioaddr;
 
@@ -330,29 +294,27 @@ uint8_t Adafruit_MCP23017::digitalRead(uint8_t p)
 
 }
 
-void Adafruit_MCP23017::write_i2c(uchar command, uchar value)
+void pmx::Adafruit_MCP23017::write_i2c(uchar command, uchar value)
 {
 	MCP_i2c_.writeRegValue(MCP23017_ADDRESS, command, value);
 }
 
-int Adafruit_MCP23017::read_i2c(uchar command)
+int pmx::Adafruit_MCP23017::read_i2c(uchar command)
 {
 	uchar receivedVal = 0;
 	MCP_i2c_.readRegValue(MCP23017_ADDRESS, command, &receivedVal);
 	return receivedVal;
 }
 
-void Adafruit_MCP23017::writeI2c_3Bytes(const char *buf)
+void pmx::Adafruit_MCP23017::writeI2c_3Bytes(const char *buf)
 {
 	MCP_i2c_.writeI2cSize(MCP23017_ADDRESS, buf, 3);
 }
 
-
-
-
-char* Adafruit_MCP23017::readI2c_2Byte()
+char* pmx::Adafruit_MCP23017::readI2c_2Byte()
 {
-	char buf[2]; //TODO voir avec chaff
+	//char buf[2];
+	char *buf = (char *)calloc(2, sizeof(char));
 	MCP_i2c_.readI2cSize(MCP23017_ADDRESS, buf, 2);
 	return buf;
 }

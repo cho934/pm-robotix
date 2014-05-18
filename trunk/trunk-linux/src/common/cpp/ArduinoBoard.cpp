@@ -44,7 +44,9 @@ void pmx::ArduinoBoard::init()
 // function for launch command
 int pmx::ArduinoBoard::launchCmd(const char command[3], const char action[10])
 {
-	if (!connected_)
+	logger().debug() << "launchCmd() : action=" << action << utils::end;
+
+	if (!connected_ && strcmp(command, "ACK") !=0)
 	{
 		logger().error() << "launchCmd() : ArduinoBoard(" << addr_ << ") NOT CONNECTED !" << utils::end;
 		return 0;
@@ -52,26 +54,12 @@ int pmx::ArduinoBoard::launchCmd(const char command[3], const char action[10])
 
 	int ret = 0;
 
-	try
-	{
-		writeI2c_3Bytes(command);
-	} catch (utils::Exception * e)
-	{
-		logger().error() << "Exception launchCmd() : write i2c : action=" << action << " - " << e->what()
-				<< utils::end;
-	}
+	writeI2c_3Bytes(command);
 
 	// give arduino some reaction time
-	usleep(1000); //TODO ?
+	usleep(1000); //TODO give arduino some reaction time?
 
-	try
-	{
-		ret = readI2c_1Byte();
-	} catch (utils::Exception * e)
-	{
-		logger().error() << "Exception testCommand() : read i2c" << e->what() << utils::end;
-	}
-
+	ret = readI2c_1Byte();
 	// check response: 0 = error / 1 = success
 	if (ret == 1 || ret ==125)
 	{

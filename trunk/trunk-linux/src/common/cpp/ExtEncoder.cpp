@@ -21,7 +21,6 @@ pmx::ExtEncoder::ExtEncoder(pmx::Robot & robot, char slave_select_port_letter, i
 		logger().debug() << "ss_port_=" << ss_port_ << " ss_pin_=" << ss_pin_ << utils::end;
 
 		gpio_->openIoctl(ss_port_, ss_pin_);
-
 		gpio_->setDirIoctl(1);
 
 		this->counterSize = 4; //n-byte counter
@@ -30,19 +29,20 @@ pmx::ExtEncoder::ExtEncoder(pmx::Robot & robot, char slave_select_port_letter, i
 		this->prevDiff = 0; //difference in coundt from previous read
 
 		ss_pin_set(1);
-		logger().debug() << "ss_pin_set(1); ok " << utils::end;
 
-		logger().debug() << "test0003 " << utils::end;
 		utils::HostSpiBus::instance().open();
 		long speed = utils::HostSpiBus::instance().getSpeed();
 		std::cout << " Encoder spi speed = " << speed << std::endl;
-		logger().debug() << "test0004 " << utils::end;
 
-		logger().debug() << "test0005 " << utils::end;
+		//singleByteWrite(WRITE_MDR0, QUADRX4|FREE_RUN|INDX_LOADC|SYNCH_INDX|FILTER_2);
+		//singleByteWrite(WRITE_MDR1, IDX_FLAG|CMP_FLAG|BYTE_2|EN_CNTR);
+
 		//init MDR0  and MDR1
-		this->initialize(0x00, 0x00); //x4 and 4 bytes
-		logger().debug() << "test0006 " << utils::end;
-
+		int mdr0 = QUADRX4 | FREE_RUN | DISABLE_INDX | ASYNCH_INDX | FILTER_1;
+		int mdr1 = NO_FLAGS | EN_CNTR | BYTE_4;
+		logger().debug() << "MDR0=" << reinterpret_cast<void*>(mdr0) << "\t MDR1=" << reinterpret_cast<void*>(mdr1)
+				<< utils::end;
+		this->setup(mdr0, mdr1);
 	} catch (utils::Exception * e)
 	{
 		logger().error() << "Exception ExtEncoder::ExtEncoder: " << e->what() << utils::end;
@@ -65,7 +65,7 @@ void pmx::ExtEncoder::ss_pin_set(int value)
 /*!
  Initialize the encoder to the SPI with your own desired parameters
  */
-void pmx::ExtEncoder::initialize(int setup_mdr0, int setup_mdr1)
+void pmx::ExtEncoder::setup(int setup_mdr0, int setup_mdr1)
 {
 	this->counterSize = (4 - (((BYTE) setup_mdr1) & 0x03)); //n-byte counter
 
@@ -120,24 +120,36 @@ void pmx::ExtEncoder::clearStatus(void)
 /*!
  Used for reading the counter
  */
-unsigned long long pmx::ExtEncoder::readCounter(void)
+long long pmx::ExtEncoder::readCounter(void)
 {
 	readStatus(); //read status before read otherwise it doesn't work
+	long long counter = 0;
+	unsigned long long data = 0;
+	unsigned long long fulldata = 0;
 
 	lock();
-	unsigned long long data;
-	unsigned long long returnVal = 0;
 	ss_pin_set(0);
 	this->spiTransfer(READ_COUNTER);
 
 	for (char i = this->counterSize; i > 0; i--)
 	{
 		data = this->spiTransfer(0x00);
-		returnVal = returnVal * 255 + data;
+		fulldata = fulldata * 255 + data;
 	}
 	ss_pin_set(1); //release device
 	unlock();
-	return returnVal;
+
+	//logger().debug() << "fulldata =  " << fulldata << utils::end;
+
+	if (fulldata > 4244897280 / 2)
+	{
+		counter = -(((long long) 4244897280) - fulldata);
+	}
+	else
+	{
+		counter = fulldata;
+	}
+	return counter;
 }
 
 /*!

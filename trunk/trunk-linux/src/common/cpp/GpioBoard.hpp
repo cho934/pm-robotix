@@ -17,7 +17,7 @@
 //  with no jumpers the full address is   1 0 0 1 1 1    1 0 0 A2 A1 A0  0x27 is the default address for the DFR0013 board with no jumpers.
 // 0x27 is default address for the DFR0013 board with no jumpers.
 // 0x20 is address for the DFR0013 board with all jumpers.
-#define GPIOBOARD_PCA9555		 0x20
+#define GPIOBOARD_PCA9555		 0x24
 
 
 // COMMAND BYTE TO REGISTER RELATIONSHIP FROM PCA9555 DATA SHEET

@@ -7,6 +7,7 @@
 #include "Robot.hpp"
 #include "Exception.hpp"
 #include "HostI2cBus.hpp"
+#include "LedIndicator.hpp"
 
 pmx::Robot::Robot()
 		: base_(*this), myColor_(pmx::PMXNOCOLOR), runMode_(pmx::ROBOTHOMOLOGATION), groveColorSensor_(*this), ledBar_(
@@ -18,13 +19,12 @@ pmx::Robot::Robot()
 
 	//initialize i2C components
 	groveColorSensor_.init();
-	md25_.init();
 	arduinoBoardDuemilanove_.init();
 	arduinoBoardMega_.init();
 	arduinoBoardSeeed_.init();
 	gpioBoard_.init();
-
 	lcdBoard_.begin(16, 2);
+	md25_.init();
 
 	//Led indicator initialisation
 	pmx::LedIndicator::instance().reset();

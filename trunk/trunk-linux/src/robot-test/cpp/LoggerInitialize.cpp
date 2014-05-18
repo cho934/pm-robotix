@@ -25,9 +25,9 @@ void utils::LoggerFactory::initialize()
 	add(utils::Level::INFO, "robottest::IrSensorsGroupTest", "console");
 	add(utils::Level::INFO, "robottest::ServoMotorDxlTest", "console");
 	add(utils::Level::INFO, "robottest::Md25Test", "console");
+	add(utils::Level::INFO, "robottest::Md25EncoderTest", "console");
 	add(utils::Level::INFO, "robottest::ArduinoTest", "console");
 	add(utils::Level::INFO, "robottest::GpioBoardTest", "console");
-
 
 	//add(utils::Level::DEBUG, "pmx::Robot", "console");
 	//add(utils::Level::DEBUG, "pmx::GroveColorSensor", "console");
@@ -38,7 +38,6 @@ void utils::LoggerFactory::initialize()
 	//add(utils::Level::DEBUG, "pmx::ServoMotorDxlObject", "console");
 	//add(utils::Level::DEBUG, "pmx::ServoMotorDxl", "console");
 	//add(utils::Level::DEBUG, "pmx::GpioBoard", "console");
-	//add(utils::Level::DEBUG, "pmx::Md25", "console");
-
+	add(utils::Level::DEBUG, "pmx::Md25", "console");
 
 }

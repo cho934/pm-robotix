@@ -47,8 +47,8 @@ void robottest::GroveColorTest::run(int argc, char *argv[])
 	int in7=0;
 	for (int i = 0; i < nb; i++)
 	{
-		//in7 = robot.gpioBoard().getValueP1(7);
-		//logger().info() << " in7=" << in7 << utils::end;
+		in7 = robot.gpioBoard().getValueP1(7);
+		logger().info() << " in7=" << in7 << utils::end;
 		// drive some gpioboard tests
 		logger().info() << "P0 ON" << utils::end;
 		robot.gpioBoard().setOnP0(0);

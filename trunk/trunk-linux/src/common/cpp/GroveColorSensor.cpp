@@ -23,8 +23,12 @@ void pmx::GroveColorSensor::init()
 		//open i2c and setslave
 		grovei2c_.open(GROVE_COLOR_DEFAULT_ADDRESS);
 
+		//0x80 1000 0000 //write to Control register
+		//0x01 0000 0001 //Turn the device on (does not enable ADC yet)
+		write_i2c(0x80, 0x01);
+
 		// Request ID to test if TCS3414 is connected
-		uchar ID;
+		uchar ID = 0;
 		//0x84 1000 0100 //get information from ID register (04h)
 		ID = read_i2c(0x84); //ID 0001 0000 (first byte == 0001 (TCS: 3413,3414,3415,3416) or 0000 (TCS: 3404).
 		if (ID == 17) //0000 0001 || 0001 0001
@@ -35,7 +39,7 @@ void pmx::GroveColorSensor::init()
 		}
 		else
 		{
-			logger().error() << "init() : TCS3414 is now OFF, ID=" << (int) ID  << " not eq 17 !"<< utils::end;
+			logger().error() << "init() : TCS3414 is now OFF, ID=" << (int) ID << " not eq 17 !" << utils::end;
 		}
 	} catch (utils::Exception * e)
 	{

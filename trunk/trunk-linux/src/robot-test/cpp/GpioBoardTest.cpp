@@ -11,7 +11,6 @@
 #include <iostream>
 
 #include "../../common/cpp/Logger.hpp"
-//#include "../../common/cpp/LoggerFactory.hpp"
 #include "../../common/cpp/Robot.hpp"
 
 void robottest::GpioBoardTest::run(int argc, char *argv[])
