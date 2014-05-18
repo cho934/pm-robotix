@@ -3,20 +3,30 @@
  * \brief Implémentation de la classe Robot.
  */
 
-#include <iostream>
 #include "Robot.hpp"
-#include "Exception.hpp"
-#include "HostI2cBus.hpp"
+
+#include <unistd.h>
+//#include <iostream>
+
+#include "Configuration.hpp"
+//#include "Exception.hpp"
+//#include "HostI2cBus.hpp"
+#include "HostSpiBus.hpp"
 #include "LedIndicator.hpp"
 
 pmx::Robot::Robot()
 		: base_(*this), myColor_(pmx::PMXNOCOLOR), runMode_(pmx::ROBOTHOMOLOGATION), groveColorSensor_(*this), ledBar_(
 				*this), md25_(*this), encoderLeft_(*this, 'B', 17), encoderRight_(*this, 'D', 31),
 		//servoTest_(*this, 0),
-		servoDxlTest_(*this), irSensorsGroup_(*this), arduinoBoardDuemilanove_(*this, 0x2A), arduinoBoardMega_(*this,
-				0x2B), arduinoBoardSeeed_(*this, 0x2C), gpioBoard_(*this), lcdBoard_()
+		servoDxlTest_(*this),
+		irSensorsGroup_(*this),
+		arduinoBoardDuemilanove_(*this, 0x2A),
+		arduinoBoardMega_(*this, 0x2B),
+		arduinoBoardSeeed_(*this, 0x2C),
+		gpioBoard_(*this),
+		lcdBoard_()
 {
-
+/*
 	//initialize i2C components
 	groveColorSensor_.init();
 	arduinoBoardDuemilanove_.init();
@@ -25,6 +35,8 @@ pmx::Robot::Robot()
 	gpioBoard_.init();
 	lcdBoard_.begin(16, 2);
 	md25_.init();
+*/
+	servoDxlTest_.begin();
 
 	//Led indicator initialisation
 	pmx::LedIndicator::instance().reset();
@@ -70,13 +82,9 @@ void pmx::Robot::stop()
 
 	this->stopDevices();
 	logger().debug() << "before  stopManagers" << utils::end;
-	try
-	{
-		this->stopManagers();
-	} catch (Exception e)
-	{
-		logger().error() << "Exception Robot : " << e.what() << utils::end;
-	}
+
+	this->stopManagers();
+
 	logger().debug() << "after stopManagers" << utils::end;
 }
 
