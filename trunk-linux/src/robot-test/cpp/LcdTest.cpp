@@ -15,6 +15,7 @@ void robottest::LcdTest::run(int, char *[])
 	//robot.start();
 
 	robot.lcdBoard().setBacklight(RED);
+
 	robot.lcdBoard().clear();
 
 	robot.lcdBoard().print("PMX");

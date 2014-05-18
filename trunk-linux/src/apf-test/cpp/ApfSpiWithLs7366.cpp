@@ -15,40 +15,46 @@ void test::ApfSpiWithLs7366::run(int, char*[])
 
 	Encoder *LeftEnc = new Encoder('B', 17);
 	Encoder *RightEnc = new Encoder('D', 31);
-/*
-	for (int i = 0; i < 500; i++)
-	{
-		LeftEnc->ss_pin_set(0);
-		usleep(1000);
-		LeftEnc->ss_pin_set(1);
-		usleep(4000);
-		RightEnc->ss_pin_set(0);
-		usleep(1000);
-		RightEnc->ss_pin_set(1);
-		usleep(4000);
-	}
-	usleep(2000000);
+	/*
+	 for (int i = 0; i < 500; i++)
+	 {
+	 LeftEnc->ss_pin_set(0);
+	 usleep(1000);
+	 LeftEnc->ss_pin_set(1);
+	 usleep(4000);
+	 RightEnc->ss_pin_set(0);
+	 usleep(1000);
+	 RightEnc->ss_pin_set(1);
+	 usleep(4000);
+	 }
+	 usleep(2000000);
 
 
-	for (int i = 0; i < 500; i++)
-	{
-		LeftEnc->ss_pin_set(0);
-		usleep(1000);
-		LeftEnc->ss_pin_set(1);
-		usleep(4000);
-		RightEnc->ss_pin_set(0);
-		usleep(1000);
-		RightEnc->ss_pin_set(1);
-		usleep(4000);
-	}
-*/
+	 for (int i = 0; i < 500; i++)
+	 {
+	 LeftEnc->ss_pin_set(0);
+	 usleep(1000);
+	 LeftEnc->ss_pin_set(1);
+	 usleep(4000);
+	 RightEnc->ss_pin_set(0);
+	 usleep(1000);
+	 RightEnc->ss_pin_set(1);
+	 usleep(4000);
+	 }
+	 */
 
 	unsigned char statusL = 0;
 	unsigned long counterL = 0;
 	unsigned char statusR = 0;
 	unsigned long counterR = 0;
-	LeftEnc->initialize(0x00, 0x00); //x4 and 4 bytes
-	RightEnc->initialize(0x00, 0x00); //x4 and 4 bytes
+
+	int mdr0 = QUADRX1 | FREE_RUN | DISABLE_INDX | ASYNCH_INDX | FILTER_1;
+	int mdr1 = NO_FLAGS | EN_CNTR | BYTE_4;
+
+	LeftEnc->initialize(mdr0, mdr1); //non quadrature and 4 bytes
+	RightEnc->initialize(mdr0, mdr1); //non quadrature and 4 bytes
+	//LeftEnc->initialize(0x03, 0x00); //x4 and 4 bytes
+	//RightEnc->initialize(0x03, 0x00); //x4 and 4 bytes
 	usleep(1000);
 
 	for (int i = 0; i < 200; i++)
@@ -56,7 +62,7 @@ void test::ApfSpiWithLs7366::run(int, char*[])
 
 		usleep(5000);
 
-		//usleep(100000);
+		usleep(100000);
 
 		counterL = LeftEnc->readCounter();
 		//usleep(1000);
@@ -68,25 +74,13 @@ void test::ApfSpiWithLs7366::run(int, char*[])
 		statusR = RightEnc->readStatus();
 		//usleep(1000);
 
-		std::cout << "counterL = " << counterL << " ------ counterR = "
-				<< counterR << "----- statusL  = "
-				<< reinterpret_cast<void*>(statusL) << "------statusR  = "
-				<< reinterpret_cast<void*>(statusR) << std::endl;
+		std::cout << "counterL = " << counterL << " \t------ counterR = " << counterR << " \t\t----- statusL  = "
+				<< reinterpret_cast<void*>(statusL) << " \t------statusR  = " << reinterpret_cast<void*>(statusR)
+				<< std::endl;
 
 		//std::cout << "statusL  = " << (int) statusL << "------statusR  = "	<< (int) statusR << std::endl;
 
-		//std::cout << std::endl;
-		//usleep(100000);
-		/*
-		 LeftEnc->ss_pin_set(0);
-		 usleep(1000);
-		 LeftEnc->ss_pin_set(1);
 
-		 usleep(10000);
-		 RightEnc->ss_pin_set(0);
-		 usleep(1000);
-		 RightEnc->ss_pin_set(1);
-		 usleep(10000);*/
 	}
 	/*
 

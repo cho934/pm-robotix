@@ -5,7 +5,7 @@
 
 #include "LedIndicator.hpp"
 
-//#include <unistd.h>
+#include <unistd.h>
 
 
 void pmx::LedIndicator::set(int position, int status)

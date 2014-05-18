@@ -25,7 +25,7 @@ void robottest::Md25Test::run(int argc, char *argv[])
 	if (argc < 7)
 	{
 		std::cout << "USAGE: PMX_TEST " << argv[1]
-				<< " [speedL(1)(0=>255)] [speedR(2)(0=>255)] [dist(tick)] [Acc:1,2,3,5,10] [Regulation:0,1]"
+				<< " [speedL(1)(0=>128=>255)] [speedR(2)(0=>128 =>255)] [dist(tick)] [Acc:1,2,3,5,10] [Regulation:0,1]"
 				<< std::endl;
 	}
 
@@ -104,10 +104,10 @@ void robottest::Md25Test::run(int argc, char *argv[])
 	chrono.start();
 
 	long now = chrono.getElapsedTimeInMicroSec();
-	long prec = now;
+	//long prec = now;
 
-	//config MD25
-	robot.md25().setMode(MD25_MODE_0); //mode0 => 0-128-255
+	//config MD25 //TODO mettre dans setup MD25
+	robot.md25().setMode(MD25_MODE_0); //mode0 => 0->128->255  ;  mode1 => -128+127
 	robot.md25().setAccelerationRate(acc); //Acc:1,2,3,5,10
 
 	robot.md25().setCommand(MD25_ENABLE_SPEED_REGULATION);
@@ -130,24 +130,21 @@ void robottest::Md25Test::run(int argc, char *argv[])
 	while (abs(encoder1) < abs(dist) && abs(encoder2) < abs(dist))
 	{
 
-		encoder1 = robot.md25().ensureGetEncoder(encoder1, MD25_ENCODER1_REG);
-		encoder2 = robot.md25().ensureGetEncoder(encoder2, MD25_ENCODER2_REG);
+		encoder1 = robot.md25().ensureGetEncoder(0, MD25_ENCODER1_REG);
+		encoder2 = robot.md25().ensureGetEncoder(0, MD25_ENCODER2_REG);
 
-		logger().info() << "MD25:getEncoder1 L: " << encoder1 << " getEncoder2 R: " << encoder2 << utils::end;
+		logger().info() << "MD25:getEncoder1 L: " << encoder1 << " \t getEncoder2 R: " << encoder2 << utils::end;
+		usleep(200000);
 
-		int err = robot.md25().getNbErrors();
-		if (err > 10)
-		{
-			logger().error() << "-------------" << err << utils::end;
-			break;
-		}
 	}
 	logger().info() << "End - stopMotors" << utils::end;
 	now = chrono.getElapsedTimeInMicroSec();
 	robot.md25().stopMotors();
 
-	encoder1 = robot.md25().ensureGetEncoder(encoder1, MD25_ENCODER1_REG);
-	encoder2 = robot.md25().ensureGetEncoder(encoder2, MD25_ENCODER2_REG);
+	usleep(1000000);
+
+	encoder1 = robot.md25().ensureGetEncoder(0, MD25_ENCODER1_REG);
+	encoder2 = robot.md25().ensureGetEncoder(0, MD25_ENCODER2_REG);
 
 	logger().info() << "MD25:getEncoder1: " << encoder1 << " getEncoder2: " << encoder2 << utils::end;
 	logger().info() << "Arrived : dist(tick)=" << dist << " dist(mm)= " << dist << utils::end;

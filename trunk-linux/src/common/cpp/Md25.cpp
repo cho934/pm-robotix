@@ -8,7 +8,6 @@
 #include <unistd.h>
 
 #include "Exception.hpp"
-//#include "HostI2cBus.hpp"
 #include "Logger.hpp"
 
 pmx::Md25::Md25(pmx::Robot & robot)
@@ -27,7 +26,12 @@ void pmx::Md25::init()
 		int soft = getSoftwareVersion();
 		logger().debug() << "soft=" << soft << utils::end;
 		if (soft == 3)
+		{
 			connected_ = true;
+
+			//SETUP MD25
+			setup();
+		}
 		else
 		{
 			logger().error() << "init() : MD25 is now OFF, Software=" << (int) soft << " not eq 3 !" << utils::end;
@@ -40,6 +44,14 @@ void pmx::Md25::init()
 	}
 }
 
+void pmx::Md25::setup()
+{
+	setMode(MD25_MODE_1); //mode0 => 0-128-255   ;  mode1 => -128+127
+	setAccelerationRate(10); //Acc:1,2,3,5,10
+	setCommand(MD25_ENABLE_SPEED_REGULATION);
+	setCommand(MD25_RESET_ENCODERS);
+}
+
 int pmx::Md25::getSoftwareVersion(void)
 {
 	uchar val = 0;
@@ -49,180 +61,98 @@ int pmx::Md25::getSoftwareVersion(void)
 
 float pmx::Md25::getBatteryVolts(void)
 {
-	if (!connected_)
-	{
-		logger().error() << "getBatteryVolts : return 0; MD25 NOT CONNECTED !" << utils::end;
-		return 0.0;
-	}
-	uchar val = 0;
-	try
-	{
-		val = read_i2c(MD25_VOLTAGE_REG);
-	} catch (utils::Exception * e)
-	{
-		logger().error() << "Exception getBatteryVolts: return 0; " << e->what() << utils::end;
-		val = 0;
-	}
-	return (float) val / 10.0;
+	return (float) getValue(MD25_VOLTAGE_REG) / 10.0;
 }
 
 int pmx::Md25::getAccelerationRate()
 {
-	if (!connected_)
-	{
-		logger().error() << "getAccelerationRate : return 0; MD25 NOT CONNECTED !" << utils::end;
-		return 0.0;
-	}
-	uchar val = 0;
-	try
-	{
-		////int err = utils::HostI2cBus::instance().readRegisterbyte(MD25_ACCELRATE_REG, &val);
-		val = read_i2c(MD25_ACCELRATE_REG);
-	} catch (utils::Exception * e)
-	{
-		logger().error() << "Exception getAccelerationRate: " << e->what() << utils::end;
-	}
-	return val;
+	return getValue(MD25_ACCELRATE_REG);
 }
 
 int pmx::Md25::getMotor1Speed(void)
 {
-	if (!connected_)
-	{
-		logger().error() << "Md25::getMotor1Speed : return 0; MD25 NOT CONNECTED !" << utils::end;
-		return 0.0;
-	}
-	uchar val = 0;
-	try
-	{
-		////int err = utils::HostI2cBus::instance().readRegisterbyte(MD25_SPEED1_REG, &val);
-		val = read_i2c(MD25_SPEED1_REG);
-	} catch (utils::Exception * e)
-	{
-		logger().error() << "Exception getMotor1Speed: " << e->what() << utils::end;
-	}
-	return val;
+	return getValue(MD25_SPEED1_REG);
 }
 
 int pmx::Md25::getMotor2Speed(void)
 {
-	if (!connected_)
-	{
-		logger().error() << "Md25::getMotor2Speed : return 0; MD25 NOT CONNECTED !" << utils::end;
-		return 0.0;
-	}
-	uchar val = 0;
-	try
-	{
-		////int err = utils::HostI2cBus::instance().readRegisterbyte(MD25_SPEED2_REG, &val);
-		val = read_i2c(MD25_SPEED2_REG);
-	} catch (utils::Exception * e)
-	{
-		logger().error() << "Exception getMotor2Speed: " << e->what() << utils::end;
-	}
-	return val;
+	return getValue(MD25_SPEED2_REG);
 }
 
 int pmx::Md25::getMotor1Current(void)
 {
-	if (!connected_)
-	{
-		logger().error() << "Md25::getMotor1Current : return 0 : MD25 NOT CONNECTED !" << utils::end;
-		return 0.0;
-	}
-	uchar val = 0;
-	try
-	{
-		////int err = utils::HostI2cBus::instance().readRegisterbyte(MD25_CURRENT1_REG, &val);
-		val = read_i2c(MD25_CURRENT1_REG);
-	} catch (utils::Exception * e)
-	{
-		logger().error() << "Exception getMotor1Current: " << e->what() << utils::end;
-	}
-	return val;
+	return getValue(MD25_CURRENT1_REG);
 }
 
 int pmx::Md25::getMotor2Current(void)
 {
-	if (!connected_)
-	{
-		logger().error() << "Md25::getMotor2Current : return 0 : MD25 NOT CONNECTED !" << utils::end;
-		return 0.0;
-	}
-	uchar val = 0;
-	try
-	{
-		////int err = utils::HostI2cBus::instance().readRegisterbyte(MD25_CURRENT2_REG, &val);
-		val = read_i2c(MD25_CURRENT2_REG);
-	} catch (utils::Exception * e)
-	{
-		logger().error() << "Exception getMotor2Current: " << e->what() << utils::end;
-	}
-	return val;
+	return getValue(MD25_CURRENT2_REG);
 }
 
 int pmx::Md25::getMode(void)
 {
+	return getValue(MD25_MODE_REG);
+}
+
+uchar pmx::Md25::getValue(uchar reg)
+{
 	if (!connected_)
 	{
-		logger().error() << "Md25::getMode : return 0 : MD25 NOT CONNECTED !" << utils::end;
-		return 0.0;
+		logger().error() << "Md25::getCommand : return 0; MD25 NOT CONNECTED !" << utils::end;
+		return 0;
 	}
 	uchar val = 0;
 	try
 	{
-		////int err = utils::HostI2cBus::instance().readRegisterbyte(MD25_MODE_REG, &val);
-		val = read_i2c(MD25_MODE_REG);
+		val = read_i2c(reg);
 	} catch (utils::Exception * e)
 	{
-		logger().error() << "Exception getMode: " << e->what() << utils::end;
+		logger().error() << "Exception getCommand: " << e->what() << utils::end;
 	}
 	return val;
+
 }
 
-int pmx::Md25::getNbErrors(void)
-{
-	//TODO return errorCount_;
-	return 0;
-}
-
-int pmx::Md25::getEncoder(long *pvalue, uchar MD25Register)
+void pmx::Md25::getEncoder(long *pvalue, uchar MD25Register) //TODO void
 {
 	if (!connected_)
 	{
 		logger().error() << "getEncoder : return 0 : MD25 NOT CONNECTED !" << utils::end;
-		return 0.0;
+		return;
 	}
 	uchar encoder2 = 0;
 	uchar encoder5 = 0;
 	uchar encoder4 = 0;
 	uchar encoder3 = 0;
-	int err = 0;
-	try
-	{
-		////err = utils::HostI2cBus::instance().readRegisterbyte(MD25Register, &encoder2);
-		////err += utils::HostI2cBus::instance().readRegisterbyte(MD25Register + 1, &encoder3);
-		////err += utils::HostI2cBus::instance().readRegisterbyte(MD25Register + 2, &encoder4);
-		////err += utils::HostI2cBus::instance().readRegisterbyte(MD25Register + 3, &encoder5);
 
-		encoder2 = read_i2c(MD25Register);
-		encoder3 = read_i2c(MD25Register + 1);
-		encoder4 = read_i2c(MD25Register + 2);
-		encoder5 = read_i2c(MD25Register + 3);
+	encoder2 = read_i2c(MD25Register);
+	encoder3 = read_i2c(MD25Register + 1);
+	encoder4 = read_i2c(MD25Register + 2);
+	encoder5 = read_i2c(MD25Register + 3);
 
-	} catch (utils::Exception * e)
-	{
-		logger().error() << "Exception getEncoder: " << e->what() << utils::end;
-	}
 	*pvalue = (encoder2 << 24) + (encoder3 << 16) + (encoder4 << 8) + encoder5;
 
-	logger().debug() << "getEncoder: " << MD25Register << " " << encoder5 << " " << encoder4 << " " << encoder3
-			<< " " << *pvalue << utils::end;
+	/*
+	 uchar buff[4];
+	 int ret = read_i2c_4Bytes(MD25Register, buff);
 
-	return err;
+	 encoder2 = buff[0];
+	 encoder3 = buff[1];
+	 encoder4 = buff[2];
+	 encoder5 = buff[3];
+
+	 *pvalue = (encoder2 << 24) + (encoder3 << 16) + (encoder4 << 8) + encoder5;
+	 */
+	/*
+	 logger().debug() << "getEncoder: MD25Register=" << reinterpret_cast<void*>(MD25Register) << " "
+	 << reinterpret_cast<void*>(encoder5) << " " << reinterpret_cast<void*>(encoder4) << " "
+	 << reinterpret_cast<void*>(encoder3) << " " << reinterpret_cast<void*>(encoder2) << " " << (long) *pvalue
+	 << utils::end;
+	 */
+
 }
 
-long pmx::Md25::ensureGetEncoder(long last, uchar MD25Register)
+long pmx::Md25::ensureGetEncoder(long, uchar MD25Register)
 {
 	if (!connected_)
 	{
@@ -230,25 +160,35 @@ long pmx::Md25::ensureGetEncoder(long last, uchar MD25Register)
 		return 0.0;
 	}
 	long value = 0;
-	int err = getEncoder(&value, MD25Register);
-	if (err < 0 || value > last + 100) //filtrage par rapport à l'ancienne valeur
+
+	try
 	{
-		value = 0;
-		int err2 = getEncoder(&value, MD25Register);
-		if (err2 < 0 || value > last + 100) //filtrage par rapport à l'ancienne valeur
+		getEncoder(&value, MD25Register);
+
+	} catch (utils::Exception * e)
+	{
+		logger().error() << "1=>ensureGetEncoder::Exception on getEncoder :" << e->what() << utils::end;
+
+		try
 		{
-			return last;
-		}
-		else
+			getEncoder(&value, MD25Register);
+
+		} catch (utils::Exception * e)
 		{
-			return value;
+			logger().error() << "2=>ensureGetEncoder::Exception on getEncoder :" << e->what() << utils::end;
+			try
+			{
+				getEncoder(&value, MD25Register);
+
+			} catch (utils::Exception * e)
+			{
+				logger().error() << "3=>ensureGetEncoder::Exception on getEncoder :" << e->what() << utils::end;
+				getEncoder(&value, MD25Register);
+			}
 		}
 	}
-	else
-	{
-		return value;
-	}
-	return last;
+
+	return value;
 }
 
 void pmx::Md25::setMode(uchar mode)
@@ -260,7 +200,6 @@ void pmx::Md25::setMode(uchar mode)
 	}
 	try
 	{
-		////int err = utils::HostI2cBus::instance().writeRegisterbyte(MD25_MODE_REG, mode);
 		write_i2c(MD25_MODE_REG, mode);
 		current_mode_ = mode;
 	} catch (utils::Exception * e)
@@ -278,7 +217,6 @@ void pmx::Md25::setAccelerationRate(uchar rate)
 	}
 	try
 	{
-		/////int err = utils::HostI2cBus::instance().writeRegisterbyte(MD25_ACCELRATE_REG, rate);
 		write_i2c(MD25_ACCELRATE_REG, rate);
 	} catch (utils::Exception * e)
 	{
@@ -295,7 +233,6 @@ void pmx::Md25::setCommand(uchar command)
 	}
 	try
 	{
-		////int err = utils::HostI2cBus::instance().writeRegisterbyte(MD25_CMD_REG, command);
 		write_i2c(MD25_CMD_REG, command);
 	} catch (utils::Exception * e)
 	{
@@ -321,170 +258,108 @@ void pmx::Md25::ensureSetSpeed(int speed, uchar reg)
 		logger().error() << "ensureSetSpeed : MD25 NOT CONNECTED !" << utils::end;
 		return;
 	}
-	int err = setSpeedReg(speed, reg);
-	if (err != 0)
+	try
 	{
-		logger().info() << "setSpeed1Reg, value=" << speed << " not applied, write again (1) : err=" << err
-				<< utils::end;
-		int err2 = setSpeedReg(speed, reg);
-		if (err2 != 0)
+		setSpeedReg(speed, reg);
+	} catch (utils::Exception * e)
+	{
+		logger().error() << "1=>Exception ensureSetSpeed: setSpeedReg :" << e->what() << utils::end;
+		try
 		{
-			logger().info() << "setSpeed1Reg, value=" << speed << " not applied, write again (2) : err=" << err2
-					<< utils::end;
+			setSpeedReg(speed, reg);
+		} catch (utils::Exception * e)
+		{
+			logger().error() << "2=>Exception ensureSetSpeed: setSpeedReg :" << e->what() << utils::end;
+			try
+			{
+				setSpeedReg(speed, reg);
+			} catch (utils::Exception * e)
+			{
+				logger().error() << "3=>Exception ensureSetSpeed: setSpeedReg :" << e->what() << utils::end;
+				setSpeedReg(speed, reg);
+			}
 		}
 	}
 }
 
-int pmx::Md25::setSpeedReg(int speed, uchar reg)
+void pmx::Md25::setSpeedReg(int speed, uchar reg)
 {
 	if (!connected_)
 	{
 		logger().error() << "setSpeedReg : return 0 : MD25 NOT CONNECTED !" << utils::end;
-		return 0;
+		return;
 	}
-	uchar reading = 0;
-	//int err = 0;
-	try
+	if ((speed < 0 || speed > 255) && (current_mode_ == MD25_MODE_0 || current_mode_ == MD25_MODE_2))
 	{
-		////err = utils::HostI2cBus::instance().writeRegisterbyte(reg, speed);
-		write_i2c(reg, speed);
-	} catch (utils::Exception * e)
-	{
-		logger().error() << "Exception setSpeedReg: write :" << e->what() << utils::end;
+		logger().error() << "setSpeedReg ERROR : MODE=" << current_mode_ << " ; must 0 < speed < 255 !" << utils::end;
+		return;
 	}
-	try
+	if ((speed < -128  || speed > 127) && (current_mode_ == MD25_MODE_1 || current_mode_ == MD25_MODE_3))
 	{
-		////err = utils::HostI2cBus::instance().readRegisterbyte(reg, &read);
-		reading = read_i2c(reg);
-	} catch (utils::Exception * e)
-	{
-		logger().error() << "Exception setSpeedReg: write :" << e->what() << utils::end;
+		logger().error() << "setSpeedReg ERROR : MODE=" << current_mode_ << " ; must -128 < speed < 127 !" << utils::end;
+		return;
 	}
-	//if (current_mode_ == MD25_MODE_1 || current_mode_ == MD25_MODE_3) {
-	//if (speed >= 0) {
-	if (speed == reading)
+
+	write_i2c(reg, speed);
+
+	//Compare with the read register
+	uchar reading = getValue(reg);
+	if (speed != reading)
 	{
-		return 0;
+		logger().error() << "=> ERROR COMPARAISON setSpeedReg" << (int) reg << " : write != read :" << (int) speed
+				<< " / " << (int) reading << utils::end;
 	}
-	else
-	{
-		logger().error() << "setSpeedReg" << (int) reg << " : write / read :" << (int) speed << " / " << (int) read
-				<< utils::end;
-		return reading;
-	}
-	//}else {
-	//    if ((speed + 256) == read) //decalage de 256 par rapport à la lecture.
-	//    {
-	//        return 0;
-	//    }else {
-	//        logger().error() << "setSpeedReg" << (int) reg << " : write / read :" << (int) speed << " / " << (int) read << utils::end;
-	//        return read;
-	//    }
-	//}
-	//}else {
-	//    if (speed == read) {
-	//        return 0;
-	//    }else {
-	//        logger().error() << "setSpeedReg" << (int) reg << " : write / read :" << (int) speed << " / " << (int) read << utils::end;
-	//        return read;
-	//    }
-	//}
 }
 
-int pmx::Md25::stopMotor(uchar reg)
+void pmx::Md25::stopMotor(uchar reg)
 {
 	if (!connected_)
 	{
 		logger().error() << "stopMotor : return 0 : MD25 NOT CONNECTED !" << utils::end;
-		return 0;
+		return;
 	}
-	int nb_err = 0;
 	switch (current_mode_)
 	{
 	case MD25_MODE_0:
 	case MD25_MODE_2:
-		try
-		{
-			/////ret = utils::HostI2cBus::instance().writeRegisterbyte(reg, 128);
-			write_i2c(reg, 128);
-		} catch (utils::Exception * e)
-		{
-			logger().error() << "Exception stopMotor mode 1:" << e->what() << utils::end;
-			nb_err++;
-		}
+		ensureSetSpeed(128, reg);
 		break;
 	case MD25_MODE_1:
 	case MD25_MODE_3:
-		try
-		{
-			////ret = utils::HostI2cBus::instance().writeRegisterbyte(reg, 0);
-			write_i2c(reg, 0);
-		} catch (utils::Exception * e)
-		{
-			logger().error() << "Exception stopMotor mode3:" << e->what() << utils::end;
-			nb_err++;
-		}
+		ensureSetSpeed(0, reg);
 		break;
 	}
-	return nb_err;
 }
 
-int pmx::Md25::stopMotors(void)
+void pmx::Md25::stopMotors(void)
 {
 	if (!connected_)
 	{
 		logger().error() << "stopMotors : return 0 : MD25 NOT CONNECTED !" << utils::end;
-		return 0;
-	}
-	int res1 = stopMotor(MD25_SPEED1_REG);
-	//if (res1 == 0)
-	//logger().debug() << "stopMotor1:ok" << utils::end;
-	int tmp = 0;
-	while (res1 < 0) //try 5 times
-	{
-		logger().error() << "apply stopMotor1: error" << utils::end;
-		res1 = stopMotor(MD25_SPEED1_REG);
-		//if (res1 == 0)
-		//    logger().debug() << "stopMotor1:ok" << utils::end;
-		tmp++;
-		if (tmp > 5)
-		{
-			logger().error() << "stopMotor1: error > 5" << utils::end;
-			return -3;
-		}
+		return;
 	}
 
-	int res2 = stopMotor(MD25_SPEED2_REG);
-	//if (res2 == 0)
-	//    logger().debug() << "stopMotor2:ok" << utils::end;
-	tmp = 0;
-	while (res2 < 0) //try 5 times
-	{
-		logger().error() << "apply stopMotor2: error" << utils::end;
-		res2 = stopMotor(MD25_SPEED2_REG);
-		//if (res2 == 0)
-		//logger().debug() << "stopMotor2:ok" << utils::end;
-		tmp++;
-		if (tmp > 5)
-		{
-			logger().error() << "stopMotor2: error > 5" << utils::end;
-			return -3;
-		}
-	}
-	return 0;
+	stopMotor(MD25_SPEED1_REG);
+	stopMotor(MD25_SPEED2_REG);
 }
 
 void pmx::Md25::write_i2c(uchar command, uchar value)
 {
 	md25_i2c_.writeRegValue(MD25_DEFAULT_ADDRESS, command, value);
-	//utils::HostI2cBus::instance("Md25::write_i2c").writeRegValue(MD25_DEFAULT_ADDRESS, command, value);
 }
 
-int pmx::Md25::read_i2c(uchar command)
+uchar pmx::Md25::read_i2c(uchar command)
 {
 	uchar receivedVal = 0;
 	md25_i2c_.readRegValue(MD25_DEFAULT_ADDRESS, command, &receivedVal);
-	//utils::HostI2cBus::instance("Md25::read_i2c").readRegValue(MD25_DEFAULT_ADDRESS, command, &receivedVal);
 	return receivedVal;
 }
+/*
+ //TODO ne marche pas
+ int pmx::Md25::read_i2c_4Bytes(uchar reg, uchar *data)
+ {
 
+ int ret = md25_i2c_.readReg_nValue(reg, data, 4);
+ return ret;
+ }
+ */

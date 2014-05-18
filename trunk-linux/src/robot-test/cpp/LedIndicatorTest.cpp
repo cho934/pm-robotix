@@ -3,7 +3,11 @@
  * \brief Implémentation de la classe LedIndicatorTest.
  */
 
+#include "../../common/cpp/LedIndicator.hpp"
 #include "LedIndicatorTest.hpp"
+
+#include <unistd.h>
+
 #include "../../common/cpp/Robot.hpp"
 
 void robottest::LedIndicatorTest::run(int, char *[])

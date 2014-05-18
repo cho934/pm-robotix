@@ -102,7 +102,7 @@ public:
 	I2cException(const std::string & message)
 			: Exception(message)
 	{
-		std::cout << "I2cException=====" <<message << std::endl;
+		//std::cout << "I2cException=====" <<message << std::endl;
 	}
 
 	virtual ~ I2cException() throw ()
@@ -179,6 +179,17 @@ public:
 	int readI2cSize(uchar slave_addr, char *buf, size_t size);
 
 	int writeI2cSize(uchar slave_addr, const char *buf, size_t size);
+
+
+	/*!
+		 * \brief Read 4 bytes from the given register.
+		 *
+		 * \param   reg   the given register.
+		 * \param   data   the read value.
+		 *
+		 * \return return 0 on success, -1 on write error (\e reg byte), -2 on read error.
+		 */
+	//int readReg_nValue(uchar reg, uchar* data, size_t size);
 
 	/*!
 	 * \brief Open i2c.

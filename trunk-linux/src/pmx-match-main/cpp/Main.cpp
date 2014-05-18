@@ -3,15 +3,18 @@
  * \brief Ce fichier contient la méthode main() pour le programme principal.
  */
 
-#include <iostream>
-#include <cmath>
-#include <dirent.h>
+//#include <dirent.h>
 #include <stdlib.h>
-#include "Robot.hpp"
-#include "LoggerFactory.hpp"
-#include "Macro.hpp"
-#include "Automate.hpp"
+//#include <cmath>
+//#include <iostream>
+
+#include "../../common/cpp/LedIndicator.hpp"
+#include "../../common/cpp/Logger.hpp"
+#include "../../common/cpp/LoggerFactory.hpp"
+#include "../../common/cpp/Robot.hpp"
+//#include "Automate.hpp"
 #include "Data.hpp"
+//#include "Macro.hpp"
 
 /*
 #include "StateWaitForReboot.hpp"

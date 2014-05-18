@@ -22,39 +22,6 @@
 #define INPUT 0x01
 #define OUTPUT 0x00
 
-class Adafruit_MCP23017
-{
-public:
-	void begin(uint8_t addr); //TODO deprecated
-	void begin(void);
-
-	void pinMode(uint8_t p, uint8_t d);
-	void digitalWrite(uint8_t p, uint8_t d);
-	void pullUp(uint8_t p, uint8_t d);
-	uint8_t digitalRead(uint8_t p);
-
-	void writeGPIOAB(uint16_t);
-	uint16_t readGPIOAB();
-
-	void write_i2c(uchar command, uchar value);
-	int read_i2c(uchar command);
-	char* readI2c_2Byte();
-	void writeI2c_3Bytes(const char *buf);
-
-
-private:
-	/*!
-	 * \brief Retourne le \ref Logger associé à la classe \ref Md25.
-	 */
-	static const utils::Logger & logger()
-	{
-		static const utils::Logger & instance = utils::LoggerFactory::logger("pmx::Adafruit_MCP23017");
-		return instance;
-	}
-	uint8_t i2caddr;
-	utils::HostI2cBus MCP_i2c_;
-};
-
 #define MCP23017_ADDRESS 0x20
 
 // registers
@@ -81,5 +48,45 @@ private:
 #define MCP23017_INTCAPB 0x11
 #define MCP23017_GPIOB 0x13
 #define MCP23017_OLATB 0x15
+
+namespace pmx
+{
+class Adafruit_MCP23017
+{
+
+private:
+	/*!
+	 * \brief Retourne le \ref Logger associé à la classe \ref Md25.
+	 */
+	static const utils::Logger & logger()
+	{
+		static const utils::Logger & instance = utils::LoggerFactory::logger("pmx::Adafruit_MCP23017");
+		return instance;
+	}
+
+	bool connected_;
+
+	uint8_t i2caddr;
+	utils::HostI2cBus MCP_i2c_;
+
+public:
+
+	void begin(void);
+
+	void pinMode(uint8_t p, uint8_t d);
+	void digitalWrite(uint8_t p, uint8_t d);
+	void pullUp(uint8_t p, uint8_t d);
+	uint8_t digitalRead(uint8_t p);
+
+	void writeGPIOAB(uint16_t);
+	uint16_t readGPIOAB();
+
+	void write_i2c(uchar command, uchar value);
+	int read_i2c(uchar command);
+	char* readI2c_2Byte();
+	void writeI2c_3Bytes(const char *buf);
+
+};
+}
 
 #endif

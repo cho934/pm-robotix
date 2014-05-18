@@ -42,60 +42,22 @@ void robottest::ExtEncoderTest::run(int argc, char *argv[])
 	logger().info() << "-----------------------------" << utils::end;
 	logger().info() << "ExtEncoderTest - Go" << utils::end;
 
-	try
+	long long counterR = 0;
+	long long counterL = 0;
+
+	pmx::Robot &robot = pmx::Robot::instance();
+
+	robot.encoderLeft().clearCounter();
+	robot.encoderRight().clearCounter();
+
+	for (int i = 0; i < nb; i++)
 	{
+		usleep(timeSpan * 1000);
 
-		unsigned long counterR = 0;
-		unsigned long counterL = 0;
-		unsigned long counterRold = 0;
-		unsigned long counterLold = 0;
+		counterL = -robot.encoderLeft().readCounter();
+		counterR = robot.encoderRight().readCounter();
 
-		long long right = 0;
-		long long left = 0;
-
-		pmx::Robot &robot = pmx::Robot::instance();
-
-		robot.encoderLeft().clearCounter();
-		robot.encoderRight().clearCounter();
-
-		for (int i = 0; i < nb; i++)
-		{
-			usleep(timeSpan * 1000);
-
-			counterL = robot.encoderLeft().readCounter();
-			counterR = robot.encoderRight().readCounter();
-			if (counterL > 4244897280 / 2)
-			{
-				left = -(((long long) 4244897280) - counterL);
-			}
-			else
-			{
-				left = counterL;
-			}
-			if (counterR > 4244897280 / 2)
-			{
-				right = -(((long long) 4244897280) - counterR);
-			}
-			else
-			{
-				right = counterR;
-			}
-			right = -right;
-
-			std::cout << "left = " << left << " ------ right = " << right << "    counterL = " << counterL
-					<< " ------ counterR = " << counterR
-
-					//<< "----- statusL  = "
-					//<< reinterpret_cast<void*>(statusL) << "------statusR  = " << reinterpret_cast<void*>(statusR)
-					<< std::endl;
-
-			counterRold = counterR;
-			counterLold = counterL;
-
-		}
-	} catch (utils::Exception * e)
-	{
-		logger().error() << "Exception : " << e->what() << utils::end;
+		std::cout << "counterL = " << counterL << "\t\t counterR = " << counterR << std::endl;
 	}
 
 	logger().info() << "End of RobotTest." << utils::end;

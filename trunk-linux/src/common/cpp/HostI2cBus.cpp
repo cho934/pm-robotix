@@ -104,7 +104,7 @@ int utils::HostI2cBus::readRegValue(uchar, uchar reg, uchar* data)
 			unlock();
 			throw new I2cException("Error HostI2cBus::readRegValue, i2c error !");
 		}
-		//usleep(1000); //fréq i2c à 100kHz : attente de l'application complète de la trame
+		//usleep(2000); //1000us si fréq i2c à 100kHz : attente de l'application complète de la trame
 		unlock();
 		return ret;
 	}
@@ -121,13 +121,12 @@ int utils::HostI2cBus::writeRegValue(uchar, uchar reg, uchar value)
 		lock();
 		int result = 0;
 		result = as_i2c_write_reg_byte(device_, reg, value);
-
 		if (result < 0)
 		{
 			unlock();
 			throw new I2cException("Error HostI2cBus::writeRegValue, i2c error !");
 		}
-		//usleep(1000); //fréq i2c à 100kHz : attente de l'application complète de la trame
+		//usleep(2000); //fréq i2c à 100kHz : attente de l'application complète de la trame
 		unlock();
 		return result;
 	}
@@ -178,4 +177,56 @@ int utils::HostI2cBus::writeI2cSize(uchar, const char *buf, size_t size) //TODO 
 		throw new I2cException("Error HostI2cBus::writeI2cSize, i2c not opened !");
 	}
 }
+
+/*
+int utils::HostI2cBus::readReg_nValue(uchar reg, uchar* data, size_t n)
+{
+	if (opened_ == 1)
+	{
+		lock();
+		int ret = 0;
+		ret = as_i2c_read_reg(device_, reg, data, n);
+		if (ret < 0)
+		{
+			if (ret == -1)
+			{
+				unlock();
+				throw new I2cException("Error HostI2cBus::readReg4Value, WRITE error !");
+			}
+			if (ret == -2)
+			{
+				unlock();
+				throw new I2cException("Error HostI2cBus::readReg4Value, READ error !");
+			}
+			unlock();
+			throw new I2cException("Error HostI2cBus::readReg4Value, i2c error !");
+		}
+		//usleep(1000); //1000us si fréq i2c à 100kHz : attente de l'application complète de la trame
+		unlock();
+		return ret;
+	}
+	else
+	{
+		throw new I2cException("Error HostI2cBus::readReg4Value, i2c not opened !");
+	}
+}
+*/
+/*
+int utils::HostI2cBus::writeI2cReadMsg(uchar MD25Register, uchar * buf, size_t size)
+{
+	if (opened_ == 1)
+	{
+		uchar buff[1]={MD25Register};
+
+		lock();
+		int result = 0;
+		result = as_i2c_read_msg(device_, buff, 1, buf, size);
+		unlock();
+		return result;
+
+	}else
+	{
+		throw new I2cException("Error HostI2cBus::writeI2cReadMsg, i2c not opened !");
+	}
+}*/
 
