@@ -8,7 +8,7 @@
 #ifndef GLOBAL_H_
 #define GLOBAL_H_
 
-// #define DEBUG_MOTION
+#define DEBUG_MOTION
 // #define DEBUG_ENCODER
 // #define DEBUG_PID
 
@@ -41,13 +41,12 @@ typedef int boolean;
 
 #define MAX_PID_SYSTEM_NUMBER	6
 
-#define VTOPS_PER_TICKS 1000
+//vTops is a virtual measure distance to avoid floating point computation
+#define VTOPS_PER_TICKS 2048 //1000
 
 // Attention ces valeurs sont couplées
 #define DEFAULT_SAMPLING_FREQ 100 // en Hz (cad combien de fois par seconde)
 #define valueSample 0.01f //(1f/DEFAULT_SAMPLING_FREQ)
-
-//#define DEFAULT_SAMPLING_FREQ 100
 
 //some values goes in pair :
 //the first one is the measured/real one

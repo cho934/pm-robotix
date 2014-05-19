@@ -51,7 +51,7 @@ void robottest::Md25EncoderTest::run(int argc, char *argv[])
 	{
 		encoder1 = -robot.md25().ensureGetEncoder(0, MD25_ENCODER1_REG);
 		encoder2 = -robot.md25().ensureGetEncoder(0, MD25_ENCODER2_REG);
-		logger().info() << "getEnc1 L:" << encoder1 << "\tgetEnc2 R: " << encoder2 << utils::end;
+		logger().info() << "getEnc2 L:" << encoder2 << "\tgetEnc1 R: " << encoder1 << utils::end;
 		usleep(200000);
 	}
 

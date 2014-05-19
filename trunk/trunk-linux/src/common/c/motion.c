@@ -336,11 +336,16 @@ void *motion_ITTask(void *p_arg) {
 				fin1 = GetStepOrder(&motionCommand.cmd.stepCmd[1], &ord1);
 				break;
 			}
+
+			/*
 			log_status(currentTimeInMillis(), encoder_getLeftCounter(),
 					encoder_getRightCounter(), robot_getLeftPower(),
 					robot_getRightPower(), ord0, ord1,
 					motors[motionCommand.mcType][0].lastPos,
 					motors[motionCommand.mcType][1].lastPos, p.x, p.y, p.theta);
+			*/
+
+
 			//compute pwm for first motor
 			//	printf("motion.c : pid_Compute : ORDER 0 : %d current:%d\n", ord0,
 			//			motors[motionCommand.mcType][0].lastPos);

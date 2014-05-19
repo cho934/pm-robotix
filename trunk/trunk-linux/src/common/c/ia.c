@@ -9,7 +9,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include "ccbase.h"
+
 
 int _zones_count = 0;
 ZONE* _zones[100];
@@ -24,6 +26,7 @@ void ia_addAction(const char* name, RobotAction action) {
 	ACTIONS *a = (ACTIONS*) calloc(1, sizeof(ACTIONS));
 	strcpy(a->name, name);
 	a->action = action;
+	a->completed = FALSE;
 	_actions[_actions_count] = a;
 	_actions_count++;
 }
@@ -113,18 +116,29 @@ void ia_start() {
 		__LINE__);
 		exit(2);
 	}
+	boolean allDone = FALSE;
+	while (!allDone) {
+		allDone = TRUE;
+		int i = 0;
+		for (i = 0; i < _actions_count; i++) {
+			ACTIONS *z = _actions[i];
+			if (z->completed == FALSE) {
+				printf("\n== ia is executing actions [%d/%d] : %s\n", i + 1,
+						_actions_count, z->name);
+				printf("state before actions : %s : (%f,%f) %f\n", z->name,
+						cc_getX(), cc_getY(), cc_getThetaInDegree());
+				boolean done = (*z->action)();
+				if (!done) {
+					allDone = FALSE;
+				}
+				z->completed = done;
+				printf("state after actions : %s : (%f,%f) %f\n", z->name,
+						cc_getX(), cc_getY(), cc_getThetaInDegree());
+			}
 
-	int i = 0;
-	for (i = 0; i < _actions_count; i++) {
-		ACTIONS *z = _actions[i];
-		printf("\n== ia is executing actions [%d/%d] : %s\n", i+1,_actions_count, z->name);
-		printf("state before actions : %s : (%f,%f) %f\n", z->name, cc_getX(),
-				cc_getY(), cc_getThetaInDegree());
-		(*z->action)();
-		printf("state after actions : %s : (%f,%f) %f\n", z->name, cc_getX(),
-				cc_getY(), cc_getThetaInDegree());
+		}
+		sleep(1);
 	}
-
 }
 
 ZONE* ia_getZone(const char* zoneName) {

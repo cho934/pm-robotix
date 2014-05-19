@@ -1,3 +1,5 @@
+#ifndef SIMULATED
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -8,106 +10,187 @@
 #include <sys/time.h>
 #include "robot.h"
 #include "motion.h"
+#include "../cpp/Robot.hpp"
+
 /**
  * APF
  **/
 long long timeOffset;
-int lPower;
-int rPower;
 
 long tLeft;
-
 long tRight;
+
+int lPower;
+int rPower;
 
 long rightCounter;
 long leftCounter;
 
-void robot_init() {
-	tLeft=0;
-	tRight=0;
-	lPower=0;
-	rPower=0;
+//asserv setup
+void robot_init()
+{
+	tLeft = 0;
+	tRight = 0;
 
-	rightCounter=0;
-	leftCounter=0;
-	//
+	rightCounter = 0;
+	leftCounter = 0;
+	/*
+	 //reset external encoder
+	 pmx::Robot &robot = pmx::Robot::instance();
+	 robot.encoderLeft().clearCounter();
+	 robot.encoderRight().clearCounter();
+
+	 //reset internal encoder
+	 robot.md25().setCommand(MD25_RESET_ENCODERS);
+	 */
 	struct timeval te;
-	gettimeofday(&te, NULL);// get current time
-	timeOffset =( te.tv_sec*1000LL + te.tv_usec/1000);
+	gettimeofday(&te, NULL); // get current time
+	timeOffset = (te.tv_sec * 1000LL + te.tv_usec / 1000);
 
-	printf("Init time %ld\n",currentTimeInMillis());
-}
-void robot_dispose() {
-}
-void robot_startMotorLeft() {
-}
-void robot_startMotors() {
+	printf("Init time %ld\n", currentTimeInMillis());
 }
 
-void robot_stopMotorRight() {
-}
-void robot_stopMotorLeft() {
-}
-void computeCounterL() {
-	long deltaT= currentTimeInMillis()- tLeft;
-	leftCounter+= (deltaT*lPower )/25;
+/*
+ void computeCounterL() {
+ long deltaT= currentTimeInMillis()- tLeft;
+ leftCounter+= (deltaT*lPower )/25;
+
+ }
+ void computeCounter() {
+ long deltaT= currentTimeInMillis()- tRight;
+ rightCounter+= (deltaT*rPower )/25;
+ }
+
+ */
+void robot_stopMotorRight()
+{
+
+	pmx
+	::Robot &robot = pmx::Robot::instance();
+	robot.md25().stopMotor(MD25_SPEED1_REG);
 
 }
-void computeCounter() {
-	long deltaT= currentTimeInMillis()- tRight;
-	rightCounter+= (deltaT*rPower )/25;
+void robot_stopMotorLeft()
+{
+
+	pmx
+	::Robot &robot = pmx::Robot::instance();
+	robot.md25().stopMotor(MD25_SPEED2_REG);
+
 }
 
-void robot_setMotorRightSpeed(int speed) {
-	computeCounter();
-	rPower=speed;
-	tRight=currentTimeInMillis();
+void robot_setMotorRightSpeed(int power) //-100 à 100
+{
+
+	pmx
+	::Robot &robot = pmx::Robot::instance();
+	int powerR = (int) (((power + 100) * 256.0 / 200.0));
+	if (powerR == 256)
+		powerR = 255;
+	//printf("robot_setMotorRightSpeed.c %d\n", powerR);
+	robot.md25().ensureSetSpeed(powerR, MD25_SPEED1_REG); //0=>255
+
+	tRight = currentTimeInMillis();
 }
 
-void robot_setMotorLeftSpeed(int speed) {
-	computeCounterL();
-	lPower=speed;
-	tLeft=currentTimeInMillis();
+void robot_setMotorLeftSpeed(int power)
+{
+	pmx
+	::Robot &robot = pmx::Robot::instance();
+	int powerL = (int) (((power + 100) * 256.0 / 200.0));
+	if (powerL == 256)
+		powerL = 255;
+	//printf("robot_setMotorLeftSpeed.c %d\n", powerL);
+	robot.md25().ensureSetSpeed(powerL, MD25_SPEED2_REG); //0=>255
+
+	tLeft = currentTimeInMillis();
 }
 
-long robot_getLeftExternalCounter() {
-	computeCounterL();
+long robot_getLeftExternalCounter() //en tick
+{
+
+	pmx
+	::Robot &robot = pmx::Robot::instance();
+	int leftCounter = -robot.encoderLeft().readCounter();
+
 	return leftCounter;
 }
-long robot_getRightExternalCounter() {
-	computeCounter();
+long robot_getRightExternalCounter()
+{
+
+	pmx
+	::Robot &robot = pmx::Robot::instance();
+	int rightCounter = robot.encoderRight().readCounter();
+
 	return rightCounter;
 }
-long robot_getLeftInternalCounter() {
-	return robot_getLeftExternalCounter();
+
+long robot_getLeftInternalCounter()
+{
+	long encoder = 0;
+
+	pmx
+	::Robot &robot = pmx::Robot::instance();
+	encoder = robot.md25().ensureGetEncoder(0, MD25_ENCODER2_REG);
+
+	return encoder;
 }
-long robot_getRightInternalCounter() {
-	return robot_getRightExternalCounter();
+long robot_getRightInternalCounter()
+{
+	long encoder = 0;
+
+	pmx
+	::Robot &robot = pmx::Robot::instance();
+	encoder = robot.md25().ensureGetEncoder(0, MD25_ENCODER1_REG);
+
+	return encoder;
 }
-int robot_isButton1Pressed() {
-	return 0;
-}
-int robot_isEmergencyPressed() {
-	return 0;
-}
-void robot_waitStart() {
-	// nothing to do here :)
-}
-int robot_isDetectingObstacle() {
-	return 0;
-}
-void robot_displayText(int line, char* text) {
-	printf("%d : %s\n",line,text);
-}
-int robot_isButtonPressed(int button) {
-	return 0;
-}
-void robot_setLedStatus(int status) {
-	printf("LED STATUS : %d\n",status);
-}
-void robot_initPID() {
+
+void robot_initPID()
+{
 	motion_configureAlphaPID(0.0002400f, 0.001f, 0.000000f);
 	//motion_configureDeltaPID(0.0002950f, 0.0f, 0.000001f);
 	motion_configureDeltaPID(0.0003000f, 0.0001f, 0.000000f);
 }
 
+int robot_isDetectingObstacle()
+{
+	return 0;
+}
+
+void robot_dispose()
+{
+}
+void robot_startMotorLeft()
+{
+}
+void robot_startMotors()
+{
+}
+
+void robot_waitStart()
+{
+	// nothing to do here :)
+}
+int robot_isButton1Pressed()
+{
+	return 0;
+}
+int robot_isEmergencyPressed()
+{
+	return 0;
+}
+void robot_displayText(int line, char* text)
+{
+	printf("%d : %s\n", line, text);
+}
+int robot_isButtonPressed(int)
+{
+	return 0;
+}
+void robot_setLedStatus(int status)
+{
+	printf("LED STATUS : %d\n", status);
+}
+
+#endif
