@@ -45,7 +45,7 @@ pmx::Robot::Robot()
 
 }
 
-void pmx::Robot::initialize(const std::string& prefix, utils::Configuration& configuration)
+void pmx::Robot::initialize(const std::string& prefix, utils::Configuration& )
 {
 	logger().debug() << "initialize: " << prefix << utils::end;
 
@@ -63,7 +63,11 @@ void pmx::Robot::configure(const std::string & configurationFile)
 
 void pmx::Robot::start()
 {
+	//start action manager
 	actionManager_.start();
+
+	//start asserv
+	//base().begin();
 
 	logger().info("Robot is started");
 
@@ -88,7 +92,7 @@ void pmx::Robot::stop()
 
 void pmx::Robot::stopDevices()
 {
-	this->base().stop();
+	//this->base().stop();
 
 	this->ledBar().stop(true);
 
@@ -98,13 +102,14 @@ void pmx::Robot::stopManagers()
 {
 	logger().debug("Stop managers");
 	actionManager_.stop();
-//todo Attente fin manager
+
+//TODO  créer une Attente de la fin de l'actionManager à la place du usleep
 	usleep(5000);
 
 }
 
-void pmx::Robot::goTo(double x, double y, BaseWay way, bool detection)
-{
+//void pmx::Robot::goTo(double x, double y, BaseWay way, bool detection)
+//{
 	/*
 
 	 if (detection == true)
@@ -143,10 +148,10 @@ void pmx::Robot::goTo(double x, double y, BaseWay way, bool detection)
 	 irSensorsGroup().stopTimer();
 	 }*/
 
-}
+//}
 
-void pmx::Robot::goToTeta(double x, double y, double teta, BaseWay way, bool detection)
-{
+//void pmx::Robot::goToTeta(double x, double y, double teta, BaseWay way, bool detection)
+//{
 
 	/*
 	 if (detection == true)
@@ -185,4 +190,4 @@ void pmx::Robot::goToTeta(double x, double y, double teta, BaseWay way, bool det
 	 irSensorsGroup().stopTimer();
 	 }*/
 
-}
+//}

@@ -46,7 +46,7 @@ void pmx::Md25::begin()
 
 void pmx::Md25::setup()
 {
-	setMode(MD25_MODE_1); //mode0 => 0-128-255   ;  mode1 => -128+127
+	setMode(MD25_MODE_0); //mode0 => 0-128-255   ;  mode1 => -128+127
 	setAccelerationRate(10); //Acc:1,2,3,5,10
 	setCommand(MD25_ENABLE_SPEED_REGULATION);
 	setCommand(MD25_RESET_ENCODERS);
