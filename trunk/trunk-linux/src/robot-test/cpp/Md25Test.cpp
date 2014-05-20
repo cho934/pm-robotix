@@ -36,7 +36,6 @@ void robottest::Md25Test::run(int argc, char *argv[])
 	}
 	else
 	{
-		//demande de la distance x
 		std::cout << "powerL(1): " << std::flush;
 		std::cin >> powerL;
 	}
@@ -48,7 +47,6 @@ void robottest::Md25Test::run(int argc, char *argv[])
 	}
 	else
 	{
-		//demande de la distance y
 		std::cout << "speedR(2): " << std::flush;
 		std::cin >> powerR;
 	}
@@ -60,7 +58,6 @@ void robottest::Md25Test::run(int argc, char *argv[])
 	}
 	else
 	{
-		//demande de la vitesse moteur droit à appliquer
 		std::cout << "dist: " << std::flush;
 		std::cin >> dist;
 	}
@@ -72,7 +69,6 @@ void robottest::Md25Test::run(int argc, char *argv[])
 	}
 	else
 	{
-		//demande de la vitesse moteur droit à appliquer
 		std::cout << "acc: " << std::flush;
 		std::cin >> acc;
 	}
@@ -86,7 +82,6 @@ void robottest::Md25Test::run(int argc, char *argv[])
 	}
 	else
 	{
-		//demande de la vitesse moteur droit à appliquer
 		std::cout << "reg: " << std::flush;
 		std::cin >> reg;
 	}

@@ -41,6 +41,7 @@ void robot_setLedStatus(int status);
 
 int robot_isButtonPressed(int button);
 void robot_initPID();
+void robot_initPID_AD(float Ap, float Ai, float Ad, float Dp, float Di, float Dd);
 
 
 #endif

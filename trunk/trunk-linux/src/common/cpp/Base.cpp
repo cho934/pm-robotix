@@ -5,15 +5,20 @@
 
 #include "Base.hpp"
 
+#include <math.h>
 #include <stdlib.h>
 #include <cstdio>
 
 #include "../c/ccbase.h"
 #include "../c/encoder.h"
+#include "../c/global.h"
 #include "../c/motion.h"
 #include "../c/path_manager.h"
 #include "../c/robot.h"
+#include "../c/robot_unitConversion.h"
+#include "Level.hpp"
 #include "Logger.hpp"
+#include "SvgWriter.hpp"
 
 pmx::Base::Base(pmx::Robot & robot)
 		: ARobotElement(robot)
@@ -27,7 +32,25 @@ void pmx::Base::begin(int lResolution, int rResolution, float dist, int startAss
 	encoder_SetDist(dist);
 	encoder_SetResolution(lResolution, rResolution);
 
-	//initLog(lResolution, rResolution, dist);
+#ifdef LOG_PID
+	initLog(lResolution, rResolution, dist);
+#endif
+#ifdef LOG_PID_APPENDER
+
+	if (utils::LoggerFactory::logger("motion").isActive(utils::Level::DEBUG))
+	{
+		utils::LoggerFactory::logger("motion").debug() << "// encoder resolution in tick per meter" << utils::end;
+		utils::LoggerFactory::logger("motion").debug() << "leftResolution:" << lResolution << "" << utils::end;
+		utils::LoggerFactory::logger("motion").debug() << "rightResolution:" << rResolution << "" << utils::end;
+		utils::LoggerFactory::logger("motion").debug() << "// distance between the 2 encoders in meter" << utils::end;
+		utils::LoggerFactory::logger("motion").debug() << "encoderDistance:" << dist << "" << utils::end;
+		utils::LoggerFactory::logger("motion").debug()
+				<< "// time (ms), left encoder (ticks), right encoder (ticks), left motor power (0-100), right motor power (0-100), order0, order1, x (mm), y (mm), theta (rad)"
+				<< utils::end;
+	}
+
+
+#endif
 
 	printf("Encoders resolution: %d %d , distance: %f\n", lResolution, rResolution, dist);
 
@@ -46,7 +69,7 @@ void pmx::Base::initialize(const std::string& prefix, utils::Configuration&)
 
 void pmx::Base::printPosition()
 {
-	printf("START: (%f,%f) %f\n", cc_getX(), cc_getY(), cc_getThetaInDegree());
+	printf("START: (%f mm,%f mm) %f deg\n", cc_getX(), cc_getY(), cc_getThetaInDegree());
 }
 
 void pmx::Base::launchAndEndAfterCmd(RobotCommand* cmd)
@@ -63,25 +86,30 @@ void pmx::Base::launchAndEndAfterCmd(RobotCommand* cmd)
 	robot_setMotorLeftSpeed(0);
 	robot_setMotorRightSpeed(0);
 	free(cmd);
-	//closeLog();
 
+#ifdef LOG_PID
+	closeLog();//TODO est-ce bien ici le close log ? meme si plusieurs launch l'un après l'autre ?
+#endif
 }
 
-void pmx::Base::motionLine(int mm)
+void pmx::Base::move(int mm)
+{
+	cc_move(mm);
+}
+
+void pmx::Base::findPidAD(float degrees, int mm, int sec)
 {
 	RobotCommand* cmd = (RobotCommand*) malloc(sizeof(RobotCommand));
 	float meters = mm / 1000.0f;
-	motion_Line(cmd, meters);
-	printf("Loading line command for %d mm (%f meters)\n", mm, meters);
-	launchAndEndAfterCmd(cmd);
+	float radians = (degrees * M_PI) / 180.0f;
 
+	motion_StepOrderAD(cmd, convertDistTovTops(radians * distEncoderMeter / 2.0f), meters / valueVTops, sec);
+
+	launchAndEndAfterCmd(cmd);
 }
 
-void pmx::Base::pidD(int mm)
+void pmx::Base::setupPID_AD(float Ap, float Ai, float Ad, float Dp, float Di, float Dd)
 {
-	RobotCommand* cmd = (RobotCommand*) malloc(sizeof(RobotCommand));
-	float meters = mm / 1000.0f;
-	motion_StepOrderAD(cmd, 0.0f, meters / valueVTops, 5);
-
-	launchAndEndAfterCmd(cmd);
+	robot_initPID_AD(Ap, Ai, Ad, Dp, Di, Dd);
 }
+
