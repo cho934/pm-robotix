@@ -8,9 +8,12 @@
 #ifndef GLOBAL_H_
 #define GLOBAL_H_
 
-#define DEBUG_MOTION
+//#define DEBUG_MOTION
 // #define DEBUG_ENCODER
-// #define DEBUG_PID
+//#define DEBUG_PID
+//#define LOG_PID
+#define LOG_SVG_APPENDER //log c++ pour activer le SVG
+#define LOG_PID_APPENDER  //log c++ pour activer le fileAppender
 
 #define uint8 unsigned char
 #define uint16 unsigned short
@@ -37,12 +40,12 @@ typedef int boolean;
 #define BACK_SHOCK 1
 #define isSendErrorsEnabled 0
 
-#define MAX_PWM_VALUE 100
+#define MAX_PWM_VALUE 128
 
 #define MAX_PID_SYSTEM_NUMBER	6
 
 //vTops is a virtual measure distance to avoid floating point computation
-#define VTOPS_PER_TICKS 2048 //1000
+#define VTOPS_PER_TICKS 1000 //1000
 
 // Attention ces valeurs sont couplées
 #define DEFAULT_SAMPLING_FREQ 100 // en Hz (cad combien de fois par seconde)

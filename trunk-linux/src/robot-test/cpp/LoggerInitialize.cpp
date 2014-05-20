@@ -13,9 +13,13 @@ void utils::LoggerFactory::initialize()
 {
 	add("console", new ConsoleAppender());
 
+	add("odometry-svg", new SvgAppender("pos.svg"));
+	add("file-motion-pid-csv", new FileAppender("log.txt"));
+
 	add(utils::Level::ERROR, "", "console");
 
-	add(utils::Level::INFO, "pmx::ServoMotorDxlObject", "console");
+	add(utils::Level::DEBUG, "utils::SvgWriter::svg", "odometry-svg");
+	add(utils::Level::DEBUG, "motion", "file-motion-pid-csv");
 
 	add(utils::Level::INFO, "robottest::LedIndicatorTest", "console");
 	add(utils::Level::INFO, "robottest::GroveColorTest", "console");
@@ -28,8 +32,13 @@ void utils::LoggerFactory::initialize()
 	add(utils::Level::INFO, "robottest::Md25EncoderTest", "console");
 	add(utils::Level::INFO, "robottest::ArduinoTest", "console");
 	add(utils::Level::INFO, "robottest::GpioBoardTest", "console");
+	add(utils::Level::INFO, "robottest::MoveTest", "console");
+	add(utils::Level::INFO, "robottest::FindPIDTest", "console");
 
-	add(utils::Level::DEBUG, "pmx::ServoMotorDxlObj", "console");
+
+	//add(utils::Level::INFO, "pmx::ServoMotorDxlObject", "console");
+	//add(utils::Level::DEBUG, "pmx::ServoMotorDxlObj", "console");
+
 	//add(utils::Level::DEBUG, "pmx::Robot", "console");
 	//add(utils::Level::DEBUG, "pmx::GroveColorSensor", "console");
 	//add(utils::Level::DEBUG, "pmx::ActionManager", "console");
@@ -37,7 +46,7 @@ void utils::LoggerFactory::initialize()
 	//add(utils::Level::DEBUG, "pmx::IrSensor", "console");
 	//add(utils::Level::DEBUG, "pmx::IrSensorsGroup", "console");
 
-	add(utils::Level::DEBUG, "pmx::ServoMotorDxl", "console");
+	//add(utils::Level::DEBUG, "pmx::ServoMotorDxl", "console");
 	//add(utils::Level::DEBUG, "pmx::GpioBoard", "console");
 	//add(utils::Level::DEBUG, "pmx::Md25", "console");
 

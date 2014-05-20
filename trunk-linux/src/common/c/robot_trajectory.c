@@ -161,13 +161,13 @@ void traj_Init() {
 
 // en m/s (d'apres Cho)
 float motion_GetDefaultSpeed() {
-	return 0.40f;
+	return 1.0f;
 }
 float motion_GetDefaultAccel() {
-	return 0.10f;
+	return 0.5f;
 }
 float motion_GetDefaultDecel() {
-	return 0.10f;
+	return 0.99f;
 }
 
 void motion_Line(RobotCommand *out_cmd, float dist) {

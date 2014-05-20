@@ -58,12 +58,12 @@ namespace utils
         {
             if (this->state() == utils::CREATED)
             {
-                //std::cout << "Thread FileAppender Start." << std::endl;
-                printf(" Thread ConsoleAppender Start. \n");
+                std::cout << "Thread FileAppender Start : Name=" <<  logger.name() << " " << level.name() << std::endl;
+                //printf(" Thread ConsoleAppender Start. \n");
                 this->start();
             }
 
-            utils::MemoryAppender::writeMessage(logger, level, message);
+            utils::MemoryAppender::writeMessageOnly(message);
         }
 
         virtual void execute();

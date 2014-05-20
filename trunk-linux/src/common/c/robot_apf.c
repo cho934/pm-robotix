@@ -84,7 +84,9 @@ void robot_setMotorRightSpeed(int power) //-100 à 100
 
 	pmx
 	::Robot &robot = pmx::Robot::instance();
-	int powerR = (int) (((power + 100) * 256.0 / 200.0));
+	/*
+	int powerR = (int) (((-power + 100) * 256.0 / 200.0));*/
+	int powerR = (int) (-power + 128);
 	if (powerR == 256)
 		powerR = 255;
 	//printf("robot_setMotorRightSpeed.c %d\n", powerR);
@@ -95,11 +97,15 @@ void robot_setMotorRightSpeed(int power) //-100 à 100
 
 void robot_setMotorLeftSpeed(int power)
 {
-	pmx
-	::Robot &robot = pmx::Robot::instance();
-	int powerL = (int) (((power + 100) * 256.0 / 200.0));
+	pmx::Robot &robot = pmx::Robot::instance();
+	/*
+	int powerL = (int) (((-power + 100) * 256.0 / 200.0));
 	if (powerL == 256)
 		powerL = 255;
+		*/
+	int powerL = (int) (-power + 128);
+	if (powerL == 256)
+			powerL = 255;
 	//printf("robot_setMotorLeftSpeed.c %d\n", powerL);
 	robot.md25().ensureSetSpeed(powerL, MD25_SPEED2_REG); //0=>255
 
@@ -131,7 +137,7 @@ long robot_getLeftInternalCounter()
 
 	pmx
 	::Robot &robot = pmx::Robot::instance();
-	encoder = robot.md25().ensureGetEncoder(0, MD25_ENCODER2_REG);
+	encoder = (-1 * robot.md25().ensureGetEncoder(0, MD25_ENCODER2_REG));
 
 	return encoder;
 }
@@ -141,16 +147,20 @@ long robot_getRightInternalCounter()
 
 	pmx
 	::Robot &robot = pmx::Robot::instance();
-	encoder = robot.md25().ensureGetEncoder(0, MD25_ENCODER1_REG);
+	encoder = (-1 * robot.md25().ensureGetEncoder(0, MD25_ENCODER1_REG));
 
 	return encoder;
 }
 
 void robot_initPID()
 {
-	motion_configureAlphaPID(0.0002400f, 0.001f, 0.000000f);
-	//motion_configureDeltaPID(0.0002950f, 0.0f, 0.000001f);
-	motion_configureDeltaPID(0.0003000f, 0.0001f, 0.000000f);
+	motion_configureAlphaPID(0.0008f, 0.00002f, 0.00003f); //0.0008 0.00002 0.00003
+	motion_configureDeltaPID(0.0005f, 0.0005f, 0.00001f); //0.0005 0.000008 0.000009
+}
+void robot_initPID_AD(float Ap, float Ai, float Ad, float Dp, float Di, float Dd)
+{
+	motion_configureAlphaPID(Ap, Ai, Ad);
+	motion_configureDeltaPID(Dp, Di, Dd);
 }
 
 int robot_isDetectingObstacle()

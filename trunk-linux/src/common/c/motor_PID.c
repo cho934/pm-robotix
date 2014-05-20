@@ -35,12 +35,14 @@ pidSystemValues systemValues[MAX_PID_SYSTEM_NUMBER];
 //number of system created so far
 PID_SYSTEM pid_Nb;
 
-void pid_Init() {
+void pid_Init()
+{
 	pid_Nb = 0;
 
 }
 
-PID_SYSTEM pid_Create() {
+PID_SYSTEM pid_Create()
+{
 	//no more available system
 	if (pid_Nb >= MAX_PID_SYSTEM_NUMBER)
 		return -1;
@@ -58,23 +60,26 @@ PID_SYSTEM pid_Create() {
 
 //! \brief This function signal a very big error integral value,
 //! generally it is caused by a hardware problem
-void signalErrorOverflow(PID_SYSTEM system) {
-	if (getMotorSpeed(&(motors[ALPHA_DELTA][DELTA_MOTOR])) > 0) {
+void signalErrorOverflow(PID_SYSTEM system)
+{
+	if (getMotorSpeed(&(motors[ALPHA_DELTA][DELTA_MOTOR])) > 0)
+	{
 		//collision_SignalShock(FRONT_SHOCK);
-		printf("motor.c signalErrorOverflow PID Overflow'd front : %d\n",
-				system);
-	} else {
+		printf("motor.c signalErrorOverflow PID Overflow'd front : %d\n", system);
+	}
+	else
+	{
 		//collision_SignalShock(BACK_SHOCK);
-		printf("motor.c signalErrorOverflow PID Overflow'd back : %d\n",
-				system);
+		printf("motor.c signalErrorOverflow PID Overflow'd back : %d\n", system);
 	}
 }
 
-int SampleTime = 10; //30 millisec
-double outMin = -100.0f;
-double outMax = 100.0f;
+int SampleTime = 5; //... millisec
+double outMin = -1.0f * MAX_PWM_VALUE;
+double outMax = 1.0f * MAX_PWM_VALUE;
 
-void pid_Config(PID_SYSTEM system, double kp, double ki, double kd) {
+void pid_Config(PID_SYSTEM system, double kp, double ki, double kd)
+{
 
 	double SampleTimeInSec = ((double) SampleTime) / 1000;
 	systemValues[system].lastTime = 0;
@@ -111,8 +116,9 @@ void pid_Config(PID_SYSTEM system, double kp, double ki, double kd) {
  * Input : current value
  *
  * */
-double pid_Compute(PID_SYSTEM system, double setpoint, double input,
-		double speed) {
+double pid_Compute(PID_SYSTEM system, double setpoint, double input, double speed)
+{
+
 	pidSystemValues* val = &(systemValues[system]);
 	pidConfig conf = val->conf;
 
@@ -124,7 +130,8 @@ double pid_Compute(PID_SYSTEM system, double setpoint, double input,
 	unsigned long lastTime = val->lastTime;
 
 	int timeChange = (now - lastTime);
-	if (timeChange >= SampleTime) {
+	if (timeChange >= SampleTime)
+	{
 		double kp = conf.kP;
 		double ki = conf.kI;
 		double kd = conf.kD;
@@ -149,10 +156,12 @@ double pid_Compute(PID_SYSTEM system, double setpoint, double input,
 		val->lastInput = input;
 		val->lastTime = now;
 		val->ITerm = ITerm;
-	} else {
+	}
+	else
+	{
 #ifdef DEBUG_PID
-		printf("No pid calculation: %ld - %ld = %d ms\n", now, lastTime,
-				timeChange);
+		printf("conf.kP %f %f %f \n", conf.kP, conf.kI, conf.kD);
+		//printf("No pid calculation: %ld - %ld = %d ms\n", now, lastTime, timeChange);
 #endif
 	}
 	val->lastOutput = outPut;
@@ -161,38 +170,90 @@ double pid_Compute(PID_SYSTEM system, double setpoint, double input,
 
 // RCVA
 
-// int32 pid_Compute(PID_SYSTEM system, int32 error,
-//		double vitesse) {
-//	pidSystemValues * val;
-//	double P, I, D;
-//	double pwm;
-//
-//	error /= VTOPS_PER_TICKS;
-//
-//	//printf("motor_PID.c pid_Compute %d, err:%d ", system, error);
-//	val = &(systemValues[system]);
-//
-//	printf("motor_PID.c pid_Compute pid error:%d kP:%f (vitesse:%f)\n", error,
-//			val->conf.kP, vitesse);
-//
-//	P = error * val->conf.kP;
-//	I = 0;
-//	float kd = (float) val->conf.kD;
-//
-//	D = -vitesse * kd;
-//	D = 0;
-//	pwm = P + I + D;
-//
-//	pwm /= 256.0f;
-//	printf("motor_PID.c pid_Compute pid P:%f I:%f D:%f -> pwm:%f\n", P, I, D,
-//			pwm);
-//	//bound the resulting pwm
-//	if (pwm > MAX_PWM_VALUE) {
-//		pwm = MAX_PWM_VALUE;
-//	} else if (pwm < -MAX_PWM_VALUE) {
-//		pwm = -MAX_PWM_VALUE;
-//	}
-//
-//	return (int32) pwm;
-//}
+int32 pid_Compute_rcva_chaff(PID_SYSTEM system, int32 error, double vitesse)
+{
+	pidSystemValues * val;
+	double P, I, D;
+	double pwm;
+
+	error /= VTOPS_PER_TICKS;
+
+	//printf("motor_PID.c pid_Compute %d, err:%d ", system, error);
+	val = &(systemValues[system]);
+
+	printf("motor_PID.c pid_Compute pid error:%d kP:%f (vitesse:%f)\n", error, val->conf.kP, vitesse);
+
+	P = error * val->conf.kP;
+	I = 0;
+	float kd = (float) val->conf.kD;
+
+	D = -vitesse * kd;
+	D = 0;
+	pwm = P + I + D;
+
+	pwm /= 256.0f;
+	printf("motor_PID.c pid_Compute pid P:%f I:%f D:%f -> pwm:%f\n", P, I, D, pwm);
+	//bound the resulting pwm
+	if (pwm > MAX_PWM_VALUE)
+	{
+		pwm = MAX_PWM_VALUE;
+	}
+	else if (pwm < -MAX_PWM_VALUE)
+	{
+		pwm = -MAX_PWM_VALUE;
+	}
+
+	return (int32) pwm;
+}
+
+//! \brief Compute the PID sum of a system
+//!
+//! \param system The system on which we compute the PID
+//! \param error The difference between measured and reference values in ticks/sample
+//! \param vitesse The vitesse in vTops/sample
+//! \return The new command to apply on the system (pwm)
+int32 pid_ComputeRcva(PID_SYSTEM system, int32 error, int32 vitesse)
+{
+	//http://www.rcva.fr/index.php?option=com_content&view=article&id=27&Itemid=42&limitstart=8
+	/*
+	 commande = ecart * GAIN_PROPORTIONNEL_DISTANCE
+	 commande_distance = commande � GAIN_DERIVE_DISTANCE*vitesse
+	 commande_roue_D= commande_distance
+	 commande_roue_G= commande_distance
+	 */
+	pidSystemValues *val;
+	val = &(systemValues[system]);
+
+// 	#if(LEVEL_PID <= DEBUG)
+// 		writeDebugStreamLine("cpid.c : before error=%d vitesse=%d", error, vitesse);
+// 	#endif
+
+	error /= VTOPS_PER_TICKS; //=[Ticks/sample]
+	vitesse /= VTOPS_PER_TICKS; //=[Ticks/sample]
+
+	int32 cmd = error * val->conf.kP;
+	int32 pwm = cmd - val->conf.kD * vitesse;
+
+// 	#if(LEVEL_PID <= DEBUG)
+// 		writeDebugStreamLine("cpid.c : during error=%d vitesse=%d pwm=%d", error, vitesse, pwm);
+// 	#endif
+
+	pwm /= 256; //2048 ou 1024 ou 256??
+
+// 	#if(LEVEL_PID <= DEBUG)
+// 		writeDebugStreamLine("cpid.c : after  error=%d vitesse=%d pwm=%d", error, vitesse, pwm);
+// 	#endif
+
+	//bound the resulting pwm
+	if (pwm > MAX_PWM_VALUE)
+	{
+		pwm = MAX_PWM_VALUE;
+	}
+	else if (pwm < -MAX_PWM_VALUE)
+	{
+		pwm = -MAX_PWM_VALUE;
+	}
+
+	return pwm;
+}
 

@@ -14,6 +14,7 @@ utils::LoggerFactory::LoggerFactory()
     if(rootLogger() == NULL)
     {
         //! \todo Must throw an exception
+    	//TODO Exception Must throw an exception
     }
 }
 

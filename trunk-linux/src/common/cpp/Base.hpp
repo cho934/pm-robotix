@@ -37,8 +37,6 @@ namespace pmx
             return instance;
         }
 
-
-
     public:
 
 
@@ -68,9 +66,10 @@ namespace pmx
 
         void launchAndEndAfterCmd(RobotCommand* cmd);
 
-        void motionLine(int mm);
+        void move(int mm);
 
-        void pidD(int mm);
+        void findPidAD(float degrees, int mm, int sec);
+        void setupPID_AD(float Ap, float Ai, float Ad, float Dp, float Di, float Dd);
     };
 }
 

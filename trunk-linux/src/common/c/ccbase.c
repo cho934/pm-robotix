@@ -21,6 +21,7 @@
 #include "log.h"
 #include "global.h"
 #include "path_manager.h"
+
 boolean ignoreCollision = FALSE;
 
 void launchAndWait(RobotCommand* cmd) {

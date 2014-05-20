@@ -7,7 +7,7 @@ view_doc()
 
 all()
 {
-	scp src/apf-test/sh/*.sh SVG/index.html SVG/ground_2014.svg PMXArmadeusBinaries/* root@192.168.7.253:/pmx/
+	scp src/apf-test/sh/*.sh PMXArmadeusBinaries/* root@192.168.7.253:/pmx/
 }
 
 conf()
@@ -49,12 +49,12 @@ recupcsvhost()
 
 recupcsv()
 {
-        scp root@192.168.7.253:/pmx/*.* /home/pmx/recupcsv/.
+        scp root@192.168.7.253:/pmx/*.* /home/pmx/Arecup/.
 }
 
 recupsvg()
 {
-        scp root@192.168.7.253:/pmx/*.svg /home/pmx/recupcsv/.
+        scp root@192.168.7.253:/pmx/*.svg /home/pmx/workspace/ARM/SVG/.
 }
 
 connect()

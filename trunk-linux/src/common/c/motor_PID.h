@@ -65,4 +65,8 @@ void pid_Config(PID_SYSTEM system, double kp, double ki, double kd);
 //! \return The new command to apply on the system (% pwm) between -100 and +100
 double pid_Compute(PID_SYSTEM system, double setpoint, double input, double speed);
 
+int32 pid_Compute_rcva_chaff(PID_SYSTEM system, int32 error, double vitesse);
+
+int32 pid_ComputeRcva(PID_SYSTEM system, int32 error, int32 vitesse);
+
 #endif//_MOTOR_PID_H_
