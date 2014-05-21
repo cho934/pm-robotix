@@ -97,13 +97,13 @@ void log_status(long timeInMillis, long lEndcoder, long rEncoder, int lPower, in
 	}
 }
 
-void apf_log(long timeInMillis, long lEndcoder, long rEncoder, int lPower, int rPower, int ord0, int ord1, int current0,
+void apf_log(long timeInMillis, long dAlpha, long dDelta, int lPower, int rPower, int ord0, int ord1, int current0,
 		int current1, float x, float y, float theta)
 {
 	if (utils::LoggerFactory::logger("motion").isActive(utils::Level::DEBUG))
 	{
 		utils
-	::LoggerFactory::logger("motion").debug() << timeInMillis <<","<< lEndcoder<<","<< rEncoder<<","<< lPower<<","<< rPower<<","<< ord0<<","<<
+	::LoggerFactory::logger("motion").debug() << timeInMillis <<","<< dAlpha<<","<< dDelta<<","<< lPower<<","<< rPower<<","<< ord0<<","<<
 		ord1<<","<< current0<<","<< current1<<","<< x<<","<< y<<","<< theta << utils::end;
 	}
 }

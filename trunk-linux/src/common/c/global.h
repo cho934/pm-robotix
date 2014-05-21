@@ -44,8 +44,13 @@ typedef int boolean;
 
 #define MAX_PID_SYSTEM_NUMBER	6
 
+
+#define defaultVmax 		1.0f
+#define defaultAcc 		1.0f
+#define defaultDec		1.0f
+
 //vTops is a virtual measure distance to avoid floating point computation
-#define VTOPS_PER_TICKS 1000 //1000
+#define VTOPS_PER_TICKS 1000 //1000 => ROBOT_TEST 13 -700  1.0 0.8 1.5  0.0015 0.0008 0.000002
 
 // Attention ces valeurs sont couplées
 #define DEFAULT_SAMPLING_FREQ 100 // en Hz (cad combien de fois par seconde)

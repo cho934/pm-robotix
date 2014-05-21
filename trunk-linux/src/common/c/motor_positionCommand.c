@@ -26,6 +26,7 @@
 
 #include "motor_positionCommand.h"
 
+#include "../cpp/Robot.hpp"
 #include "global.h"
 #define _ISOC99_SOURCE
 #include <math.h>
@@ -150,11 +151,18 @@ void LoadPositionCommand(PositionCommand *out_cmd, MOTOR *motor, int32 periodNb)
  */
 EXPORTED_FUNCTION BOOL GetPositionOrder(PositionCommand *posCommand, int32 Tn,
 int32 *out_Order) {
+
+
+	pmx
+	::Robot &robot = pmx::Robot::instance();
+
+
 	BOOL finished = FALSE;
 
 	switch (posCommand->phase) {
 	case TR_PRE_PHASE:
-		//	printf("GetPositionOrder TR_PRE_PHASE\n");
+		robot.base().mlogger().debug() << "GetPositionOrder: TR_PRE_PHASE" << utils::end;
+//printf("GetPositionOrder TR_PRE_PHASE\n");
 		if (Tn >= posCommand->period0) {
 			posCommand->phase = TR_ACCEL_PHASE;
 		} else {
@@ -164,7 +172,8 @@ int32 *out_Order) {
 
 		//acceleration phase
 	case TR_ACCEL_PHASE:
-		//printf("GetPositionOrder TR_ACCEL_PHASE\n");
+		robot.base().mlogger().debug() << "GetPositionOrder: TR_ACCEL_PHASE" << utils::end;
+//printf("GetPositionOrder TR_ACCEL_PHASE\n");
 		Tn -= posCommand->period0;
 
 		if (Tn >= posCommand->T01) {
@@ -183,7 +192,8 @@ int32 *out_Order) {
 
 		//constant speed phase
 	case TR_CONSTANT_PHASE:
-		//printf("GetPositionOrder TR_CONSTANT_PHASE\n");
+		robot.base().mlogger().debug() << "GetPositionOrder: TR_CONSTANT_PHASE" << utils::end;
+//printf("GetPositionOrder TR_CONSTANT_PHASE\n");
 		Tn -= posCommand->period0;
 
 		if (Tn >= posCommand->T12) {
@@ -198,7 +208,8 @@ int32 *out_Order) {
 
 		//deceleration phase
 	case TR_DECEL_PHASE:
-		//	printf("GetPositionOrder TR_DECEL_PHASE\n");
+		robot.base().mlogger().debug() << "GetPositionOrder: TR_DECEL_PHASE" << utils::end;
+//printf("GetPositionOrder TR_DECEL_PHASE\n");
 		Tn -= posCommand->period0;
 
 		if (Tn >= posCommand->T23) {
@@ -212,6 +223,7 @@ int32 *out_Order) {
 		}
 
 	case TR_END_PHASE:
+//printf("GetPositionOrder TR_END_PHASE\n");
 		*out_Order = posCommand->order3;
 		finished = TRUE;
 		break;

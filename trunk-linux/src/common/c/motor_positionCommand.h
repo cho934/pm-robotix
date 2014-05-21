@@ -30,6 +30,7 @@
 #include "motor.h"
 #include "motion_priv.h"
 
+
 //possible phase of a position trajectory :
 typedef enum {
 	TR_PRE_PHASE,			//trajectory not yet started

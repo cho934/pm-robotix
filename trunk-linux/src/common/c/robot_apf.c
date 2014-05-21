@@ -87,11 +87,11 @@ void robot_setMotorRightSpeed(int power) //-100 à 100
 	/*
 	int powerR = (int) (((-power + 100) * 256.0 / 200.0));*/
 	int powerR = (int) (-power + 128);
-	if (powerR == 256)
+	if (powerR >= 256)
 		powerR = 255;
 	//printf("robot_setMotorRightSpeed.c %d\n", powerR);
 	robot.md25().ensureSetSpeed(powerR, MD25_SPEED1_REG); //0=>255
-
+	rPower = power;
 	tRight = currentTimeInMillis();
 }
 
@@ -104,11 +104,11 @@ void robot_setMotorLeftSpeed(int power)
 		powerL = 255;
 		*/
 	int powerL = (int) (-power + 128);
-	if (powerL == 256)
+	if (powerL >= 256)
 			powerL = 255;
 	//printf("robot_setMotorLeftSpeed.c %d\n", powerL);
 	robot.md25().ensureSetSpeed(powerL, MD25_SPEED2_REG); //0=>255
-
+	lPower = power;
 	tLeft = currentTimeInMillis();
 }
 
@@ -154,8 +154,8 @@ long robot_getRightInternalCounter()
 
 void robot_initPID()
 {
-	motion_configureAlphaPID(0.0008f, 0.00002f, 0.00003f); //0.0008 0.00002 0.00003
-	motion_configureDeltaPID(0.0005f, 0.0005f, 0.00001f); //0.0005 0.000008 0.000009
+	motion_configureAlphaPID(0.0015f, 0.0008f, 0.000002f); //0.0008 0.00002 0.00003
+	motion_configureDeltaPID(0.0010f, 0.0008f, 0.000002f); //0.0005 0.000008 0.000009 //0.0015 0.0008 0.000002
 }
 void robot_initPID_AD(float Ap, float Ai, float Ad, float Dp, float Di, float Dd)
 {

@@ -12,6 +12,7 @@
 void utils::LoggerFactory::initialize()
 {
 	add("console", new ConsoleAppender());
+	add("memory", new MemoryAppender());
 
 	add("odometry-svg", new SvgAppender("pos.svg"));
 	add("file-motion-pid-csv", new FileAppender("log.txt"));
@@ -34,12 +35,17 @@ void utils::LoggerFactory::initialize()
 	add(utils::Level::INFO, "robottest::GpioBoardTest", "console");
 	add(utils::Level::INFO, "robottest::MoveTest", "console");
 	add(utils::Level::INFO, "robottest::FindPIDTest", "console");
+	add(utils::Level::INFO, "robottest::FindPIDXYTest", "console");
+	add(utils::Level::INFO, "robottest::MoveXYTest", "console");
 
 
 	//add(utils::Level::INFO, "pmx::ServoMotorDxlObject", "console");
 	//add(utils::Level::DEBUG, "pmx::ServoMotorDxlObj", "console");
 
 	//add(utils::Level::DEBUG, "pmx::Robot", "console");
+	//add(utils::Level::DEBUG, "pmx::Base", "console");
+	//add(utils::Level::DEBUG, "motion.c", "memory");
+
 	//add(utils::Level::DEBUG, "pmx::GroveColorSensor", "console");
 	//add(utils::Level::DEBUG, "pmx::ActionManager", "console");
 	//add(utils::Level::DEBUG, "pmx::ExtEncoder", "console");
