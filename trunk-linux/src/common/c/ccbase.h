@@ -32,6 +32,9 @@ float cc_getTheta();
 void cc_setIgnoreCollision(boolean b);
 boolean cc_collisionOccured();
 
+void cc_setMatchColor(int color);
+int cc_getMatchColor();
+
 void cc_setMirrorCoordinates(boolean b);
 
 void cc_goToZone(const char *zoneName);

@@ -70,6 +70,9 @@ public:
 
 	void launchAndEndAfterCmd(RobotCommand* cmd);
 
+	int getMatchColor();
+	void setMatchColor(int color);
+
 	void move(int mm);
 
 	void movexyteta(int forward, float x, float y, float thetaInDegree);
