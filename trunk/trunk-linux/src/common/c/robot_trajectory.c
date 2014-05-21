@@ -27,6 +27,7 @@
 #include "robot_trajectory.h"
 
 #include "motion.h"
+#include "global.h"
 
 #include "robot_unitConversion.h"
 
@@ -161,13 +162,13 @@ void traj_Init() {
 
 // en m/s (d'apres Cho)
 float motion_GetDefaultSpeed() {
-	return 1.0f;
+	return defaultVmax;
 }
 float motion_GetDefaultAccel() {
-	return 0.5f;
+	return defaultAcc;
 }
 float motion_GetDefaultDecel() {
-	return 0.99f;
+	return defaultDec;
 }
 
 void motion_Line(RobotCommand *out_cmd, float dist) {

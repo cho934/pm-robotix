@@ -23,6 +23,7 @@
 // $LastChangedBy$
 // $LastChangedDate$
 /******************************************************************************/
+#include "../cpp/Robot.hpp"
 
 #include "motion.h"
 
@@ -45,6 +46,9 @@
 #include "robot.h"
 #include "robot_odometry.h"
 #include "robot_slippage.h"
+
+
+
 
 //#include "robot_trajectory.h"
 
@@ -253,6 +257,10 @@ void motion_SetCurrentCommand(RobotCommand *cmd)
 //a constant and precise period between computation
 void *motion_ITTask(void *p_arg)
 {
+#ifdef LOG_PID_APPENDER
+	pmx ::Robot &logrobot = pmx::Robot::instance();
+#endif
+
 //static int32 left, right;
 //static int32 alpha, delta;
 
@@ -357,15 +365,8 @@ void *motion_ITTask(void *p_arg)
 			}
 
 #ifdef LOG_PID
-			log_status(currentTimeInMillis(), encoder_getLeftCounter(),
-					encoder_getRightCounter(), robot_getLeftPower(),
-					robot_getRightPower(), ord0, ord1,
-					motors[motionCommand.mcType][0].lastPos,
-					motors[motionCommand.mcType][1].lastPos, p.x, p.y, p.theta);
-#endif
 
-#ifdef LOG_PID_APPENDER
-			apf_log(currentTimeInMillis(), encoder_getLeftCounter(),
+			log_status(currentTimeInMillis(), encoder_getLeftCounter(),
 					encoder_getRightCounter(), robot_getLeftPower(),
 					robot_getRightPower(), ord0, ord1,
 					motors[motionCommand.mcType][0].lastPos,
@@ -376,65 +377,77 @@ void *motion_ITTask(void *p_arg)
 			apf_svg_writePosition(p.x, p.y, p.theta);
 #endif
 
-		//compute pwm for first motor
-		//	printf("motion.c : pid_Compute : ORDER 0 : %d current:%d\n", ord0,
-		//			motors[motionCommand.mcType][0].lastPos);
-		pwm0 = pid_Compute(motors[motionCommand.mcType][0].PIDSys, ord0, motors[motionCommand.mcType][0].lastPos,
-				dSpeed0);
-		//	printf("motion.c : pid_Compute : ORDER 1 : %d current:%d\n", ord1,
-		//			motors[motionCommand.mcType][1].lastPos);
-		//compute pwm for second motor
-		pwm1 = pid_Compute(motors[motionCommand.mcType][1].PIDSys, ord1, motors[motionCommand.mcType][1].lastPos,
-				dSpeed1);
+			//compute pwm for first motor
+			//	printf("motion.c : pid_Compute : ORDER 0 : %d current:%d\n", ord0,
+			//			motors[motionCommand.mcType][0].lastPos);
+			pwm0 = pid_Compute(motors[motionCommand.mcType][0].PIDSys, ord0, motors[motionCommand.mcType][0].lastPos,
+					dSpeed0);
+			//	printf("motion.c : pid_Compute : ORDER 1 : %d current:%d\n", ord1,
+			//			motors[motionCommand.mcType][1].lastPos);
+			//compute pwm for second motor
+			pwm1 = pid_Compute(motors[motionCommand.mcType][1].PIDSys, ord1, motors[motionCommand.mcType][1].lastPos,
+					dSpeed1);
 
-		//output pwm to motors
-		if (motionCommand.mcType == LEFT_RIGHT)
-		{
-			//	printf("motion.c : LEFT_RIGHT mode, pid result : %d %d \n",	pwm0, pwm1);
-			BOUND_INT(pwm0, MAX_PWM_VALUE);
-			BOUND_INT(pwm1, MAX_PWM_VALUE);
-			setPWM(pwm0, pwm1);
-		}
-		else if (motionCommand.mcType == ALPHA_DELTA)
-		{
-			// printf("motion.c : ALPHA_DELTA mode, pid result : %d %d \n", pwm0, pwm1);
-			pwm0b = pwm1 - pwm0;
-			BOUND_INT(pwm0b, MAX_PWM_VALUE);
+			//output pwm to motors
+			if (motionCommand.mcType == LEFT_RIGHT)
+			{
+				//	printf("motion.c : LEFT_RIGHT mode, pid result : %d %d \n",	pwm0, pwm1);
+				BOUND_INT(pwm0, MAX_PWM_VALUE);
+				BOUND_INT(pwm1, MAX_PWM_VALUE);
+				pwm0b = pwm0;
+				pwm1b = pwm1;
+				setPWM(pwm0b, pwm1b);
+			}
+			else if (motionCommand.mcType == ALPHA_DELTA)
+			{
+				// printf("motion.c : ALPHA_DELTA mode, pid result : %d %d \n", pwm0, pwm1);
+				pwm0b = pwm1 - pwm0;
+				BOUND_INT(pwm0b, MAX_PWM_VALUE);
 
-			pwm1b = pwm1 + pwm0;
-			BOUND_INT(pwm1b, MAX_PWM_VALUE);
+				pwm1b = pwm1 + pwm0;
+				BOUND_INT(pwm1b, MAX_PWM_VALUE);
 
-			setPWM(pwm0b, pwm1b);
-		}
+				setPWM(pwm0b, pwm1b);
+			}
 
-		//test end of traj
-		if (fin0 && fin1)
-		{
+
+#ifdef LOG_PID_APPENDER
+
+			apf_log(currentTimeInMillis(), dSpeed0, dSpeed1, pwm0b,
+					pwm1b, ord0, ord1, motors[motionCommand.mcType][0].lastPos,
+					motors[motionCommand.mcType][1].lastPos, p.x, p.y, p.theta);
+
+			logrobot.base().mlogger().debug() << "Motion.c p=" << periodNb << "\tdSpeed=" << dSpeed1 << "\tpwm=" << pwm1b << "\tord1=" << ord1 << utils::end;
+#endif
+
+			//test end of traj
+			if (fin0 && fin1)
+			{
 
 #ifdef LOG_PID
-			closeLog();
+				closeLog();
 #endif
-			signalEndOfTraj();
+				signalEndOfTraj();
+			}
+
+			//unlock motionCommand
+			pthread_mutex_unlock(&mtxMotionCommand);
+
+			break;
+
+		case DISABLE_PID:
+		{
+			printf("motion_ITTask DISABLE_PID  \n");
+			break;
 		}
-
-		//unlock motionCommand
-		pthread_mutex_unlock(&mtxMotionCommand);
-
-		break;
-
-	case DISABLE_PID:
-	{
-		printf("motion_ITTask DISABLE_PID  \n");
-		break;
-	}
-	case FREE_MOTION:
-	{
-		//printf("motion_ITTask FREE_MOTION  \n");
-		//stop = 1;
-		break;
-	}
-	default:
-		break;
+		case FREE_MOTION:
+		{
+			//printf("motion_ITTask FREE_MOTION  \n");
+			//stop = 1;
+			break;
+		}
+		default:
+			break;
 		};
 
 		long stopTime = currentTimeInMillis();
@@ -443,7 +456,6 @@ void *motion_ITTask(void *p_arg)
 		{
 			__useconds_t d = 1000 * (loopDelayInMillis - duration);
 			usleep(d);
-			//
 		}
 
 	}

@@ -48,9 +48,9 @@ PID_SYSTEM pid_Create()
 		return -1;
 
 	//init configuration variables
-	systemValues[pid_Nb].conf.kP = 50;
-	systemValues[pid_Nb].conf.kI = 5;
-	systemValues[pid_Nb].conf.kD = 40;
+	systemValues[pid_Nb].conf.kP = 0.0010;
+	systemValues[pid_Nb].conf.kI = 0.0008;
+	systemValues[pid_Nb].conf.kD = 0.000002;
 
 	//init current state variables
 
@@ -74,7 +74,7 @@ void signalErrorOverflow(PID_SYSTEM system)
 	}
 }
 
-int SampleTime = 5; //... millisec
+int SampleTime = 1; //... millisec
 double outMin = -1.0f * MAX_PWM_VALUE;
 double outMax = 1.0f * MAX_PWM_VALUE;
 
