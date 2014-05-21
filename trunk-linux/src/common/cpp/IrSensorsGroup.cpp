@@ -9,6 +9,7 @@
 
 #include "Chronometer.hpp"
 #include "Logger.hpp"
+#include "Robot.hpp"
 
 pmx::IrSensorsGroup::IrSensorsGroup(pmx::Robot & robot)
 		: ARobotElement(robot), timerIrSensorGroup_(PERIOD_IR, 0, this),
@@ -50,11 +51,19 @@ void pmx::IrSensorsGroup::onTimer(utils::Chronometer chrono)
 	logger().debug() << "onTimer : " << chrono.getElapsedTimeInMilliSec() << " ms R=" << this->irRight_.distanceMm()
 			<< " mm C=" << this->irCenter_.distanceMm() << " mm L=" << this->irLeft_.distanceMm() << " mm RC="
 			<< this->irRearCenter_.distanceMm() << " mm" << utils::end;
+
+	//test detection opponent
+	if(irCenter_.distanceMm() <= 300)
+	{
+		logger().debug() << "=> opponent detected" << utils::end;
+		robot().base().collisionOccured();
+	}
+
 }
 
 void pmx::IrSensorsGroup::onTimerEnd(utils::Chronometer chrono)
 {
-	logger().debug() << "onTimerEnd :" << chrono.getElapsedTimeInMilliSec() << "ms" << utils::end;
+	logger().error() << "onTimerEnd :" << chrono.getElapsedTimeInMilliSec() << "ms" << utils::end;
 	irRight_.reset();
 	irLeft_.reset();
 	irCenter_.reset();

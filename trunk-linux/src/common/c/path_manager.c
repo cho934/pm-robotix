@@ -115,3 +115,10 @@ void path_InterruptTrajectory() {
 	}
 }
 
+void path_CollisionOnTrajectory() {
+	if (waitingSemaphore) {
+		motion_FreeMotion();
+		path_TriggerWaypoint(TRAJ_COLLISION);
+	}
+}
+

@@ -25,13 +25,18 @@
 int matchColor = 0; //0=default color of the match
 boolean ignoreCollision = FALSE;
 
+void cc_AssistedHandling()
+{
+	motion_AssistedHandling();
+}
+
 void launchAndWait(RobotCommand* cmd)
 {
 	checkRobotCommand(cmd);
 	path_LaunchTrajectory(cmd);
 
-	path_WaitEndOfTrajectory();
-	//printf("path_WaitEndOfTrajectory returned : %d : %d\n", result, TRAJ_OK);
+	TRAJ_STATE result = path_WaitEndOfTrajectory();
+	printf("path_WaitEndOfTrajectory returned : %d : TRAJ_OK=%d TRAJ_COLLISION=%d\n", result, TRAJ_OK, TRAJ_COLLISION);
 	free(cmd);
 }
 
@@ -56,7 +61,7 @@ void cc_moveForwardTo(float xMM, float yMM)
 	float aRadian = atan2(dy, dx);
 	cc_rotateTo((aRadian * 180.0f) / M_PI);
 	float dist = sqrt(dx * dx + dy * dy);
-	printf("xMM=%f yMM=%f dx=%f dy=%f dist=%f\n", xMM, yMM,dx,dy,dist);
+	//printf("xMM=%f yMM=%f dx=%f dy=%f dist=%f\n", xMM, yMM,dx,dy,dist);
 	cc_move(dist);
 }
 void cc_moveForwardAndRotateTo(float xMM, float yMM, float thetaInDegree)
@@ -150,10 +155,11 @@ void cc_setIgnoreCollision(boolean b)
 	ignoreCollision = b;
 }
 
-boolean cc_collisionOccured()
+void cc_collisionOccured()
 {
-	return FALSE;
+	path_CollisionOnTrajectory();
 }
+
 
 void cc_setMatchColor(int color)
 {

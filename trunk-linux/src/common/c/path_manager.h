@@ -91,4 +91,6 @@ void path_CancelTrajectory(void);
 //! Used to stop on a particular event (for instance actuator event)
 void path_InterruptTrajectory(void);
 
+void path_CollisionOnTrajectory();
+
 #endif//_PATH_MANAGER_H_

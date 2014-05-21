@@ -30,10 +30,12 @@ float cc_getThetaInDegree();
 float cc_getTheta();
 
 void cc_setIgnoreCollision(boolean b);
-boolean cc_collisionOccured();
+void cc_collisionOccured();
 
 void cc_setMatchColor(int color);
 int cc_getMatchColor();
+
+void cc_AssistedHandling();
 
 void cc_setMirrorCoordinates(boolean b);
 

@@ -127,6 +127,10 @@ void robottest::MoveXYTest::run(int argc, char *argv[])
 	robot.base().printPosition();
 	robot.base().begin(lRes, rRes, distRes, 1);
 
+	if (detect == true)
+	{
+		robot.irSensorsGroup().startTimer();
+	}
 	for (int j = 0; j < nb; j++)
 	{
 
@@ -135,54 +139,58 @@ void robottest::MoveXYTest::run(int argc, char *argv[])
 
 		robot.base().movexyteta(back[j], targetX[j], targetY[j], angle[j]);
 		robot.base().printPosition();
+
 		/*
-		if (detect == true)
-		{
-			robot.irSensorsGroup().startTimer();
-		}
+		 bool opponentDetected = false;
 
-		bool opponentDetected = false;
+		 while (robot.base().arrivedDestination() == false)
+		 {
+		 opponentDetected = robot.base().checkOpponent();
+		 if (!opponentDetected)
+		 {
+		 if (angle[y] > 180.0)
+		 {
+		 //opponentDetected = robot.base().movexy(targetX[y], targetY[y], way, detect);
+		 }
+		 else
+		 {
+		 opponentDetected = robot.base().movexyTeta(targetX[y], targetY[y], way, angle[y] * M_PI / 180.0,
+		 detect);
+		 }
 
-		while (robot.base().arrivedDestination() == false)
-		{
-			opponentDetected = robot.base().checkOpponent();
-			if (!opponentDetected)
-			{
-				if (angle[y] > 180.0)
-				{
-					//opponentDetected = robot.base().movexy(targetX[y], targetY[y], way, detect);
-				}
-				else
-				{
-					opponentDetected = robot.base().movexyTeta(targetX[y], targetY[y], way, angle[y] * M_PI / 180.0,
-							detect);
-				}
+		 if (opponentDetected == true)
+		 {
+		 robot.base().stop();
+		 logger().info() << " !! opponentDetected time=" << robot.chronometerRobot().getElapsedTimeInSec()
+		 << utils::end;
+		 }
+		 }
+		 else
+		 {
+		 robot.base().stop();
+		 logger().info() << " sleep" << utils::end;
+		 sleep(1);
+		 }
+		 }
 
-				if (opponentDetected == true)
-				{
-					robot.base().stop();
-					logger().info() << " !! opponentDetected time=" << robot.chronometerRobot().getElapsedTimeInSec()
-							<< utils::end;
-				}
-			}
-			else
-			{
-				robot.base().stop();
-				logger().info() << " sleep" << utils::end;
-				sleep(1);
-			}
-		}
-
-		if (detect == true)
-		{
-			robot.irSensorsGroup().stopTimer();
-		}
-*/
+		 if (detect == true)
+		 {
+		 robot.irSensorsGroup().stopTimer();
+		 }
+		 */
 		//sleep(3);
-
 	}
 
-	logger().info() << "Stop Robot" << utils::end;
+	if (detect == true)
+	{
+		robot.irSensorsGroup().stopTimer();
+	}
+	/*
+	 logger().info() << "start Robot assistedHandling" << utils::end;
+	 robot.base().assistedHandling(); //TODO regler le PID LEFT/RIGHT
+	 sleep(5);
+	 logger().info() << "Stop Robot assistedHandling" << utils::end;
+	 */
 	robot.stop();
 	sleep(1);
 	robot.base().printPosition();

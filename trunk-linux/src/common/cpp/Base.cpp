@@ -91,6 +91,11 @@ void pmx::Base::launchAndEndAfterCmd(RobotCommand* cmd)
 #endif
 }
 
+void pmx::Base::collisionOccured()
+{
+	cc_collisionOccured();
+}
+
 int pmx::Base::getMatchColor()
 {
 	return cc_getMatchColor();
@@ -101,6 +106,11 @@ void pmx::Base::setMatchColor(int color)
 	cc_setMatchColor(color);
 }
 
+void pmx::Base::assistedHandling()
+{
+	cc_AssistedHandling();
+}
+
 void pmx::Base::move(int mm)
 {
 	cc_move(mm);
@@ -108,10 +118,11 @@ void pmx::Base::move(int mm)
 
 void pmx::Base::movexyteta(int backward, float x, float y, float thetaInDegree)
 {
-	if(backward == 0)
+	if (backward == 0)
 	{
 		cc_moveForwardAndRotateTo(x, y, thetaInDegree);
-	}else
+	}
+	else
 	{
 		cc_moveBackwardAndRotateTo(x, y, thetaInDegree);
 	}
@@ -131,7 +142,7 @@ void pmx::Base::setupPID_AD(float Ap, float Ai, float Ad, float Dp, float Di, fl
 	robot_initPID_AD(Ap, Ai, Ad, Dp, Di, Dd);
 }
 
-void pmx::Base::MoveLineSpeedAcc(int mm,  float VMax, float Accel, float Decel )
+void pmx::Base::MoveLineSpeedAcc(int mm, float VMax, float Accel, float Decel)
 {
 	RobotCommand* cmd = (RobotCommand*) malloc(sizeof(RobotCommand));
 	float meters = mm / 1000.0f;
