@@ -21,21 +21,21 @@ void robottest::MoveXYTest::run(int argc, char *argv[])
 	int lot = argc / 4;
 	int targetX[lot], targetY[lot], back[lot];
 	double angle[lot];
-	int cap = 0, detect = 0;
+	int color = 0, detect = 0;
 
 	std::cout << "USAGE: PMX_TEST " << (int) argv[1]
-			<< " [capActivation:0-1] [OpponentDetect:0-1]  [[coordX(mm)] [coordY(mm)] [angle(deg -179...+180)] [FORWARD-BACK:0-1] ...] "
+			<< " [colorMatch:0-1] [OpponentDetect:0-1]  [[coordX(mm)] [coordY(mm)] [angle(deg -179...+180)] [FORWARD-BACK:0-1] ...] "
 			<< std::endl;
 
 	if (argc > 2)
 	{
-		cap = atoi(argv[2]);
-		std::cout << "Cap correction: " << atoi(argv[2]) << std::endl;
+		color = atoi(argv[2]);
+		std::cout << "colorMatch:0-1: " << atoi(argv[2]) << std::endl;
 	}
 	else
 	{
-		std::cout << "Cap correction (0-1): " << std::flush;
-		std::cin >> cap;
+		std::cout << "colorMatch:0-1: " << std::flush;
+		std::cin >> color;
 	}
 
 	if (argc > 3)
@@ -122,6 +122,8 @@ void robottest::MoveXYTest::run(int argc, char *argv[])
 		distRes = 0.300f;
 	}
 
+	robot.base().setMatchColor(color);
+
 	robot.base().printPosition();
 	robot.base().begin(lRes, rRes, distRes, 1);
 
@@ -132,6 +134,7 @@ void robottest::MoveXYTest::run(int argc, char *argv[])
 				<< robot.chronometerRobot().getElapsedTimeInSec() << utils::end; //TODO remettre le chrono
 
 		robot.base().movexyteta(back[j], targetX[j], targetY[j], angle[j]);
+		robot.base().printPosition();
 		/*
 		if (detect == true)
 		{
@@ -179,6 +182,7 @@ void robottest::MoveXYTest::run(int argc, char *argv[])
 
 	}
 
+	logger().info() << "Stop Robot" << utils::end;
 	robot.stop();
 	sleep(1);
 	robot.base().printPosition();

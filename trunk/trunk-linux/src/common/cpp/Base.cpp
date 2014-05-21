@@ -18,7 +18,7 @@
 #include "../c/robot_unitConversion.h"
 #include "Level.hpp"
 #include "Logger.hpp"
-#include "SvgWriter.hpp"
+//#include "SvgWriter.hpp"
 
 pmx::Base::Base(pmx::Robot & robot)
 		: ARobotElement(robot)
@@ -89,6 +89,16 @@ void pmx::Base::launchAndEndAfterCmd(RobotCommand* cmd)
 #ifdef LOG_PID
 	closeLog();	//TODO est-ce bien ici le close log ? meme si plusieurs launch l'un après l'autre ?
 #endif
+}
+
+int pmx::Base::getMatchColor()
+{
+	return cc_getMatchColor();
+}
+
+void pmx::Base::setMatchColor(int color)
+{
+	cc_setMatchColor(color);
 }
 
 void pmx::Base::move(int mm)

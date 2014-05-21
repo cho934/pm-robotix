@@ -22,6 +22,7 @@
 #include "global.h"
 #include "path_manager.h"
 
+int matchColor = 0; //0=default color of the match
 boolean ignoreCollision = FALSE;
 
 void launchAndWait(RobotCommand* cmd)
@@ -45,22 +46,38 @@ void cc_move(float distanceInMM)
 
 void cc_moveForwardTo(float xMM, float yMM)
 {
+	if (matchColor != 0)
+	{
+		yMM = -yMM;
+	}
+
 	float dx = xMM - cc_getX();
 	float dy = yMM - cc_getY();
 	float aRadian = atan2(dy, dx);
 	cc_rotateTo((aRadian * 180.0f) / M_PI);
 	float dist = sqrt(dx * dx + dy * dy);
+	printf("xMM=%f yMM=%f dx=%f dy=%f dist=%f\n", xMM, yMM,dx,dy,dist);
 	cc_move(dist);
 }
 void cc_moveForwardAndRotateTo(float xMM, float yMM, float thetaInDegree)
 {
+	if (matchColor != 0)
+	{
+		thetaInDegree = -thetaInDegree;
+	}
+
 	cc_moveForwardTo(xMM, yMM);
 	cc_rotateTo(thetaInDegree);
 }
 void cc_moveBackwardTo(float xMM, float yMM)
 {
+	if (matchColor != 0)
+	{
+		yMM = -yMM;
+	}
+
 	float dx = xMM - cc_getX();
-	float dy = yMM - cc_getY();
+	float dy = yMM - cc_getY(); //-500 -x = -900
 	float aRadian = atan2(dy, dx);
 	cc_rotateTo(((M_PI + aRadian) * 180.0f) / M_PI); //TODO angle au plus court ?
 	float dist = sqrt(dx * dx + dy * dy);
@@ -68,6 +85,10 @@ void cc_moveBackwardTo(float xMM, float yMM)
 }
 void cc_moveBackwardAndRotateTo(float xMM, float yMM, float thetaInDegree)
 {
+	if (matchColor != 0)
+	{
+		thetaInDegree = -thetaInDegree;
+	}
 	cc_moveBackwardTo(xMM, yMM);
 	cc_rotateTo(thetaInDegree);
 }
@@ -90,11 +111,14 @@ void cc_rotateRight(float degrees)
 void cc_rotateTo(float thetaInDegree)
 {
 	float currentThetaInDegree = cc_getThetaInDegree();
+	//printf("ccbase.c cc_rotateTo %f deg   current=%f \n", thetaInDegree, currentThetaInDegree);
 	float delta = thetaInDegree - currentThetaInDegree;
 
 	float turn = ((int) (delta * 1000.0f) % 360000) / 1000.0f;
 
-	cc_rotateLeft(turn);
+	//printf("ccbase.c cc_rotateAbs %f deg   delta=%f deg\n ", turn, delta);
+
+	cc_rotateAbs(turn); //cho use Abs not left!!
 }
 
 // position x,x in mm
@@ -114,7 +138,7 @@ float cc_getTheta()
 	RobotPosition p = odo_GetPosition();
 	return p.theta;
 }
-// angle in radian
+// angle in degre
 float cc_getThetaInDegree()
 {
 	RobotPosition p = odo_GetPosition();
@@ -129,6 +153,15 @@ void cc_setIgnoreCollision(boolean b)
 boolean cc_collisionOccured()
 {
 	return FALSE;
+}
+
+void cc_setMatchColor(int color)
+{
+	matchColor = color;
+}
+int cc_getMatchColor()
+{
+	return matchColor;
 }
 
 void cc_setMirrorCoordinates(boolean)
