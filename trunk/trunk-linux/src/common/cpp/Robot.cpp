@@ -100,94 +100,13 @@ void pmx::Robot::stopDevices()
 
 void pmx::Robot::stopManagers()
 {
+	irSensorsGroup_.stopTimer();
 	logger().debug("Stop managers");
 	actionManager_.stop();
 
 //TODO  créer une Attente de la fin de l'actionManager à la place du usleep
 	usleep(5000);
 
+
 }
 
-//void pmx::Robot::goTo(double x, double y, BaseWay way, bool detection)
-//{
-	/*
-
-	 if (detection == true)
-	 {
-	 irSensorsGroup().startTimer();
-	 }
-
-	 base().arrivedDestination(false);
-	 bool opponentDetected = false;
-
-	 while (base().arrivedDestination() == false)
-	 {
-	 opponentDetected = base().checkOpponent();
-	 if (!opponentDetected)
-	 {
-	 opponentDetected = base().movexy(x, y, way, detection);
-
-	 if (opponentDetected == true)
-	 {
-	 base().stop();
-	 logger().info() << " !! opponentDetected time="
-	 << chronometerRobot().getElapsedTimeInSec()
-	 << utils::end;
-	 }
-	 }
-	 else
-	 {
-	 base().stop();
-	 logger().info() << " sleep" << utils::end;
-	 sleep(1);
-	 }
-	 }
-
-	 if (detection == true)
-	 {
-	 irSensorsGroup().stopTimer();
-	 }*/
-
-//}
-
-//void pmx::Robot::goToTeta(double x, double y, double teta, BaseWay way, bool detection)
-//{
-
-	/*
-	 if (detection == true)
-	 {
-	 irSensorsGroup().startTimer();
-	 }
-
-	 base().arrivedDestination(false);
-	 bool opponentDetected = false;
-
-	 while (base().arrivedDestination() == false)
-	 {
-	 opponentDetected = base().checkOpponent();
-	 if (!opponentDetected)
-	 {
-	 opponentDetected = base().movexyTeta(x, y, way, teta, detection);
-
-	 if (opponentDetected == true)
-	 {
-	 base().stop();
-	 logger().info() << " !! opponentDetected time="
-	 << chronometerRobot().getElapsedTimeInSec()
-	 << utils::end;
-	 }
-	 }
-	 else
-	 {
-	 base().stop();
-	 logger().info() << " sleep" << utils::end;
-	 sleep(1);
-	 }
-	 }
-
-	 if (detection == true)
-	 {
-	 irSensorsGroup().stopTimer();
-	 }*/
-
-//}

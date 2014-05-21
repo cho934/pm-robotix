@@ -47,9 +47,6 @@
 #include "robot_odometry.h"
 #include "robot_slippage.h"
 
-
-
-
 //#include "robot_trajectory.h"
 
 MOTION_STATE RobotMotionState;
@@ -172,6 +169,7 @@ void motion_FreeMotion()
 void motion_AssistedHandling()
 {
 	motion_FreeMotion();
+	RobotMotionState = ASSISTED_HANDLING;
 }
 
 void motion_DisablePID()
@@ -258,7 +256,8 @@ void motion_SetCurrentCommand(RobotCommand *cmd)
 void *motion_ITTask(void *p_arg)
 {
 #ifdef LOG_PID_APPENDER
-	pmx ::Robot &logrobot = pmx::Robot::instance();
+	pmx
+	::Robot &logrobot = pmx::Robot::instance();
 #endif
 
 //static int32 left, right;
@@ -410,14 +409,15 @@ void *motion_ITTask(void *p_arg)
 				setPWM(pwm0b, pwm1b);
 			}
 
-
 #ifdef LOG_PID_APPENDER
 
-			apf_log(currentTimeInMillis(), dSpeed0, dSpeed1, pwm0b,
-					pwm1b, ord0, ord1, motors[motionCommand.mcType][0].lastPos,
-					motors[motionCommand.mcType][1].lastPos, p.x, p.y, p.theta);
+			apf_log(currentTimeInMillis(), dSpeed0, dSpeed1, pwm0b, pwm1b, ord0, ord1,
+					motors[motionCommand.mcType][0].lastPos, motors[motionCommand.mcType][1].lastPos, p.x, p.y,
+					p.theta);
 
-			logrobot.base().mlogger().debug() << "Motion.c p=" << periodNb << "\tdSpeed=" << dSpeed1 << "\tpwm=" << pwm1b << "\tord1=" << ord1 << utils::end;
+			logrobot.base().mlogger().debug() << "Motion.c p=" << periodNb << "\tdSpeed=" << dSpeed1 << "\tpwm="
+					<< pwm1b << "\tord1=" << ord1 << utils
+			::end;
 #endif
 
 			//test end of traj
@@ -435,15 +435,37 @@ void *motion_ITTask(void *p_arg)
 
 			break;
 
+		case ASSISTED_HANDLING:
+		{
+			//printf("motion_ITTask ASSISTED_HANDLING  \n");
+			dSpeed0 = dLeft;
+			dSpeed1 = dRight;
+			//compute pwm for first motor
+			//pwm0 = pid_Compute(motors[motionCommand.mcType][0].PIDSys, dLeft);
+			//pwm0 = pid_ComputeRcva(motors[motionCommand.mcType][0].PIDSys, dLeft, dSpeed0);
+			pwm0 = pid_Compute(motors[motionCommand.mcType][0].PIDSys, 0, motors[motionCommand.mcType][0].lastPos,
+					dSpeed0);
+
+			//compute pwm for second motor
+			//pwm1 = pid_Compute(motors[motionCommand.mcType][1].PIDSys, dRight);
+			//pwm1 = pid_ComputeRcva(motors[motionCommand.mcType][1].PIDSys, dRight, dSpeed1);
+			pwm1 = pid_Compute(motors[motionCommand.mcType][1].PIDSys, 0, motors[motionCommand.mcType][1].lastPos,
+					dSpeed1);
+			printf("motion_ITTask ASSISTED_HANDLING  pwm0=%d pwm1=%d \n", pwm0, pwm1);
+			//write pwm in registers
+			setPWM(pwm0, pwm1);
+			break;
+		}
+
+
 		case DISABLE_PID:
 		{
-			printf("motion_ITTask DISABLE_PID  \n");
+			//printf("motion_ITTask DISABLE_PID  \n");
 			break;
 		}
 		case FREE_MOTION:
 		{
 			//printf("motion_ITTask FREE_MOTION  \n");
-			//stop = 1;
 			break;
 		}
 		default:
@@ -485,6 +507,7 @@ void motion_InitTimer(int frequency)
 void motion_StopTimer()
 {
 	setPWM(0, 0);
+	//TODO kill timer
 }
 
 void initPWM()

@@ -69,10 +69,12 @@ public:
 	void printPosition();
 
 	void launchAndEndAfterCmd(RobotCommand* cmd);
+	void collisionOccured();
 
 	int getMatchColor();
 	void setMatchColor(int color);
 
+	void assistedHandling();
 	void move(int mm);
 
 	void movexyteta(int forward, float x, float y, float thetaInDegree);
