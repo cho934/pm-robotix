@@ -39,7 +39,9 @@ namespace pmx
 
         virtual IAutomateState* execute(Robot& robot, void * data);
 
-        void IASetup();
+        void IASetupTableTest();
+        void IASetupHomologation();
+        void IASetupMatches();
 
     };
 }

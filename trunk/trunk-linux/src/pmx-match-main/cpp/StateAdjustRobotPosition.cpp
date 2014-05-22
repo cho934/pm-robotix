@@ -3,24 +3,34 @@
  * \brief Implémentation de la classe StateAdjustRobotPosition.
  */
 
-#include <cmath>
-#include "StateWaitForStart.hpp"
-#include "StateWaitForReboot.hpp"
-#include "StateInitialize.hpp"
 #include "StateAdjustRobotPosition.hpp"
-#include "Robot.hpp"
+
+//#include <cmath>
+#include <stdint.h>
+
+#include "../../common/cpp/Adafruit_RGBLCDShield.hpp"
+#include "../../common/cpp/LedBar.hpp"
+#include "../../common/cpp/Logger.hpp"
+#include "../../common/cpp/Robot.hpp"
+#include "Data.hpp"
+//#include "StateInitialize.hpp"
+//#include "StateWaitForReboot.hpp"
+//#include "StateWaitForStart.hpp"
 
 pmx::IAutomateState*
-pmx::StateAdjustRobotPosition::execute(Robot& robot, void *)
+pmx::StateAdjustRobotPosition::execute(Robot& robot, void *data)
 {
 	IAutomateState* result;
 
 	this->logger().info() << "start" << utils::end;
-	//pmx::Data* sharedData = (pmx::Data*) data;
+	pmx::Data* sharedData = (pmx::Data*) data;
 
-	robot.lcdBoard().setBacklight(LCD_ON);
-	robot.lcdBoard().clear();
-	robot.lcdBoard().print("PMX...Adjust Position !");
+	if (!sharedData->skipSetup())
+	{
+		robot.lcdBoard().setBacklight(LCD_ON);
+		robot.lcdBoard().clear();
+		robot.lcdBoard().print("PMX...Adjust Position !");
+	}
 
 	logger().debug() << "Adjust position in the correct board..." << utils::end;
 
@@ -40,33 +50,36 @@ pmx::StateAdjustRobotPosition::execute(Robot& robot, void *)
 	 utils::SvgWriter::writePosition(robot.position().x(), robot.position().y(), robot.position().angle(),
 	 utils::SVG_POS_ROBOT);
 	 */
-
-	logger().info() << "=> Clic SELECT..." << utils::end;
-	robot.lcdBoard().setCursor(0, 1);
-	robot.lcdBoard().print("Clic SELECT...");
-	robot.ledBar().startK2Mil(50000, 50000, false);
-	//wait
-	uint8_t buttons = 0;
-	while (!(buttons & BUTTON_SELECT))
+	//skip setup
+	if (!sharedData->skipSetup())
 	{
-		buttons = robot.lcdBoard().readButtons();
-		if (buttons)
+
+		logger().info() << "=> Clic SELECT..." << utils::end;
+		robot.lcdBoard().setCursor(0, 1);
+		robot.lcdBoard().print("Clic SELECT...");
+		robot.ledBar().startK2Mil(50000, 50000, false);
+		//wait
+		uint8_t buttons = 0;
+		while (!(buttons & BUTTON_SELECT))
 		{
-			if (buttons & BUTTON_SELECT)
+			buttons = robot.lcdBoard().readButtons();
+			if (buttons)
 			{
-				robot.lcdBoard().clear();
-				robot.lcdBoard().setCursor(0, 0);
-				robot.lcdBoard().print("NEXT ");
-				//robot.lcdBoard().setBacklight(LCD_OFF);
+				if (buttons & BUTTON_SELECT)
+				{
+					robot.lcdBoard().clear();
+					robot.lcdBoard().setCursor(0, 0);
+					robot.lcdBoard().print("NEXT ");
+					//robot.lcdBoard().setBacklight(LCD_OFF);
+				}
 			}
 		}
+
+		robot.ledBar().startReset();
+		robot.ledBar().stopAndWait(true);
+
+		logger().debug() << "Position adjusted." << utils::end;
 	}
-
-	robot.ledBar().startReset();
-	robot.ledBar().stopAndWait(true);
-
-	logger().debug() << "Position adjusted." << utils::end;
-
 	result = this->getState("next");
 
 	return result;

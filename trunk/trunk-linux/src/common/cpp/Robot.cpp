@@ -68,7 +68,25 @@ void pmx::Robot::start()
 	actionManager_.start("ActionManager");
 
 	//start asserv
-	//base().begin();
+
+	//TODO INIT base et asserv !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	int lRes = 1191;//1121
+		int rRes = 1192;//1192
+		float distRes = 0.300f;
+
+		if (0) //TODO a mettre dans Base.cpp
+		{
+			lRes = 19885;
+			rRes = 20360;
+			distRes = 0.250f;
+		}
+		else
+		{
+			lRes = 1136;
+			rRes = 1136;
+			distRes = 0.300f;
+		}
+		base().begin(lRes, rRes, distRes, 1);
 
 	logger().info("Robot is started");
 

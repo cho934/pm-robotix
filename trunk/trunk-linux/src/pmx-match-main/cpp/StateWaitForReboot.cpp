@@ -5,10 +5,9 @@
 
 #include "StateWaitForReboot.hpp"
 
-//#include <linux/limits.h>
 #include <unistd.h>
 #include <climits>
-//#include <cmath>
+#include <stdint.h>
 #include <cstdio>
 #include <cstdlib>
 #include <iostream>
@@ -18,17 +17,16 @@
 #include "../../common/cpp/LedBar.hpp"
 #include "../../common/cpp/Logger.hpp"
 #include "../../common/cpp/Robot.hpp"
+#include "Data.hpp"
 
 pmx::IAutomateState*
-pmx::StateWaitForReboot::execute(Robot& robot, void *)
+pmx::StateWaitForReboot::execute(Robot& robot, void *data)
 {
 	logger().info() << "Start" << utils::end;
 
 	//TODO arret des moteurs
 
-	robot.lcdBoard().setBacklight(LCD_ON);
-	robot.lcdBoard().clear();
-	robot.lcdBoard().print("PMX...GO !");
+
 
 	try
 	{
@@ -49,6 +47,11 @@ pmx::StateWaitForReboot::execute(Robot& robot, void *)
 		exit(60);
 	}
 
+	//skip setup
+	pmx::Data* sharedData = (pmx::Data*) data;
+	if(sharedData->skipSetup())
+		return this->getState("next");
+
 	logger().info() << "=> Clic SELECT..." << utils::end;
 	robot.lcdBoard().setCursor(0, 1);
 	robot.lcdBoard().print("Clic SELECT...");
@@ -65,7 +68,6 @@ pmx::StateWaitForReboot::execute(Robot& robot, void *)
 				robot.lcdBoard().clear();
 				robot.lcdBoard().setCursor(0, 0);
 				robot.lcdBoard().print("NEXT ");
-				//robot.lcdBoard().setBacklight(LCD_OFF);
 			}
 		}
 	}
