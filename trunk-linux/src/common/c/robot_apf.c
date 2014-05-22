@@ -47,7 +47,7 @@ void robot_init()
 	gettimeofday(&te, NULL); // get current time
 	timeOffset = (te.tv_sec * 1000LL + te.tv_usec / 1000);
 
-	printf("Init time %ld\n", currentTimeInMillis());
+	//printf("Init time %ld\n", currentTimeInMillis());
 }
 
 /*

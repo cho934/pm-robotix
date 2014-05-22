@@ -46,36 +46,35 @@ utils::Thread::yield()
  * return false si aucun pb.
  */
 bool
-utils::Thread::start()
+utils::Thread::start(std::string name)
 {
     //printf("    utils::Thread::start()\n");
     this->setState(utils::STARTING);
    
     int code = pthread_create(&threadId_, NULL, utils::Thread::entryPoint, (void *) this);
 
-   
-
     if (code == 0)
     {
         pid_t tid;
         tid = syscall(SYS_gettid);
-        std::cout << "Thread::started:" << &threadId_ << " : " << tid << std::endl;
+        //std::cout << "utils::Thread::start::started:" << &threadId_ << " : " << tid << " name=" << name << std::endl;
         return false;
     }else
     {
-        std::cout << "Thread::pthread_create: NOK \n" << std::endl;
+    	std::cout << "utils::Thread::start::NOT started:" << &threadId_ << " : " << " name=" << name << std::endl;
+        std::cout << "utils::Thread::start::pthread_create: NOK \n" << std::endl;
         switch(code)
         {
             case EAGAIN :
             // The  system lacked the necessary resources to create another
             // thread, or the system-imposed limit on the total number of
             // threads in a process {PTHREAD_THREADS_MAX} would be exceeded.
-                std::cout << "Thread::ERROR:EAGAIN \n" << std::endl;
+                std::cout << "utils::Thread::start::ERROR:EAGAIN \n" << std::endl;
             break;
 
             case EINVAL :
             // The value specified by attr is invalid.
-                std::cout << "Thread::ERROR:EINVAL \n" << std::endl;
+                std::cout << "utils::Thread::start::ERROR:EINVAL \n" << std::endl;
             break;
 /*
             case EPERM :
@@ -85,7 +84,7 @@ utils::Thread::start()
             break;*/
 
             default:
-                std::cout << "Thread::ERROR:default \n"  << std::endl;
+                std::cout << "utils::Thread::start::ERROR:default \n"  << std::endl;
         }
         return true;
     }

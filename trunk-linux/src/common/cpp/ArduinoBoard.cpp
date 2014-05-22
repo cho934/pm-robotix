@@ -6,7 +6,7 @@
 #include "ArduinoBoard.hpp"
 
 #include <unistd.h>
-
+#include <string.h>
 #include "Exception.hpp"
 #include "HostI2cBus.hpp"
 

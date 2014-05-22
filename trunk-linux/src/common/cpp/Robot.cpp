@@ -43,6 +43,7 @@ pmx::Robot::Robot()
 	//Led indicator begin initialisation
 	pmx::LedIndicator::instance().reset();
 
+	usleep(300000);
 }
 
 void pmx::Robot::initialize(const std::string& prefix, utils::Configuration& )
@@ -64,7 +65,7 @@ void pmx::Robot::configure(const std::string & configurationFile)
 void pmx::Robot::start()
 {
 	//start action manager
-	actionManager_.start();
+	actionManager_.start("ActionManager");
 
 	//start asserv
 	//base().begin();

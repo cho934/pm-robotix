@@ -32,7 +32,8 @@ pmx::ExtEncoder::ExtEncoder(pmx::Robot & robot, char slave_select_port_letter, i
 
 		utils::HostSpiBus::instance().open();
 		long speed = utils::HostSpiBus::instance().getSpeed();
-		std::cout << " Encoder spi speed = " << speed << std::endl;
+		logger().debug() << " Encoder spi speed = " << speed << utils::end;
+
 
 		//singleByteWrite(WRITE_MDR0, QUADRX4|FREE_RUN|INDX_LOADC|SYNCH_INDX|FILTER_2);
 		//singleByteWrite(WRITE_MDR1, IDX_FLAG|CMP_FLAG|BYTE_2|EN_CNTR);

@@ -115,6 +115,9 @@ void cc_rotateRight(float degrees)
 
 void cc_rotateTo(float thetaInDegree)
 {
+	int c=ignoreCollision;
+	ignoreCollision = TRUE;
+
 	float currentThetaInDegree = cc_getThetaInDegree();
 	//printf("ccbase.c cc_rotateTo %f deg   current=%f \n", thetaInDegree, currentThetaInDegree);
 	float delta = thetaInDegree - currentThetaInDegree;
@@ -124,6 +127,8 @@ void cc_rotateTo(float thetaInDegree)
 	//printf("ccbase.c cc_rotateAbs %f deg   delta=%f deg\n ", turn, delta);
 
 	cc_rotateAbs(turn); //cho use Abs not left!!
+
+	ignoreCollision=c;
 }
 
 // position x,x in mm
@@ -157,7 +162,8 @@ void cc_setIgnoreCollision(boolean b)
 
 void cc_collisionOccured()
 {
-	path_CollisionOnTrajectory();
+	if(!ignoreCollision)
+		path_CollisionOnTrajectory();
 }
 
 

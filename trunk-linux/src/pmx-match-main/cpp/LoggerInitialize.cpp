@@ -15,4 +15,7 @@ utils::LoggerFactory::initialize() {
 
     add(utils::Level::ERROR, "", "console");
 
+    add(utils::Level::DEBUG, "main", "console");
+    add(utils::Level::DEBUG, "pmx::StateWaitForReboot", "console");
+
 }

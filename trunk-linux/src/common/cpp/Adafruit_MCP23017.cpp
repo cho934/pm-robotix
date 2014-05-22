@@ -15,10 +15,12 @@
 //#include <avr/pgmspace.h>
 #include "Adafruit_MCP23017.hpp"
 
-#include "Exception.hpp"
-#include "Logger.hpp"
+#include <stdlib.h>
+
+//#include "Exception.hpp"
+//#include "Logger.hpp"
 #include "Macro.hpp"
-#include "Md25.hpp"
+//#include "Md25.hpp"
 
 /*
  #ifdef __AVR__

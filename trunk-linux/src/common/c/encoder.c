@@ -40,7 +40,7 @@ void encoder_SetDist(float dist) {
 }
 
 void encoder_SetResolution(uint32 leftTicksPerM, uint32 rightTicksPerM) {
-	printf("encoder_SetResolution   %d , %d \n", leftTicksPerM, rightTicksPerM);
+
 	if (leftTicksPerM > rightTicksPerM) {
 		leftEncoderRatio = VTOPS_PER_TICKS;
 		rightEncoderRatio = VTOPS_PER_TICKS * rightTicksPerM
@@ -52,9 +52,13 @@ void encoder_SetResolution(uint32 leftTicksPerM, uint32 rightTicksPerM) {
 		rightEncoderRatio = VTOPS_PER_TICKS;
 		valueVTops = 1 / (float) (VTOPS_PER_TICKS * rightTicksPerM);
 	}
+#ifdef DEBUG_MOTION
+	printf("encoder_SetResolution   %d , %d \n", leftTicksPerM, rightTicksPerM);
 	printf("valueVTops %f = 1 / %f = 1 / %d x %d \n", valueVTops,
 			(float) (VTOPS_PER_TICKS * rightTicksPerM), VTOPS_PER_TICKS,
 			rightTicksPerM);
+#endif
+
 	//recompute values involving vTops
 	encoder_SetDist(distEncoderMeter);
 }

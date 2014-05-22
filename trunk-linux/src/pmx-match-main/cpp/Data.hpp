@@ -17,10 +17,6 @@ private:
 
 	bool empty_;
 
-	bool strategyCatchWithOpponent_;
-
-	bool strategyPushGoldBar_;
-
 public:
 
 	/*!
