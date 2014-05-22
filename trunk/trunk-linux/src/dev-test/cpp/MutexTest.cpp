@@ -25,8 +25,8 @@ void test::MutexTest::testDoubleThread() {
     test::mutex::TestThread t1(c, true);
     test::mutex::TestThread t2(c, false);
 
-    t1.start();
-    t2.start();
+    t1.start("t1");
+    t2.start("t2");
 
     t1.waitForEnd();
     t2.waitForEnd();

@@ -25,7 +25,7 @@ pmx::IrSensorsGroup::IrSensorsGroup(pmx::Robot & robot)
 
 void pmx::IrSensorsGroup::startTimer()
 {
-	this->timerIrSensorGroup_.start();
+	this->timerIrSensorGroup_.start("IrSensorsGroup");
 }
 
 void pmx::IrSensorsGroup::stopTimer()
@@ -63,7 +63,7 @@ void pmx::IrSensorsGroup::onTimer(utils::Chronometer chrono)
 
 void pmx::IrSensorsGroup::onTimerEnd(utils::Chronometer chrono)
 {
-	logger().error() << "onTimerEnd :" << chrono.getElapsedTimeInMilliSec() << "ms" << utils::end;
+	logger().debug() << "onTimerEnd :" << chrono.getElapsedTimeInMilliSec() << "ms" << utils::end;
 	irRight_.reset();
 	irLeft_.reset();
 	irCenter_.reset();

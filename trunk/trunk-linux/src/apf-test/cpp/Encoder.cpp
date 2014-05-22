@@ -13,16 +13,14 @@
 
 #include <as_devices/as_gpio.h>
 #include <as_devices/as_spi.h>
-//#include <linux/spi/spidev.h>
 
 /*
  * Encoder constructor.
  */
 Encoder::Encoder(char slave_select_port_letter, int slave_select_pin)
-		: ss_port_(slave_select_port_letter), ss_pin_(slave_select_pin)
-,gpio_dev_(0), spi_fd_(0)
+		: ss_port_(slave_select_port_letter), ss_pin_(slave_select_pin), gpio_dev_(0), spi_fd_(0)
 {
-    lock();
+	lock();
 	int32_t ret;
 	const char *aSpidev_name = "/dev/spidev1.1";
 	unsigned char *d = (unsigned char*) aSpidev_name;
@@ -32,15 +30,12 @@ Encoder::Encoder(char slave_select_port_letter, int slave_select_pin)
 	this->prevCount = 0; //count from previous read
 	//this->prevTime = millis(); //time stamp of previous read
 	this->prevDiff = 0; //difference in coundt from previous read
-	//this->ss_pin = slave_select_pin; //slave select pin
-	//this->ss_port = slave_select_port_letter;
 
 	// setup the pins on the microcontroller
 	gpio_dev_ = as_gpio_open(slave_select_port_letter, slave_select_pin);
 	if (gpio_dev_ == NULL)
 	{
-		printf("Error can't open gpio %c\nHave you run loadgpio.sh ?\n",
-				slave_select_port_letter);
+		printf("Error can't open gpio %c\nHave you run loadgpio.sh ?\n", slave_select_port_letter);
 		exit(1);
 	}
 	usleep(1000);
@@ -51,25 +46,20 @@ Encoder::Encoder(char slave_select_port_letter, int slave_select_pin)
 		exit(1);
 	}
 
-
 	ss_pin_set(1);
-	//usleep(1000);
 
 	//setup spi
 	spi_fd_ = as_spi_open(d);
 	if (spi_fd_ < 0)
 	{
-		std::cout << "Error, can't open SPI \nHave you run modprobe spidev ?\n"
-				<< std::endl;
+		std::cout << "Error, can't open SPI \nHave you run modprobe spidev ?\n" << std::endl;
 		exit(0);
 	}
 
-	long speed = as_spi_get_speed(spi_fd_);
-	std::cout << " Encoder spi speed = " << speed << std::endl;
+	//long speed = as_spi_get_speed(spi_fd_);
+	//std::cout << " Encoder spi speed = " << speed << std::endl;
 
-	//pinMode(this->ss_pin, OUTPUT);
-	//digitalWrite(this->ss_pin, HIGH); //delay(10); //disable device
-	 unlock();
+	unlock();
 }
 
 void Encoder::ss_pin_set(int value)
@@ -125,7 +115,6 @@ void Encoder::initialize(void)
 	unlock();
 	ss_pin_set(1);
 
-
 }
 
 /*
@@ -141,16 +130,7 @@ void Encoder::initialize(int setup_mdr0, int setup_mdr1)
 	//Clear LS7366
 	this->clearCounter(); //clear counter
 	this->clearStatus(); //clear status
-	/*
-	 //Setup LS7366
-	 digitalWrite(this->ss_pin,LOW); //enable device
-	 this->spiTransfer(WRITE_MODE0);
-	 this->spiTransfer((char)setup_mdr0);
-	 digitalWrite(this->ss_pin,HIGH); //release device
-	 digitalWrite(this->ss_pin,LOW); //enable device
-	 this->spiTransfer(WRITE_MODE1);
-	 this->spiTransfer((char)setup_mdr1);
-	 digitalWrite(this->ss_pin,HIGH); //release device*/
+
 	lock();
 	ss_pin_set(0);
 	this->spiTransfer(WRITE_MODE0);

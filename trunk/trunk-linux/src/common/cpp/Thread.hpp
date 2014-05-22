@@ -81,7 +81,7 @@ namespace utils
          *
          * Cette méthode initialise le thread et appelle la méthode ::execute().
          */
-        bool start();
+        bool start(std::string name);
 
         /*!
          * \brief Cette méthode retourne l'état du thread.

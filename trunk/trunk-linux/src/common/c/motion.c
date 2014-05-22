@@ -501,7 +501,9 @@ void *motion_ITTask(void *p_arg)
 void motion_InitTimer(int frequency)
 {
 	loopDelayInMillis = 1000 / frequency;
+#ifdef DEBUG_MOTION
 	printf("motion.c : motion_InitTimer with pause of %ld us\n", loopDelayInMillis);
+#endif
 }
 
 void motion_StopTimer()

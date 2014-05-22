@@ -20,7 +20,7 @@ test::ThreadTest::testSimpleThread() {
     logger().info() << "testSimpleThread()" << utils::end;
     DummyThread t1("1t1");
 
-    t1.start();
+    t1.start("t1");
     // logger().info() << "testSimpleThread() start done" << utils::end;
     while (!t1.finished()) {
         usleep(1000);
@@ -35,8 +35,8 @@ test::ThreadTest::testDoubleThread() {
     DummyThread t1("2td1");
     DummyThread t2("2td2");
 
-    t1.start();
-    t2.start();
+    t1.start("t1");
+    t2.start("t2");
 
     while (!t1.finished() && !t2.finished()) {
         usleep(1000);
@@ -53,9 +53,9 @@ test::ThreadTest::testTripleThread() {
     DummyThread t2("3td2");
     DummyThread t3("3td3");
 
-    t1.start();
-    t2.start();
-    t3.start();
+    t1.start("t1");
+    t2.start("t2");
+    t3.start("t3");
 
     while (!t1.finished() && !t2.finished() && !t3.finished()) {
         usleep(1000);

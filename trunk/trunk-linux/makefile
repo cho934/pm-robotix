@@ -15,7 +15,7 @@ init: build/common PMXArmadeusBinaries
 # Build the main application
 pmx: build/pmx-match-main
 	@(cd src/pmx-match-main && make)
-	#expect ./msend pmx
+	expect ./msend pmx
 	
 # Build the functional tests package
 robot-test: build/robot-test
