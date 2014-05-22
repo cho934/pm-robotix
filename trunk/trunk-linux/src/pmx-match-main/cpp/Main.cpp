@@ -16,6 +16,7 @@
 #include "StateInitialize.hpp"
 #include "StateWaitForReboot.hpp"
 #include "StateWaitForStart.hpp"
+#include "StateIADecisionMaker.hpp"
 
 
 using namespace pmx;
@@ -67,7 +68,7 @@ int main(int argc, char** argv)
 	IAutomateState* initialize = new pmx::StateInitialize();
 	IAutomateState* ajustRobotPosition = new pmx::StateAdjustRobotPosition();
 	IAutomateState* waitForStart = new pmx::StateWaitForStart();
-	//pmx::StateDecisionMaker* decisionMaker = new pmx::StateDecisionMaker();
+	pmx::StateIADecisionMaker* decisionMaker = new pmx::StateIADecisionMaker();
 
 	waitForReboot->addState("next", initialize);
 	initialize->addState("next", ajustRobotPosition);
@@ -75,7 +76,9 @@ int main(int argc, char** argv)
 	ajustRobotPosition->addState("next", waitForStart);
 
 	waitForStart->addState("rebootInitialize", initialize);
-	//waitForStart->addState("decisionMaker", decisionMaker);
+	waitForStart->addState("decisionMaker", decisionMaker);
+
+	decisionMaker->IASetup();
 
 	//Ajout des stratégies
 	if (robot.myRunningMode() == pmx::ROBOTMATCHES)

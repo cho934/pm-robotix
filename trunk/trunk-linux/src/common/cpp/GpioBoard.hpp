@@ -80,7 +80,7 @@ public:
 		return connected_;
 	}
 
-	uchar getValueP1(int pin);
+	int getValueP1(int pin);
 	void setValueP0(int port, int pin, int value);
 	void setOnP0(int pin);
 	void setOffP0(int pin);

@@ -192,6 +192,12 @@ public:
 	inline void myColorIs(pmx::RobotColor color)
 	{
 		this->myColor_ = color;
+		if (color == pmx::PMXYELLOW)
+			base().setMatchColor(0);
+		if (color == pmx::PMXRED)
+			base().setMatchColor(1);
+		if (color == pmx::PMXNOCOLOR)
+			base().setMatchColor(0);
 	}
 
 	/*!
@@ -319,7 +325,6 @@ public:
 		return lcdBoard_;
 
 	}
-
 
 	/*!
 	 * \brief Retourne le mode de match du robot.

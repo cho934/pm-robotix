@@ -25,6 +25,18 @@
 #include "LoggerFactory.hpp"
 #include "Print.hpp"
 
+//COLOR LCD
+#define LCD_ON 0x1
+#define LCD_OFF 0x6
+
+#define LCD_RED 0x1
+#define LCD_YELLOW 0x3
+#define LCD_GREEN 0x2
+#define LCD_TEAL 0x6
+#define LCD_BLUE 0x4
+#define LCD_VIOLET 0x5
+#define LCD_WHITE 0x7
+
 // commands
 #define LCD_CLEARDISPLAY 0x01
 #define LCD_RETURNHOME 0x02

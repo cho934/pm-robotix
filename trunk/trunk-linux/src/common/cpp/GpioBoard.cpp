@@ -76,7 +76,7 @@ void pmx::GpioBoard::setOffP0(int pin) // 0 à 7
 	setValueP0(OUT_P0, pin, 0);
 }
 
-uchar pmx::GpioBoard::getValueP1(int pin)
+int pmx::GpioBoard::getValueP1(int pin)
 {
 	if (!connected_)
 	{
@@ -85,7 +85,7 @@ uchar pmx::GpioBoard::getValueP1(int pin)
 	}
 	uchar in = read_i2c(IN_P1);
 	logger().debug() << "getValueP1 in = " << reinterpret_cast<void*>(in) << utils::end;
-	uchar intmp = (in >> pin) & 0x01;
+	int intmp = (in >> pin) & 0x01;
 	logger().debug() << "getValueP1 in" << pin << "=" << reinterpret_cast<void*>(intmp) << utils::end;
 	return intmp;
 }
