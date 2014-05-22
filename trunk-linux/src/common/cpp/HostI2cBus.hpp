@@ -102,7 +102,7 @@ public:
 	I2cException(const std::string & message)
 			: Exception(message)
 	{
-		//std::cout << "I2cException=====" <<message << std::endl;
+		std::cout << "I2cException=====" << message << std::endl;
 	}
 
 	virtual ~ I2cException() throw ()

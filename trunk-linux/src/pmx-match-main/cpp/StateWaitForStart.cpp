@@ -15,73 +15,59 @@
 #include "../../common/cpp/LedBar.hpp"
 #include "../../common/cpp/Logger.hpp"
 #include "../../common/cpp/Robot.hpp"
+#include "Data.hpp"
 #include "Wait90SecondsAction.hpp"
 
 pmx::IAutomateState*
-pmx::StateWaitForStart::execute(Robot& robot, void *)
+pmx::StateWaitForStart::execute(Robot& robot, void *data)
 {
 	logger().info() << "start" << utils::end;
 
+	pmx::Data* sharedData = (pmx::Data*) data;
 	IAutomateState* result = NULL;
 
-	robot.lcdBoard().setBacklight(LCD_ON);
-	robot.lcdBoard().clear();
-	robot.lcdBoard().print("PMX...");
-	robot.lcdBoard().setCursor(0, 1);
-	robot.lcdBoard().print("Wait for Start !");
-
-	//GPIOBOARD
-	robot.gpioBoard().setOnP0(0);
-
-	robot.ledBar().startAlternate(100000, 100000, 0x81, 0x3C, false);
-	//wait
-	uint8_t buttons = 0;
-	int in7 = 0;
-	in7 = robot.gpioBoard().getValueP1(7);
-	while (in7) //TODO ou pas de tir de ficelle
+	//skip setup
+	if (!sharedData->skipSetup())
 	{
+
+		robot.lcdBoard().setBacklight(LCD_ON);
+		robot.lcdBoard().clear();
+		robot.lcdBoard().print("PMX...");
+		robot.lcdBoard().setCursor(0, 1);
+		robot.lcdBoard().print("Wait for Start !");
+
+		//GPIOBOARD
+		robot.gpioBoard().setOnP0(0);
+
+		robot.ledBar().startAlternate(100000, 100000, 0x81, 0x3C, false);
+		//wait
+		uint8_t buttons = 0;
+		int in7 = 0;
 		in7 = robot.gpioBoard().getValueP1(7);
-		buttons = robot.lcdBoard().readButtons();
-		logger().info() << "in7=" << in7 << utils::end;
-		if (buttons)
+		while (in7) //TODO ou pas de tir de ficelle
 		{
-			robot.ledBar().startReset();
-			robot.ledBar().stop(true);
-			return this->getState("rebootInitialize");
+			in7 = robot.gpioBoard().getValueP1(7);
+			buttons = robot.lcdBoard().readButtons();
+			logger().info() << "in7=" << in7 << utils::end;
+			if (buttons)
+			{
+				robot.ledBar().startReset();
+				robot.ledBar().stop(true);
+				return this->getState("rebootInitialize");
+			}
+			usleep(200000);
 		}
-		usleep(200000);
+
+		robot.lcdBoard().clear();
+		robot.lcdBoard().print("PMX...GO GO GO !");
+
+		robot.ledBar().startReset();
+		robot.ledBar().stop(true);
+		robot.gpioBoard().setOffP0(0);
+		usleep(500000);
+
+		robot.lcdBoard().setBacklight(LCD_OFF);
 	}
-
-	robot.lcdBoard().clear();
-	robot.lcdBoard().print("PMX...GO GO GO !");
-
-	robot.ledBar().startReset();
-	robot.ledBar().stop(true);
-	robot.gpioBoard().setOffP0(0);
-	usleep(500000);
-	robot.lcdBoard().setBacklight(LCD_OFF);
-
-
-	//TODO INIT base et asserv
-	int lRes = 1191;//1121
-		int rRes = 1192;//1192
-		float distRes = 0.300f;
-
-		if (0) //TODO a mettre dans Base.cpp
-		{
-			lRes = 19885;
-			rRes = 20360;
-			distRes = 0.250f;
-		}
-		else
-		{
-			lRes = 1136;
-			rRes = 1136;
-			distRes = 0.300f;
-		}
-
-		robot.base().printPosition();
-		robot.base().begin(lRes, rRes, distRes, 1);
 
 
 

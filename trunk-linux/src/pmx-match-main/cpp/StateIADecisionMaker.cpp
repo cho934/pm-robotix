@@ -45,9 +45,10 @@ boolean obj2()
 	return TRUE;
 }
 
-void pmx::StateIADecisionMaker::IASetup()
+
+void pmx::StateIADecisionMaker::IASetupTableTest()
 {
-	logger().debug() << "IASetup" << utils::end;
+	logger().debug() << "IASetupTableTest" << utils::end;
 
 	ia_createZone("depart", 0, 0, 100, 100, 100, 100, 0);
 	ia_createZone("zone 1", 300, 600, 100, 100, 400, 600, 180);
@@ -60,5 +61,19 @@ void pmx::StateIADecisionMaker::IASetup()
 
 	ia_addAction("objectif 1", &obj1);
 	ia_addAction("objectif 2", &obj2);
+
+}
+void pmx::StateIADecisionMaker::IASetupHomologation()
+{
+	logger().debug() << "IASetupHomologation" << utils::end;
+
+
+}
+
+void pmx::StateIADecisionMaker::IASetupMatches()
+{
+	logger().debug() << "IASetupMatches" << utils::end;
+
+
 
 }

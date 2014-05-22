@@ -17,6 +17,10 @@ private:
 
 	bool empty_;
 
+	int useInternalEncoder_;
+
+	int skipSetup_;
+
 public:
 
 	/*!
@@ -24,6 +28,9 @@ public:
 	 */
 	Data()
 	{
+		empty_ = 0;
+		useInternalEncoder_ = 0;
+		skipSetup_ = 0;
 	}
 
 	/*!
@@ -40,6 +47,24 @@ public:
 	void isEmpty(bool empty)
 	{
 		this->empty_ = empty;
+	}
+
+	int useInternalEncoder() const
+	{
+		return this->useInternalEncoder_;
+	}
+	void useInternalEncoder(int useInternalEncoder)
+	{
+		this->useInternalEncoder_ = useInternalEncoder;
+	}
+
+	int skipSetup() const
+	{
+		return this->skipSetup_;
+	}
+	void skipSetup(int skip)
+	{
+		this->skipSetup_ = skip;
 	}
 };
 }
