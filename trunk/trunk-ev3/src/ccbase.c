@@ -56,7 +56,7 @@ void cc_moveBackwardTo(float xMM, float yMM) {
 	float dx = xMM - cc_getX();
 	float dy = yMM - cc_getY();
 	float aRadian = atan2(dy, dx);
-	cc_rotateTo(M_PI + (aRadian * 180.0f) / M_PI);
+	cc_rotateTo(((M_PI + aRadian) * 180.0f) / M_PI);
 	float dist = sqrt(dx * dx + dy * dy);
 	cc_move(-dist);
 }
