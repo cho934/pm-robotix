@@ -49,6 +49,24 @@ static MOTORDATA *pMotorData;
 // puissance minimale applicable pour que les 2 moteurs soient en rotation
 #define MINIMAL_MOTOR_POWER 10
 
+boolean emergencyPressed;
+static pthread_t thread;
+void checkEmergency() {
+	int buttonPort = SENSOR_PORT_1;
+	unsigned char v =
+			(unsigned char) pAnalog->Pin1[buttonPort][pAnalog->Actual[buttonPort]];
+	emergencyPressed = (v < 225);
+}
+
+void *sensorCheckThread(void *p_arg) {
+	while (TRUE) {
+		checkEmergency();
+		// 50 ms
+		usleep(50 * 1000);
+	}
+	return 0;
+}
+
 void robot_resetSensors() {
 
 	IICDAT IicDat;
@@ -255,7 +273,12 @@ void robot_init() {
 	LCDClear(my_lcd.Lcd);
 	robot_startMotors();
 
-	//sleep(3);
+	emergencyPressed = FALSE;
+	//create motion control task
+	if (pthread_create(&thread, NULL, sensorCheckThread, NULL) < 0) {
+		fprintf(stderr, "pthread_create error for sensorCheckThread\n");
+		exit(1);
+	}
 }
 void robot_dispose() {
 	int result;
@@ -445,16 +468,10 @@ int robot_isButton1Pressed() {
 	return FALSE;
 }
 
-int robot_isEmergencyPressed() {
-	int buttonPort = SENSOR_PORT_1;
-	unsigned char v =
-			(unsigned char) pAnalog->Pin1[buttonPort][pAnalog->Actual[buttonPort]];
-	if (v < 225) {
-		//printf("Pressed\n");
-		return TRUE;
-	}
-	return FALSE;
+boolean robot_isEmergencyPressed() {
+	return emergencyPressed;
 }
+
 void robot_waitStart() {
 	while (robot_isEmergencyPressed()) {
 		usleep(100);
