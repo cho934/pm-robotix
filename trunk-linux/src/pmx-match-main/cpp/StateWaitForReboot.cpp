@@ -3,18 +3,32 @@
  * \brief Implémentation de la classe StateWaitForReboot.
  */
 
-#include <cmath>
-#include <cstdlib>
-#include <linux/limits.h>
 #include "StateWaitForReboot.hpp"
-#include "Robot.hpp"
+
+//#include <linux/limits.h>
+#include <unistd.h>
+#include <climits>
+//#include <cmath>
+#include <cstdio>
+#include <cstdlib>
+#include <iostream>
+
+#include "../../common/cpp/Adafruit_RGBLCDShield.hpp"
+#include "../../common/cpp/Configuration.hpp"
+#include "../../common/cpp/LedBar.hpp"
+#include "../../common/cpp/Logger.hpp"
+#include "../../common/cpp/Robot.hpp"
 
 pmx::IAutomateState*
 pmx::StateWaitForReboot::execute(Robot& robot, void *)
 {
 	logger().info() << "Start" << utils::end;
 
-	//arret des moteurs
+	//TODO arret des moteurs
+
+	robot.lcdBoard().setBacklight(LCD_ON);
+	robot.lcdBoard().clear();
+	robot.lcdBoard().print("PMX...GO !");
 
 	try
 	{
@@ -35,25 +49,29 @@ pmx::StateWaitForReboot::execute(Robot& robot, void *)
 		exit(60);
 	}
 
-	logger().info() << "=> Clic RESET..." << utils::end;
+	logger().info() << "=> Clic SELECT..." << utils::end;
+	robot.lcdBoard().setCursor(0, 1);
+	robot.lcdBoard().print("Clic SELECT...");
 	robot.ledBar().startK2Mil(50000, 50000, false);
 	//wait
-	/*
-	 //robot.rebootContact().wait();
+	uint8_t buttons = 0;
+	while (!(buttons & BUTTON_SELECT))
+	{
+		buttons = robot.lcdBoard().readButtons();
+		if (buttons)
+		{
+			if (buttons & BUTTON_SELECT)
+			{
+				robot.lcdBoard().clear();
+				robot.lcdBoard().setCursor(0, 0);
+				robot.lcdBoard().print("NEXT ");
+				//robot.lcdBoard().setBacklight(LCD_OFF);
+			}
+		}
+	}
 
-	 //attente d'un clic (seuil bas + seuil haut)
-	 while (!robot.rebootContact().state())
-	 {
-	 usleep(10000);
-	 }
-	 while (robot.rebootContact().state())
-	 {
-	 usleep(10000);
-	 }
-	 robot.rebootContact().stop(true); //arrete le listener associé.
-	 */
-	robot.ledBar().stopAndWait(true);
 	robot.ledBar().startReset();
+	robot.ledBar().stopAndWait(true);
 
 	return this->getState("next");
 }

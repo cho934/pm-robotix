@@ -4,9 +4,18 @@
  */
 
 #include "StateWaitForStart.hpp"
-#include "Robot.hpp"
+
+#include <stdint.h>
+#include <unistd.h>
+#include <cstdio>
+
+#include "../../common/cpp/Adafruit_RGBLCDShield.hpp"
+#include "../../common/cpp/Chronometer.hpp"
+#include "../../common/cpp/GpioBoard.hpp"
+#include "../../common/cpp/LedBar.hpp"
+#include "../../common/cpp/Logger.hpp"
+#include "../../common/cpp/Robot.hpp"
 #include "Wait90SecondsAction.hpp"
-#include "LedIndicator.hpp"
 
 pmx::IAutomateState*
 pmx::StateWaitForStart::execute(Robot& robot, void *)
@@ -15,83 +24,76 @@ pmx::StateWaitForStart::execute(Robot& robot, void *)
 
 	IAutomateState* result = NULL;
 
-	/*
-	 robot.firePulseEnabled(false);
+	robot.lcdBoard().setBacklight(LCD_ON);
+	robot.lcdBoard().clear();
+	robot.lcdBoard().print("PMX...");
+	robot.lcdBoard().setCursor(0, 1);
+	robot.lcdBoard().print("Wait for Start !");
 
-	 robot.startContact().wait();
-	 robot.rebootContact().wait();
-	 //robot.leftBackContact().wait();
-	 //robot.rightBackContact().wait();
-	 //attente de la prise en compte des états des contacts.
-	 usleep(50000);
+	//GPIOBOARD
+	robot.gpioBoard().setOnP0(0);
 
+	robot.ledBar().startAlternate(100000, 100000, 0x81, 0x3C, false);
+	//wait
+	uint8_t buttons = 0;
+	int in7 = 0;
+	in7 = robot.gpioBoard().getValueP1(7);
+	while (in7) //TODO ou pas de tir de ficelle
+	{
+		in7 = robot.gpioBoard().getValueP1(7);
+		buttons = robot.lcdBoard().readButtons();
+		logger().info() << "in7=" << in7 << utils::end;
+		if (buttons)
+		{
+			robot.ledBar().startReset();
+			robot.ledBar().stop(true);
+			return this->getState("rebootInitialize");
+		}
+		usleep(200000);
+	}
 
-	 robot.ledBar().startAlternate(100000,100000,0x81,0x3C,false);
+	robot.lcdBoard().clear();
+	robot.lcdBoard().print("PMX...GO GO GO !");
 
-	 pmx::LedIndicator::instance().reset();
-
-	 logger().info() << "=> Tirer sur la ficelle !" << utils::end;
-
-	 //attente de l'appui enfoncé du reboot ou du tirage du fil de départ.
-	 while (robot.startContact().state() && !robot.rebootContact().state()) {
-	 usleep(100000);
-	 pmx::LedIndicator::instance().setOn(0);
-	 pmx::LedIndicator::instance().setOn(7);
-	 usleep(100000);
-	 pmx::LedIndicator::instance().setOff(0);
-	 pmx::LedIndicator::instance().setOff(7);
-
-	 //        //test des contacts arrières
-	 //        if (robot.leftBackContact().state()) {
-	 //            pmx::LedIndicator::instance().setOn(0);
-	 //        }else {
-	 //            pmx::LedIndicator::instance().setOff(0);
-	 //        }
-	 //        if (robot.rightBackContact().state()) {
-	 //            pmx::LedIndicator::instance().setOn(7);
-	 //        }else {
-	 //            pmx::LedIndicator::instance().setOff(7);
-	 //        }
-	 }
-
-	 robot.ledBar().stopAndWait(true);
-
-	 //lecture du contact reboot
-	 bool reboot = robot.rebootContact().state();
+	robot.ledBar().startReset();
+	robot.ledBar().stop(true);
+	robot.gpioBoard().setOffP0(0);
+	usleep(500000);
+	robot.lcdBoard().setBacklight(LCD_OFF);
 
 
-	 if (reboot) {
-	 logger().info() << "REBOOT forced (clic reset)" << utils::end;
-	 //attente du relachement du reboot
-	 while (robot.rebootContact().state()) {
-	 usleep(10000);
-	 }
+	//TODO INIT base et asserv
+	int lRes = 1191;//1121
+		int rRes = 1192;//1192
+		float distRes = 0.300f;
 
-	 //retour à l'initialisation
-	 result = this->getState("rebootInitialize");
-	 }else {
-	 logger().info() << "Start Chronometer" << utils::end;
-	 //démarrage du chrono
-	 robot.chronometerRobot().start();
+		if (0) //TODO a mettre dans Base.cpp
+		{
+			lRes = 19885;
+			rRes = 20360;
+			distRes = 0.250f;
+		}
+		else
+		{
+			lRes = 1136;
+			rRes = 1136;
+			distRes = 0.300f;
+		}
 
-	 printf(" Thread Wait90SecondsAction Start. \n");
-	 //lancement de l'etape Wait90Seconds
-	 pmx::Wait90SecondsAction* action = new pmx::Wait90SecondsAction(&robot);
-	 action->start();
+		robot.base().printPosition();
+		robot.base().begin(lRes, rRes, distRes, 1);
 
-	 result = this->getState("decisionMaker"); //Prog de decision
-	 }
 
-	 robot.startContact().stop(true);
-	 robot.rebootContact().stop(true);
-	 robot.colorContact().stop(true);
-	 //robot.leftBackContact().stop(true);
-	 //robot.rightBackContact().stop(true);
 
-	 robot.ledBar().stopAndWait(true);
-	 usleep(50000);
-	 robot.ledBar().reset();
-	 pmx::LedIndicator::instance().reset();
-	 */
+	logger().info() << "Start Chronometer" << utils::end;
+	//démarrage du chrono
+	robot.chronometerRobot().start();
+
+	//lancement de l'etape Wait90Seconds
+	pmx::Wait90SecondsAction* action = new pmx::Wait90SecondsAction(&robot);
+	action->start("Wait90SecondsAction");
+
+	result = this->getState("decisionMaker"); //IA
+
 	return result;
 }

@@ -14,7 +14,7 @@ void robottest::LcdTest::run(int, char *[])
 	pmx::Robot &robot = pmx::Robot::instance();
 	//robot.start();
 
-	robot.lcdBoard().setBacklight(RED);
+	robot.lcdBoard().setBacklight(LCD_RED);
 
 	robot.lcdBoard().clear();
 
@@ -33,34 +33,34 @@ void robottest::LcdTest::run(int, char *[])
 			if (buttons & BUTTON_UP)
 			{
 				robot.lcdBoard().print("UP ");
-				robot.lcdBoard().setBacklight(RED);
+				robot.lcdBoard().setBacklight(LCD_BLUE);
 			}
 
 			if (buttons & BUTTON_DOWN)
 			{
 				robot.lcdBoard().print("DOWN ");
-				robot.lcdBoard().setBacklight(YELLOW);
+				robot.lcdBoard().setBacklight(LCD_YELLOW);
 			}
 			if (buttons & BUTTON_LEFT)
 			{
 				robot.lcdBoard().print("LEFT ");
-				robot.lcdBoard().setBacklight(GREEN);
+				robot.lcdBoard().setBacklight(LCD_GREEN);
 			}
 			if (buttons & BUTTON_RIGHT)
 			{
 				robot.lcdBoard().print("RIGHT ");
-				robot.lcdBoard().setBacklight(TEAL);
+				robot.lcdBoard().setBacklight(LCD_TEAL);
 			}
 			if (buttons & BUTTON_SELECT)
 			{
 				robot.lcdBoard().print("SELECT ");
-				robot.lcdBoard().setBacklight(VIOLET);
+				robot.lcdBoard().setBacklight(LCD_VIOLET);
 			}
 		}
 	}
 
 	usleep(1000000);
-	robot.lcdBoard().setBacklight(BLUE);
+	robot.lcdBoard().setBacklight(LCD_BLUE);
 	robot.lcdBoard().clear();
 	usleep(1000000);
 
