@@ -50,5 +50,7 @@ void ia_setPath(const char* zone1Name, const char* zone2Name, float x, float y);
 ZONE_PATH* ia_getZonePath(ZONE *z1, ZONE *z2);
 
 void ia_addAction(const char* name, RobotAction action);
+void ia_setEndAction(const char* name, RobotAction action, int seconds);
+void ia_notify();
 
 #endif /* IA_H_ */

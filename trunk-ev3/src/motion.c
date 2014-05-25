@@ -394,6 +394,7 @@ void *motion_ITTask(void *p_arg) {
 
 		long stopTime = currentTimeInMillis();
 		long duration = stopTime - startTime;
+		ia_notify();
 		if (duration < loopDelayInMillis && duration >= 0) {
 			__useconds_t d = 1000 * (loopDelayInMillis - duration);
 			usleep(d);

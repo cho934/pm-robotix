@@ -520,5 +520,6 @@ int main(int argc, const char* argv[]) {
 	printf("End at : (%f,%f) %f\n", cc_getX(), cc_getY(),
 			cc_getThetaInDegree());
 	printf("Bye\n");
+	closeLog();
 	return 0;
 }
