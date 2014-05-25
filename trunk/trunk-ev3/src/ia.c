@@ -11,7 +11,8 @@
 #include <string.h>
 #include <unistd.h>
 #include "ccbase.h"
-
+#include "robot.h"
+#include "log.h"
 
 int _zones_count = 0;
 ZONE* _zones[100];
@@ -21,6 +22,11 @@ ZONE_PATH* _zones_path[100];
 
 int _actions_count = 0;
 ACTIONS* _actions[200];
+
+// end action
+const char* endActionName = NULL;
+RobotAction endAction = NULL;
+long endActionTimeout = -1;
 
 void ia_addAction(const char* name, RobotAction action) {
 	ACTIONS *a = (ACTIONS*) calloc(1, sizeof(ACTIONS));
@@ -181,4 +187,23 @@ ZONE* ia_getNearestZoneFrom(float x, float y) {
 		}
 	}
 	return result;
+}
+
+void ia_setEndAction(const char* name, RobotAction action, int seconds) {
+	endActionName = name;
+	endAction = action;
+	endActionTimeout = currentTimeInMillis() + seconds * 1000;
+}
+
+void ia_notify() {
+	if (endActionTimeout > 0 && currentTimeInMillis() > endActionTimeout) {
+		printf("END ACTION :  (%f,%f) %f\n", cc_getX(), cc_getY(),
+				cc_getThetaInDegree());
+		(endAction)();
+		printf("BYE BYE!!\n");
+		robot_startMotors();
+		robot_dispose();
+		closeLog();
+		exit(0);
+	}
 }
