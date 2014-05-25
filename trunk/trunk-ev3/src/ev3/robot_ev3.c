@@ -260,10 +260,10 @@ void robot_init() {
 
 	long left = robot_getLeftExternalCounter();
 	long right = robot_getRightExternalCounter();
-	while (left != 0 && right != 0) {
+	while (left != 0 || right != 0) {
 		printf("Reset sensors %ld %ld\n", left, right);
 		robot_resetSensors();
-		sleep(1);
+		usleep(200);
 		left = robot_getLeftExternalCounter();
 		right = robot_getRightExternalCounter();
 	}
