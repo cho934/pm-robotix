@@ -50,6 +50,8 @@
 #include "robot.h"
 #include "log.h"
 #include "ia.h"
+#include "ccbase.h"
+
 MOTION_STATE RobotMotionState;
 
 //nb of period since the beginning
@@ -375,7 +377,8 @@ void *motion_ITTask(void *p_arg) {
 				signalEndOfTraj();
 			}
 			// detection
-			if (fin0 && fin1) {
+			if (robot_isDetectingObstacle()) {
+				cc_setCollisionOccured(TRUE);
 				signalEndOfTraj();
 			}
 			//unlock motionCommand

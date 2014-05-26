@@ -22,6 +22,7 @@
 #include "global.h"
 #include "path_manager.h"
 boolean ignoreCollision = FALSE;
+boolean collision = FALSE;
 
 void launchAndWait(RobotCommand* cmd) {
 	checkRobotCommand(cmd);
@@ -111,9 +112,11 @@ void cc_setIgnoreCollision(boolean b) {
 }
 
 boolean cc_collisionOccured() {
-	return FALSE;
+	return collision;
 }
-
+void cc_setCollisionOccured(boolean b) {
+	collision = b;
+}
 void cc_setMirrorCoordinates(boolean b) {
 
 }

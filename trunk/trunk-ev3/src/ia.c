@@ -128,6 +128,7 @@ void ia_start() {
 		int i = 0;
 		for (i = 0; i < _actions_count; i++) {
 			ACTIONS *z = _actions[i];
+			cc_setCollisionOccured(FALSE);
 			if (z->completed == FALSE) {
 				printf("\n== ia is executing actions [%d/%d] : %s\n", i + 1,
 						_actions_count, z->name);
