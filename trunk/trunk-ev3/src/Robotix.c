@@ -58,6 +58,11 @@ boolean obj2() {
 	cc_goToZone("zone 3");
 	return TRUE;
 }
+
+boolean funny() {
+	printf("Ca fume, c'est fun");
+	return TRUE;
+}
 void testIA() {
 	ia_createZone("zone 1", 0, 0, 100, 100, 50, 50, 45);
 	ia_createZone("zone 2", 1000, 1000, 100, 100, 50, 50, 0);
@@ -69,6 +74,8 @@ void testIA() {
 
 	ia_addAction("objectif 1", &obj1);
 	ia_addAction("objectif 2", &obj2);
+
+	ia_setEndAction("funny action", &funny, 90);
 	ia_start();
 }
 
