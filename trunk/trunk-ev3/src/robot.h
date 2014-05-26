@@ -34,6 +34,7 @@ int robot_isButton1Pressed();
 int robot_isRunning();
 int robot_isEmergencyPressed();
 
+void robot_startMenu();
 void robot_waitStart();
 
 int robot_isDetectingObstacle();

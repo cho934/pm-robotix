@@ -11,6 +11,7 @@ int rPower;
 #include <sys/time.h>
 #include <string.h>
 #include "../robot.h"
+#include "../ccbase.h"
 #include "lms2012.h"
 #include "d_lcd.h"
 #include "../motion.h"
@@ -528,7 +529,28 @@ boolean robot_isEmergencyPressed() {
 	return emergencyPressed;
 }
 
+void robot_startMenu() {
+
+	boolean modeRed = TRUE;
+	boolean stop = FALSE;
+	while (!stop) {
+		if (modeRed) {
+			robot_displayText(1, "Mode JAUNE");
+		} else {
+			robot_displayText(1, "Mode ROUGE");
+		}
+		usleep(500);
+		if (robot_isButtonPressed(1)) {
+			modeRed = !modeRed;
+		}
+		if (robot_isButtonPressed(2)) {
+			stop = TRUE;
+		}
+	}
+	cc_setMirrorCoordinates(modeRed);
+}
 void robot_waitStart() {
+	robot_displayText(1, "Ready to start!");
 	while (robot_isEmergencyPressed()) {
 		usleep(100);
 	}

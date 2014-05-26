@@ -36,18 +36,18 @@ void test() {
 	robot_setMotorRightSpeed(100);
 	robot_setMotorLeftSpeed(100);
 
-	sleep(5);
+	sleep(2);
 	printf("SET SPEED TO 0\n");
 	robot_setMotorRightSpeed(0);
 	robot_setMotorLeftSpeed(0);
 
-	sleep(5);
 	printf("SLEEP STOP\n");
 	robot_stopMotorLeft();
 	robot_stopMotorRight();
-	robot_dispose();
 
-	sleep(2);
+	robot_startMenu();
+	robot_waitStart();
+
 
 }
 boolean obj1() {
