@@ -49,6 +49,7 @@
 #include <string.h>
 #include "robot.h"
 #include "log.h"
+#include "ia.h"
 MOTION_STATE RobotMotionState;
 
 //nb of period since the beginning
@@ -373,7 +374,10 @@ void *motion_ITTask(void *p_arg) {
 			if (fin0 && fin1) {
 				signalEndOfTraj();
 			}
-
+			// detection
+			if (fin0 && fin1) {
+				signalEndOfTraj();
+			}
 			//unlock motionCommand
 			pthread_mutex_unlock(&mtxMotionCommand);
 

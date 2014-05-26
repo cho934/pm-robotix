@@ -14,7 +14,7 @@ int rPower;
 #include "lms2012.h"
 #include "d_lcd.h"
 #include "../motion.h"
-
+#include <pthread.h>
 // Sensors
 #define SENSOR_PORT_1 0
 #define SENSOR_PORT_2 1
@@ -24,6 +24,8 @@ int rPower;
 static LCD my_lcd;
 // A = 0x01, B = 0x02, C = 0x04, D = 0x08
 // AC = 0x05
+static const char MOTOR_PORT_A = 0x01;
+static const char MOTOR_PORT_D = 0x08;
 static const char MOTOR_PORT_RIGHT = 0x04;
 static const char MOTOR_PORT_LEFT = 0x02;
 
@@ -320,14 +322,16 @@ void robot_startMotors() {
 
 	char motor_command[2];
 	motor_command[0] = opOUTPUT_RESET;
-	motor_command[1] = MOTOR_PORT_RIGHT | MOTOR_PORT_LEFT;
+	motor_command[1] = MOTOR_PORT_RIGHT | MOTOR_PORT_LEFT | MOTOR_PORT_A
+			| MOTOR_PORT_D;
 	int s = write(motor_file, motor_command, 2);
 	printf(
 			"robot_startMotors command : [%d, %d] written size: %d on file: %d\n",
 			motor_command[0], motor_command[1], s, motor_file);
 	// Start the motor
 	motor_command[0] = opOUTPUT_START;
-	motor_command[1] = MOTOR_PORT_RIGHT | MOTOR_PORT_LEFT;
+	motor_command[1] = MOTOR_PORT_RIGHT | MOTOR_PORT_LEFT | MOTOR_PORT_A
+			| MOTOR_PORT_D;
 
 	s = write(motor_file, motor_command, 2);
 	printf(
@@ -335,6 +339,28 @@ void robot_startMotors() {
 			motor_command[0], motor_command[1], s, motor_file);
 
 	usleep(100 * 1000);
+}
+
+void robot_stopMotorA() {
+	printf("robot_stopMotorA\n");
+	char motor_command[2];
+	// Stop the motor
+	motor_command[0] = opOUTPUT_STOP;
+	motor_command[1] = MOTOR_PORT_A;
+	int s = write(motor_file, motor_command, 2);
+	printf("robot_stopMotorA command : [%d, %d] written size: %d on file: %d\n",
+			motor_command[0], motor_command[1], s, motor_file);
+}
+
+void robot_stopMotorD() {
+	printf("robot_stopMotorD\n");
+	char motor_command[2];
+	// Stop the motor
+	motor_command[0] = opOUTPUT_STOP;
+	motor_command[1] = MOTOR_PORT_D;
+	int s = write(motor_file, motor_command, 2);
+	printf("robot_stopMotorD command : [%d, %d] written size: %d on file: %d\n",
+			motor_command[0], motor_command[1], s, motor_file);
 }
 
 void robot_stopMotorRight() {
@@ -410,6 +436,36 @@ void robot_setMotorLeftSpeed(int speed) {
 //			motor_command[0], motor_command[1], motor_command[2], s,
 //			motor_file);
 	lPower = speed;
+}
+
+void robot_setMotorASpeed(int speed) {
+	printf("robot_setMotorASpeed REAL %d\n", speed);
+	if (speed > 0) {
+		speed += MINIMAL_MOTOR_POWER;
+	}
+	if (speed > 100) {
+		speed = 100;
+	}
+	char motor_command[3];
+	motor_command[0] = opOUTPUT_POWER;
+	motor_command[1] = MOTOR_PORT_A;
+	motor_command[2] = speed;
+	write(motor_file, motor_command, 3);
+}
+
+void robot_setMotorDSpeed(int speed) {
+	printf("robot_setMotorDSpeed REAL %d\n", speed);
+	if (speed > 0) {
+		speed += MINIMAL_MOTOR_POWER;
+	}
+	if (speed > 100) {
+		speed = 100;
+	}
+	char motor_command[3];
+	motor_command[0] = opOUTPUT_POWER;
+	motor_command[1] = MOTOR_PORT_D;
+	motor_command[2] = speed;
+	write(motor_file, motor_command, 3);
 }
 
 long robot_getExternalCounter(int portCounter1) {

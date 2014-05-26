@@ -111,5 +111,10 @@ void robot_initPID() {
 	//motion_configureDeltaPID(0.0002950f, 0.0f, 0.000001f);
 	motion_configureDeltaPID(0.0003000f, 0.0001f, 0.000000f);
 }
+void robot_setMotorASpeed(int speed) {
 
+}
+void robot_setMotorDSpeed(int speed) {
+
+}
 #endif
