@@ -64,7 +64,7 @@ public:
 	 */
 	virtual void initialize(const std::string& prefix, utils::Configuration& configuration);
 
-	void begin(int lResolution, int rResolution, float dist, int startAsserv);
+	void begin(int lResolution, int rResolution, float dist, int startAsserv, int useExtEncoders);
 
 	void printPosition();
 
@@ -82,7 +82,8 @@ public:
 	void findPidAD(float degrees, int mm, int sec);
 	void setupPID_AD(float Ap, float Ai, float Ad, float Dp, float Di, float Dd);
 
-	void MoveLineSpeedAcc(int mm, float VMax, float Accel, float Decel);
+	void LineSpeedAcc(int mm, float VMax, float Accel, float Decel);
+	void RotateSpeedAcc(int degrees, float VMax, float Accel, float Decel);
 };
 }
 

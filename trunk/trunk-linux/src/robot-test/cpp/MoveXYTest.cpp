@@ -23,7 +23,7 @@ void robottest::MoveXYTest::run(int argc, char *argv[])
 	double angle[lot];
 	int color = 0, detect = 0;
 
-	std::cout << "USAGE: PMX_TEST " << (int) argv[1]
+	std::cout << "USAGE: PMX_TEST " << argv[1]
 			<< " [colorMatch:0-1] [OpponentDetect:0-1]  [[coordX(mm)] [coordY(mm)] [angle(deg -179...+180)] [FORWARD-BACK:0-1] ...] "
 			<< std::endl;
 
@@ -103,29 +103,11 @@ void robottest::MoveXYTest::run(int argc, char *argv[])
 
 	pmx::Robot &robot = pmx::Robot::instance();
 
-	robot.start();
-
-	int lRes = 1191; //1121
-	int rRes = 1192; //1192
-	float distRes = 0.300f;
-
-	if (useExternalEncoders) //TODO a mettre dans Base.cpp
-	{
-		lRes = 19885;
-		rRes = 20360;
-		distRes = 0.250f;
-	}
-	else
-	{
-		lRes = 1136;
-		rRes = 1136;
-		distRes = 0.300f;
-	}
-
 	robot.base().setMatchColor(color);
+	robot.start(1);
 
 	robot.base().printPosition();
-	robot.base().begin(lRes, rRes, distRes, 1);
+
 
 	if (detect == true)
 	{
