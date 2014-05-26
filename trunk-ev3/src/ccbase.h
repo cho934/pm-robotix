@@ -31,6 +31,7 @@ float cc_getTheta();
 
 void cc_setIgnoreCollision(boolean b);
 boolean cc_collisionOccured();
+void cc_setCollisionOccured(boolean b);
 
 void cc_setMirrorCoordinates(boolean b);
 
