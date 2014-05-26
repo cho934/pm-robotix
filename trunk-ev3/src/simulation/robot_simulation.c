@@ -94,6 +94,9 @@ int robot_isEmergencyPressed() {
 void robot_waitStart() {
 	// nothing to do here :)
 }
+void robot_startMenu() {
+	// nothing to do here :)
+}
 int robot_isDetectingObstacle() {
 	return 0;
 }
