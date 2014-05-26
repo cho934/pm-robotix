@@ -11,7 +11,6 @@ long currentTimeInMillis();
 void robot_init();
 void robot_dispose();
 
-void robot_startMotorLeft();
 void robot_startMotors();
 
 void robot_stopMotorRight();
@@ -21,6 +20,8 @@ int robot_getRightPower();
 
 void robot_setMotorRightSpeed(int speed);
 void robot_setMotorLeftSpeed(int speed);
+void robot_setMotorASpeed(int speed);
+void robot_setMotorDSpeed(int speed);
 
 long robot_getLeftExternalCounter();
 long robot_getRightExternalCounter();
@@ -41,6 +42,5 @@ void robot_setLedStatus(int status);
 
 int robot_isButtonPressed(int button);
 void robot_initPID();
-
 
 #endif
