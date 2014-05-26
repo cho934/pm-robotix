@@ -12,7 +12,7 @@ void robottest::ServoMotorDxlLearnTest::run(int, char *[])
 	logger().info() << "ServoMotorDxlLearnTest - learn AX-12 position" << utils::end;
 
 	pmx::Robot &robot = pmx::Robot::instance();
-	robot.start();
+	//robot.start(0);
 
 
 	robot.stop();

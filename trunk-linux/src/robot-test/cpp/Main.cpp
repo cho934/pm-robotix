@@ -17,8 +17,8 @@
 #include "LedIndicatorTest.hpp"
 #include "Md25Test.hpp"
 #include "Md25EncoderTest.hpp"
+#include "FindPIDDTest.hpp"
 #include "FindPIDADTest.hpp"
-#include "FindPIDTest.hpp"
 #include "MoveLineVAccTest.hpp"
 #include "MoveTest.hpp"
 #include "MoveXYTest.hpp"
@@ -57,8 +57,8 @@ int main(int argc, char** argv)
 
 	manager.add(new robottest::Md25Test());
 	manager.add(new robottest::Md25EncoderTest());
+	manager.add(new robottest::FindPIDDTest());
 	manager.add(new robottest::FindPIDADTest());
-	manager.add(new robottest::FindPIDTest());
 	manager.add(new robottest::MoveLineVAccTest());
 	manager.add(new robottest::MoveTest());
 	manager.add(new robottest::MoveXYTest());

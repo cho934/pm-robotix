@@ -12,7 +12,7 @@ void robottest::LcdTest::run(int, char *[])
 	logger().info() << "LcdTest - " << utils::end;
 
 	pmx::Robot &robot = pmx::Robot::instance();
-	//robot.start();
+	//robot.start(0);
 
 	robot.lcdBoard().setBacklight(LCD_RED);
 

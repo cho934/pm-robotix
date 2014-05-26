@@ -18,6 +18,7 @@
 #include "../c/robot_unitConversion.h"
 #include "Level.hpp"
 #include "Logger.hpp"
+
 //#include "SvgWriter.hpp"
 
 pmx::Base::Base(pmx::Robot & robot)
@@ -25,8 +26,16 @@ pmx::Base::Base(pmx::Robot & robot)
 {
 }
 
-void pmx::Base::begin(int lResolution, int rResolution, float dist, int startAsserv)
+void pmx::Base::begin(int lResolution, int rResolution, float dist, int startAsserv, int useExtEncoders)
 {
+	if (useExtEncoders)
+	{
+		useExternalEncoders = 1;
+	}
+	else
+	{
+		useExternalEncoders = 0;
+	}
 	robot_init();
 
 	encoder_SetDist(dist);
@@ -142,10 +151,19 @@ void pmx::Base::setupPID_AD(float Ap, float Ai, float Ad, float Dp, float Di, fl
 	robot_initPID_AD(Ap, Ai, Ad, Dp, Di, Dd);
 }
 
-void pmx::Base::MoveLineSpeedAcc(int mm, float VMax, float Accel, float Decel)
+void pmx::Base::LineSpeedAcc(int mm, float VMax, float Accel, float Decel)
 {
 	RobotCommand* cmd = (RobotCommand*) malloc(sizeof(RobotCommand));
 	float meters = mm / 1000.0f;
 	motion_LineSpeedAcc(cmd, meters, VMax, Accel, Decel);
 	launchAndEndAfterCmd(cmd);
 }
+
+void pmx::Base::RotateSpeedAcc(int degrees, float VMax, float Accel, float Decel)
+{
+	RobotCommand* cmd = (RobotCommand*) malloc(sizeof(RobotCommand));
+	float radians = (degrees * M_PI) / 180.0f;
+	motion_RotateSpeedAcc(cmd, radians, VMax, Accel, Decel);
+	launchAndEndAfterCmd(cmd);
+}
+

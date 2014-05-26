@@ -33,7 +33,7 @@ public:
 	 * \brief Constructeur de la classe.
 	 */
 	MoveTest()
-			: pmx::ConsoleUnitTest("MoveTest : ")
+			: pmx::ConsoleUnitTest("MoveTest : Check encoder and forward move")
 	{
 	}
 

@@ -359,7 +359,7 @@ public:
 	 * Cette méthode lance les différents threads associés et initialise
 	 * le système.
 	 */
-	void start();
+	void start(int useExtEncoders);
 
 	/*!
 	 * \brief Arrete le robot et libère les ressources associés.

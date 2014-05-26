@@ -16,10 +16,11 @@ void robottest::MoveLineVAccTest::run(int argc, char *argv[])
 	float vmax = 0;
 	float acc = 0;
 	float dec = 0;
+	int useExtEnc = 0;
 
-	if (argc < 6)
+	if (argc < 7)
 	{
-		std::cout << "USAGE: PMX_TEST " << argv[1] << " [dist] [Vmax] [Acc] [Dec]" << std::endl;
+		std::cout << "USAGE: PMX_TEST " << argv[1] << " [dist] [Vmax] [Acc] [Dec] [option:useExternalEncoders=0]" << std::endl;
 	}
 
 	if (argc > 2)
@@ -66,34 +67,22 @@ void robottest::MoveLineVAccTest::run(int argc, char *argv[])
 		std::cin >> dec;
 	}
 
+	if (argc > 6)
+		{
+			useExtEnc = atoi(argv[6]);
+			std::cout << "useExtEnc: " << atoi(argv[6]) << std::endl;
+		}
+
 	logger().info() << "-------------------------------------------------" << utils::end;
 	logger().info() << "MoveTest - " << utils::end;
 
 	pmx::Robot &robot = pmx::Robot::instance();
 	//sleep(1);
-	robot.start();
-
-	int lRes = 1191; //1121
-	int rRes = 1192; //1192
-	float distRes = 0.300f;
-
-	if (useExternalEncoders) //TODO a mettre dans Base.cpp
-	{
-		lRes = 19885;
-		rRes = 20360;
-		distRes = 0.250f;
-	}
-	else
-	{
-		lRes = 1136;
-		rRes = 1136;
-		distRes = 0.300f;
-	}
+	robot.start(useExtEnc);
 
 	robot.base().printPosition();
-	robot.base().begin(lRes, rRes, distRes, 1);
 
-	robot.base().MoveLineSpeedAcc(dist, vmax, acc, dec); // 1.4
+	robot.base().LineSpeedAcc(dist, vmax, acc, dec); // 1.4
 
 	robot.stop();
 	robot.base().printPosition();

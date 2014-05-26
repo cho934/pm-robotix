@@ -34,10 +34,10 @@ void utils::LoggerFactory::initialize()
 	add(utils::Level::INFO, "robottest::ArduinoTest", "console");
 	add(utils::Level::INFO, "robottest::GpioBoardTest", "console");
 	add(utils::Level::INFO, "robottest::MoveTest", "console");
-	add(utils::Level::INFO, "robottest::FindPIDTest", "console");
+	add(utils::Level::INFO, "robottest::FindPIDADTest", "console");
+	add(utils::Level::INFO, "robottest::FindPIDDTest", "console");
 	add(utils::Level::INFO, "robottest::FindPIDXYTest", "console");
 	add(utils::Level::INFO, "robottest::MoveXYTest", "console");
-
 
 	//add(utils::Level::INFO, "pmx::ServoMotorDxlObject", "console");
 	//add(utils::Level::DEBUG, "pmx::ServoMotorDxlObj", "console");

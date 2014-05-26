@@ -1,10 +1,10 @@
 /*!
  * \file
- * \brief Définition de la classe FindPIDADTest.
+ * \brief Définition de la classe FindPIDATest.
  */
 
-#ifndef ROBOTTEST_FINDPIDADTEST_HPP
-#define	ROBOTTEST_FINDPIDADTEST_HPP
+#ifndef ROBOTTEST_FINDPIDATEST_HPP
+#define	ROBOTTEST_FINDPIDATEST_HPP
 
 #include "../../common/cpp/ConsoleUnitTest.hpp"
 #include "../../common/cpp/LoggerFactory.hpp"
@@ -12,9 +12,9 @@
 namespace robottest
 {
 /*!
- * \brief Effectue un test afin avec des coeff PID.
+ * \brief Effectue un test d'asservissement AlphaDelta afin avec des coeff PID.
  */
-class FindPIDADTest: public pmx::ConsoleUnitTest
+class FindPIDATest: public pmx::ConsoleUnitTest
 {
 private:
 
@@ -23,7 +23,7 @@ private:
 	 */
 	static inline const utils::Logger & logger()
 	{
-		static const utils::Logger & instance = utils::LoggerFactory::logger("robottest::FindPIDADTest");
+		static const utils::Logger & instance = utils::LoggerFactory::logger("robottest::FindPIDATest");
 		return instance;
 	}
 
@@ -32,15 +32,15 @@ public:
 	/*!
 	 * \brief Constructeur de la classe.
 	 */
-	FindPIDADTest()
-			: pmx::ConsoleUnitTest("FindPIDADTest : Permet de tester les parametres PID A et D")
+	FindPIDATest()
+			: pmx::ConsoleUnitTest("FindPIDATest : Test les parametres PID sur une rotation")
 	{
 	}
 
 	/*!
 	 * \brief Destructeur de la classe.
 	 */
-	virtual ~FindPIDADTest()
+	virtual ~FindPIDATest()
 	{
 	}
 

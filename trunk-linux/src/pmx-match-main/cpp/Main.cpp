@@ -39,12 +39,10 @@ int main(int argc, char** argv)
 
 	int mode = 0;
 	//prise en compte des arguments
-	if (argc < 4)
-	{
-		logger.info()
-				<< "USAGE: PMX  [0=Matches, 1=Homologation, 2=Tabletest, Default=Homologation] [1=Internal encoder] [1=don't setup]"
-				<< utils::end;
-	}
+
+	logger.info()
+			<< "USAGE: PMX  [0=Matches, 1=Homologation, 2=Tabletest, Default=Homologation] [1=Internal encoder] [1=don't setup]"
+			<< utils::end;
 
 	if (argc > 1)
 	{
@@ -76,17 +74,19 @@ int main(int argc, char** argv)
 	{
 		data->useInternalEncoder(atoi(argv[2]));
 		std::cout << "USE internal encoder : " << atoi(argv[2]) << std::endl;
+		robot.start(0); //start Manager and asserv
 	}
 	else
 	{
 		data->useInternalEncoder(0);
 		std::cout << "USE EXTERNAL ENCODER " << std::endl;
+		robot.start(1); //start Manager and asserv
 	}
 
 	if (argc > 3)
 	{
 		data->skipSetup(atoi(argv[3]));
-		std::cout << "skip setup: " << atoi(argv[3]) << ", COLOR is RED"<< std::endl;
+		std::cout << "skip setup: " << atoi(argv[3]) << ", COLOR is RED" << std::endl;
 		robot.myColorIs(pmx::PMXRED);
 
 	}
@@ -97,7 +97,7 @@ int main(int argc, char** argv)
 	}
 
 	logger.info() << "Start of PMX, the robot..." << utils::end;
-	robot.start(); //start Manager and asserv
+
 
 	IAutomateState* waitForReboot = new pmx::StateWaitForReboot();
 	IAutomateState* initialize = new pmx::StateInitialize();

@@ -12,22 +12,11 @@
 #include "LedIndicator.hpp"
 
 pmx::Robot::Robot()
-		: 	base_(*this),
-			myColor_(pmx::PMXNOCOLOR),
-			runMode_(pmx::ROBOTHOMOLOGATION),
-			groveColorSensor_(*this),
-			ledBar_(*this),
-			md25_(*this),
-			encoderLeft_(*this, 'B', 17),
-			encoderRight_(*this, 'D', 31),
-			//servoTest_(*this, 0),
-			servoDxlTest_(*this),
-			irSensorsGroup_(*this),
-			arduinoBoardDuemilanove_(*this, 0x2A),
-			arduinoBoardMega_(*this, 0x2B),
-			arduinoBoardSeeed_(*this, 0x2C),
-			gpioBoard_(*this),
-			lcdBoard_()
+		: base_(*this), myColor_(pmx::PMXNOCOLOR), runMode_(pmx::ROBOTHOMOLOGATION), groveColorSensor_(*this), ledBar_(
+				*this), md25_(*this), encoderLeft_(*this, 'B', 17), encoderRight_(*this, 'D', 31),
+		//servoTest_(*this, 0),
+		servoDxlTest_(*this), irSensorsGroup_(*this), arduinoBoardDuemilanove_(*this, 0x2A), arduinoBoardMega_(*this,
+				0x2B), arduinoBoardSeeed_(*this, 0x2C), gpioBoard_(*this), lcdBoard_()
 {
 
 	//initialize i2C components
@@ -46,7 +35,7 @@ pmx::Robot::Robot()
 	usleep(300000);
 }
 
-void pmx::Robot::initialize(const std::string& prefix, utils::Configuration& )
+void pmx::Robot::initialize(const std::string& prefix, utils::Configuration&)
 {
 	logger().debug() << "initialize: " << prefix << utils::end;
 
@@ -62,31 +51,29 @@ void pmx::Robot::configure(const std::string & configurationFile)
 	this->initialize("robot", configuration);
 }
 
-void pmx::Robot::start()
+void pmx::Robot::start(int useExtEncoders)
 {
 	//start action manager
 	actionManager_.start("ActionManager");
 
-	//start asserv
+	//config and start asserv
+	int lRes = 0;
+	int rRes = 0;
+	float distRes = 0.0f;
 
-	//TODO INIT base et asserv !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	int lRes = 1191;//1121
-		int rRes = 1192;//1192
-		float distRes = 0.300f;
-
-		if (0) //TODO a mettre dans Base.cpp
-		{
-			lRes = 19885;
-			rRes = 20360;
-			distRes = 0.250f;
-		}
-		else
-		{
-			lRes = 1136;
-			rRes = 1136;
-			distRes = 0.300f;
-		}
-		base().begin(lRes, rRes, distRes, 1);
+	if (useExtEncoders)
+	{
+		lRes = 19885;
+		rRes = 20360;
+		distRes = 0.250f;
+	}
+	else
+	{
+		lRes = 1136;
+		rRes = 1136;
+		distRes = 0.300f;
+	}
+	base().begin(lRes, rRes, distRes, 1, useExtEncoders);
 
 	logger().info("Robot is started");
 
@@ -125,7 +112,6 @@ void pmx::Robot::stopManagers()
 
 //TODO  créer une Attente de la fin de l'actionManager à la place du usleep
 	usleep(5000);
-
 
 }
 
