@@ -509,6 +509,7 @@ void motion_InitTimer(int frequency)
 void motion_StopTimer()
 {
 	setPWM(0, 0);
+	setPWM(0, 0);
 	//TODO kill timer
 }
 

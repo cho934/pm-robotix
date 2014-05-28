@@ -6,11 +6,13 @@
 #ifndef HOSTSPIBUS_HPP
 #define HOSTSPIBUS_HPP
 
+#include <stddef.h>
+#include <stdint.h>
+#include <iostream>
 #include <string>
 
 #include "Exception.hpp"
 #include "Mutex.hpp"
-#include <stdint.h>
 
 #define CLOCKSPEED 6000000
 #define APF9328_SPI "/dev/spidev1.1"
@@ -27,6 +29,7 @@ public:
 	HostSpiException(const std::string & message)
 			: Exception(message)
 	{
+		std::cout << "HostSpiException=====" << message << std::endl;
 	}
 
 	virtual ~ HostSpiException() throw ()

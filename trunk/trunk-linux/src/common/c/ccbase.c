@@ -22,7 +22,7 @@
 #include "global.h"
 #include "path_manager.h"
 
-int matchColor = 0; //0=default color of the match
+int matchColor = 0; //0=default color of the match (yellow)
 boolean ignoreCollision = FALSE;
 
 void cc_AssistedHandling()
@@ -115,7 +115,7 @@ void cc_rotateRight(float degrees)
 
 void cc_rotateTo(float thetaInDegree)
 {
-	int c=ignoreCollision;
+	int c = ignoreCollision;
 	ignoreCollision = TRUE;
 
 	float currentThetaInDegree = cc_getThetaInDegree();
@@ -128,7 +128,16 @@ void cc_rotateTo(float thetaInDegree)
 
 	cc_rotateAbs(turn); //cho use Abs not left!!
 
-	ignoreCollision=c;
+	ignoreCollision = c;
+}
+void cc_setPosition(float xMM, float yMM, float thetaDegrees, int matchColor)
+{
+	if (matchColor != 0)
+	{
+		yMM = -yMM;
+	}
+
+	odo_SetPosition(xMM / 1000.0, yMM / 1000.0, thetaDegrees * M_PI / 180.0);
 }
 
 // position x,x in mm
@@ -148,7 +157,7 @@ float cc_getTheta()
 	RobotPosition p = odo_GetPosition();
 	return p.theta;
 }
-// angle in degre
+// angle in degrees
 float cc_getThetaInDegree()
 {
 	RobotPosition p = odo_GetPosition();
@@ -162,10 +171,9 @@ void cc_setIgnoreCollision(boolean b)
 
 void cc_collisionOccured()
 {
-	if(!ignoreCollision)
+	if (!ignoreCollision)
 		path_CollisionOnTrajectory();
 }
-
 
 void cc_setMatchColor(int color)
 {

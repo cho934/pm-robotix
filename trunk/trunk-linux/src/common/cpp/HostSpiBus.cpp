@@ -41,7 +41,7 @@ long utils::HostSpiBus::getSpeed(void)
 unsigned long long utils::HostSpiBus::spiTransfer(char data)
 {
 	//unsigned long long result =0;
-	unsigned long long  result = as_spi_msg_pmx(fd_spi_, (unsigned long long) data, 8, CLOCKSPEED);
+	unsigned long long  result = as_spi_msg(fd_spi_, (unsigned long long) data, 8, CLOCKSPEED);
 	return result;
 }
 

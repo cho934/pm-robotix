@@ -21,6 +21,9 @@ void cc_rotateLeft(float degres);
 void cc_rotateRight(float degres);
 void cc_rotateTo(float theta);
 
+//x,y en mm
+void cc_setPosition(float xMM, float yMM, float theta,int color);
+
 // position x,x in mm
 float cc_getX();
 float cc_getY();

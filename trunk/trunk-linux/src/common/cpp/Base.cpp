@@ -18,6 +18,7 @@
 #include "../c/robot_unitConversion.h"
 #include "Level.hpp"
 #include "Logger.hpp"
+#include "SvgWriter.hpp"
 
 //#include "SvgWriter.hpp"
 
@@ -77,7 +78,8 @@ void pmx::Base::initialize(const std::string& prefix, utils::Configuration&)
 
 void pmx::Base::printPosition()
 {
-	printf("START: (%f mm,%f mm) %f deg\n", cc_getX(), cc_getY(), cc_getThetaInDegree());
+	printf("POS: (%f mm,%f mm) %f deg\n", cc_getX(), cc_getY(), cc_getThetaInDegree());
+	utils::SvgWriter::writePosition(cc_getX(), cc_getY(), cc_getTheta(), utils::SVG_POS_ROBOT);
 }
 
 void pmx::Base::launchAndEndAfterCmd(RobotCommand* cmd)
@@ -86,14 +88,15 @@ void pmx::Base::launchAndEndAfterCmd(RobotCommand* cmd)
 	checkRobotCommand(cmd);
 
 	path_LaunchTrajectory(cmd);
-	printf("path_WaitEndOfTrajectory\n");
+	//printf("path_WaitEndOfTrajectory\n");
 	int result = path_WaitEndOfTrajectory();
-
+	printPosition();
 	printf("path_WaitEndOfTrajectory returned : %d : %d\n", result, TRAJ_OK);
 
 	//robot_setMotorLeftSpeed(0);
 	//robot_setMotorRightSpeed(0);
 	free(cmd);
+	printPosition();
 
 #ifdef LOG_PID
 	closeLog();	//TODO est-ce bien ici le close log ? meme si plusieurs launch l'un après l'autre ?
@@ -125,6 +128,8 @@ void pmx::Base::move(int mm)
 	cc_move(mm);
 }
 
+
+
 void pmx::Base::movexyteta(int backward, float x, float y, float thetaInDegree)
 {
 	if (backward == 0)
@@ -151,6 +156,20 @@ void pmx::Base::setupPID_AD(float Ap, float Ai, float Ad, float Dp, float Di, fl
 	robot_initPID_AD(Ap, Ai, Ad, Dp, Di, Dd);
 }
 
+void pmx::Base::setupPID_LR(float Lp, float Li, float Ld, float Rp, float Ri, float Rd)
+{
+	robot_initPID_LR(Lp, Li, Ld, Rp, Ri, Rd);
+}
+
+void pmx::Base::findPidLR(int posLmm, int posRmm, int sec)
+{
+	RobotCommand* cmd = (RobotCommand*) malloc(sizeof(RobotCommand));
+	float posLm = posLmm / 1000.0f;
+	float posRm = posRmm / 1000.0f;
+	motion_StepOrderLR(cmd, posLm / valueVTops, posRm / valueVTops, sec);
+	launchAndEndAfterCmd(cmd);
+}
+
 void pmx::Base::LineSpeedAcc(int mm, float VMax, float Accel, float Decel)
 {
 	RobotCommand* cmd = (RobotCommand*) malloc(sizeof(RobotCommand));
@@ -166,4 +185,26 @@ void pmx::Base::RotateSpeedAcc(int degrees, float VMax, float Accel, float Decel
 	motion_RotateSpeedAcc(cmd, radians, VMax, Accel, Decel);
 	launchAndEndAfterCmd(cmd);
 }
+
+void pmx::Base::SpeedControlLR(float spLeft, int distLeftmm,
+		float accLeft, float spRight, int distRightmm, float accRight)
+{
+	RobotCommand* cmd = (RobotCommand*) malloc(sizeof(RobotCommand));
+	float distLeftm = distLeftmm /1000.0;
+	float distRightm = distRightmm /1000.0;
+
+	motion_SpeedControlLR(cmd, spLeft, distLeftm,
+			accLeft, spRight, distRightm, accRight);
+	launchAndEndAfterCmd(cmd);
+}
+
+void pmx::Base::ArcRotate(int degrees, float radiusMM)
+{
+	//TODO mettre dans ccbase
+	RobotCommand* cmd = (RobotCommand*) malloc(sizeof(RobotCommand));
+	motion_ArcRotate(cmd, degrees*M_PI/180.0, radiusMM/1000.0);
+	launchAndEndAfterCmd(cmd);
+}
+
+
 

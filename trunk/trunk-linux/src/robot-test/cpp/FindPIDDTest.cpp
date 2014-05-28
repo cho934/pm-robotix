@@ -30,7 +30,7 @@ void robottest::FindPIDDTest::run(int argc, char *argv[])
 	if (argc < 12)
 	{
 		std::cout << "USAGE: PMX_TEST " << argv[1]
-				<< " [dist(mm)] [Vmax] [Acc] [Dec] [P] [I] [D] [option:useExtEncoders=0] [option:sec=5s]" << std::endl;
+				<< " [dist(mm)] [Vmax] [Acc] [Dec] [P] [I] [D] [option:useExtEncoders=0]" << std::endl;
 	}
 
 	if (argc > 2)
@@ -115,11 +115,11 @@ void robottest::FindPIDDTest::run(int argc, char *argv[])
 		useExtEnc = atoi(argv[9]);
 		std::cout << "useExtEnc: " << atoi(argv[9]) << std::endl;
 	}
-	if (argc > 10)
+	/*if (argc > 10)
 	{
 		sec = atoi(argv[10]);
 		std::cout << "sec: " << atoi(argv[10]) << std::endl;
-	}
+	}*/
 
 	logger().info() << "-------------------------------------------------" << utils::end;
 	logger().info() << "FindPIDDTest - " << utils::end;
@@ -133,7 +133,7 @@ void robottest::FindPIDDTest::run(int argc, char *argv[])
 	robot.base().printPosition();
 
 	robot.base().LineSpeedAcc(dist, vmax, acc, dec);
-
+	sleep(1);
 	robot.stop();
 	sleep(1);
 	robot.base().printPosition();

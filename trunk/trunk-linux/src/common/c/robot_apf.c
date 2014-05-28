@@ -1,3 +1,6 @@
+#include "../cpp/Md25.hpp"
+#include "encoder.h"
+
 #ifndef SIMULATED
 
 #include <stdio.h>
@@ -85,7 +88,7 @@ void robot_setMotorRightSpeed(int power) //-100 à 100
 	pmx
 	::Robot &robot = pmx::Robot::instance();
 	/*
-	int powerR = (int) (((-power + 100) * 256.0 / 200.0));*/
+	 int powerR = (int) (((-power + 100) * 256.0 / 200.0));*/
 	int powerR = (int) (-power + 128);
 	if (powerR >= 256)
 		powerR = 255;
@@ -97,15 +100,16 @@ void robot_setMotorRightSpeed(int power) //-100 à 100
 
 void robot_setMotorLeftSpeed(int power)
 {
-	pmx::Robot &robot = pmx::Robot::instance();
+	pmx
+	::Robot &robot = pmx::Robot::instance();
 	/*
-	int powerL = (int) (((-power + 100) * 256.0 / 200.0));
-	if (powerL == 256)
-		powerL = 255;
-		*/
+	 int powerL = (int) (((-power + 100) * 256.0 / 200.0));
+	 if (powerL == 256)
+	 powerL = 255;
+	 */
 	int powerL = (int) (-power + 128);
 	if (powerL >= 256)
-			powerL = 255;
+		powerL = 255;
 	//printf("robot_setMotorLeftSpeed.c %d\n", powerL);
 	robot.md25().ensureSetSpeed(powerL, MD25_SPEED2_REG); //0=>255
 	lPower = power;
@@ -117,7 +121,7 @@ long robot_getLeftExternalCounter() //en tick
 
 	pmx
 	::Robot &robot = pmx::Robot::instance();
-	int leftCounter = -robot.encoderLeft().readCounter();
+	long leftCounter = -1 * robot.encoderLeft().readCounter();
 
 	return leftCounter;
 }
@@ -126,7 +130,7 @@ long robot_getRightExternalCounter()
 
 	pmx
 	::Robot &robot = pmx::Robot::instance();
-	int rightCounter = robot.encoderRight().readCounter();
+	long rightCounter = robot.encoderRight().readCounter();
 
 	return rightCounter;
 }
@@ -154,13 +158,37 @@ long robot_getRightInternalCounter()
 
 void robot_initPID()
 {
-	motion_configureAlphaPID(0.0015f, 0.0008f, 0.000002f); //0.0008 0.00002 0.00003
-	motion_configureDeltaPID(0.0010f, 0.0008f, 0.000002f); //0.0005 0.000008 0.000009 //0.0015 0.0008 0.000002
+	if (!useExternalEncoders) //INTERNAL ENCODERS
+	{
+		motion_configureAlphaPID(0.0015f, 0.0008f, 0.000002f); //0.0008 0.00002 0.00003
+		motion_configureDeltaPID(0.0010f, 0.0008f, 0.000002f); //0.0005 0.000008 0.000009 //0.0015 0.0008 0.000002
+
+		motion_configureLeftPID(0.0006, 0.0, 0.0);
+		motion_configureRightPID(0.0006, 0.0, 0.0);
+	}
+	else //EXTERNAL ENCODERS
+	{
+		motion_configureAlphaPID(0.000065f, 0.00001f, 0.00000002f); //(0.000065f, 0.000001f, 0.00000001f);
+		motion_configureDeltaPID(0.00006f, 0.00002f, 0.0000002f);
+
+		//motion_configureLeftPID(0.0004, 0.0004, 0.0000002);
+		//motion_configureRightPID(0.0004, 0.0004, 0.0000002);
+
+		motion_configureLeftPID(0.00003, 0.00004, 0.0000002);
+		motion_configureRightPID(0.00003, 0.00004, 0.0000002);
+	}
+
 }
 void robot_initPID_AD(float Ap, float Ai, float Ad, float Dp, float Di, float Dd)
 {
 	motion_configureAlphaPID(Ap, Ai, Ad);
 	motion_configureDeltaPID(Dp, Di, Dd);
+}
+
+void robot_initPID_LR(float Lp, float Li, float Ld, float Rp, float Ri, float Rd)
+{
+	motion_configureLeftPID(Lp, Li, Ld);
+	motion_configureRightPID(Rp, Ri, Rd);
 }
 
 int robot_isDetectingObstacle()

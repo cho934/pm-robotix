@@ -6,10 +6,14 @@
  */
 
 #include "ia.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <math.h>
+
+#include "../../common/cpp/SvgWriter.hpp"
 #include "ccbase.h"
 
 
@@ -32,7 +36,7 @@ void ia_addAction(const char* name, RobotAction action) {
 }
 
 void ia_createZone(const char* name, float minX, float minY, float width,
-		float height, float startX, float startY, float startAngle) {
+		float height, float startX, float startY, float startAngleDeg) {
 	ZONE *z = (ZONE*) calloc(1, sizeof(ZONE));
 	z->minX = minX;
 	z->minY = minY;
@@ -40,10 +44,13 @@ void ia_createZone(const char* name, float minX, float minY, float width,
 	z->height = height;
 	z->startX = startX;
 	z->startY = startY;
-	z->startAngle = startAngle;
+	z->startAngle = startAngleDeg;
 	strcpy(z->name, name);
 	_zones[_zones_count] = z;
 	_zones_count++;
+
+	//log SVG
+	utils::SvgWriter::writeZone(name, minX, minY, width, height, startX, startY, startAngleDeg* M_PI/180.0);
 }
 
 void ia_printZone(ZONE *z) {
@@ -96,6 +103,8 @@ void ia_setPath(const char* zone1Name, const char* zone2Name, float x, float y) 
 	zp->y = y;
 	_zones_path[_zones_path_count] = zp;
 	_zones_path_count++;
+
+	utils::SvgWriter::writeIaPath(zone1Name, zone2Name, x, y);
 
 }
 ZONE_PATH* ia_getZonePath(ZONE *z1, ZONE *z2) {

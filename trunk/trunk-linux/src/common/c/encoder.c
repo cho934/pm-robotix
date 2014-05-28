@@ -69,7 +69,9 @@ int useExternalEncoders = 0;
 
 long encoder_getLeftCounter() {
 	if (useExternalEncoders) {
-		return robot_getLeftExternalCounter();
+		long encl = robot_getLeftExternalCounter();
+		//printf("encl=%ld\n", encl);
+		return encl;
 	}
 	return robot_getLeftInternalCounter();
 }
