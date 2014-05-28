@@ -128,7 +128,11 @@ void cc_goToZone(const char *zoneName) {
 				zoneName);
 	} else {
 		ZONE *zCurrent = ia_getNearestZoneFrom(cc_getX(), cc_getY());
+
 		ZONE_PATH *path = ia_getZonePath(zCurrent, z);
+		printf("%s (line %d) : goToZone FROM %s TO %s using path (%f,%f)\n",
+				__FUNCTION__,
+				__LINE__, zCurrent->name, z->name, path->x, path->y);
 		cc_moveForwardTo(path->x, path->y);
 		// Move to destination
 		cc_moveForwardAndRotateTo(z->startX, z->startY, z->startAngle);
