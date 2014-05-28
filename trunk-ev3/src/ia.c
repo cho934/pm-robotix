@@ -172,6 +172,8 @@ ZONE* ia_getZoneAt(float x, float y) {
 
 ZONE* ia_getNearestZoneFrom(float x, float y) {
 	if (ia_getZoneAt(x, y) != NULL) {
+		printf("ia_getNearestZoneFrom is current zone : %s : (%f,%f) \n",
+				ia_getZoneAt(x, y)->name, cc_getX(), cc_getY());
 		return ia_getZoneAt(x, y);
 	}
 	ZONE *result = _zones[0];
@@ -181,7 +183,9 @@ ZONE* ia_getNearestZoneFrom(float x, float y) {
 		ZONE *z = _zones[i];
 		float x1 = z->minX + z->width / 2.0f;
 		float y1 = z->minY + z->height / 2.0f;
-		float d = x1 * x1 + y1 * y1;
+		float dx = x1 - x;
+		float dy = y1 - y;
+		float d = dx * dx + dy * dy;
 		if (d < minDist2) {
 			minDist2 = d;
 			result = z;
