@@ -63,9 +63,10 @@ void pmx::Robot::start(int useExtEncoders)
 
 	if (useExtEncoders)
 	{
-		lRes = 19885;
-		rRes = 20360;
+		lRes = 20100;//19885
+		rRes = 20100; //20360
 		distRes = 0.250f;
+		logger().debug("EXTERNAL ENCODERS USED");
 	}
 	else
 	{
@@ -82,11 +83,6 @@ void pmx::Robot::start(int useExtEncoders)
 void pmx::Robot::stop()
 {
 	logger().info("Stop");
-
-	//close SPI
-	utils::HostSpiBus::instance().close();
-
-	//TODO Close ADC, serial ?
 
 	this->stopDevices();
 	logger().debug() << "before  stopManagers" << utils::end;

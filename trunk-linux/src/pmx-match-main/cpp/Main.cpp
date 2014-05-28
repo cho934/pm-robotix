@@ -41,7 +41,7 @@ int main(int argc, char** argv)
 	//prise en compte des arguments
 
 	logger.info()
-			<< "USAGE: PMX  [0=Matches, 1=Homologation, 2=Tabletest, Default=Homologation] [1=Internal encoder] [1=don't setup]"
+			<< "USAGE: PMX  [0=Matches, 1=Homologation, 2=Tabletest, Default=Homologation] [1=External encoder] [1=don't setup]"
 			<< utils::end;
 
 	if (argc > 1)
@@ -72,13 +72,13 @@ int main(int argc, char** argv)
 
 	if (argc > 2)
 	{
-		data->useInternalEncoder(atoi(argv[2]));
+		//data->useExternalEncoder(atoi(argv[2])); //TODO Ne sert plus
 		std::cout << "USE internal encoder : " << atoi(argv[2]) << std::endl;
 		robot.start(0); //start Manager and asserv
 	}
 	else
 	{
-		data->useInternalEncoder(0);
+		//data->useExternalEncoder(1);
 		std::cout << "USE EXTERNAL ENCODER " << std::endl;
 		robot.start(1); //start Manager and asserv
 	}
@@ -143,7 +143,7 @@ int main(int argc, char** argv)
 	// Start the automate and wait for its return
 	Automate *automate = new Automate();
 	automate->run(robot, waitForReboot, data);
-
+	logger.debug() << "end automate;" << utils::end;
 	robot.lcdBoard().setBacklight(LCD_OFF);
 
 	logger.debug() << "robot.stop();" << utils::end;

@@ -66,7 +66,13 @@ public:
 
 	static void writeTextCustom(double x, double y, std::string text, std::string color, std::string fontsize);
 
+	//TODO deprecated
 	static void writePawn(double x, double y);
+
+	static void writeZone(const char* name, float minX, float minY, float width,
+			float height, float startX, float startY, float startAngle);
+
+	static void writeIaPath(const char* zone1Name, const char* zone2Name, float x, float y );
 };
 }
 

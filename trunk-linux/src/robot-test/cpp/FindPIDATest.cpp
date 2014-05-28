@@ -30,7 +30,7 @@ void robottest::FindPIDATest::run(int argc, char *argv[])
 	if (argc < 12)
 	{
 		std::cout << "USAGE: PMX_TEST " << argv[1]
-				<< " [angle(deg)] [Vmax] [Acc] [Dec] [P] [I] [D] [option:useExtEncoders=0] [option:sec=5s]" << std::endl;
+				<< " [angle(deg)] [Vmax] [Acc] [Dec] [P] [I] [D] [option:useExtEncoders=0] " << std::endl;
 	}
 
 	if (argc > 2)
@@ -115,11 +115,11 @@ void robottest::FindPIDATest::run(int argc, char *argv[])
 		useExtEnc = atoi(argv[9]);
 		std::cout << "useExtEnc: " << atoi(argv[9]) << std::endl;
 	}
-	if (argc > 10)
+	/*if (argc > 10)
 	{
 		sec = atoi(argv[10]);
 		std::cout << "sec: " << atoi(argv[10]) << std::endl;
-	}
+	}*/
 
 	logger().info() << "-------------------------------------------------" << utils::end;
 	logger().info() << "FindPIDATest - " << utils::end;

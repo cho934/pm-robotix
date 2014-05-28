@@ -99,6 +99,7 @@ unsigned long long pmx::ExtEncoder::spiTransfer(char data)
  */
 void pmx::ExtEncoder::clearCounter(void)
 {
+	//printf("ExtEncoder::clearCounter\n");
 	lock();
 	ss_pin_set(0); //enable device
 	this->spiTransfer(CLEAR_COUNTER); //transmit clear opcode
@@ -139,7 +140,7 @@ long long pmx::ExtEncoder::readCounter(void)
 	}
 	ss_pin_set(1); //release device
 	unlock();
-
+	//printf("ExtEncoder::readCounter fulldata : %lld\n", fulldata);
 	//logger().debug() << "fulldata =  " << fulldata << utils::end;
 
 	if (fulldata > 4244897280 / 2)
@@ -150,6 +151,8 @@ long long pmx::ExtEncoder::readCounter(void)
 	{
 		counter = fulldata;
 	}
+	//printf("ExtEncoder::readCounter : %lld\n", counter);
+	//logger().error() << "counter=" << counter << utils::end;
 	return counter;
 }
 

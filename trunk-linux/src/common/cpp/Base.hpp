@@ -80,10 +80,16 @@ public:
 	void movexyteta(int forward, float x, float y, float thetaInDegree);
 
 	void findPidAD(float degrees, int mm, int sec);
+	void findPidLR(int posLmm, int posRmm, int sec);
 	void setupPID_AD(float Ap, float Ai, float Ad, float Dp, float Di, float Dd);
+	void setupPID_LR(float Ap, float Ai, float Ad, float Dp, float Di, float Dd);
 
 	void LineSpeedAcc(int mm, float VMax, float Accel, float Decel);
 	void RotateSpeedAcc(int degrees, float VMax, float Accel, float Decel);
+
+	void SpeedControlLR(float spLeft, int distLeftmm,
+	float accLeft, float spRight, int distRightmm, float accRight);
+	void ArcRotate(int degrees, float radius);
 };
 }
 

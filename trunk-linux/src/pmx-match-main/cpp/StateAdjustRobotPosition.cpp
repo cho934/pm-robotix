@@ -5,14 +5,16 @@
 
 #include "StateAdjustRobotPosition.hpp"
 
-//#include <cmath>
 #include <stdint.h>
 
+#include "../../common/c/ccbase.h"
 #include "../../common/cpp/Adafruit_RGBLCDShield.hpp"
 #include "../../common/cpp/LedBar.hpp"
 #include "../../common/cpp/Logger.hpp"
 #include "../../common/cpp/Robot.hpp"
+#include "../../common/cpp/SvgWriter.hpp"
 #include "Data.hpp"
+
 //#include "StateInitialize.hpp"
 //#include "StateWaitForReboot.hpp"
 //#include "StateWaitForStart.hpp"
@@ -38,18 +40,19 @@ pmx::StateAdjustRobotPosition::execute(Robot& robot, void *data)
 
 	/*
 	 robot.position().x(130);
-	 robot.position().y(600, robot.myColor());
-	 robot.position().angle(0, robot.myColor());
+	 robot.position().y(570, robot.myColor());
+	 robot.position().angle(0, robot.myColor());*/
 
 
+	cc_setPosition(130, 470, 0.0,robot.myColor());
+	/*
 	 logger().debug() << "Position x=" << robot.position().x() << " y=" << robot.position().y() << " a="
 	 << robot.position().angle() << utils::end;
-
+*/
 
 	 //Ecriture dans le SVG
-	 utils::SvgWriter::writePosition(robot.position().x(), robot.position().y(), robot.position().angle(),
-	 utils::SVG_POS_ROBOT);
-	 */
+	 utils::SvgWriter::writePosition(cc_getX(), cc_getY(), cc_getTheta(), utils::SVG_POS_ROBOT);
+
 	//skip setup
 	if (!sharedData->skipSetup())
 	{

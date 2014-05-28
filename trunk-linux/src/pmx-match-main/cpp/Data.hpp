@@ -17,7 +17,7 @@ private:
 
 	bool empty_;
 
-	int useInternalEncoder_;
+	int useExternalEncoder_;
 
 	int skipSetup_;
 
@@ -29,7 +29,7 @@ public:
 	Data()
 	{
 		empty_ = 0;
-		useInternalEncoder_ = 0;
+		useExternalEncoder_ = 0;
 		skipSetup_ = 0;
 	}
 
@@ -49,13 +49,13 @@ public:
 		this->empty_ = empty;
 	}
 
-	int useInternalEncoder() const
+	int useExternalEncoder() const
 	{
-		return this->useInternalEncoder_;
+		return this->useExternalEncoder_;
 	}
-	void useInternalEncoder(int useInternalEncoder)
+	void useExternalEncoder(int useEncoder)
 	{
-		this->useInternalEncoder_ = useInternalEncoder;
+		this->useExternalEncoder_ = useEncoder;
 	}
 
 	int skipSetup() const

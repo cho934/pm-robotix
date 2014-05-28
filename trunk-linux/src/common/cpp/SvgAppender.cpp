@@ -29,10 +29,11 @@ utils::SvgAppender::SvgAppender(const std::string & filename) : ofs_(filename.c_
         << "<line id=\"Vline\" x1=\"0\" y1=\"" << ymin << "\" x2=\"0\" y2=\"" << ymax << "\" stroke=\"#eeeeee\" />"
         << "<line id=\"Hline\" x1=\"" << xmin << "\" y1=\"0\" x2=\"" << xmax << "\" y2=\"0\" stroke=\"#eeeeee\" />"
         << "<symbol id=\"robot-pmx\">"
-        << "<circle cx=\"158\" cy=\"158\" r=\"158\" fill=\"none\" stroke=\"black\" />"
-        << "<circle cx=\"158\" cy=\"158\" r=\"10\" fill=\"none\" stroke=\"black\" />"
-       //<< "<line x1=\"60\" y1=\"60\" x2=\"60\" y2=\"320\" stroke=\"blue\" />"
-        << "</symbol>"
+        << "<circle cx=\"190\" cy=\"190\" r=\"190\" fill=\"none\" stroke=\"blue\" />"
+        << "<circle cx=\"190\" cy=\"190\" r=\"10\" fill=\"none\" stroke=\"blue\" />"
+        //<< "<line x1=\"60\" y1=\"60\" x2=\"60\" y2=\"320\" stroke=\"blue\" />" //arriere du robot en position 0,0
+        //<< "<line x1=\"340\" y1=\"80\" x2=\"340\" y2=\"300\" stroke=\"blue\" />" //devant du robot en position 0,0
+                << "</symbol>"
         << "</defs>"
         << std::endl;
 

@@ -52,7 +52,7 @@ void utils::HostI2cBus::close_i2c(void)
 
 		if (ret < 0)
 		{
-			throw new I2cException("Error HostI2cBus::close, can't close I2C !");
+			throw new I2cWarning("Error HostI2cBus::close, can't close I2C on close_i2c()!");
 		}
 		opened_ = 0;
 	}

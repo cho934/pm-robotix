@@ -42,7 +42,7 @@ void utils::LoggerFactory::initialize()
 	//add(utils::Level::INFO, "pmx::ServoMotorDxlObject", "console");
 	//add(utils::Level::DEBUG, "pmx::ServoMotorDxlObj", "console");
 
-	//add(utils::Level::DEBUG, "pmx::Robot", "console");
+	add(utils::Level::DEBUG, "pmx::Robot", "console");
 	//add(utils::Level::DEBUG, "pmx::Base", "console");
 	//add(utils::Level::DEBUG, "motion.c", "memory");
 
