@@ -61,7 +61,7 @@ void encoder_SetResolution(uint32 leftTicksPerM, uint32 rightTicksPerM) {
 
 static int32 lastLeft = 0;
 static int32 lastRight = 0;
-int useExternalEncoders = 0;
+int useExternalEncoders = 1;
 
 long encoder_getLeftCounter() {
 	if (useExternalEncoders) {

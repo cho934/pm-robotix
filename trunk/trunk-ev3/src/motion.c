@@ -79,20 +79,25 @@ void path_TriggerWaypoint(TRAJ_STATE state);
 
 long loopDelayInMillis;
 
-void motion_configureAlphaPID(float p, float i, float d) {
+void motion_configureAlphaPID(float p, float i, float d)
+{
 	pid_Config(motors[ALPHA_DELTA][ALPHA_MOTOR].PIDSys, p, i, d);
 }
-void motion_configureDeltaPID(float p, float i, float d) {
+void motion_configureDeltaPID(float p, float i, float d)
+{
 	pid_Config(motors[ALPHA_DELTA][DELTA_MOTOR].PIDSys, p, i, d);
 }
-void motion_configureLeftPID(float p, float i, float d) {
+void motion_configureLeftPID(float p, float i, float d)
+{
 	pid_Config(motors[LEFT_RIGHT][LEFT_MOTOR].PIDSys, p, i, d);
 }
-void motion_configureRightPID(float p, float i, float d) {
+void motion_configureRightPID(float p, float i, float d)
+{
 	pid_Config(motors[LEFT_RIGHT][RIGHT_MOTOR].PIDSys, p, i, d);
 }
 
-void motion_Init() {
+void motion_Init()
+{
 	int i, j;
 	RobotMotionState = DISABLE_PID;
 	periodNb = 0;
@@ -101,8 +106,10 @@ void motion_Init() {
 
 	pid_Init();
 	//motor initialisation
-	for (i = 0; i < MAX_MOTION_CONTROL_TYPE_NUMBER; i++) {
-		for (j = 0; j < MOTOR_PER_TYPE; j++) {
+	for (i = 0; i < MAX_MOTION_CONTROL_TYPE_NUMBER; i++)
+	{
+		for (j = 0; j < MOTOR_PER_TYPE; j++)
+		{
 			initMotor(&motors[i][j]);
 		}
 	}
@@ -118,7 +125,8 @@ void motion_Init() {
 	pthread_mutex_init(&mtxMotionCommand, NULL);
 
 	//create motion control task
-	if (pthread_create(&thread, NULL, motion_ITTask, NULL) < 0) {
+	if (pthread_create(&thread, NULL, motion_ITTask, NULL) < 0)
+	{
 		fprintf(stderr, "pthread_create error for thread 1\n");
 		exit(1);
 	}
@@ -130,18 +138,22 @@ void motion_Init() {
 	//path manager initialisation
 	path_Init();
 }
-void motion_Destroy() {
+void motion_Destroy()
+{
 
 }
-void signalEndOfTraj() {
+void signalEndOfTraj()
+{
 #ifdef DEBUG_MOTION
 	printf("motions.c : signalEndOfTraj %d\n", nextWaypoint.type);
 #endif
-	if (motionCommand.cmdType == POSITION_COMMAND) {
+	if (motionCommand.cmdType == POSITION_COMMAND)
+	{
 		motion_FreeMotion();
 	}
 
-	if (nextWaypoint.type == WP_END_OF_TRAJ) {
+	if (nextWaypoint.type == WP_END_OF_TRAJ)
+	{
 #ifdef DEBUG_MOTION
 		printf("signalEndOfTraj path_TriggerWaypoint\n");
 #endif
@@ -150,63 +162,67 @@ void signalEndOfTraj() {
 
 }
 
-void motion_FreeMotion() {
+void motion_FreeMotion()
+{
 	RobotMotionState = FREE_MOTION;
 	setPWM(0, 0);
 
 }
 
-void motion_AssistedHandling() {
+void motion_AssistedHandling()
+{
 	motion_FreeMotion();
+	RobotMotionState = ASSISTED_HANDLING;
 }
 
-void motion_DisablePID() {
+void motion_DisablePID()
+{
 	motion_FreeMotion();
 	RobotMotionState = DISABLE_PID;
 	setPWM(0, 0);
 
 }
-void checkRobotCommand(RobotCommand *cmd) {
+void checkRobotCommand(RobotCommand *cmd)
+{
 	int cmdType = cmd->cmdType;
-	if (cmdType != POSITION_COMMAND && cmdType != SPEED_COMMAND
-			&& cmdType != STEP_COMMAND) {
-		printf("motion.c checkRobotCommand : ERROR: bad command type: %d\n",
-				cmdType);
+	if (cmdType != POSITION_COMMAND && cmdType != SPEED_COMMAND && cmdType != STEP_COMMAND)
+	{
+		printf("motion.c checkRobotCommand : ERROR: bad command type: %d\n", cmdType);
 		exit(1);
 	}
 	int mcType = cmd->mcType;
-	if (mcType != ALPHA_DELTA && mcType != LEFT_RIGHT) {
-		printf("motion.c checkRobotCommand : ERROR: bad control type: %d\n",
-				cmdType);
+	if (mcType != ALPHA_DELTA && mcType != LEFT_RIGHT)
+	{
+		printf("motion.c checkRobotCommand : ERROR: bad control type: %d\n", cmdType);
 		exit(1);
 	}
 }
-void loadCommand(RobotCommand *cmd) {
+void loadCommand(RobotCommand *cmd)
+{
 	checkRobotCommand(cmd);
-	switch (cmd->cmdType) {
+	switch (cmd->cmdType)
+	{
 	case POSITION_COMMAND:
-		LoadPositionCommand(&cmd->cmd.posCmd[0], &motors[cmd->mcType][0],
-				periodNb);
-		LoadPositionCommand(&cmd->cmd.posCmd[1], &motors[cmd->mcType][1],
-				periodNb);
+		LoadPositionCommand(&cmd->cmd.posCmd[0], &motors[cmd->mcType][0], periodNb);
+		LoadPositionCommand(&cmd->cmd.posCmd[1], &motors[cmd->mcType][1], periodNb);
 		break;
 
 	case SPEED_COMMAND:
 		//if we are in same command mode, we get the next order and apply it
 		//as the starting point of new trajectory
-		if (motionCommand.cmdType == SPEED_COMMAND
-				&& motionCommand.mcType == cmd->mcType) {
+		if (motionCommand.cmdType == SPEED_COMMAND && motionCommand.mcType == cmd->mcType)
+		{
 			int32 pos0, pos1;
 			GetSpeedOrder(&motionCommand.cmd.speedCmd[0], periodNb, &pos0);
 			GetSpeedOrder(&motionCommand.cmd.speedCmd[1], periodNb, &pos1);
 
 			LoadSpeedCommand(&cmd->cmd.speedCmd[0], pos0, periodNb);
 			LoadSpeedCommand(&cmd->cmd.speedCmd[1], pos1, periodNb);
-		} else {
-			LoadSpeedCommand(&cmd->cmd.speedCmd[0],
-					motors[cmd->mcType][0].lastPos, periodNb);
-			LoadSpeedCommand(&cmd->cmd.speedCmd[1],
-					motors[cmd->mcType][1].lastPos, periodNb);
+		}
+		else
+		{
+			LoadSpeedCommand(&cmd->cmd.speedCmd[0], motors[cmd->mcType][0].lastPos, periodNb);
+			LoadSpeedCommand(&cmd->cmd.speedCmd[1], motors[cmd->mcType][1].lastPos, periodNb);
 		}
 		break;
 
@@ -215,7 +231,8 @@ void loadCommand(RobotCommand *cmd) {
 	};
 }
 
-void motion_SetCurrentCommand(RobotCommand *cmd) {
+void motion_SetCurrentCommand(RobotCommand *cmd)
+{
 	checkRobotCommand(cmd);
 #ifdef DEBUG_MOTION
 	printf("motion.c : motion_SetCurrentCommand  \n");
@@ -239,7 +256,8 @@ void motion_SetCurrentCommand(RobotCommand *cmd) {
 //Motion control main loop
 //implemented as an IT task, armed on a timer to provide
 //a constant and precise period between computation
-void *motion_ITTask(void *p_arg) {
+void *motion_ITTask(void *p_arg)
+{
 //static int32 left, right;
 //static int32 alpha, delta;
 
@@ -257,7 +275,8 @@ void *motion_ITTask(void *p_arg) {
 	printf("motion.c : motion_ITTask start\n");
 #endif
 	int stop = 0;
-	while (!stop) {
+	while (!stop)
+	{
 
 		//sem_wait(&semMotionIT);
 
@@ -288,36 +307,40 @@ void *motion_ITTask(void *p_arg) {
 		double dSpeed0 = 0;
 		double dSpeed1 = 0;
 		//order and pwm computation
-		switch (RobotMotionState) {
+		switch (RobotMotionState)
+		{
 		case TRAJECTORY_RUNNING:
 			//lock motionCommand
 			pthread_mutex_lock(&mtxMotionCommand);
 
-			if (motionCommand.mcType == LEFT_RIGHT) {
+			if (motionCommand.mcType == LEFT_RIGHT)
+			{
 				dSpeed0 = dLeft;
 				dSpeed1 = dRight;
-			} else if (motionCommand.mcType == ALPHA_DELTA) {
+			}
+			else if (motionCommand.mcType == ALPHA_DELTA)
+			{
 				dSpeed0 = dAlpha * 2.0;
 				dSpeed1 = dDelta;
-			} else {
-				printf(
-						"motion.c : motion_ITTask : motionCommand error: %d (%d %d %d)\n",
-						motionCommand.mcType, LEFT_RIGHT, ALPHA_DELTA,
+			}
+			else
+			{
+				printf("motion.c : motion_ITTask : motionCommand error: %d (%d %d %d)\n", motionCommand.mcType,
+						LEFT_RIGHT, ALPHA_DELTA,
 
 						MAX_MOTION_CONTROL_TYPE_NUMBER);
 				exit(1);
 			}
 
 			//choose the right function to compute new order value
-			switch (motionCommand.cmdType) {
+			switch (motionCommand.cmdType)
+			{
 			case POSITION_COMMAND:
 #ifdef DEBUG_MOTION
 				printf("motion.c :  POSITION_COMMAND\n");
 #endif
-				fin0 = GetPositionOrder(&motionCommand.cmd.posCmd[0], periodNb,
-						&ord0);
-				fin1 = GetPositionOrder(&motionCommand.cmd.posCmd[1], periodNb,
-						&ord1);
+				fin0 = GetPositionOrder(&motionCommand.cmd.posCmd[0], periodNb, &ord0);
+				fin1 = GetPositionOrder(&motionCommand.cmd.posCmd[1], periodNb, &ord1);
 
 				break;
 
@@ -325,10 +348,8 @@ void *motion_ITTask(void *p_arg) {
 #ifdef DEBUG_MOTION
 				printf("motion.c :  SPEED_COMMAND\n");
 #endif
-				fin0 = GetSpeedOrder(&motionCommand.cmd.speedCmd[0], periodNb,
-						&ord0);
-				fin1 = GetSpeedOrder(&motionCommand.cmd.speedCmd[1], periodNb,
-						&ord1);
+				fin0 = GetSpeedOrder(&motionCommand.cmd.speedCmd[0], periodNb, &ord0);
+				fin1 = GetSpeedOrder(&motionCommand.cmd.speedCmd[1], periodNb, &ord1);
 				break;
 
 			case STEP_COMMAND:
@@ -339,29 +360,30 @@ void *motion_ITTask(void *p_arg) {
 				fin1 = GetStepOrder(&motionCommand.cmd.stepCmd[1], &ord1);
 				break;
 			}
-			log_status(currentTimeInMillis(), encoder_getLeftCounter(),
-					encoder_getRightCounter(), robot_getLeftPower(),
-					robot_getRightPower(), ord0, ord1,
-					motors[motionCommand.mcType][0].lastPos,
+			log_status(currentTimeInMillis(), encoder_getLeftCounter(), encoder_getRightCounter(), robot_getLeftPower(),
+					robot_getRightPower(), ord0, ord1, motors[motionCommand.mcType][0].lastPos,
 					motors[motionCommand.mcType][1].lastPos, p.x, p.y, p.theta);
 			//compute pwm for first motor
 			//	printf("motion.c : pid_Compute : ORDER 0 : %d current:%d\n", ord0,
 			//			motors[motionCommand.mcType][0].lastPos);
-			pwm0 = pid_Compute(motors[motionCommand.mcType][0].PIDSys, ord0,
-					motors[motionCommand.mcType][0].lastPos, dSpeed0);
+			pwm0 = pid_Compute(motors[motionCommand.mcType][0].PIDSys, ord0, motors[motionCommand.mcType][0].lastPos,
+					dSpeed0);
 			//	printf("motion.c : pid_Compute : ORDER 1 : %d current:%d\n", ord1,
 			//			motors[motionCommand.mcType][1].lastPos);
 			//compute pwm for second motor
-			pwm1 = pid_Compute(motors[motionCommand.mcType][1].PIDSys, ord1,
-					motors[motionCommand.mcType][1].lastPos, dSpeed1);
+			pwm1 = pid_Compute(motors[motionCommand.mcType][1].PIDSys, ord1, motors[motionCommand.mcType][1].lastPos,
+					dSpeed1);
 
 			//output pwm to motors
-			if (motionCommand.mcType == LEFT_RIGHT) {
+			if (motionCommand.mcType == LEFT_RIGHT)
+			{
 				//	printf("motion.c : LEFT_RIGHT mode, pid result : %d %d \n",	pwm0, pwm1);
 				BOUND_INT(pwm0, 100);
 				BOUND_INT(pwm1, 100);
 				setPWM(pwm0, pwm1);
-			} else if (motionCommand.mcType == ALPHA_DELTA) {
+			}
+			else if (motionCommand.mcType == ALPHA_DELTA)
+			{
 				// printf("motion.c : ALPHA_DELTA mode, pid result : %d %d \n", pwm0, pwm1);
 				pwm0b = pwm1 - pwm0;
 				BOUND_INT(pwm0b, 100);
@@ -373,11 +395,13 @@ void *motion_ITTask(void *p_arg) {
 			}
 
 			//test end of traj
-			if (fin0 && fin1) {
+			if (fin0 && fin1)
+			{
 				signalEndOfTraj();
 			}
 			// detection
-			if (robot_isDetectingObstacle()) {
+			if (robot_isDetectingObstacle())
+			{
 				cc_setCollisionOccured(TRUE);
 				signalEndOfTraj();
 			}
@@ -385,12 +409,36 @@ void *motion_ITTask(void *p_arg) {
 			pthread_mutex_unlock(&mtxMotionCommand);
 
 			break;
+		
+		case ASSISTED_HANDLING:
+		{
+			//printf("motion_ITTask ASSISTED_HANDLING  \n");
+			dSpeed0 = dLeft;
+			dSpeed1 = dRight;
+			//compute pwm for first motor
+			//pwm0 = pid_Compute(motors[motionCommand.mcType][0].PIDSys, dLeft);
+			//pwm0 = pid_ComputeRcva(motors[motionCommand.mcType][0].PIDSys, dLeft, dSpeed0);
+			pwm0 = pid_Compute(motors[motionCommand.mcType][0].PIDSys, 0, motors[motionCommand.mcType][0].lastPos,
+					dSpeed0);
 
-		case DISABLE_PID: {
+			//compute pwm for second motor
+			//pwm1 = pid_Compute(motors[motionCommand.mcType][1].PIDSys, dRight);
+			//pwm1 = pid_ComputeRcva(motors[motionCommand.mcType][1].PIDSys, dRight, dSpeed1);
+			pwm1 = pid_Compute(motors[motionCommand.mcType][1].PIDSys, 0, motors[motionCommand.mcType][1].lastPos,
+					dSpeed1);
+			printf("motion_ITTask ASSISTED_HANDLING  pwm0=%d pwm1=%d \n", pwm0, pwm1);
+			//write pwm in registers
+			setPWM(pwm0, pwm1);
+			break;
+		}
+		
+		case DISABLE_PID:
+		{
 			printf("motion_ITTask DISABLE_PID  \n");
 			break;
 		}
-		case FREE_MOTION: {
+		case FREE_MOTION:
+		{
 			//printf("motion_ITTask FREE_MOTION  \n");
 			//stop = 1;
 			break;
@@ -402,7 +450,8 @@ void *motion_ITTask(void *p_arg) {
 		long stopTime = currentTimeInMillis();
 		long duration = stopTime - startTime;
 		ia_notify();
-		if (duration < loopDelayInMillis && duration >= 0) {
+		if (duration < loopDelayInMillis && duration >= 0)
+		{
 			__useconds_t d = 1000 * (loopDelayInMillis - duration);
 			usleep(d);
 			//
@@ -421,21 +470,25 @@ void *motion_ITTask(void *p_arg) {
 //Motion control main loop
 //implemented as an IT handler armed on a timer to provide
 //a constant and precise period between computation
-void motion_InitTimer(int frequency) {
+void motion_InitTimer(int frequency)
+{
 	loopDelayInMillis = 1000 / frequency;
-	printf("motion.c : motion_InitTimer with pause of %ld us\n",
-			loopDelayInMillis);
+	printf("motion.c : motion_InitTimer with pause of %ld us\n", loopDelayInMillis);
 }
 
-void motion_StopTimer() {
+void motion_StopTimer()
+{
+	setPWM(0, 0);
 	setPWM(0, 0);
 }
 
-void initPWM() {
+void initPWM()
+{
 
 }
 
-void setPWM(int16 pwmLeft, int16 pwmRight) {
+void setPWM(int16 pwmLeft, int16 pwmRight)
+{
 #ifdef DEBUG_MOTION
 	printf("motion.c setPWM : left %d  right %d\n", pwmLeft, pwmRight);
 #endif
