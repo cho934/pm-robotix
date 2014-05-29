@@ -200,6 +200,7 @@ void ia_setEndAction(const char* name, RobotAction action, int seconds) {
 	endActionTimeout = currentTimeInMillis() + seconds * 1000;
 }
 
+//appeler dans la boucle de motion.
 void ia_notify() {
 	if (endActionTimeout > 0 && currentTimeInMillis() > endActionTimeout) {
 		printf("END ACTION :  (%f,%f) %f\n", cc_getX(), cc_getY(),

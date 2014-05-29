@@ -596,7 +596,10 @@ void robot_setLedStatus(int status) {
 	write(ui_file, led_command, 2);
 }
 void robot_initPID() {
-	motion_configureAlphaPID(0.0005f, 0.00001f, 0.000000f);
-	motion_configureDeltaPID(0.00080f, 0.0f, 0.0f);
+	//motion_configureAlphaPID(0.0005f, 0.00001f, 0.000000f); //chaff
+		//motion_configureDeltaPID(0.00080f, 0.0f, 0.0f);//chaff
+
+		motion_configureAlphaPID(0.0008f, 0.0001f, 0.000000f);
+		motion_configureDeltaPID(0.00030f, 0.0f, 0.0f);
 }
 #endif

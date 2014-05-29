@@ -23,8 +23,10 @@
 #include "path_manager.h"
 boolean ignoreCollision = FALSE;
 boolean collision = FALSE;
+int matchColor = 0; //0=default color of the match
 
-void launchAndWait(RobotCommand* cmd) {
+void launchAndWait(RobotCommand* cmd)
+{
 	checkRobotCommand(cmd);
 	path_LaunchTrajectory(cmd);
 
@@ -34,14 +36,20 @@ void launchAndWait(RobotCommand* cmd) {
 }
 
 // if distance <0, move backward
-void cc_move(float distanceInMM) {
+void cc_move(float distanceInMM)
+{
 	RobotCommand* cmd = (RobotCommand*) malloc(sizeof(RobotCommand));
 	float meters = distanceInMM / 1000.0f;
 	motion_Line(cmd, meters);
 	launchAndWait(cmd);
 }
 
-void cc_moveForwardTo(float xMM, float yMM) {
+void cc_moveForwardTo(float xMM, float yMM)
+{
+	if (matchColor != 0)
+	{
+		yMM = -yMM;
+	}
 	float dx = xMM - cc_getX();
 	float dy = yMM - cc_getY();
 	float aRadian = atan2(dy, dx);
@@ -49,11 +57,23 @@ void cc_moveForwardTo(float xMM, float yMM) {
 	float dist = sqrt(dx * dx + dy * dy);
 	cc_move(dist);
 }
-void cc_moveForwardAndRotateTo(float xMM, float yMM, float thetaInDegree) {
+void cc_moveForwardAndRotateTo(float xMM, float yMM, float thetaInDegree)
+{
+	if (matchColor != 0)
+	{
+		thetaInDegree = -thetaInDegree;
+	}
+
 	cc_moveForwardTo(xMM, yMM);
 	cc_rotateTo(thetaInDegree);
 }
-void cc_moveBackwardTo(float xMM, float yMM) {
+void cc_moveBackwardTo(float xMM, float yMM)
+{
+	if (matchColor != 0)
+	{
+		yMM = -yMM;
+	}
+
 	float dx = xMM - cc_getX();
 	float dy = yMM - cc_getY();
 	float aRadian = atan2(dy, dx);
@@ -61,72 +81,111 @@ void cc_moveBackwardTo(float xMM, float yMM) {
 	float dist = sqrt(dx * dx + dy * dy);
 	cc_move(-dist);
 }
-void cc_moveBackwardAndRotateTo(float xMM, float yMM, float thetaInDegree) {
+void cc_moveBackwardAndRotateTo(float xMM, float yMM, float thetaInDegree)
+{
+	if (matchColor != 0)
+	{
+		thetaInDegree = -thetaInDegree;
+	}
 	cc_moveBackwardTo(xMM, yMM);
 	cc_rotateTo(thetaInDegree);
 }
-void cc_rotateAbs(float degrees) {
+void cc_rotateAbs(float degrees)
+{
 	RobotCommand* cmd = (RobotCommand*) malloc(sizeof(RobotCommand));
 	float rad = (degrees * M_PI) / 180.0f;
 	motion_Rotate(cmd, rad);
 	launchAndWait(cmd);
 }
-void cc_rotateLeft(float degrees) {
+void cc_rotateLeft(float degrees)
+{
 	cc_rotateAbs(degrees);
 }
-void cc_rotateRight(float degrees) {
+void cc_rotateRight(float degrees)
+{
 	cc_rotateAbs(-degrees);
 }
 
-void cc_rotateTo(float thetaInDegree) {
+void cc_rotateTo(float thetaInDegree)
+{
+	int c=ignoreCollision;
+	ignoreCollision = TRUE;
+	
 	float currentThetaInDegree = cc_getThetaInDegree();
+	
 	float delta = thetaInDegree - currentThetaInDegree;
 
 	float turn = ((int) (delta * 1000.0f) % 360000) / 1000.0f;
 
 	cc_rotateLeft(turn);
+	
+	ignoreCollision=c;
 }
 
 // position x,x in mm
-float cc_getX() {
+float cc_getX()
+{
 	RobotPosition p = odo_GetPosition();
 	return p.x * 1000.0f;
 }
-float cc_getY() {
+float cc_getY()
+{
 	RobotPosition p = odo_GetPosition();
 	return p.y * 1000.0f;
 }
 // angle in radian
-float cc_getTheta() {
+float cc_getTheta()
+{
 	RobotPosition p = odo_GetPosition();
 	return p.theta;
 }
-// angle in radian
-float cc_getThetaInDegree() {
+// angle in degrees
+float cc_getThetaInDegree()
+{
 	RobotPosition p = odo_GetPosition();
 	return (p.theta * 180.0f) / M_PI;
 }
 
-void cc_setIgnoreCollision(boolean b) {
+void cc_setIgnoreCollision(boolean b)
+{
 	ignoreCollision = b;
 }
 
-boolean cc_collisionOccured() {
+boolean cc_collisionOccured()
+{
+//TODO cch
+//if(!ignoreCollision)
+//		path_CollisionOnTrajectory();
 	return collision;
 }
-void cc_setCollisionOccured(boolean b) {
+
+void cc_setMatchColor(int color)
+{
+	matchColor = color;
+}
+int cc_getMatchColor()
+{
+	return matchColor;
+}
+
+void cc_setCollisionOccured(boolean b)
+{
 	collision = b;
 }
-void cc_setMirrorCoordinates(boolean b) {
-
+void cc_setMirrorCoordinates(boolean b)
+{
+//TODO a supprimer
 }
-void cc_goToZone(const char *zoneName) {
+void cc_goToZone(const char *zoneName)
+{
 	ZONE* z = ia_getZone(zoneName);
 	printf("%s (line %d) : goToZone %s\n", __FUNCTION__, __LINE__, zoneName);
-	if (z == NULL) {
-		printf("%s %d : unable to get zone %s\n", __FUNCTION__, __LINE__,
-				zoneName);
-	} else {
+	if (z == NULL)
+	{
+		printf("%s %d : unable to get zone %s\n", __FUNCTION__, __LINE__, zoneName);
+	}
+	else
+	{
 		ZONE *zCurrent = ia_getNearestZoneFrom(cc_getX(), cc_getY());
 
 		ZONE_PATH *path = ia_getZonePath(zCurrent, z);
