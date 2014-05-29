@@ -42,10 +42,16 @@ void robottest::MoveTest::run(int argc, char *argv[])
 
 	pmx::Robot &robot = pmx::Robot::instance();
 	sleep(1);
-	robot.start(0);
+	cc_setMatchColor(1); //red
+	int asserv=1;
+	robot.start(0, asserv);
 
+
+	cc_setPosition(0, 0, 0.0, cc_getMatchColor());
 	robot.base().printPosition();
-	utils::SvgWriter::writePosition(cc_getX(), cc_getY(), cc_getTheta(), utils::SVG_POS_ROBOT);
+	//	utils::SvgWriter::writePosition(cc_getX(), cc_getY(), cc_getTheta(), utils::SVG_POS_ROBOT);
+
+	cc_rotateTo(-20);
 
 	/*
 	 long ileft = robot_getLeftInternalCounter();
@@ -77,12 +83,12 @@ void robottest::MoveTest::run(int argc, char *argv[])
 	 //motion_SpeedControlLRDecel(cmd, 2.0, 0.9, 2.0, 0.1,  2.0, 0.9, 2.0, 0.1);
 	 robot.base().launchAndEndAfterCmd(cmd);
 	 */
-/*
-	RobotCommand* cmd = (RobotCommand*) malloc(sizeof(RobotCommand));
-	motion_ArcRotate(cmd, -M_PI / 2.0, -0.200);
-	robot.base().launchAndEndAfterCmd(cmd);
-*/
-	robot.base().ArcRotate(-90, -550);
+	/*
+	 RobotCommand* cmd = (RobotCommand*) malloc(sizeof(RobotCommand));
+	 motion_ArcRotate(cmd, -M_PI / 2.0, -0.200);
+	 robot.base().launchAndEndAfterCmd(cmd);
+	 */
+	//robot.base().ArcRotate(-90, -550);
 
 	//Ecriture dans le SVG
 	utils::SvgWriter::writePosition(cc_getX(), cc_getY(), cc_getTheta(), utils::SVG_POS_ROBOT);

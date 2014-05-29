@@ -100,6 +100,8 @@ public:
 
 	void dxlSetAxLedOff(int id);
 
+	void dxlSetEnableTorque(int id, int tor);
+
 	void logBf(utils::byte *buffer, int n);
 };
 }

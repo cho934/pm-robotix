@@ -11,6 +11,7 @@
 
 #include "../../common/c/encoder.h"
 #include "../../common/c/robot.h"
+#include "../../common/c/ccbase.h"
 #include "../../common/cpp/Base.hpp"
 #include "../../common/cpp/Logger.hpp"
 #include "../../common/cpp/Robot.hpp"
@@ -104,7 +105,9 @@ void robottest::MoveXYTest::run(int argc, char *argv[])
 	pmx::Robot &robot = pmx::Robot::instance();
 
 	robot.base().setMatchColor(color);
-	robot.start(1);
+	int asserv=1;
+	robot.start(0, asserv);
+	cc_setPosition(0, 0, 0.0, cc_getMatchColor());
 
 	robot.base().printPosition();
 

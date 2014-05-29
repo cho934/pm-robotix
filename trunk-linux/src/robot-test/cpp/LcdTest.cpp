@@ -12,7 +12,8 @@ void robottest::LcdTest::run(int, char *[])
 	logger().info() << "LcdTest - " << utils::end;
 
 	pmx::Robot &robot = pmx::Robot::instance();
-	//robot.start(0);
+	robot.start(0,0);
+
 
 	robot.lcdBoard().setBacklight(LCD_RED);
 
@@ -22,9 +23,10 @@ void robottest::LcdTest::run(int, char *[])
 	usleep(1000000);
 
 	robot.lcdBoard().print("GO");
-
-	while (1)
+	int nb = 0;
+	while (nb < 1000)
 	{
+		nb++;
 		uint8_t buttons = robot.lcdBoard().readButtons();
 		if (buttons)
 		{

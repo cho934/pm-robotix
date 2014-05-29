@@ -78,7 +78,8 @@ void robottest::MoveLineVAccTest::run(int argc, char *argv[])
 
 	pmx::Robot &robot = pmx::Robot::instance();
 	//sleep(1);
-	robot.start(useExtEnc);
+	int asserv=1;
+	robot.start(useExtEnc, asserv);
 
 	robot.base().printPosition();
 

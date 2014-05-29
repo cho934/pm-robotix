@@ -12,7 +12,7 @@ void robottest::LedBarTest::run(int, char *[])
 	logger().info() << "LedBarTest - Blink Led board by ActionManager" << utils::end;
 
 	pmx::Robot &robot = pmx::Robot::instance();
-	robot.start(0);
+	robot.start(0,0);
 
 	logger().info() << " ledBar().reset()" << utils::end;
 	robot.ledBar().startReset();

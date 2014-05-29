@@ -36,7 +36,7 @@ pmx::StateAdjustRobotPosition::execute(Robot& robot, void *data)
 
 	logger().debug() << "Adjust position in the correct board..." << utils::end;
 
-	logger().debug() << "Color=" << robot.myColor() << utils::end;
+	logger().debug() << "Color=" << robot.myColor() << " cc_getMatchColor()=" << cc_getMatchColor() << utils::end;
 
 	/*
 	 robot.position().x(130);
@@ -44,7 +44,7 @@ pmx::StateAdjustRobotPosition::execute(Robot& robot, void *data)
 	 robot.position().angle(0, robot.myColor());*/
 
 
-	cc_setPosition(130, 470, 0.0,robot.myColor());
+	cc_setPosition(130, 470, 0.0, cc_getMatchColor());
 	/*
 	 logger().debug() << "Position x=" << robot.position().x() << " y=" << robot.position().y() << " a="
 	 << robot.position().angle() << utils::end;
@@ -75,6 +75,7 @@ pmx::StateAdjustRobotPosition::execute(Robot& robot, void *data)
 					robot.lcdBoard().print("NEXT ");
 					//robot.lcdBoard().setBacklight(LCD_OFF);
 				}
+
 			}
 		}
 

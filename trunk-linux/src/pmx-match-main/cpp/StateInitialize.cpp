@@ -29,10 +29,6 @@ pmx::StateInitialize::execute(Robot& robot, void *data)
 		robot.lcdBoard().print("PMX...Initialize !");
 	}
 
-	//actions d'initialisation
-	logger().debug() << "Initialize mechanical..." << utils::end;
-	//TODO Initialize mechanical
-	logger().debug() << "End Initialize mechanical." << utils::end;
 	//skip setup
 	if (!sharedData->skipSetup())
 	{
@@ -74,6 +70,56 @@ pmx::StateInitialize::execute(Robot& robot, void *data)
 					//robot.lcdBoard().print("NEXT ");
 					//robot.lcdBoard().setBacklight(LCD_OFF);
 				}
+				if (buttons & BUTTON_DOWN)
+				{
+					logger().info() << "Initialize mechanical..." << utils::end;
+					robot.servoDxlLeft().enable();
+					robot.servoDxlLeft().turnMin();
+					robot.servoDxlLeft().turnMax();
+					robot.servoDxlLeft().turnMin();
+					robot.servoDxlLeft().freeMotion();
+
+					robot.servoDxlRight().enable();
+					robot.servoDxlRight().turnMin();
+					robot.servoDxlRight().turnMax();
+					robot.servoDxlRight().turnMin();
+					robot.servoDxlRight().freeMotion();
+
+					robot.servoDxlBallLaunch().enable();
+					robot.servoDxlBallLaunch().turnMin();
+					robot.servoDxlBallLaunch().turnMax();
+					robot.servoDxlBallLaunch().turnMin();
+					robot.servoDxlBallLaunch().freeMotion();
+
+					robot.servoDxlFiletLaunch().enable();
+					robot.servoDxlFiletLaunch().turnMin();
+					robot.servoDxlFiletLaunch().turnMax();
+					robot.servoDxlFiletLaunch().turnMin();
+					robot.servoDxlFiletLaunch().freeMotion();
+
+					logger().info() << "End Initialize mechanical." << utils::end;
+				}
+				if (buttons & BUTTON_UP)
+				{
+					logger().info() << "Initialize mechanical..." << utils::end;
+					robot.servoDxlLeft().enable();
+					robot.servoDxlLeft().turnMin();
+					robot.servoDxlLeft().freeMotion();
+
+					robot.servoDxlRight().enable();
+					robot.servoDxlRight().turnMin();
+					robot.servoDxlRight().freeMotion();
+
+					robot.servoDxlBallLaunch().enable();
+					robot.servoDxlBallLaunch().turnMin();
+					robot.servoDxlBallLaunch().freeMotion();
+
+					robot.servoDxlFiletLaunch().enable();
+					robot.servoDxlFiletLaunch().turnMin();
+					robot.servoDxlFiletLaunch().freeMotion();
+
+					logger().info() << "End Initialize mechanical." << utils::end;
+				}
 			}
 		}
 
@@ -82,17 +128,15 @@ pmx::StateInitialize::execute(Robot& robot, void *data)
 		logger().debug() << "End Initialize color." << utils::end;
 	}
 
-	if(robot.myColor() == pmx::PMXRED)
-			logger().info() << "color: RED" << utils::end;
-	if(robot.myColor() == pmx::PMXYELLOW)
-			logger().info() << "color: YELLOW" << utils::end;
-	if(robot.myColor() == pmx::PMXNOCOLOR)
+	if (robot.myColor() == pmx::PMXRED)
+		logger().info() << "color: RED" << utils::end;
+	if (robot.myColor() == pmx::PMXYELLOW)
+		logger().info() << "color: YELLOW" << utils::end;
+	if (robot.myColor() == pmx::PMXNOCOLOR)
 	{
-			logger().error() << "color: NOCOLOR" << utils::end;
-			exit(0);
+		logger().error() << "color: NOCOLOR" << utils::end;
+		exit(0);
 	}
-
-
 
 	return this->getState("next");
 }

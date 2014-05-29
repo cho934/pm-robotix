@@ -74,7 +74,7 @@ public:
 	/*!
 	 * \brief Constructeur de la classe.
 	 */
-	ServoMotorDxlObject(pmx::Robot & robot);
+	ServoMotorDxlObject(pmx::Robot & robot, int id, int min, int max);
 
 	/*!
 	 * \brief Destructeur de la classe.
@@ -136,6 +136,10 @@ public:
 	void turnMin();
 
 	void turnMax();
+
+	void freeMotion();
+
+	void enable();
 
 	void displayInfos();
 

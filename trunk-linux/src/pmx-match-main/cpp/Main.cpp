@@ -74,13 +74,13 @@ int main(int argc, char** argv)
 	{
 		//data->useExternalEncoder(atoi(argv[2])); //TODO Ne sert plus
 		std::cout << "USE internal encoder : " << atoi(argv[2]) << std::endl;
-		robot.start(0); //start Manager and asserv
+		robot.start(0, 1); //start Manager and asserv
 	}
 	else
 	{
 		//data->useExternalEncoder(1);
 		std::cout << "USE EXTERNAL ENCODER " << std::endl;
-		robot.start(1); //start Manager and asserv
+		robot.start(1, 1); //start Manager and asserv
 	}
 
 	if (argc > 3)
@@ -143,10 +143,10 @@ int main(int argc, char** argv)
 	// Start the automate and wait for its return
 	Automate *automate = new Automate();
 	automate->run(robot, waitForReboot, data);
-	logger.debug() << "end automate;" << utils::end;
+	logger.info() << "end automate;" << utils::end;
 	robot.lcdBoard().setBacklight(LCD_OFF);
 
-	logger.debug() << "robot.stop();" << utils::end;
+	logger.info() << "robot.stop();" << utils::end;
 	robot.stop();
 	//logger.info() << "Position :" << robot.position().x() << " " << robot.position().y() << " " << (robot.position().angle()*180) / M_PI << utils::end;
 	logger.info() << "PMX - Happy End" << utils::end;

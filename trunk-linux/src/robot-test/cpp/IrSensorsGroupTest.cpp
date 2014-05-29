@@ -56,8 +56,8 @@ void robottest::IrSensorsGroupTest::run(int argc, char *argv[])
 	logger().info() << "IrSensorsGroupTest - Detection by IR" << utils::end;
 
 	pmx::Robot &robot = pmx::Robot::instance();
-
-	robot.start(0);
+	int asserv=0;
+	robot.start(0, asserv);
 	robot.chronometerRobot().start(); //Chronometre général (match) du robot
 
 	logger().info() << "Start IrSensor Listener" << utils::end;

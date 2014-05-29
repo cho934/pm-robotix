@@ -406,3 +406,8 @@ void pmx::ServoMotorDxl::dxlSetAxLedOff(int id)
 	setCommand(id, AX_LED, 0, 1);
 }
 
+void pmx::ServoMotorDxl::dxlSetEnableTorque(int id, int tor)
+{
+	setCommand(id, AX_TORQUE_ENABLE, tor, 1);
+}
+
