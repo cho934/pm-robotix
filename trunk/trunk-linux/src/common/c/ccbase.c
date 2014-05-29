@@ -51,54 +51,96 @@ void cc_move(float distanceInMM)
 
 void cc_moveForwardTo(float xMM, float yMM)
 {
-	if (matchColor != 0)
+	if (cc_getMatchColor() != 0)
 	{
-		yMM = -yMM;
+		//yMM = -yMM;
+		xMM = 3000 - xMM;
 	}
 
 	float dx = xMM - cc_getX();
 	float dy = yMM - cc_getY();
 	float aRadian = atan2(dy, dx);
-	cc_rotateTo((aRadian * 180.0f) / M_PI);
+	if (cc_getMatchColor() != 0)
+	{
+		cc_rotateTo(180 - (aRadian * 180.0f) / M_PI);
+	}
+	else
+	{
+		cc_rotateTo((aRadian * 180.0f) / M_PI);
+	}
+
 	float dist = sqrt(dx * dx + dy * dy);
 	//printf("xMM=%f yMM=%f dx=%f dy=%f dist=%f\n", xMM, yMM,dx,dy,dist);
 	cc_move(dist);
 }
 void cc_moveForwardAndRotateTo(float xMM, float yMM, float thetaInDegree)
 {
-	if (matchColor != 0)
-	{
-		thetaInDegree = -thetaInDegree;
-	}
+	/*if (matchColor != 0)
+	 {
+	 thetaInDegree = (- thetaInDegree);
+	 }*/
 
 	cc_moveForwardTo(xMM, yMM);
+	//printf("thetaInDegree = %f\n", thetaInDegree);
 	cc_rotateTo(thetaInDegree);
 }
 void cc_moveBackwardTo(float xMM, float yMM)
 {
-	if (matchColor != 0)
+	if (cc_getMatchColor() != 0)
 	{
-		yMM = -yMM;
+		//yMM = -yMM;
+		xMM = 3000 - xMM;
 	}
 
 	float dx = xMM - cc_getX();
 	float dy = yMM - cc_getY(); //-500 -x = -900
 	float aRadian = atan2(dy, dx);
-	cc_rotateTo(((M_PI + aRadian) * 180.0f) / M_PI); //TODO angle au plus court ?
+	if (cc_getMatchColor() != 0)
+	{
+		cc_rotateTo(180 - ((M_PI + aRadian) * 180.0f) / M_PI); //TODO angle au plus court ?
+	}
+	else
+	{
+		cc_rotateTo(((M_PI + aRadian) * 180.0f) / M_PI); //TODO angle au plus court ?
+	}
+
 	float dist = sqrt(dx * dx + dy * dy);
 	cc_move(-dist);
 }
 void cc_moveBackwardAndRotateTo(float xMM, float yMM, float thetaInDegree)
 {
-	if (matchColor != 0)
-	{
-		thetaInDegree = -thetaInDegree;
-	}
+	/*
+	 if (matchColor != 0)
+	 {
+	 thetaInDegree = (- thetaInDegree);
+	 }*/
 	cc_moveBackwardTo(xMM, yMM);
 	cc_rotateTo(thetaInDegree);
 }
 void cc_rotateAbs(float degrees)
 {
+	if (cc_getMatchColor() != 0)
+	{
+		degrees = -degrees;
+	}
+	//reduction de 0 à 360
+	if (degrees > 360)
+	{
+		degrees = ( (int)(degrees * 1000.0f) % 360000) / 1000.0f;
+	}
+	if (degrees < -360)
+	{
+		int d =(int) -(degrees * 1000.0f);
+		d = d % 360000;
+		degrees = -d / 1000.0f;
+	}
+
+	// OPTIMISER la rotation -PI < a < PI
+	if (degrees >= 180)
+		degrees -= 360;
+	if (degrees < -180)
+		degrees += 360;
+
 	RobotCommand* cmd = (RobotCommand*) malloc(sizeof(RobotCommand));
 	float rad = (degrees * M_PI) / 180.0f;
 	motion_Rotate(cmd, rad);
@@ -118,6 +160,11 @@ void cc_rotateTo(float thetaInDegree)
 	int c = ignoreCollision;
 	ignoreCollision = TRUE;
 
+	if (cc_getMatchColor() != 0)
+	{
+		thetaInDegree = 180.0 - thetaInDegree;
+	}
+
 	float currentThetaInDegree = cc_getThetaInDegree();
 	//printf("ccbase.c cc_rotateTo %f deg   current=%f \n", thetaInDegree, currentThetaInDegree);
 	float delta = thetaInDegree - currentThetaInDegree;
@@ -125,7 +172,10 @@ void cc_rotateTo(float thetaInDegree)
 	float turn = ((int) (delta * 1000.0f) % 360000) / 1000.0f;
 
 	//printf("ccbase.c cc_rotateAbs %f deg   delta=%f deg\n ", turn, delta);
-
+	if (cc_getMatchColor() != 0)
+	{
+		turn = -turn;
+	}
 	cc_rotateAbs(turn); //cho use Abs not left!!
 
 	ignoreCollision = c;
@@ -134,7 +184,9 @@ void cc_setPosition(float xMM, float yMM, float thetaDegrees, int matchColor)
 {
 	if (matchColor != 0)
 	{
-		yMM = -yMM;
+		//yMM = -yMM;
+		xMM = 3000 - xMM;
+		thetaDegrees = 180.0 - thetaDegrees;
 	}
 
 	odo_SetPosition(xMM / 1000.0, yMM / 1000.0, thetaDegrees * M_PI / 180.0);
@@ -191,7 +243,7 @@ void cc_setMirrorCoordinates(boolean)
 void cc_goToZone(const char *zoneName)
 {
 	ZONE* z = ia_getZone(zoneName);
-	printf("%s (line %d) : goToZone %s\n", __FUNCTION__, __LINE__, zoneName);
+	//printf("%s (line %d) : goToZone %s\n", __FUNCTION__, __LINE__, zoneName);
 	if (z == NULL)
 	{
 		printf("%s %d : unable to get zone %s\n", __FUNCTION__, __LINE__, zoneName);
@@ -200,8 +252,19 @@ void cc_goToZone(const char *zoneName)
 	{
 		ZONE *zCurrent = ia_getNearestZoneFrom(cc_getX(), cc_getY());
 		ZONE_PATH *path = ia_getZonePath(zCurrent, z);
-		cc_moveForwardTo(path->x, path->y);
-		// Move to destination
-		cc_moveForwardAndRotateTo(z->startX, z->startY, z->startAngle);
+		printf("%s (line %d) : goToZone FROM %s TO %s using path (%f,%f)\n", __FUNCTION__,__LINE__, zCurrent->name, z->name, path->x, path->y);
+
+		if (cc_getMatchColor() != 0)
+		{
+			cc_moveForwardTo(3000 - path->x, path->y);
+			// Move to destinatio
+			cc_moveForwardAndRotateTo(3000 - z->startX, z->startY, 180-z->startAngle);
+		}
+		else
+		{
+			cc_moveForwardTo(path->x, path->y);
+			// Move to destination
+			cc_moveForwardAndRotateTo(z->startX, z->startY, z->startAngle);
+		}
 	}
 }

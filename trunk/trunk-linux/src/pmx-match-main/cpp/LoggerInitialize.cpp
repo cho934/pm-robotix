@@ -20,7 +20,10 @@ utils::LoggerFactory::initialize() {
     add(utils::Level::DEBUG, "main", "console");
     add(utils::Level::INFO, "pmx::StateWaitForReboot", "console");
     add(utils::Level::INFO, "pmx::StateInitialize", "console");
-    add(utils::Level::INFO, "pmx::StateAdjustRobotPosition", "console");
+    add(utils::Level::DEBUG, "pmx::StateAdjustRobotPosition", "console");
     add(utils::Level::INFO, "pmx::StateWaitForStart", "console");
     add(utils::Level::DEBUG, "pmx::StateIADecisionMaker", "console");
+    add(utils::Level::DEBUG, "pmx::Wait90SecondsAction", "console");
+
+
 }

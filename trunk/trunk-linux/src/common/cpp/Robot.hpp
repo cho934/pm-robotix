@@ -124,6 +124,12 @@ private:
 	 */
 	pmx::ServoMotorDxlObject servoDxlTest_;
 
+	pmx::ServoMotorDxlObject servoDxlLeft_;
+
+	pmx::ServoMotorDxlObject servoDxlRight_;
+	pmx::ServoMotorDxlObject servoDxlBallLaunch_;
+	pmx::ServoMotorDxlObject servoDxlFiletLaunch_;
+
 	/*!
 	 * \brief Groupe de détecteur IR.
 	 */
@@ -271,6 +277,23 @@ public:
 		return servoDxlTest_;
 	}
 
+	inline pmx::ServoMotorDxlObject & servoDxlLeft()
+	{
+		return servoDxlLeft_;
+	}
+	inline pmx::ServoMotorDxlObject & servoDxlRight()
+	{
+		return servoDxlRight_;
+	}
+	inline pmx::ServoMotorDxlObject & servoDxlBallLaunch()
+	{
+		return servoDxlBallLaunch_;
+	}
+	inline pmx::ServoMotorDxlObject & servoDxlFiletLaunch()
+	{
+		return servoDxlFiletLaunch_;
+	}
+
 	/*!
 	 * \brief Cette methode retourne le groupe de détecteur IR.
 	 * \return irSensorsGroup_.
@@ -359,7 +382,7 @@ public:
 	 * Cette méthode lance les différents threads associés et initialise
 	 * le système.
 	 */
-	void start(int useExtEncoders);
+	void start(int useExtEncoders, int startAsserv);
 
 	/*!
 	 * \brief Arrete le robot et libère les ressources associés.

@@ -43,6 +43,8 @@ void robottest::ServoMotorDxlTest::run(int argc, char *argv[])
 
 	pmx::Robot &robot = pmx::Robot::instance();
 
+	robot.servoDxlTest().enable();
+
 	for (int i = 0; i < nb; i++)
 	{
 		//logger().info() << "displayInfos" << utils::end;
@@ -60,6 +62,7 @@ void robottest::ServoMotorDxlTest::run(int argc, char *argv[])
 		usleep(timeSpan * 1000);
 
 	}
+	robot.servoDxlTest().freeMotion();
 
 	robot.stop();
 

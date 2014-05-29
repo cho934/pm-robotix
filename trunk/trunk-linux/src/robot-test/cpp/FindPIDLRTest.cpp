@@ -139,7 +139,8 @@ void robottest::FindPIDLRTest::run(int argc, char *argv[])
 
 	pmx::Robot &robot = pmx::Robot::instance();
 	//sleep(1);
-	robot.start(useExtEnc);
+	int asserv=1;
+	robot.start(useExtEnc, asserv);
 
 
 	robot.base().setupPID_LR(Ap, Ai, Ad, Dp, Di, Dd);

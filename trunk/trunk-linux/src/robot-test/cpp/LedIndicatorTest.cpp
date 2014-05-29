@@ -17,6 +17,7 @@ void robottest::LedIndicatorTest::run(int, char *[])
 
 	pmx::Robot &robot = pmx::Robot::instance();
 
+
 	pmx::LedIndicator::instance().reset();
 
 	pmx::LedIndicator::instance().blink(20, 200000);

@@ -29,6 +29,7 @@ void utils::LoggerFactory::initialize()
 	add(utils::Level::INFO, "robottest::ExtEncoderTest", "console");
 	add(utils::Level::INFO, "robottest::IrSensorsGroupTest", "console");
 	add(utils::Level::INFO, "robottest::ServoMotorDxlTest", "console");
+	add(utils::Level::INFO, "robottest::ServoMotorDxlLearnTest", "console");
 	add(utils::Level::INFO, "robottest::Md25Test", "console");
 	add(utils::Level::INFO, "robottest::Md25EncoderTest", "console");
 	add(utils::Level::INFO, "robottest::ArduinoTest", "console");
@@ -42,7 +43,7 @@ void utils::LoggerFactory::initialize()
 	//add(utils::Level::INFO, "pmx::ServoMotorDxlObject", "console");
 	//add(utils::Level::DEBUG, "pmx::ServoMotorDxlObj", "console");
 
-	add(utils::Level::DEBUG, "pmx::Robot", "console");
+	//add(utils::Level::DEBUG, "pmx::Robot", "console");
 	//add(utils::Level::DEBUG, "pmx::Base", "console");
 	//add(utils::Level::DEBUG, "motion.c", "memory");
 

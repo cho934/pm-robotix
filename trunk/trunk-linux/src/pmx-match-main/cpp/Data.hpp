@@ -21,6 +21,8 @@ private:
 
 	int skipSetup_;
 
+	bool end90s_;
+
 public:
 
 	/*!
@@ -31,6 +33,7 @@ public:
 		empty_ = 0;
 		useExternalEncoder_ = 0;
 		skipSetup_ = 0;
+		end90s_ = 0;
 	}
 
 	/*!
@@ -38,6 +41,15 @@ public:
 	 */
 	virtual ~Data()
 	{
+	}
+
+	bool end90s() const
+	{
+		return this->end90s_;
+	}
+	void end90s(bool end)
+	{
+		this->end90s_ = end;
 	}
 
 	bool isEmpty() const

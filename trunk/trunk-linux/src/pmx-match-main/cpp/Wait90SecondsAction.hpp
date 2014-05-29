@@ -7,10 +7,13 @@
 #define	PMX_WAIT90SECONDSACTION_HPP
 
 //#include <cstdlib>
+
 #include <string>
 
+#include "../../common/cpp/AAutomateState.hpp"
 #include "../../common/cpp/LoggerFactory.hpp"
 #include "../../common/cpp/Thread.hpp"
+
 //#include "IAction.hpp"
 //#include "Robot.hpp"
 
@@ -24,7 +27,7 @@ namespace pmx
     /*!
      * \brief Cette action lance le chronometer du robot.
      */
-    class Wait90SecondsAction : public utils::Thread
+    class Wait90SecondsAction : public utils::Thread// , public AAutomateState
     {
     private:
         
@@ -39,12 +42,14 @@ namespace pmx
          */
         Robot * robot_;
         
+        void * data_;
+
     public:
         
         /*!
          * \brief Constructeur de la classe.
          */
-        Wait90SecondsAction(Robot* robot);
+        Wait90SecondsAction(Robot* robot,  void *data);
 
         virtual std::string name()
         {

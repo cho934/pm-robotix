@@ -83,6 +83,7 @@ pmx::Adafruit_RGBLCDShield::Adafruit_RGBLCDShield()
 
 void pmx::Adafruit_RGBLCDShield::begin(uint8_t, uint8_t lines, uint8_t dotsize) //cols, lines, dotsize
 {
+
 	try
 	{
 		_i2c.begin();

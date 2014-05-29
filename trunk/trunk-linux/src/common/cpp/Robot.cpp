@@ -15,8 +15,15 @@ pmx::Robot::Robot()
 		: base_(*this), myColor_(pmx::PMXNOCOLOR), runMode_(pmx::ROBOTHOMOLOGATION), groveColorSensor_(*this), ledBar_(
 				*this), md25_(*this), encoderLeft_(*this, 'B', 17), encoderRight_(*this, 'D', 31),
 		//servoTest_(*this, 0),
-		servoDxlTest_(*this), irSensorsGroup_(*this), arduinoBoardDuemilanove_(*this, 0x2A), arduinoBoardMega_(*this,
-				0x2B), arduinoBoardSeeed_(*this, 0x2C), gpioBoard_(*this), lcdBoard_()
+		servoDxlTest_(*this, 1, 475, 841),
+		servoDxlLeft_(*this, 3, 512, 175),
+		servoDxlRight_(*this, 5, 475, 841),
+		servoDxlBallLaunch_(*this, 8, 378, 592),
+		servoDxlFiletLaunch_(*this, 7, 544, 843),
+		irSensorsGroup_(*this),
+		arduinoBoardDuemilanove_(*this, 0x2A), arduinoBoardMega_(*this, 0x2B), arduinoBoardSeeed_(*this, 0x2C),
+		gpioBoard_(*this),
+		lcdBoard_()
 {
 
 	//initialize i2C components
@@ -27,7 +34,11 @@ pmx::Robot::Robot()
 	gpioBoard_.begin();
 	lcdBoard_.begin(16, 2);
 	md25_.begin();
-	servoDxlTest_.begin();
+	//servoDxlTest_.begin();
+	servoDxlLeft_.begin();
+	servoDxlRight_.begin();
+	servoDxlBallLaunch_.begin();
+	servoDxlFiletLaunch_.begin();
 
 	//Led indicator begin initialisation
 	pmx::LedIndicator::instance().reset();
@@ -51,7 +62,7 @@ void pmx::Robot::configure(const std::string & configurationFile)
 	this->initialize("robot", configuration);
 }
 
-void pmx::Robot::start(int useExtEncoders)
+void pmx::Robot::start(int useExtEncoders, int startAsserv)
 {
 	//start action manager
 	actionManager_.start("ActionManager");
@@ -74,7 +85,7 @@ void pmx::Robot::start(int useExtEncoders)
 		rRes = 1136;
 		distRes = 0.300f;
 	}
-	base().begin(lRes, rRes, distRes, 1, useExtEncoders);
+	base().begin(lRes, rRes, distRes, startAsserv, useExtEncoders);
 
 	logger().info("Robot is started");
 
@@ -90,6 +101,7 @@ void pmx::Robot::stop()
 	this->stopManagers();
 
 	logger().debug() << "after stopManagers" << utils::end;
+	usleep(200000);
 }
 
 void pmx::Robot::stopDevices()

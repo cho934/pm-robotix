@@ -1,3 +1,4 @@
+
 /*
  * ccbase.h
  *
@@ -9,6 +10,7 @@
 #define CCBASE_H_
 
 #include "global.h"
+
 // if distance <0, move backward
 void cc_move(float distanceInMM);
 

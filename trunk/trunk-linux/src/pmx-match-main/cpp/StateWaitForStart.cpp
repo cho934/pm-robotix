@@ -48,7 +48,7 @@ pmx::StateWaitForStart::execute(Robot& robot, void *data)
 		{
 			in7 = robot.gpioBoard().getValueP1(7);
 			buttons = robot.lcdBoard().readButtons();
-			logger().info() << "in7=" << in7 << utils::end;
+			//logger().info() << "in7=" << in7 << utils::end;
 			if (buttons)
 			{
 				robot.ledBar().startReset();
@@ -69,14 +69,12 @@ pmx::StateWaitForStart::execute(Robot& robot, void *data)
 		robot.lcdBoard().setBacklight(LCD_OFF);
 	}
 
-
-
 	logger().info() << "Start Chronometer" << utils::end;
 	//démarrage du chrono
 	robot.chronometerRobot().start();
 
 	//lancement de l'etape Wait90Seconds
-	pmx::Wait90SecondsAction* action = new pmx::Wait90SecondsAction(&robot);
+	pmx::Wait90SecondsAction* action = new pmx::Wait90SecondsAction(&robot, (void *)sharedData);
 	action->start("Wait90SecondsAction");
 
 	result = this->getState("decisionMaker"); //IA
