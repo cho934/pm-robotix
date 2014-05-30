@@ -25,5 +25,9 @@ utils::LoggerFactory::initialize() {
     add(utils::Level::DEBUG, "pmx::StateIADecisionMaker", "console");
     add(utils::Level::DEBUG, "pmx::Wait90SecondsAction", "console");
 
+    add(utils::Level::INFO, "pmx::IrSensorsGroup", "console");
+
+    add(utils::Level::DEBUG, "pmx::Robot", "console");
+
 
 }

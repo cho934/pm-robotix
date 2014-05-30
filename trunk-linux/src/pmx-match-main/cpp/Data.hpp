@@ -6,6 +6,8 @@
 #ifndef PMX_DATA_HPP
 #define PMX_DATA_HPP
 
+#include "StateIADecisionMaker.hpp"
+
 namespace pmx
 {
 /*!
@@ -23,13 +25,17 @@ private:
 
 	bool end90s_;
 
+
 public:
+
+	pmx::StateIADecisionMaker* decisionMaker;
 
 	/*!
 	 * \brief Constructeur de la classe.
 	 */
 	Data()
 	{
+		decisionMaker = new pmx::StateIADecisionMaker();
 		empty_ = 0;
 		useExternalEncoder_ = 0;
 		skipSetup_ = 0;

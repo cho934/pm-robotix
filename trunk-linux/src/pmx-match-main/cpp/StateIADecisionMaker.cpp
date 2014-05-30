@@ -5,102 +5,145 @@
 
 #include "StateIADecisionMaker.hpp"
 
-//#include <math.h>
 #include <unistd.h>
+#include <cstdio>
 
 #include "../../common/c/ccbase.h"
 #include "../../common/c/ia.h"
+#include "../../common/c/motion.h"
+#include "../../common/c/path_manager.h"
 #include "../../common/cpp/Base.hpp"
+#include "../../common/cpp/Chronometer.hpp"
+#include "../../common/cpp/IrSensorsGroup.hpp"
 #include "../../common/cpp/Logger.hpp"
 #include "../../common/cpp/Robot.hpp"
 #include "../../common/cpp/ServoMotorDxlObject.hpp"
 #include "Data.hpp"
 
 pmx::IAutomateState*
-pmx::StateIADecisionMaker::execute(Robot&robot, void *data)
-{
+pmx::StateIADecisionMaker::execute(Robot&robot, void *data) {
 	//IAutomateState* result;
 
 	pmx::Data* sharedData = (pmx::Data*) data;
 
+	//detection adversaire
+	robot.irSensorsGroup().startTimer();
+
 	//launch IA
 	ia_start();
 
+	robot.irSensorsGroup().stopTimer();
+
+	setPWM(0, 0);
 	//wait the execution Wait90
-	while (!sharedData->end90s() )//&& robot.chronometerRobot().getElapsedTimeInSec() < 35)
+	while (!sharedData->end90s()) //&& robot.chronometerRobot().getElapsedTimeInSec() < 35)
 	{
 		printf("sharedData->end90s=%d time=%f\n", sharedData->end90s(), robot.chronometerRobot().getElapsedTimeInSec());
 		usleep(300000);
 	}
 
+	setPWM(0, 0);
+	setPWM(0, 0);
+
 	return NULL;
 }
+int ii = 0;
+int pousserT2() {
 
-int pousserT2()
-{
 	pmx::Robot &robot = pmx::Robot::instance();
 	pmx::StateIADecisionMaker::logger().debug() << "==>pousserT2" << utils::end;
 
-	robot.base().printPosition();
-	if (cc_getMatchColor() == 0)
-		robot.base().ArcRotate(90, 270); //TODO Modif du sens pour la couleur
-	else
-		robot.base().ArcRotate(-90, -270);
+	if (ii <= 0) {
+		cc_setIgnoreRearCollision(true);
+		cc_setIgnoreFrontCollision(true);
+		robot.base().printPosition();
+		if (cc_getMatchColor() == 0)
+			robot.base().ArcRotate(90, 270); //TODO Modif du sens pour la couleur
+		else
+			robot.base().ArcRotate(-90, -270);
 
-	//cc_goToZone("zoneT2");
+		ii++;
+	}
+
+	cc_setIgnoreRearCollision(true);
+	cc_setIgnoreFrontCollision(false);
+	cc_goToZone("zoneT2");
 	robot.base().printPosition();
 
 	//sortir le bras devant
 
-	robot.base().movexyteta(0, 400, 1350, 0);
+	cc_setIgnoreRearCollision(true);
+	cc_setIgnoreFrontCollision(false);
+	TRAJ_STATE r = robot.base().movexyteta(0, 400, 1350, 0);
+	if (r == TRAJ_COLLISION) {
+		pmx::StateIADecisionMaker::logger().debug() << "==>TRAJ_COLLISION" << utils::end;
+		robot.base().printPosition();
+		return false;
+	}
 
 	//rentrer le bras devant
 
 	//si adversaire alors return false
-
+	robot.base().printPosition();
 	return true; //return true si ok sinon false si interruption
 }
 
-int pousserT3()
-{
-	printf("TEST0001\n");
+int pousserT3() {
+
 	pmx::Robot &robot = pmx::Robot::instance();
 	pmx::StateIADecisionMaker::logger().debug() << "==>pousserT3" << utils::end;
-	printf("TEST0002\n");
-	cc_goToZone("zoneT3");
-	printf("TEST0003\n");
-	robot.base().printPosition();
-	printf("TEST0004\n");
 
-	//robot.base().movexyteta(0, 1000, 1350, 0);
-	//robot.base().printPosition();
+	cc_setIgnoreRearCollision(true);
+	cc_setIgnoreFrontCollision(false);
+	TRAJ_STATE ts = cc_goToZone("zoneT3");
+	if (ts == TRAJ_COLLISION)
+		return false;
+	robot.base().printPosition();
 
 	//sortir bras droit si rouge
-	if (!cc_getMatchColor())
-	{
+	if (!cc_getMatchColor()) {
 		robot.servoDxlLeft().enable();
 		robot.servoDxlLeft().turnMax();
+		robot.servoDxlLeft().turnMax();
 		robot.servoDxlLeft().freeMotion();
-	}
-	else
-	{
+	} else {
 		robot.servoDxlRight().enable();
+		robot.servoDxlRight().turnMax();
 		robot.servoDxlRight().turnMax();
 		robot.servoDxlRight().freeMotion();
 	}
 
-	robot.base().movexyteta(1, 700, 1350, 0);
+	cc_setIgnoreRearCollision(false);
+	cc_setIgnoreFrontCollision(true);
+	ts = robot.base().movexyteta(1, 700, 1400, 0);
+	cc_setIgnoreRearCollision(true);
+	cc_setIgnoreFrontCollision(false);
+
+	if (ts == TRAJ_COLLISION_REAR) {
+		//rentre le bras
+		if (!cc_getMatchColor()) {
+			robot.servoDxlLeft().enable();
+			robot.servoDxlLeft().turnMin();
+			robot.servoDxlLeft().turnMin();
+			robot.servoDxlLeft().freeMotion();
+		} else {
+			robot.servoDxlRight().enable();
+			robot.servoDxlRight().turnMin();
+			robot.servoDxlRight().turnMin();
+			robot.servoDxlRight().freeMotion();
+		}
+		return false;
+	}
 	robot.base().printPosition();
 	//rentrer bras droit si rouge
-	if (!cc_getMatchColor())
-	{
+	if (!cc_getMatchColor()) {
 		robot.servoDxlLeft().enable();
 		robot.servoDxlLeft().turnMin();
+		robot.servoDxlLeft().turnMin();
 		robot.servoDxlLeft().freeMotion();
-	}
-	else
-	{
+	} else {
 		robot.servoDxlRight().enable();
+		robot.servoDxlRight().turnMin();
 		robot.servoDxlRight().turnMin();
 		robot.servoDxlRight().freeMotion();
 	}
@@ -108,75 +151,137 @@ int pousserT3()
 	return true; //return true si ok sinon false si interruption
 }
 
-boolean tirSurB1()
-{
+boolean tirSurB1() {
+
 	pmx::Robot &robot = pmx::Robot::instance();
 	pmx::StateIADecisionMaker::logger().debug() << "==>tirSurB1" << utils::end;
-	cc_goToZone("zoneB1");
+	cc_setIgnoreRearCollision(true);
+	cc_setIgnoreFrontCollision(false);
+	TRAJ_STATE ts = cc_goToZone("zoneB1");
+	if (ts == TRAJ_COLLISION)
+		return false;
 	robot.base().printPosition();
+	cc_rotateTo(-90);
 	cc_rotateTo(-90);
 
 	//tir des balles
 	robot.servoDxlBallLaunch().enable();
 	robot.servoDxlBallLaunch().turnMax();
 	robot.servoDxlBallLaunch().turnMax();
-		robot.servoDxlBallLaunch().freeMotion();
+	robot.servoDxlBallLaunch().freeMotion();
 
 	return true;
 }
 
-boolean obj2()
-{
+boolean poseP() {
+
+	pmx::Robot &robot = pmx::Robot::instance();
+	pmx::StateIADecisionMaker::logger().debug() << "==>poseP" << utils::end;
+	cc_setIgnoreRearCollision(true);
+	cc_setIgnoreFrontCollision(false);
+	TRAJ_STATE ts = cc_goToZone("zonePoseP");
+	if (ts == TRAJ_COLLISION)
+		return false;
+	robot.base().printPosition();
+
+	cc_setIgnoreRearCollision(true);
+	cc_setIgnoreFrontCollision(true);
+	ts = robot.base().movexyteta(0, 1350, 10, -90);
+	if (ts == TRAJ_COLLISION)
+		return false;
+	robot.base().printPosition();
+
+	//pose
+	robot.servoDxlP6front().enable();
+	robot.servoDxlP6front().turnMax();
+	robot.servoDxlP6front().turnMax();
+	robot.servoDxlP6front().turnMin();
+	robot.servoDxlP6front().turnMin();
+
+	//robot.servoDxlP6front().freeMotion();
+	cc_setIgnoreRearCollision(false);
+		cc_setIgnoreFrontCollision(true);
+		ts = robot.base().movexyteta(1, 1350, 300, -90);
+	if (ts == TRAJ_COLLISION_REAR)
+			return false;
+	return true;
+}
+
+boolean obj2() {
 	//logger().debug() << "Start Chronometer" << utils::end;
 	cc_goToZone("zone 2");
 	return true;
 }
 
-void pmx::StateIADecisionMaker::IASetupTableTest()
-{
+void pmx::StateIADecisionMaker::IASetupTableTest() {
 	logger().debug() << "IASetupTableTest" << utils::end;
 
-	ia_createZone("depart", 0, 0, 100, 100, 100, 100, 0);
-	ia_createZone("zone 1", 300, 600, 100, 100, 400, 600, 180);
-	ia_createZone("zone 2", 800, 500, 200, 200, 700, 600, 0);
+	ia_createZone("depart", 0, 0, 400, 690, 400, 520, 0);
+	ia_createZone("zoneT2", 200, 1000, 400, 400, 400, 850, 90);
+	ia_createZone("zoneB1", 500, 600, 400, 400, 670, 600, -90);
 
-	ia_setPath("depart", "zone 1", 500, 600);
-	ia_setPath("depart", "zone 2", 500, 600);
-	ia_setPath("zone 1", "zone 2", 500, 600);
-	ia_setPath("zone 2", "zone 1", 500, 600);
+	ia_setPath("depart", "zoneT2", 400, 650);
+	ia_setPath("depart", "zoneB1", 500, 600);
+	ia_setPath("zoneT2", "zoneB1", 500, 600);
+	ia_setPath("zoneB1", "zoneT2", 500, 600);
 
-	//ia_addAction("objectif 1", &obj1);
-	ia_addAction("objectif 2", &obj2);
+	ia_addAction("pousserT2", &pousserT2);
+	ia_addAction("tirSurB1", &tirSurB1);
 
 }
-void pmx::StateIADecisionMaker::IASetupHomologation()
-{
+void pmx::StateIADecisionMaker::IASetupHomologation() {
 	logger().debug() << "IASetupHomologation" << utils::end;
+	ia_createZone("depart", 0, 0, 450, 800, 400, 520, 0);
+	ia_createZone("zoneT2", 200, 1000, 400, 400, 400, 850, 90);
+	ia_createZone("zoneT3", 800, 1200, 200, 400, 1000, 1400, 0);
+	ia_createZone("zoneB1", 500, 600, 400, 400, 750, 600, -90);
+	ia_createZone("zonePoseP", 1350, 0, 400, 400, 1350, 400, -90);
+
+	ia_setPath("depart", "zoneT2", 400, 650);
+	ia_setPath("depart", "zoneT3", 500, 600);
+	ia_setPath("depart", "zoneB1", 500, 600);
+	ia_setPath("depart", "zonePoseP", 1100, 690);
+
+	ia_setPath("zoneT2", "zoneT3", 800, 1350);
+	ia_setPath("zoneT2", "zoneB1", 500, 600);
+	ia_setPath("zoneT2", "zonePoseP", 1100, 690);
+
+	ia_setPath("zoneT3", "zoneB1", 750, 900);
+	ia_setPath("zoneT3", "zoneT2", 800, 1350);
+	ia_setPath("zoneT3", "zonePoseP", 1100, 800);
+
+	ia_setPath("zoneB1", "zonePoseP", 1100, 690);
+
+	ia_setPath("zonePoseP", "zoneT2", 1100, 690);
+	ia_setPath("zonePoseP", "zoneT3", 1100, 690);
+	ia_setPath("zonePoseP", "zoneB1", 1100, 690);
+
+	ia_addAction("pousserT2", &pousserT2);
+	ia_addAction("pousserT3", &pousserT3);
+	ia_addAction("poseP", &poseP);
+	ia_addAction("tirSurB1", &tirSurB1);
+
+
+}
+
+void pmx::StateIADecisionMaker::IASetupMatches() {
+	logger().debug() << "IASetupMatches" << utils::end;
 	ia_createZone("depart", 0, 0, 400, 690, 400, 520, 0);
 	ia_createZone("zoneT2", 200, 1000, 400, 400, 400, 850, 90);
 	ia_createZone("zoneT3", 800, 1200, 200, 400, 1000, 1400, 0);
-	ia_createZone("zoneB1", 500, 600, 400, 400, 670, 600, -90);
+	ia_createZone("zoneB1", 500, 600, 400, 400, 750, 600, -90);
 
 	ia_setPath("depart", "zoneT2", 400, 650);
 	ia_setPath("depart", "zoneT3", 500, 600);
 	ia_setPath("depart", "zoneB1", 500, 600);
 	ia_setPath("zoneT2", "zoneT3", 800, 1350);
 	ia_setPath("zoneT2", "zoneB1", 500, 600);
-	ia_setPath("zoneT3", "zoneB1", 500, 600);
+	ia_setPath("zoneT3", "zoneB1", 750, 900);
+	ia_setPath("zoneT3", "zoneT2", 800, 1350);
 
 	ia_addAction("pousserT2", &pousserT2);
 	ia_addAction("pousserT3", &pousserT3);
 	ia_addAction("tirSurB1", &tirSurB1);
-
-}
-
-void pmx::StateIADecisionMaker::IASetupMatches()
-{
-	logger().debug() << "IASetupMatches" << utils::end;
-	ia_createZone("depart", 0, 0, 100, 100, 100, 100, 0);
-	ia_createZone("zone 1", 300, 0, 100, 100, 300, 200, 0);
-
-	ia_setPath("depart", "zone 1", 200, 0);
 
 	//ia_addAction("objectif 1", &obj1);
 }

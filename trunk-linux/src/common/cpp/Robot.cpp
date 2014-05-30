@@ -20,6 +20,9 @@ pmx::Robot::Robot()
 		servoDxlRight_(*this, 5, 475, 841),
 		servoDxlBallLaunch_(*this, 8, 378, 592),
 		servoDxlFiletLaunch_(*this, 7, 544, 843),
+		servoDxlP14_(*this, 14, 531, 841),
+		servoDxlP4_(*this, 4, 531, 841),
+		servoDxlP6front_(*this, 6, 770, 540),
 		irSensorsGroup_(*this),
 		arduinoBoardDuemilanove_(*this, 0x2A), arduinoBoardMega_(*this, 0x2B), arduinoBoardSeeed_(*this, 0x2C),
 		gpioBoard_(*this),
@@ -39,6 +42,9 @@ pmx::Robot::Robot()
 	servoDxlRight_.begin();
 	servoDxlBallLaunch_.begin();
 	servoDxlFiletLaunch_.begin();
+	servoDxlP6front_.begin();
+	servoDxlP4_.begin();
+	servoDxlP14_.begin();
 
 	//Led indicator begin initialisation
 	pmx::LedIndicator::instance().reset();
@@ -77,13 +83,14 @@ void pmx::Robot::start(int useExtEncoders, int startAsserv)
 		lRes = 20100;//19885
 		rRes = 20100; //20360
 		distRes = 0.250f;
-		logger().debug("EXTERNAL ENCODERS USED");
+		logger().info("EXTERNAL ENCODERS USED");
 	}
 	else
 	{
 		lRes = 1136;
 		rRes = 1136;
 		distRes = 0.300f;
+		logger().info("INTERNAL ENCODERS USED");
 	}
 	base().begin(lRes, rRes, distRes, startAsserv, useExtEncoders);
 

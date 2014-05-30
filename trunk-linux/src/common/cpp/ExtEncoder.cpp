@@ -12,10 +12,8 @@
  * External Encoder constructor.
  */
 pmx::ExtEncoder::ExtEncoder(pmx::Robot & robot, char slave_select_port_letter, int slave_select_pin)
-		: ARobotElement(robot), ss_port_(slave_select_port_letter), ss_pin_(slave_select_pin)
-{
-	try
-	{
+		: ARobotElement(robot), ss_port_(slave_select_port_letter), ss_pin_(slave_select_pin) {
+	try {
 		gpio_ = new utils::HostGpioPort();
 
 		logger().debug() << "ss_port_=" << ss_port_ << " ss_pin_=" << ss_pin_ << utils::end;
@@ -34,7 +32,6 @@ pmx::ExtEncoder::ExtEncoder(pmx::Robot & robot, char slave_select_port_letter, i
 		long speed = utils::HostSpiBus::instance().getSpeed();
 		logger().debug() << " Encoder spi speed = " << speed << utils::end;
 
-
 		//singleByteWrite(WRITE_MDR0, QUADRX4|FREE_RUN|INDX_LOADC|SYNCH_INDX|FILTER_2);
 		//singleByteWrite(WRITE_MDR1, IDX_FLAG|CMP_FLAG|BYTE_2|EN_CNTR);
 
@@ -43,22 +40,20 @@ pmx::ExtEncoder::ExtEncoder(pmx::Robot & robot, char slave_select_port_letter, i
 		int mdr1 = NO_FLAGS | EN_CNTR | BYTE_4;
 		logger().debug() << "MDR0=" << reinterpret_cast<void*>(mdr0) << "\t MDR1=" << reinterpret_cast<void*>(mdr1)
 				<< utils::end;
+		logger().error() << "RESETING ENCODER" << utils::end;
 		this->setup(mdr0, mdr1);
-	} catch (utils::Exception * e)
-	{
+		logger().error() << "RESETING ENCODER" << readCounter() << utils::end;
+	} catch (utils::Exception * e) {
 		logger().error() << "Exception ExtEncoder::ExtEncoder: " << e->what() << utils::end;
 	}
 	usleep(1000);
 
 }
 
-void pmx::ExtEncoder::ss_pin_set(int value)
-{
-	try
-	{
+void pmx::ExtEncoder::ss_pin_set(int value) {
+	try {
 		gpio_->setValueIoctl(value);
-	} catch (utils::Exception * e)
-	{
+	} catch (utils::Exception * e) {
 		logger().error() << "Exception ExtEncoder::ss_pin_set: " << e->what() << utils::end;
 	}
 }
@@ -66,11 +61,10 @@ void pmx::ExtEncoder::ss_pin_set(int value)
 /*!
  Initialize the encoder to the SPI with your own desired parameters
  */
-void pmx::ExtEncoder::setup(int setup_mdr0, int setup_mdr1)
-{
+void pmx::ExtEncoder::setup(int setup_mdr0, int setup_mdr1) {
 	this->counterSize = (4 - (((BYTE) setup_mdr1) & 0x03)); //n-byte counter
 
-	//Clear LS7366
+//Clear LS7366
 	this->clearCounter(); //clear counter
 	this->clearStatus(); //clear status
 
@@ -88,8 +82,7 @@ void pmx::ExtEncoder::setup(int setup_mdr0, int setup_mdr1)
 /*!
  Used for transferring all data along the SPI
  */
-unsigned long long pmx::ExtEncoder::spiTransfer(char data)
-{
+unsigned long long pmx::ExtEncoder::spiTransfer(char data) {
 	unsigned long long result = utils::HostSpiBus::instance().spiTransfer(data);
 	return result;
 }
@@ -97,9 +90,8 @@ unsigned long long pmx::ExtEncoder::spiTransfer(char data)
 /*!
  Used for clearing the counter
  */
-void pmx::ExtEncoder::clearCounter(void)
-{
-	//printf("ExtEncoder::clearCounter\n");
+void pmx::ExtEncoder::clearCounter(void) {
+//printf("ExtEncoder::clearCounter\n");
 	lock();
 	ss_pin_set(0); //enable device
 	this->spiTransfer(CLEAR_COUNTER); //transmit clear opcode
@@ -110,8 +102,7 @@ void pmx::ExtEncoder::clearCounter(void)
 /*!
  Used for clearing the Status
  */
-void pmx::ExtEncoder::clearStatus(void)
-{
+void pmx::ExtEncoder::clearStatus(void) {
 	lock();
 	ss_pin_set(0); //enable device
 	this->spiTransfer(CLEAR_STATUS); //transmit clear opcode
@@ -122,8 +113,7 @@ void pmx::ExtEncoder::clearStatus(void)
 /*!
  Used for reading the counter
  */
-long long pmx::ExtEncoder::readCounter(void)
-{
+long long pmx::ExtEncoder::readCounter(void) {
 	readStatus(); //read status before read otherwise it doesn't work
 	long long counter = 0;
 	unsigned long long data = 0;
@@ -133,34 +123,29 @@ long long pmx::ExtEncoder::readCounter(void)
 	ss_pin_set(0);
 	this->spiTransfer(READ_COUNTER);
 
-	for (char i = this->counterSize; i > 0; i--)
-	{
+	for (char i = this->counterSize; i > 0; i--) {
 		data = this->spiTransfer(0x00);
 		fulldata = fulldata * 255 + data;
 	}
 	ss_pin_set(1); //release device
 	unlock();
-	//printf("ExtEncoder::readCounter fulldata : %lld\n", fulldata);
-	//logger().debug() << "fulldata =  " << fulldata << utils::end;
+//printf("ExtEncoder::readCounter fulldata : %lld\n", fulldata);
+//logger().debug() << "fulldata =  " << fulldata << utils::end;
 
-	if (fulldata > 4244897280 / 2)
-	{
+	if (fulldata > 4244897280 / 2) {
 		counter = -(((long long) 4244897280) - fulldata);
-	}
-	else
-	{
+	} else {
 		counter = fulldata;
 	}
-	//printf("ExtEncoder::readCounter : %lld\n", counter);
-	//logger().error() << "counter=" << counter << utils::end;
+//printf("ExtEncoder::readCounter : %lld\n", counter);
+//logger().error() << "counter"<<ss_pin_<<"=" << counter << utils::end;
 	return counter;
 }
 
 /*!
  Used for reading the status
  */
-unsigned char pmx::ExtEncoder::readStatus(void)
-{
+unsigned char pmx::ExtEncoder::readStatus(void) {
 	lock();
 	unsigned char data;
 	ss_pin_set(0); //enable device

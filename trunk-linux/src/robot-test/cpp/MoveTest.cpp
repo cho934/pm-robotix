@@ -5,13 +5,14 @@
 
 #include "MoveTest.hpp"
 
-#include <math.h>
+//#include <math.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <iostream>
 
 #include "../../common/c/ccbase.h"
-#include "../../common/c/robot_trajectory.h"
+#include "../../common/c/robot.h"
+//#include "../../common/c/robot_trajectory.h"
 #include "../../common/cpp/Base.hpp"
 #include "../../common/cpp/Logger.hpp"
 #include "../../common/cpp/Robot.hpp"
@@ -51,9 +52,9 @@ void robottest::MoveTest::run(int argc, char *argv[])
 	robot.base().printPosition();
 	//	utils::SvgWriter::writePosition(cc_getX(), cc_getY(), cc_getTheta(), utils::SVG_POS_ROBOT);
 
-	cc_rotateTo(-20);
+	//cc_rotateTo(-20);
 
-	/*
+
 	 long ileft = robot_getLeftInternalCounter();
 	 long iright = robot_getRightInternalCounter();
 	 long eleft = robot_getLeftExternalCounter();
@@ -74,7 +75,7 @@ void robottest::MoveTest::run(int argc, char *argv[])
 	 }
 
 	 robot_setMotorLeftSpeed(0);
-	 robot_setMotorRightSpeed(0);*/
+	 robot_setMotorRightSpeed(0);
 	/*
 	 RobotCommand* cmd = (RobotCommand*) malloc(sizeof(RobotCommand));
 	 //robot.base().SpeedControlLR(1.0, 1.0, 0.8, 0.0, 0, 0.0);

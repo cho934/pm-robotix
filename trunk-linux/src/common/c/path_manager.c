@@ -25,10 +25,13 @@
 /******************************************************************************/
 
 #include "path_manager.h"
-#include "motion.h"
+
 #include <semaphore.h>
-#include <stdio.h>
+//#include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+
+#include "motion.h"
 
 WAYPOINT nextWaypoint;
 static BOOL waitingSemaphore;
@@ -118,7 +121,16 @@ void path_InterruptTrajectory() {
 void path_CollisionOnTrajectory() {
 	if (waitingSemaphore) {
 		motion_FreeMotion();
+		usleep(500000);
 		path_TriggerWaypoint(TRAJ_COLLISION);
+	}
+}
+
+void path_CollisionRearOnTrajectory() {
+	if (waitingSemaphore) {
+		motion_FreeMotion();
+		usleep(500000);
+		path_TriggerWaypoint(TRAJ_COLLISION_REAR);
 	}
 }
 

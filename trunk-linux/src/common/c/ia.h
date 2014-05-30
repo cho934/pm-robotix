@@ -39,7 +39,7 @@ typedef struct {
 } ACTIONS;
 
 void ia_start();
-
+void ia_clear();
 void ia_createZone(const char* name, float minX, float minY, float width,
 		float height, float startX, float startY, float startAngleDeg);
 ZONE* ia_getZone(const char* zoneName);

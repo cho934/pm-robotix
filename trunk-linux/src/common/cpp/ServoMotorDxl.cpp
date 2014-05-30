@@ -102,7 +102,7 @@ void pmx::ServoMotorDxl::setCommand(int id, int regstart, int data, int nb2Write
 	{
 		//setRX();
 		logBf(buffer, n);
-		logger().error() << "Exception on setCommand, data not send : " << e->what() << utils::end;
+		logger().debug() << "Exception on setCommand, data not send : " << e->what() << utils::end;
 	}
 
 	//logBf(buffer, n); //Log
@@ -112,12 +112,12 @@ void pmx::ServoMotorDxl::setCommand(int id, int regstart, int data, int nb2Write
 	if (bufferIn[0] != 0xFF || bufferIn[1] != 0xFF)
 	{
 		//std::cout << "ERROR Received data without header bytes" << std::endl;
-		logger().error() << "ERROR Received data without header bytes" << utils::end;
+		logger().debug() << "ERROR Received data without header bytes" << utils::end;
 		logBf(bufferIn, 6); //Log
 	}
 	else if (bufferIn[2] != id)
 	{
-		logger().error() << "ERROR Received status from wrong device : expected=" << id << utils::end;
+		logger().debug() << "ERROR Received status from wrong device : expected=" << id << utils::end;
 		//std::cout << "ERROR Received status from wrong device : expected=" << id << std::endl;
 		logBf(bufferIn, 6); //Log
 	}
@@ -128,14 +128,14 @@ void pmx::ServoMotorDxl::setCommand(int id, int regstart, int data, int nb2Write
 		if (length == 2)
 			statuserror = bufferIn[length + 4];
 		else
-			logger().error() << "ERROR length status = " << reinterpret_cast<void*>(length) << " != 2" << utils::end;
+			logger().debug() << "ERROR length status = " << reinterpret_cast<void*>(length) << " != 2" << utils::end;
 		//std::cout << "ERROR length status = " << reinterpret_cast<void*>(length) << " != 2" << std::endl;
 
 		//verif du checksum
 		utils::byte checksum = Utils::checkSumatory(bufferIn, length + 3);
 		if (bufferIn[length + 3] != checksum)
 		{
-			logger().error() << "ERROR Received data with wrong checksum " << reinterpret_cast<void*>(checksum)
+			logger().debug() << "ERROR Received data with wrong checksum " << reinterpret_cast<void*>(checksum)
 					<< " != " << reinterpret_cast<void*>(bufferIn[length + 3]) << utils::end;
 			//std::cout << "ERROR Received data with wrong checksum " << reinterpret_cast<void*>(checksum) << " != "
 			//		<< reinterpret_cast<void*>(bufferIn[length + 3]) << std::endl;
@@ -144,7 +144,7 @@ void pmx::ServoMotorDxl::setCommand(int id, int regstart, int data, int nb2Write
 		//check error status
 		if (statuserror != 0)
 		{
-			logger().error() << "ERROR Received status error = " << reinterpret_cast<void*>(statuserror) << utils::end;
+			logger().debug() << "ERROR Received status error = " << reinterpret_cast<void*>(statuserror) << utils::end;
 			//std::cout << "ERROR Received status error = " << reinterpret_cast<void*>(statuserror) << std::endl;
 			logBf(bufferIn, 6); //Log
 		}
@@ -180,7 +180,7 @@ long pmx::ServoMotorDxl::getCommand(int id, int regstart, int readLength)
 	{
 		//setRX(); //halfduplex receive
 		logBf(buffer, n);
-		logger().error() << "Exception on setCommand, data not send : " << e->what() << utils::end;
+		logger().debug() << "Exception on setCommand, data not send : " << e->what() << utils::end;
 		unlock();
 		return err;
 	}
@@ -188,14 +188,14 @@ long pmx::ServoMotorDxl::getCommand(int id, int regstart, int readLength)
 	err = serial_.getArray(bufferIn, readLength + 6);
 	if (err < 0)
 	{
-		logger().error() << "ERROR getCommand, serial_.getArray() < 0 : " << err << utils::end;
+		logger().debug() << "ERROR getCommand, serial_.getArray() < 0 : " << err << utils::end;
 		//logBf(bufferIn, readLength + 6);
 		//std::cout << "ERROR serial_.getArray() err=" << err << std::endl;
 		error = -1;
 	}
 	if (err != readLength + 6)
 	{
-		logger().error() << "ERROR getCommand, serial_.getArray() bytetoRead=" << err
+		logger().debug() << "ERROR getCommand, serial_.getArray() bytetoRead=" << err
 				<< " different de readLength + 6 =" << readLength + 6 << utils::end;
 		//logBf(bufferIn, readLength + 6);
 		//std::cout << "ERROR serial_.getArray() err=" << err << std::endl;
@@ -207,14 +207,14 @@ long pmx::ServoMotorDxl::getCommand(int id, int regstart, int readLength)
 	//reading header of status packet
 	if (bufferIn[0] != 0xFF || bufferIn[1] != 0xFF)
 	{
-		logger().error() << "ERROR getCommand, Received data without header bytes" << utils::end;
+		logger().debug() << "ERROR getCommand, Received data without header bytes" << utils::end;
 		//logBf(bufferIn, readLength + 6);
 		//std::cout << "ERROR Received data without header bytes" << std::endl;
 		error = -1;
 	}
 	else if (bufferIn[2] != id)
 	{
-		logger().error() << "ERROR getCommand, Received status from wrong device (expected %d):" << id << utils::end;
+		logger().debug() << "ERROR getCommand, Received status from wrong device (expected %d):" << id << utils::end;
 		//std::cout << "ERROR Received status from wrong device (expected %d):" << id << std::endl;
 		//logBf(bufferIn, readLength + 6);
 		error = -1;
@@ -229,7 +229,7 @@ long pmx::ServoMotorDxl::getCommand(int id, int regstart, int readLength)
 			statuserror = bufferIn[4];
 			if (statuserror != 0)
 			{
-				logger().error() << "ERROR getCommand, Received statuserror =  " << reinterpret_cast<void*>(statuserror)
+				logger().debug() << "ERROR getCommand, Received statuserror =  " << reinterpret_cast<void*>(statuserror)
 						<< utils::end;
 				//logBf(bufferIn, readLength + 6);
 				//std::cout << "ERROR Received statuserror =  " << reinterpret_cast<void*>(statuserror) << std::endl;
@@ -246,7 +246,7 @@ long pmx::ServoMotorDxl::getCommand(int id, int regstart, int readLength)
 			}
 			else
 			{
-				logger().error() << "ERROR getCommand, NOT DEFINED, more 3 bytes received" << utils::end;
+				logger().debug() << "ERROR getCommand, NOT DEFINED, more 3 bytes received" << utils::end;
 				//std::cout << "ERROR NOT DEFINED, more 3 bytes received" << std::endl;
 				//logBf(bufferIn, readLength + 6);
 				error = -1;
@@ -257,7 +257,7 @@ long pmx::ServoMotorDxl::getCommand(int id, int regstart, int readLength)
 		byte checksum = Utils::checkSumatory(bufferIn, length + 3);
 		if (bufferIn[length + 3] != checksum)
 		{
-			logger().error() << "ERROR getCommand,Received data with wrong checksum "
+			logger().debug() << "ERROR getCommand,Received data with wrong checksum "
 					<< reinterpret_cast<void*>(checksum) << " != " << reinterpret_cast<void*>(bufferIn[length + 3])
 					<< utils::end;
 			//std::cout << "ERROR Received data with wrong checksum " << reinterpret_cast<void*>(checksum) << " != "

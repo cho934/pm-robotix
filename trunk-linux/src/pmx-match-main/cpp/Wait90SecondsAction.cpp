@@ -6,8 +6,10 @@
 #include "Wait90SecondsAction.hpp"
 
 #include <unistd.h>
-#include <cstdlib>
+//#include <cstdlib>
 
+#include "../../common/c/ccbase.h"
+#include "../../common/c/path_manager.h"
 #include "../../common/cpp/Chronometer.hpp"
 #include "../../common/cpp/LedBar.hpp"
 #include "../../common/cpp/Logger.hpp"
@@ -16,17 +18,27 @@
 #include "Data.hpp"
 
 pmx::Wait90SecondsAction::Wait90SecondsAction(pmx::Robot* robot, void *data)
-		: robot_(robot), data_(data)
-{
+		: robot_(robot), data_(data) {
 }
 
-void
-pmx::Wait90SecondsAction::execute()
-{
+void pmx::Wait90SecondsAction::execute() {
 	this->logger().info() << "start" << utils::end;
 	pmx::Data* sharedData = (pmx::Data*) data_;
 
-	sleep(30);
+	sleep(80);
+
+	int sec1 = robot_->chronometerRobot().getElapsedTimeInSec();
+
+	TRAJ_STATE ts = cc_goToZone("zoneB1");
+	//robot.base().printPosition();
+	cc_rotateTo(-90);
+
+	int sec2 = robot_->chronometerRobot().getElapsedTimeInSec();
+	int diff = sec2 - sec1;
+
+	if (diff >0 && diff <10)
+		sleep(10 - diff);
+
 	this->logger().error() << "FUNNY ACTION..." << utils::end;
 
 	//arret de tout les actions
@@ -37,6 +49,7 @@ pmx::Wait90SecondsAction::execute()
 
 	this->robot_->ledBar().startAlternate(1000, 50000, 0xF0, 0x0F, false);
 	robot_->servoDxlFiletLaunch().enable();
+	robot_->servoDxlFiletLaunch().turnMax();
 	robot_->servoDxlFiletLaunch().turnMax();
 	robot_->servoDxlFiletLaunch().turnMax();
 	robot_->servoDxlFiletLaunch().freeMotion();
