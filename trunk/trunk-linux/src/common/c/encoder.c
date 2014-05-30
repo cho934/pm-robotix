@@ -29,6 +29,8 @@
 #include "global.h"
 #include "robot.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include "ccbase.h"
 
 void encoder_Init() {
 
@@ -43,12 +45,10 @@ void encoder_SetResolution(uint32 leftTicksPerM, uint32 rightTicksPerM) {
 
 	if (leftTicksPerM > rightTicksPerM) {
 		leftEncoderRatio = VTOPS_PER_TICKS;
-		rightEncoderRatio = VTOPS_PER_TICKS * rightTicksPerM
-				/ (float) leftTicksPerM;
+		rightEncoderRatio = VTOPS_PER_TICKS * rightTicksPerM / (float) leftTicksPerM;
 		valueVTops = 1 / (float) (VTOPS_PER_TICKS * leftTicksPerM);
 	} else {
-		leftEncoderRatio = VTOPS_PER_TICKS * leftTicksPerM
-				/ (float) rightTicksPerM;
+		leftEncoderRatio = VTOPS_PER_TICKS * leftTicksPerM / (float) rightTicksPerM;
 		rightEncoderRatio = VTOPS_PER_TICKS;
 		valueVTops = 1 / (float) (VTOPS_PER_TICKS * rightTicksPerM);
 	}
@@ -63,14 +63,13 @@ void encoder_SetResolution(uint32 leftTicksPerM, uint32 rightTicksPerM) {
 	encoder_SetDist(distEncoderMeter);
 }
 
-static int32 lastLeft = 0;
-static int32 lastRight = 0;
+int32 lastLeft = 0;
+int32 lastRight = 0;
 int useExternalEncoders = 0;
 
 long encoder_getLeftCounter() {
 	if (useExternalEncoders) {
 		long encl = robot_getLeftExternalCounter();
-		//printf("encl=%ld\n", encl);
 		return encl;
 	}
 	return robot_getLeftInternalCounter();
@@ -85,7 +84,7 @@ long encoder_getRightCounter() {
 void encoder_ReadSensor(int32 *dLeft, int32 *dRight, int32 *dAlpha,
 int32 *dDelta) {
 
-	static int32 left, right;
+	int32 left, right;
 
 //read encoder
 
@@ -99,14 +98,22 @@ int32 *dDelta) {
 	right *= rightEncoderRatio;
 
 //compute delta for left wheel
-	*dLeft = left - lastLeft;
-	lastLeft = left;
+	if(abs(left - lastLeft)<1000000) {
+		*dLeft = left - lastLeft;
+		lastLeft = left;
+	} else {
+		*dLeft=0;
+	}
 //verify left encoder overflow
 //CORRECT_DELTA_OVERFLOW(*dLeft, MAX_ENCODER_ABS_VTOPS);
 
 //compute delta for right wheel
-	*dRight = right - lastRight;
-	lastRight = right;
+	if (abs(right - lastRight) < 1000000) {
+		*dRight = right - lastRight;
+		lastRight = right;
+	} else {
+		*dRight = 0;
+	}
 //verify right encoder overflow
 //CORRECT_DELTA_OVERFLOW(*dRight, MAX_ENCODER_ABS_VTOPS);
 
@@ -114,8 +121,8 @@ int32 *dDelta) {
 	*dAlpha = (*dRight - *dLeft) / 2;
 	*dDelta = (*dRight + *dLeft) / 2;
 #ifdef DEBUG_ENCODER
-	printf("encoder.c encoder_ReadSensor l:%d r:%d alpha:%d delta:%d\n", *dLeft,
-			*dRight, *dAlpha, *dDelta);
+	printf("encoder.c encoder_ReadSensor l:%d r:%d alpha:%d delta:%d\n", *dLeft, *dRight, *dAlpha, *dDelta);
+	printf("%f %f\n", cc_getX(), cc_getY());
 #endif
 }
 

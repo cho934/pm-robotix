@@ -39,6 +39,7 @@ typedef enum
 	TRAJ_NEAR_OBSTACLE,		//trajectory interrupted because of a near collision
 	TRAJ_CANCELLED,			//trajectory cancelled by remote user (for debug only)
 	TRAJ_INTERRUPTED,		//trajectory interrupted by software
+	TRAJ_COLLISION_REAR
 } TRAJ_STATE;
 
 typedef enum
@@ -92,5 +93,6 @@ void path_CancelTrajectory(void);
 void path_InterruptTrajectory(void);
 
 void path_CollisionOnTrajectory();
+void path_CollisionRearOnTrajectory();
 
 #endif//_PATH_MANAGER_H_

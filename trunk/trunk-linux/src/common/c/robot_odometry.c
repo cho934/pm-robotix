@@ -28,7 +28,8 @@
 
 #include "global.h"
 #include <math.h>
-
+#include <stdio.h>
+#include <stdlib.h>
 //every N period, we compute precise values for
 //cos and sin of the robot angle
 #define PRECISE_COMPUTATION_NTH_PERIOD		64
@@ -81,12 +82,17 @@ EXPORTED_FUNCTION void odo_Integration(float dTheta, float dV) {
 		cosTheta = newCosTheta;
 		sinTheta = newSinTheta;
 	}
-
+	//printf("odo_Integration %f,%f %f\n",xTops,yTops,Theta);
 	xTops += dV * cosTheta;
 	yTops += dV * sinTheta;
+//	if(xTops>10000000000.0){
+//	printf("odo_Integration -> %f,%f %f\n",xTops,yTops,Theta);
+//	exit(2);
+//	}
 }
 
 EXPORTED_FUNCTION void odo_SetPosition(float x, float y, float theta) {
+	printf("odo_SetPosition %f,%f %f\n",x,y,theta);
 	//convert position from meters to ticks
 	xTops = x / valueVTops;
 	yTops = y / valueVTops;

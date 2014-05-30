@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include "../../common/c/ccbase.h"
+#include "../../common/c/robot.h"
 #include "../../common/cpp/Adafruit_RGBLCDShield.hpp"
 #include "../../common/cpp/LedBar.hpp"
 #include "../../common/cpp/Logger.hpp"
@@ -44,11 +45,11 @@ pmx::StateAdjustRobotPosition::execute(Robot& robot, void *data)
 	 robot.position().angle(0, robot.myColor());*/
 
 
-	cc_setPosition(130, 470, 0.0, cc_getMatchColor());
-	/*
-	 logger().debug() << "Position x=" << robot.position().x() << " y=" << robot.position().y() << " a="
-	 << robot.position().angle() << utils::end;
-*/
+	cc_setPosition(130, 465, 0.0, cc_getMatchColor());
+
+	 logger().debug() << "codeurs ext: robot_getLeftExternalCounter=" << robot_getLeftExternalCounter() << " robot_getRightExternalCounter=" << robot_getRightExternalCounter() << " a="
+	<< utils::end;
+
 
 	 //Ecriture dans le SVG
 	 utils::SvgWriter::writePosition(cc_getX(), cc_getY(), cc_getTheta(), utils::SVG_POS_ROBOT);

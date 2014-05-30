@@ -8,9 +8,9 @@
 
 #include <string>
 
+#include "../c/path_manager.h"
 #include "../c/robot_trajectory.h"
 #include "ARobotElement.hpp"
-
 #include "IInitialized.hpp"
 #include "LoggerFactory.hpp"
 
@@ -68,16 +68,16 @@ public:
 
 	void printPosition();
 
-	void launchAndEndAfterCmd(RobotCommand* cmd);
-	void collisionOccured();
+	TRAJ_STATE launchAndEndAfterCmd(RobotCommand* cmd);
+	void collisionOccured(int front);
 
 	int getMatchColor();
 	void setMatchColor(int color);
 
 	void assistedHandling();
-	void move(int mm);
+	TRAJ_STATE move(int mm);
 
-	void movexyteta(int forward, float x, float y, float thetaInDegree);
+	TRAJ_STATE movexyteta(int forward, float x, float y, float thetaInDegree);
 
 	void findPidAD(float degrees, int mm, int sec);
 	void findPidLR(int posLmm, int posRmm, int sec);

@@ -27,14 +27,12 @@
 #include "RobotColor.hpp"
 #include "ServoMotorDxlObject.hpp"
 
-namespace pmx
-{
+namespace pmx {
 
 /*!
  * \brief Enumération du mode de programmation.
  */
-enum RobotMode
-{
+enum RobotMode {
 	ROBOTMATCHES, ROBOTHOMOLOGATION, ROBOTTABLETEST
 };
 
@@ -44,12 +42,10 @@ enum RobotMode
  * Cette classe maitresse de l'application représente le robot et permet
  * d'accéder à l'ensemble de ses éléments.
  */
-class Robot: public IInitialized
-{
+class Robot: public IInitialized {
 public:
 
-	static Robot & instance()
-	{
+	static Robot & instance() {
 		static Robot instance;
 		return instance;
 	}
@@ -59,8 +55,7 @@ private:
 	/*!
 	 * \brief Retourne le \ref Logger associé à la classe \ref Robot.
 	 */
-	static inline const utils::Logger & logger()
-	{
+	static inline const utils::Logger & logger() {
 		static const utils::Logger & instance = utils::LoggerFactory::logger("pmx::Robot");
 		return instance;
 	}
@@ -129,6 +124,9 @@ private:
 	pmx::ServoMotorDxlObject servoDxlRight_;
 	pmx::ServoMotorDxlObject servoDxlBallLaunch_;
 	pmx::ServoMotorDxlObject servoDxlFiletLaunch_;
+	pmx::ServoMotorDxlObject servoDxlP4_;
+	pmx::ServoMotorDxlObject servoDxlP6front_;
+	pmx::ServoMotorDxlObject servoDxlP14_;
 
 	/*!
 	 * \brief Groupe de détecteur IR.
@@ -168,8 +166,7 @@ private:
 	/*!
 	 * \brief Destructeur de la classe.
 	 */
-	virtual inline ~Robot()
-	{
+	virtual inline ~Robot() {
 	}
 
 public:
@@ -179,24 +176,21 @@ public:
 	 * roulante du robot.
 	 * \return La base roulante du robot.
 	 */
-	inline pmx::Base & base()
-	{
+	inline pmx::Base & base() {
 		return base_;
 	}
 
 	/*!
 	 * \brief Retourne la couleur du robot.
 	 */
-	inline pmx::RobotColor myColor() const
-	{
+	inline pmx::RobotColor myColor() const {
 		return myColor_;
 	}
 
 	/*!
 	 * \brief Enregistre la couleur du robot.
 	 */
-	inline void myColorIs(pmx::RobotColor color)
-	{
+	inline void myColorIs(pmx::RobotColor color) {
 		this->myColor_ = color;
 		if (color == pmx::PMXYELLOW)
 			base().setMatchColor(0);
@@ -210,8 +204,7 @@ public:
 	 * \brief Cette methode retourne l'objet de manipulation du chronometer.
 	 * \return Le chronometer.
 	 */
-	inline utils::Chronometer & chronometerRobot()
-	{
+	inline utils::Chronometer & chronometerRobot() {
 		return chronometerRobot_;
 	}
 
@@ -219,8 +212,7 @@ public:
 	 * \brief Cette methode retourne l'objet de manipulation du GroveColorSensor.
 	 * \return Le GroveColorSensor.
 	 */
-	inline pmx::GroveColorSensor & groveColorSensor()
-	{
+	inline pmx::GroveColorSensor & groveColorSensor() {
 		return groveColorSensor_;
 	}
 
@@ -228,8 +220,7 @@ public:
 	 * \brief Cette methode retourne l'objet de manipulation du ledBar.
 	 * \return Le ledBar.
 	 */
-	inline pmx::LedBar & ledBar()
-	{
+	inline pmx::LedBar & ledBar() {
 		return ledBar_;
 	}
 
@@ -237,8 +228,7 @@ public:
 	 * \brief Cette methode retourne l'objet de manipulation du ledBar.
 	 * \return Le ledBar.
 	 */
-	inline pmx::Md25 & md25()
-	{
+	inline pmx::Md25 & md25() {
 		return md25_;
 	}
 
@@ -246,8 +236,7 @@ public:
 	 * \brief Cette methode retourne le codeur gauche.
 	 * \return encoderLeft_.
 	 */
-	inline pmx::ExtEncoder & encoderLeft()
-	{
+	inline pmx::ExtEncoder & encoderLeft() {
 		return encoderLeft_;
 	}
 
@@ -255,8 +244,7 @@ public:
 	 * \brief Cette methode retourne le codeur droit.
 	 * \return encoderRight_.
 	 */
-	inline pmx::ExtEncoder & encoderRight()
-	{
+	inline pmx::ExtEncoder & encoderRight() {
 		return encoderRight_;
 	}
 
@@ -272,34 +260,38 @@ public:
 	 * \brief Cette methode retourne le servomotor test.
 	 * \return servoTest_.
 	 */
-	inline pmx::ServoMotorDxlObject & servoDxlTest()
-	{
+	inline pmx::ServoMotorDxlObject & servoDxlTest() {
 		return servoDxlTest_;
 	}
 
-	inline pmx::ServoMotorDxlObject & servoDxlLeft()
-	{
+	inline pmx::ServoMotorDxlObject & servoDxlLeft() {
 		return servoDxlLeft_;
 	}
-	inline pmx::ServoMotorDxlObject & servoDxlRight()
-	{
+	inline pmx::ServoMotorDxlObject & servoDxlRight() {
 		return servoDxlRight_;
 	}
-	inline pmx::ServoMotorDxlObject & servoDxlBallLaunch()
-	{
+	inline pmx::ServoMotorDxlObject & servoDxlBallLaunch() {
 		return servoDxlBallLaunch_;
 	}
-	inline pmx::ServoMotorDxlObject & servoDxlFiletLaunch()
-	{
+	inline pmx::ServoMotorDxlObject & servoDxlFiletLaunch() {
 		return servoDxlFiletLaunch_;
+	}
+	inline pmx::ServoMotorDxlObject & servoDxlP6front() {
+		return servoDxlP6front_;
+	}
+	inline pmx::ServoMotorDxlObject & servoDxlP4() {
+		return servoDxlP4_;
+	}
+
+	inline pmx::ServoMotorDxlObject & servoDxlP14() {
+		return servoDxlP14_;
 	}
 
 	/*!
 	 * \brief Cette methode retourne le groupe de détecteur IR.
 	 * \return irSensorsGroup_.
 	 */
-	inline pmx::IrSensorsGroup & irSensorsGroup()
-	{
+	inline pmx::IrSensorsGroup & irSensorsGroup() {
 		return irSensorsGroup_;
 	}
 
@@ -307,8 +299,7 @@ public:
 	 * \brief Cette methode retourne l'objet arduinoBoardDuemilanove.
 	 * \return arduinoBoardDuemilanove_.
 	 */
-	inline pmx::ArduinoBoard & arduinoBoardDuemilanove()
-	{
+	inline pmx::ArduinoBoard & arduinoBoardDuemilanove() {
 		return arduinoBoardDuemilanove_;
 	}
 
@@ -316,8 +307,7 @@ public:
 	 * \brief Cette methode retourne l'objet arduinoBoardDuemilanove.
 	 * \return arduinoBoardMega_.
 	 */
-	inline pmx::ArduinoBoard & arduinoBoardMega()
-	{
+	inline pmx::ArduinoBoard & arduinoBoardMega() {
 		return arduinoBoardMega_;
 	}
 
@@ -325,8 +315,7 @@ public:
 	 * \brief Cette methode retourne l'objet arduinoBoardDuemilanove.
 	 * \return arduinoBoardSeeed_.
 	 */
-	inline pmx::ArduinoBoard & arduinoBoardSeeed()
-	{
+	inline pmx::ArduinoBoard & arduinoBoardSeeed() {
 		return arduinoBoardSeeed_;
 	}
 
@@ -334,8 +323,7 @@ public:
 	 * \brief Cette methode retourne l'objet GpioBoard.
 	 * \return gpioBoard_.
 	 */
-	inline pmx::GpioBoard & gpioBoard()
-	{
+	inline pmx::GpioBoard & gpioBoard() {
 		return gpioBoard_;
 	}
 
@@ -343,8 +331,7 @@ public:
 	 * \brief Cette methode retourne l'objet lcdBoard.
 	 * \return lcdBoard_.
 	 */
-	inline pmx::Adafruit_RGBLCDShield & lcdBoard()
-	{
+	inline pmx::Adafruit_RGBLCDShield & lcdBoard() {
 		return lcdBoard_;
 
 	}
@@ -352,16 +339,14 @@ public:
 	/*!
 	 * \brief Retourne le mode de match du robot.
 	 */
-	inline pmx::RobotMode myRunningMode() const
-	{
+	inline pmx::RobotMode myRunningMode() const {
 		return runMode_;
 	}
 
 	/*!
 	 * \brief Enregistre le mode de match du robot.
 	 */
-	inline void runMode(pmx::RobotMode mode)
-	{
+	inline void runMode(pmx::RobotMode mode) {
 		this->runMode_ = mode;
 	}
 
@@ -370,8 +355,7 @@ public:
 	 * \param action
 	 *        L'action à ajouter.
 	 */
-	inline void addAction(IAction * action)
-	{
+	inline void addAction(IAction * action) {
 		logger().debug() << "Robot addAction" << utils::end;
 		actionManager_.addAction(action);
 	}

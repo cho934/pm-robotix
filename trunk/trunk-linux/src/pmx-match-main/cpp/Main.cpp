@@ -41,7 +41,7 @@ int main(int argc, char** argv)
 	//prise en compte des arguments
 
 	logger.info()
-			<< "USAGE: PMX  [0=Matches, 1=Homologation, 2=Tabletest, Default=Homologation] [1=External encoder] [1=don't setup]"
+			<< "USAGE: PMX  [0=Matches, 1=Homologation, 2=Tabletest, Default=Homologation] [1=External encoder] [1=don't setup] [0=YELLOW]"
 			<< utils::end;
 
 	if (argc > 1)
@@ -72,13 +72,11 @@ int main(int argc, char** argv)
 
 	if (argc > 2)
 	{
-		//data->useExternalEncoder(atoi(argv[2])); //TODO Ne sert plus
-		std::cout << "USE internal encoder : " << atoi(argv[2]) << std::endl;
-		robot.start(0, 1); //start Manager and asserv
+		std::cout << " external encoder : " << atoi(argv[2]) << std::endl;
+		robot.start(atoi(argv[2]), 1); //start Manager and asserv
 	}
 	else
 	{
-		//data->useExternalEncoder(1);
 		std::cout << "USE EXTERNAL ENCODER " << std::endl;
 		robot.start(1, 1); //start Manager and asserv
 	}
@@ -86,24 +84,40 @@ int main(int argc, char** argv)
 	if (argc > 3)
 	{
 		data->skipSetup(atoi(argv[3]));
-		std::cout << "skip setup: " << atoi(argv[3]) << ", COLOR is RED" << std::endl;
-		robot.myColorIs(pmx::PMXRED);
-
+		std::cout << "skip setup: " << atoi(argv[3]) << std::endl;
 	}
 	else
 	{
 		data->skipSetup(0);
 		std::cout << "FULL SETUP" << std::endl;
 	}
+	if (argc > 4)
+	{
+		int color = atoi(argv[4]);
+		if (color == 0)
+		{
+			robot.myColorIs(pmx::PMXYELLOW);
+			std::cout << " COLOR is YELLOW" << std::endl;
+		}
+		else
+		{
+			robot.myColorIs(pmx::PMXRED);
+			std::cout << " COLOR is RED" << std::endl;
+		}
+	}
+	else
+	{
+		robot.myColorIs(pmx::PMXYELLOW);
+		std::cout << " COLOR is YELLOW" << std::endl;
+	}
 
 	logger.info() << "Start of PMX, the robot..." << utils::end;
-
 
 	IAutomateState* waitForReboot = new pmx::StateWaitForReboot();
 	IAutomateState* initialize = new pmx::StateInitialize();
 	IAutomateState* ajustRobotPosition = new pmx::StateAdjustRobotPosition();
 	IAutomateState* waitForStart = new pmx::StateWaitForStart();
-	pmx::StateIADecisionMaker* decisionMaker = new pmx::StateIADecisionMaker();
+
 
 	waitForReboot->addState("next", initialize);
 	initialize->addState("next", ajustRobotPosition);
@@ -111,34 +125,11 @@ int main(int argc, char** argv)
 	ajustRobotPosition->addState("next", waitForStart);
 
 	waitForStart->addState("rebootInitialize", initialize);
-	waitForStart->addState("decisionMaker", decisionMaker);
+	waitForStart->addState("decisionMaker", data->decisionMaker);
 
 	robot.lcdBoard().setBacklight(LCD_ON);
 	robot.lcdBoard().clear();
 
-	//Ajout des stratégies
-	if (robot.myRunningMode() == pmx::ROBOTMATCHES)
-	{
-		logger.debug() << "ROBOTMATCHES" << utils::end;
-		//configure IA
-		decisionMaker->IASetupMatches();
-		robot.lcdBoard().print("PMX MATCH GO !");
-	}
-	else if (robot.myRunningMode() == pmx::ROBOTHOMOLOGATION)
-	{
-		logger.debug() << "ROBOTHOMOLOGATION" << utils::end;
-		//configure IA
-		decisionMaker->IASetupHomologation();
-
-		robot.lcdBoard().print("HOMOLOGATION GO !");
-	}
-	else if (robot.myRunningMode() == pmx::ROBOTTABLETEST)
-	{
-		logger.debug() << "ROBOTTABLETEST" << utils::end;
-		//configure IA
-		decisionMaker->IASetupTableTest();
-		robot.lcdBoard().print("TABLE TEST GO !");
-	}
 
 	// Start the automate and wait for its return
 	Automate *automate = new Automate();
