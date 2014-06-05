@@ -29,7 +29,7 @@ TRAJ_STATE cc_rotateTo(float theta);
 
 //x,y en mm
 void cc_setPosition(float xMM, float yMM, float theta,int color);
-
+float cc_getRelativeX(float x);
 // position x,x in mm
 float cc_getX();
 float cc_getY();
