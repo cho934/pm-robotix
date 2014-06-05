@@ -56,16 +56,17 @@ boolean emergencyPressed;
 static pthread_t thread;
 void checkEmergency() {
 	int buttonPort = SENSOR_PORT_1;
-	unsigned char v =
-			(unsigned char) pAnalog->Pin1[buttonPort][pAnalog->Actual[buttonPort]];
+	unsigned char v = (unsigned char) pAnalog->Pin1[buttonPort][pAnalog->Actual[buttonPort]];
+	//printf("emergency: %d \n",v);
 	emergencyPressed = (v < 225);
 }
 
 void *sensorCheckThread(void *p_arg) {
+	printf("sensor thread\n");
 	while (TRUE) {
 		checkEmergency();
-		// 50 ms
-		usleep(50 * 1000);
+		//  ms
+		usleep(100 * 1000);
 	}
 	return 0;
 }
@@ -178,18 +179,14 @@ void robot_init() {
 		r = ioctl(iic_device_file, IIC_SETUP, &IicDat);
 
 	}
-	printf(
-			"robot_init : IIC device is ready for left counter (return_code %d) %d\n",
-			r, IicDat.Result);
+	printf("robot_init : IIC device is ready for left counter (return_code %d) %d\n", r, IicDat.Result);
 	IicDat.Port = SENSOR_PORT_3;
 	IicDat.Result = -1;
 	while (IicDat.Result) {
 		r = ioctl(iic_device_file, IIC_SETUP, &IicDat);
 
 	}
-	printf(
-			"robot_init : IIC device is ready for right counter (return_code %d) %d\n",
-			r, IicDat.Result);
+	printf("robot_init : IIC device is ready for right counter (return_code %d) %d\n", r, IicDat.Result);
 //
 	// IR
 	//
@@ -263,7 +260,8 @@ void robot_init() {
 
 	long left = robot_getLeftExternalCounter();
 	long right = robot_getRightExternalCounter();
-	while (left != 0 || right != 0) {
+	int i=0;
+	for(i=0;i<20;i++){
 		printf("Reset sensors %ld %ld\n", left, right);
 		robot_resetSensors();
 		usleep(200);
@@ -314,30 +312,25 @@ void robot_startMotorLeft() {
 	motor_command[1] = MOTOR_PORT_LEFT;
 
 	int s = write(motor_file, motor_command, 2);
-	printf(
-			"robot_startMotorLeft command : [%d, %d] written size: %d on file: %d\n",
-			motor_command[0], motor_command[1], s, motor_file);
+	printf("robot_startMotorLeft command : [%d, %d] written size: %d on file: %d\n", motor_command[0], motor_command[1],
+			s, motor_file);
 }
 void robot_startMotors() {
 	printf("robot_startMotors\n");
 
 	char motor_command[2];
 	motor_command[0] = opOUTPUT_RESET;
-	motor_command[1] = MOTOR_PORT_RIGHT | MOTOR_PORT_LEFT | MOTOR_PORT_A
-			| MOTOR_PORT_D;
+	motor_command[1] = MOTOR_PORT_RIGHT | MOTOR_PORT_LEFT | MOTOR_PORT_A | MOTOR_PORT_D;
 	int s = write(motor_file, motor_command, 2);
-	printf(
-			"robot_startMotors command : [%d, %d] written size: %d on file: %d\n",
-			motor_command[0], motor_command[1], s, motor_file);
+	printf("robot_startMotors command : [%d, %d] written size: %d on file: %d\n", motor_command[0], motor_command[1], s,
+			motor_file);
 	// Start the motor
 	motor_command[0] = opOUTPUT_START;
-	motor_command[1] = MOTOR_PORT_RIGHT | MOTOR_PORT_LEFT | MOTOR_PORT_A
-			| MOTOR_PORT_D;
+	motor_command[1] = MOTOR_PORT_RIGHT | MOTOR_PORT_LEFT | MOTOR_PORT_A | MOTOR_PORT_D;
 
 	s = write(motor_file, motor_command, 2);
-	printf(
-			"robot_startMotors command : [%d, %d] written size: %d on file: %d\n",
-			motor_command[0], motor_command[1], s, motor_file);
+	printf("robot_startMotors command : [%d, %d] written size: %d on file: %d\n", motor_command[0], motor_command[1], s,
+			motor_file);
 
 	usleep(100 * 1000);
 }
@@ -349,8 +342,8 @@ void robot_stopMotorA() {
 	motor_command[0] = opOUTPUT_STOP;
 	motor_command[1] = MOTOR_PORT_A;
 	int s = write(motor_file, motor_command, 2);
-	printf("robot_stopMotorA command : [%d, %d] written size: %d on file: %d\n",
-			motor_command[0], motor_command[1], s, motor_file);
+	printf("robot_stopMotorA command : [%d, %d] written size: %d on file: %d\n", motor_command[0], motor_command[1], s,
+			motor_file);
 }
 
 void robot_stopMotorD() {
@@ -360,8 +353,8 @@ void robot_stopMotorD() {
 	motor_command[0] = opOUTPUT_STOP;
 	motor_command[1] = MOTOR_PORT_D;
 	int s = write(motor_file, motor_command, 2);
-	printf("robot_stopMotorD command : [%d, %d] written size: %d on file: %d\n",
-			motor_command[0], motor_command[1], s, motor_file);
+	printf("robot_stopMotorD command : [%d, %d] written size: %d on file: %d\n", motor_command[0], motor_command[1], s,
+			motor_file);
 }
 
 void robot_stopMotorRight() {
@@ -371,9 +364,8 @@ void robot_stopMotorRight() {
 	motor_command[0] = opOUTPUT_STOP;
 	motor_command[1] = MOTOR_PORT_RIGHT;
 	int s = write(motor_file, motor_command, 2);
-	printf(
-			"robot_stopMotorRight command : [%d, %d] written size: %d on file: %d\n",
-			motor_command[0], motor_command[1], s, motor_file);
+	printf("robot_stopMotorRight command : [%d, %d] written size: %d on file: %d\n", motor_command[0], motor_command[1],
+			s, motor_file);
 	rPower = 0;
 }
 void robot_stopMotorLeft() {
@@ -383,9 +375,8 @@ void robot_stopMotorLeft() {
 	motor_command[0] = opOUTPUT_STOP;
 	motor_command[1] = MOTOR_PORT_LEFT;
 	int s = write(motor_file, motor_command, 2);
-	printf(
-			"robot_stopMotorLeft command : [%d, %d] written size: %d on file: %d\n",
-			motor_command[0], motor_command[1], s, motor_file);
+	printf("robot_stopMotorLeft command : [%d, %d] written size: %d on file: %d\n", motor_command[0], motor_command[1],
+			s, motor_file);
 	lPower = 0;
 }
 void robot_setMotorRightSpeed(int speed) {
@@ -516,8 +507,7 @@ long robot_getRightInternalCounter() {
 
 int robot_isButton1Pressed() {
 	int buttonPort = SENSOR_PORT_1;
-	unsigned char v =
-			(unsigned char) pAnalog->Pin1[buttonPort][pAnalog->Actual[buttonPort]];
+	unsigned char v = (unsigned char) pAnalog->Pin1[buttonPort][pAnalog->Actual[buttonPort]];
 	if (v < 225) {
 		printf("Pressed\n");
 		return TRUE;
@@ -539,34 +529,36 @@ void robot_startMenu() {
 		} else {
 			robot_displayText(1, "Mode ROUGE");
 		}
-		usleep(500);
+		usleep(100000);
 		if (robot_isButtonPressed(1)) {
 			modeRed = !modeRed;
-		}
-		if (robot_isButtonPressed(2)) {
+		} else if (robot_isButtonPressed(2)) {
 			stop = TRUE;
 		}
 	}
 	cc_setMirrorCoordinates(modeRed);
 }
 void robot_waitStart() {
+	while (!robot_isEmergencyPressed()) {
+		usleep(100000);
+	}
 	robot_displayText(1, "Ready to start!");
 	while (robot_isEmergencyPressed()) {
-		usleep(100);
+		usleep(100000);
 	}
+	robot_displayText(1, "Starting....!");
 }
 int robot_isDetectingObstacle() {
 	int IR_REMOTE_CONTROL_CHANNEL = 0;
-	int dist =
-			(unsigned char) pUART->Raw[SENSOR_PORT_4][pUART->Actual[SENSOR_PORT_4]][IR_REMOTE_CONTROL_CHANNEL];
+	int dist = (unsigned char) pUART->Raw[SENSOR_PORT_4][pUART->Actual[SENSOR_PORT_4]][IR_REMOTE_CONTROL_CHANNEL];
 
 //	printf("IR Remote Button: %d\n", dist);
 
 	return dist < 30;
 }
 void robot_displayText(int line, char* text) {
-	dLcdDrawText(my_lcd.Lcd, FG_COLOR, 2, 20 * (line + 1), NORMAL_FONT,
-			(signed char *) text);
+	printf("LCD: %s\n", text);
+	dLcdDrawText(my_lcd.Lcd, FG_COLOR, 2, 20 * (line + 1), NORMAL_FONT, (signed char *) text);
 	dLcdUpdate(&my_lcd);
 }
 
@@ -597,9 +589,9 @@ void robot_setLedStatus(int status) {
 }
 void robot_initPID() {
 	//motion_configureAlphaPID(0.0005f, 0.00001f, 0.000000f); //chaff
-		//motion_configureDeltaPID(0.00080f, 0.0f, 0.0f);//chaff
+	//motion_configureDeltaPID(0.00080f, 0.0f, 0.0f);//chaff
 
-		motion_configureAlphaPID(0.0008f, 0.0001f, 0.000000f);
-		motion_configureDeltaPID(0.00030f, 0.0f, 0.0f);
+	motion_configureAlphaPID(0.0008f, 0.0001f, 0.000000f);
+	motion_configureDeltaPID(0.00030f, 0.0f, 0.0f);
 }
 #endif
