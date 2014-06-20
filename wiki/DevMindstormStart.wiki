@@ -14,6 +14,9 @@ Retour sur WikiStart
 Pour compiler:
 https://developer.ridgerun.com/wiki/index.php/Code_Sourcery_ARM_toolchain_2009q1-203
 
+Pour les maj
+http://shukra.cedt.iisc.ernet.in/emsys/docs/codesourcery/html/getting-started/chap-release.html
+
 == Communication ==
 
 == Tests unitaires ==
