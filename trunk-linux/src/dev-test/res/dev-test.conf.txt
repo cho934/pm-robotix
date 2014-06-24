@@ -1,5 +1,0 @@
-first : firstValue
-second : second value
-
-third : 0.001
-int : 10
