@@ -1,0 +1,39 @@
+base-RedSpeedForw-P : 170.0
+base-RedSpeedForw-I : 10.0
+base-RedSpeedForw-D : 5.0
+
+base-LeftSpeedForw-P : 0
+base-LeftSpeedForw-I : 0
+base-LeftSpeedForw-D : 0
+base-LeftSpeedBack-P : 0
+base-LeftSpeedBack-I : 0
+base-LeftSpeedBack-D : 0
+base-LeftPos-P : 0.13
+base-LeftPos-I : 0.00001
+base-LeftPos-D : 0.4
+
+base-RightSpeedForw-P : 0
+base-RightSpeedForw-I : 0
+base-RightSpeedForw-D : 0
+base-RightSpeedBack-P : 0
+base-RightSpeedBack-I : 0
+base-RightSpeedBack-D : 0
+base-RightPos-P : 0.13
+base-RightPos-I : 0.00001
+base-RightPos-D : 0.4
+
+
+servoColorSorting-Min : 550
+servoColorSorting-Med : 1000
+servoColorSorting-Max : 1900
+servoColorSorting-Speed : 0
+
+servoBalloonInflate-Min : 300
+servoBalloonInflate-Med : 300
+servoBalloonInflate-Max : 2100
+servoBalloonInflate-Speed : 0
+
+servoLevier-Min : 2050
+servoLevier-Med : 3500
+servoLevier-Max : 3500
+servoLevier-Speed : 0

@@ -1,0 +1,258 @@
+/*!
+ * \file
+ * \brief Implémentation de la classe StateInitialize.
+ */
+
+#include "StateInitialize.hpp"
+
+#include <stdint.h>
+
+#include "../../common/cpp/Adafruit_RGBLCDShield.hpp"
+#include "../../common/cpp/LedBar.hpp"
+#include "../../common/cpp/Logger.hpp"
+#include "../../common/cpp/Robot.hpp"
+#include "../../common/cpp/RobotColor.hpp"
+#include "Data.hpp"
+//#include "StateIADecisionMaker.hpp"
+
+pmx::IAutomateState*
+pmx::StateInitialize::execute(Robot& robot, void *data) {
+	this->logger().info() << "start" << utils::end;
+	pmx::Data* sharedData = (pmx::Data*) data;
+	//bool error = false;
+
+	if (!sharedData->skipSetup()) {
+		robot.lcdBoard().setBacklight(LCD_ON);
+		robot.lcdBoard().clear();
+		robot.lcdBoard().print("PMX...Initialize !");
+	}
+
+	//skip setup
+	if (!sharedData->skipSetup()) {
+		logger().debug() << "Initialize color..." << utils::end;
+
+		//prise en compte de la couleur de match
+		logger().debug() << "=> Choose PMX COLOR..." << utils::end;
+		robot.lcdBoard().setCursor(0, 1);
+		robot.lcdBoard().print("COLOR ?");
+		robot.ledBar().startK2Mil(50000, 50000, false);
+
+		robot.myColorIs(pmx::PMXNOCOLOR);
+
+		//wait
+		uint8_t buttons = robot.lcdBoard().readButtons();
+		while (!(buttons & BUTTON_SELECT) || robot.myColor() == pmx::PMXNOCOLOR) {
+			buttons = robot.lcdBoard().readButtons();
+			if (buttons) {
+				if (buttons & BUTTON_LEFT) {
+					robot.lcdBoard().setCursor(0, 1);
+					robot.lcdBoard().print("COLOR YELLOW ");
+					robot.myColorIs(pmx::PMXYELLOW);
+					logger().info() << "=> YELLOW..." << utils::end;
+				}
+				if (buttons & BUTTON_RIGHT) {
+					robot.lcdBoard().setCursor(0, 1);
+					robot.lcdBoard().print("COLOR RED     ");
+					robot.myColorIs(pmx::PMXRED);
+					logger().info() << "=> RED..." << utils::end;
+				}
+				if (buttons & BUTTON_SELECT) {
+					logger().info() << "=> SELECT..." << utils::end;
+					//robot.lcdBoard().clear();
+					//robot.lcdBoard().setCursor(0, 0);
+					//robot.lcdBoard().print("NEXT ");
+					//robot.lcdBoard().setBacklight(LCD_OFF);
+				}
+				if (buttons & BUTTON_DOWN) {
+					logger().info() << "Initialize P4 P6..." << utils::end;
+
+					robot.servoDxlP6front().enable();
+					robot.servoDxlP6front().turnMin();
+					robot.servoDxlP6front().turnMin();
+
+					robot.servoDxlP4().enable();
+					robot.servoDxlP4().turnMin();
+					robot.servoDxlP4().turnMin();
+
+					robot.servoDxlP14().enable();
+					robot.servoDxlP14().turnMin();
+					robot.servoDxlP14().turnMin();
+
+					robot.servoDxlP6front().turnMax();
+					robot.servoDxlP6front().turnMax();
+					robot.servoDxlP6front().freeMotion();
+
+					logger().info() << "Initialize mechanical..." << utils::end;
+					robot.servoDxlP4().turnMax();
+					robot.servoDxlP4().turnMax();
+					robot.servoDxlP4().freeMotion();
+
+					robot.servoDxlLeft().enable();
+					robot.servoDxlLeft().turnMin();
+					robot.servoDxlLeft().turnMax();
+					robot.servoDxlLeft().turnMin();
+					robot.servoDxlLeft().freeMotion();
+
+					robot.servoDxlRight().enable();
+					robot.servoDxlRight().turnMin();
+					robot.servoDxlRight().turnMax();
+					robot.servoDxlRight().turnMin();
+					robot.servoDxlRight().freeMotion();
+
+					robot.servoDxlBallLaunch().enable();
+					robot.servoDxlBallLaunch().turnMin();
+					robot.servoDxlBallLaunch().turnMax();
+					robot.servoDxlBallLaunch().turnMin();
+					robot.servoDxlBallLaunch().freeMotion();
+
+					robot.servoDxlFiletLaunch().enable();
+					robot.servoDxlFiletLaunch().turnMin();
+					robot.servoDxlFiletLaunch().turnMax();
+					robot.servoDxlFiletLaunch().turnMin();
+					robot.servoDxlFiletLaunch().freeMotion();
+
+					logger().info() << "End Initialize mechanical." << utils::end;
+				}
+				if (buttons & BUTTON_UP) {
+					logger().info() << "Initialize mechanical..." << utils::end;
+					robot.servoDxlLeft().enable();
+					robot.servoDxlLeft().turnMin();
+					robot.servoDxlLeft().freeMotion();
+
+					robot.servoDxlRight().enable();
+					robot.servoDxlRight().turnMin();
+					robot.servoDxlRight().freeMotion();
+
+					robot.servoDxlBallLaunch().enable();
+					robot.servoDxlBallLaunch().turnMin();
+					robot.servoDxlBallLaunch().freeMotion();
+
+					robot.servoDxlFiletLaunch().enable();
+					robot.servoDxlFiletLaunch().turnMin();
+					robot.servoDxlFiletLaunch().freeMotion();
+
+					robot.servoDxlP14().enable();
+					robot.servoDxlP14().turnMin();
+					robot.servoDxlP14().turnMin();
+
+					robot.servoDxlP6front().enable();
+					robot.servoDxlP6front().turnMin();
+					robot.servoDxlP6front().freeMotion();
+
+					robot.servoDxlP4().enable();
+					robot.servoDxlP4().turnMin();
+					robot.servoDxlP4().freeMotion();
+
+					logger().info() << "End Initialize mechanical." << utils::end;
+				}
+			}
+		}
+		/*
+		 //wait
+		 uint8_t buttons = robot.lcdBoard().readButtons();
+		 while (true ) {
+
+		 if (buttons) {
+		 if (buttons & BUTTON_LEFT) {
+		 robot.lcdBoard().setCursor(0, 1);
+		 robot.lcdBoard().print("COLOR YELLOW ");
+		 robot.myColorIs(pmx::PMXYELLOW);
+		 logger().info() << "=> YELLOW..." << utils::end;
+		 } else if (buttons & BUTTON_RIGHT) {
+		 robot.lcdBoard().setCursor(0, 1);
+		 robot.lcdBoard().print("COLOR RED     ");
+		 robot.myColorIs(pmx::PMXRED);
+		 logger().info() << "=> RED..." << utils::end;
+		 } else if (buttons & BUTTON_SELECT) {
+		 //robot.lcdBoard().clear();
+		 //robot.lcdBoard().setCursor(0, 0);
+		 //robot.lcdBoard().print("NEXT ");
+		 //robot.lcdBoard().setBacklight(LCD_OFF);
+		 if (robot.myColor() != pmx::PMXNOCOLOR)
+		 break;
+		 } else if (buttons & BUTTON_DOWN) {
+		 logger().info() << "Initialize mechanical..." << utils::end;
+		 robot.servoDxlLeft().enable();
+		 robot.servoDxlLeft().turnMin();
+		 robot.servoDxlLeft().turnMax();
+		 robot.servoDxlLeft().turnMin();
+		 robot.servoDxlLeft().freeMotion();
+
+		 robot.servoDxlRight().enable();
+		 robot.servoDxlRight().turnMin();
+		 robot.servoDxlRight().turnMax();
+		 robot.servoDxlRight().turnMin();
+		 robot.servoDxlRight().freeMotion();
+
+		 robot.servoDxlBallLaunch().enable();
+		 robot.servoDxlBallLaunch().turnMin();
+		 robot.servoDxlBallLaunch().turnMax();
+		 robot.servoDxlBallLaunch().turnMin();
+		 robot.servoDxlBallLaunch().freeMotion();
+
+		 robot.servoDxlFiletLaunch().enable();
+		 robot.servoDxlFiletLaunch().turnMin();
+		 robot.servoDxlFiletLaunch().turnMax();
+		 robot.servoDxlFiletLaunch().turnMin();
+		 robot.servoDxlFiletLaunch().freeMotion();
+
+		 logger().info() << "End Initialize mechanical." << utils::end;
+		 } else if (buttons & BUTTON_UP) {
+		 logger().info() << "Initialize mechanical..." << utils::end;
+		 robot.servoDxlLeft().enable();
+		 robot.servoDxlLeft().turnMin();
+		 robot.servoDxlLeft().freeMotion();
+
+		 robot.servoDxlRight().enable();
+		 robot.servoDxlRight().turnMin();
+		 robot.servoDxlRight().freeMotion();
+
+		 robot.servoDxlBallLaunch().enable();
+		 robot.servoDxlBallLaunch().turnMin();
+		 robot.servoDxlBallLaunch().freeMotion();
+
+		 robot.servoDxlFiletLaunch().enable();
+		 robot.servoDxlFiletLaunch().turnMin();
+		 robot.servoDxlFiletLaunch().freeMotion();
+
+		 logger().info() << "End Initialize mechanical." << utils::end;
+		 }
+		 }
+		 buttons = robot.lcdBoard().readButtons();
+		 }*/
+
+		robot.ledBar().startReset();
+		robot.ledBar().stop(true);
+		logger().debug() << "End Initialize color." << utils::end;
+	}
+
+	if (robot.myColor() == pmx::PMXRED)
+		logger().info() << "color: RED" << utils::end;
+	if (robot.myColor() == pmx::PMXYELLOW)
+		logger().info() << "color: YELLOW" << utils::end;
+	if (robot.myColor() == pmx::PMXNOCOLOR) {
+		logger().error() << "color: NOCOLOR" << utils::end;
+		exit(0);
+	}
+
+	//Ajout des stratégies
+	if (robot.myRunningMode() == pmx::ROBOTMATCHES) {
+		logger().debug() << "ROBOTMATCHES" << utils::end;
+		//configure IA
+		sharedData->decisionMaker->IASetupMatches();
+		robot.lcdBoard().print("PMX MATCH GO !");
+	} else if (robot.myRunningMode() == pmx::ROBOTHOMOLOGATION) {
+		logger().debug() << "ROBOTHOMOLOGATION" << utils::end;
+		//configure IA
+		sharedData->decisionMaker->IASetupHomologation();
+
+		robot.lcdBoard().print("HOMOLOGATION GO !");
+	} else if (robot.myRunningMode() == pmx::ROBOTTABLETEST) {
+		logger().debug() << "ROBOTTABLETEST" << utils::end;
+		//configure IA
+		sharedData->decisionMaker->IASetupTableTest();
+		robot.lcdBoard().print("TABLE TEST GO !");
+	}
+
+	return this->getState("next");
+}
