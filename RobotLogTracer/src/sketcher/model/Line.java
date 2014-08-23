@@ -17,6 +17,7 @@ public class Line implements Object2D {
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
+      System.out.println("Line "+x1+","+y1+" ->"+x2+","+y2);
     }
 
     public void renderBackground(Graphics2D graphics, int offsetX, int offsetY, int zoom) {
@@ -56,7 +57,7 @@ public class Line implements Object2D {
             graphics.drawLine(x1OnScreen - radius, y1OnScreen, x2OnScreen + radius, y2OnScreen);
             graphics.drawLine(x1OnScreen, y1OnScreen - radius, x2OnScreen, y2OnScreen + radius);
         }
-
+        System.out.println("Line "+x1OnScreen+","+y1OnScreen+" ->"+x2OnScreen+","+y2OnScreen);
     }
 
     public void setEnd(int x, int y) {
