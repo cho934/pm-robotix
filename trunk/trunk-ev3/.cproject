@@ -111,12 +111,13 @@
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="refreshScope" versionNumber="2">
-		<configuration configurationName="Linux x86">
-			<resource resourceType="PROJECT" workspacePath="/EV3"/>
-		</configuration>
 		<configuration configurationName="Release">
 			<resource resourceType="PROJECT" workspacePath="/EV3"/>
 		</configuration>
+		<configuration configurationName="Linux x86">
+			<resource resourceType="PROJECT" workspacePath="/EV3"/>
+		</configuration>
+		<configuration configurationName="EV3"/>
 		<configuration configurationName="Debug">
 			<resource resourceType="PROJECT" workspacePath="/EV3"/>
 		</configuration>
