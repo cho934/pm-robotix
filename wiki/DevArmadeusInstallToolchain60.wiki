@@ -21,16 +21,16 @@ $ sudo apt-get install expect
 == Dernier Snapshot GIT ==
 {{{
 $ cd /install
-$ git clone git://git.code.sf.net/p/armadeus/code armadeus
+$ git clone git://git.code.sf.net/p/armadeus/code armadeus-git
 }}}
 
-== Download Armadeus 3.4 ==
-https://sourceforge.net/projects/armadeus/files/armadeus/armadeus-3.4/
+== Download Armadeus 6.0 ==
+https://sourceforge.net/projects/armadeus/files/armadeus/
 
 
 == Configuration du noyau ==
 {{{
-$ cd /armadeus/compilation2 
+$ cd /install/armadeus-git/
 $ make apf9328_defconfig
 }}}
 
