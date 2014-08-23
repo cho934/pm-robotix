@@ -3,7 +3,7 @@ Retour sur DevStart
 
 = La machine virtuelle de développement =
 
-=== VirtualBox + lubuntu 14.04 + Eclipse ===
+=== virtualBox + lubuntu 14.04 + eclipse ===
  * La distribution linux utilisée [wiki:DevEnvDistributionLinux]
  * les chemins à connaitre sur la VM:
    * /install/armadeus-git/ : emplacement de compilation (attention 10Go d'espace libre sont nécessaires)
@@ -25,11 +25,17 @@ sudo apt-get install eclipse
 {{{
 $ sudo fdisk /dev/sdb
 }}}
+
  then type o press enter # creates a new table
+
  then type n press enter # creates a new partition
+
  then type p press enter # makes a primary partition.
+
  then type 1 press enter # creates it as the 1st partition
+
  finally type w #this will right any changes to disk.
+
 {{{
 $ sudo mkfs.ext4 /dev/sdb1
 $ sudo mkdir /install
@@ -44,17 +50,19 @@ $ sudo mount -t ext4 /dev/sdb1 /install
 Then edit /etc/fstab
 {{{
 #device        mountpoint             fstype    options  dump   fsck
-/dev/sdb1    /home/yourname/mydata    ext4    defaults    0    1
+/dev/sdb1    /install    ext4    defaults    0    1
 }}}
 
 = L'environnement logiciel APF9328 =
 
-== 1. La compilation ([http://www.armadeus.com/wiki/index.php?title=Armadeus_3 Armadeus:Armadeus 3.4]) et la configuration (réseau, logiciels, système d'exploitation) ==
+== 1. La compilation et la configuration (réseau, logiciels, système d'exploitation) ==
 
- * DevArmadeusInstallToolchain : Paramètres de compilation du noyau linux
- * DevArmadeusBiosUpdate       : Paramètres de configuration du BIOS de la carte APF9328
- * DevArmadeusSystemConf       : Paramètres de configuration du système APF9328
+ * wiki:DevArmadeusInstallToolchain60 : compilation 6.0
+ * DevArmadeusBiosUpdate              : Configuration du BIOS de la carte APF9328
+ * DevArmadeusSystemConf              : Configuration du système APF9328
 
+Ancienne version:
+ * DevArmadeusInstallToolchain : compilation armadeus 3.4 ([http://www.armadeus.com/wiki/index.php?title=Armadeus_3 Armadeus:Armadeus 3.4])
 
 == 2. Connexion par RS232 avec Kermit (voir [http://www.armadeus.com/wiki/index.php?title=Kermit Armadeus:Kermit]) ==
 
