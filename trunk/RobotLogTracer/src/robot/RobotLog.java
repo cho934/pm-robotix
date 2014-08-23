@@ -41,7 +41,6 @@ public class RobotLog {
             System.err.println(e.getMessage());
         }
     }
-
     private void parseLine(String line) {
         if (line.length() < 2) {
             return;
