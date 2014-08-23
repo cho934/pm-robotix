@@ -18,6 +18,16 @@ $ sudo apt-get install lrzsz
 $ sudo apt-get install expect
 }}}
 
+== Virtualbox shared folder ==
+ * add user permission
+{{{
+$ sudo adduser pmx vboxsf
+}}}
+ * reconfigure dash
+{{{
+$ sudo dpkg-reconfigure -plow dash
+}}}
+
 == Dernier Snapshot GIT ==
 {{{
 $ cd /install
