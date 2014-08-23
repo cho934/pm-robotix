@@ -20,6 +20,7 @@ $ sudo apt-get install expect
 
 == Dernier Snapshot GIT ==
 {{{
+$ cd /install
 $ git clone git://git.code.sf.net/p/armadeus/code armadeus
 }}}
 
