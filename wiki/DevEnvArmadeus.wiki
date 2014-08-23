@@ -53,6 +53,7 @@ Then edit /etc/fstab
 /dev/sdb1    /install    ext4    defaults    0    1
 }}}
 
+
 = L'environnement logiciel APF9328 =
 
 == 1. La compilation et la configuration (réseau, logiciels, système d'exploitation) ==
