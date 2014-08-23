@@ -3,7 +3,7 @@ Retour sur DevStart
 
 = La machine virtuelle de développement =
 
-=== virtualBox + lubuntu 14.04 + eclipse ===
+=== 1. virtualBox + lubuntu 14.04 + eclipse ===
  * La distribution linux utilisée [wiki:DevEnvDistributionLinux]
  * les chemins à connaitre sur la VM:
    * /install/armadeus-git/ : emplacement de compilation (attention 10Go d'espace libre sont nécessaires)
@@ -19,7 +19,7 @@ sudo apt-get install eclipse
  * Installer *Nautilus*
 
 
-== 6. Montage additionel sur hôte ==
+== 2. Montage additionel sur hôte ==
 
  * ajout d'un disque dur dans virtualbox
 {{{
