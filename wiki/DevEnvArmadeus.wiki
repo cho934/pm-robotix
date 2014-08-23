@@ -1,5 +1,52 @@
 Retour sur DevStart
 
+
+= La machine virtuelle de développement =
+
+=== VirtualBox + lubuntu 14.04 + Eclipse ===
+ * La distribution linux utilisée [wiki:DevEnvDistributionLinux]
+ * les chemins à connaitre sur la VM:
+   * /install/armadeus-git/ : emplacement de compilation (attention 10Go d'espace libre sont nécessaires)
+   * /home/pmx/tftpboot/ : emplacement des fichiers compilés pouvant être uploadé dans la carte Armadeus
+
+ * les chemins à connaitre sur la carte linux Armadeus embarquée:
+   * /pmx : emplacement SDcard où se situe le programme.
+
+ * Installation de java (en installant Eclipse 3.8)
+sudo apt-get install eclipse
+
+ * Installer les packages *doxygen* et *graphviz* pour permettre la génération de la documentation.
+ * Installer *Nautilus*
+
+
+== 6. Montage additionel sur hôte ==
+
+ * ajout d'un disque dur dans virtualbox
+{{{
+$ sudo fdisk /dev/sdb
+}}}
+ then type o press enter # creates a new table
+ then type n press enter # creates a new partition
+ then type p press enter # makes a primary partition.
+ then type 1 press enter # creates it as the 1st partition
+ finally type w #this will right any changes to disk.
+{{{
+$ sudo mkfs.ext4 /dev/sdb1
+$ sudo mkdir /install
+$ sudo chmod 777 /install
+}}}
+
+
+ * accès à la partition de compilation armadeus (ancienne VM): 
+{{{
+$ sudo mount -t ext4 /dev/sdb1 /install
+}}}
+Then edit /etc/fstab
+{{{
+#device        mountpoint             fstype    options  dump   fsck
+/dev/sdb1    /home/yourname/mydata    ext4    defaults    0    1
+}}}
+
 = L'environnement logiciel APF9328 =
 
 == 1. La compilation ([http://www.armadeus.com/wiki/index.php?title=Armadeus_3 Armadeus:Armadeus 3.4]) et la configuration (réseau, logiciels, système d'exploitation) ==
@@ -89,30 +136,10 @@ $ sudo chown -R nobody /home/pmx/tftpboot
 $ ssh root@192.168.7.253
 }}}
 
-== 6. Montage additionel sur hôte ==
 
- * accès à la partition de compilation armadeus (ancienne VM): 
-{{{
-$ mount -t ext3 /dev/sdb /armadeus
-}}}
 
-== 7. La machine virtuelle de développement ==
 
-=== VirtualBox + lubuntu 10.04 ===
- * La distribution linux utilisée [wiki:DevEnvNetbeans6 DevEnvDistributionLinux]
- * les chemins à connaitre sur la VM:
-   * /media/Armadeus/armadeus-3.4/ : emplacement de compilation (attention 10Go d'espace libre sont nécessaires)
-   * /home/pmx/tftpboot/ : emplacement des fichiers compilés pouvant être uploadé dans la carte Armadeus
-
- * les chemins à connaitre sur la carte linux Armadeus embarquée:
-   * /pmx : emplacement SDcard où se situe le programme.
-
- * Installation de java version "1.6.0_15"
- * Utilisation de Netbeans 7.4 : [wiki:DevEnvNetbeans]
- * Installer les packages *doxygen* et *graphviz* pour permettre la génération de la documentation.
- * Installer *Nautilus*
-
-=== Les bases du développement Armadeus : Compilation C++ ===
+== 6. Les bases du développement Armadeus : Compilation C++ ==
  * Obtenir les variables d'environnement
 {{{
 $ make shell_env
