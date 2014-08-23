@@ -43,6 +43,7 @@ void init(int lResolution, int rResolution, float dist, int startAsserv) {
 	}
 }
 void test() {
+
 	robot_init();
 	robot_startMotors();
 

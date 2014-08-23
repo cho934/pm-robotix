@@ -260,14 +260,14 @@ void robot_init() {
 
 	long left = robot_getLeftExternalCounter();
 	long right = robot_getRightExternalCounter();
-	int i=0;
-	for(i=0;i<20;i++){
+	//int i=0;
+	//for(i=0;i<20;i++){
 		printf("Reset sensors %ld %ld\n", left, right);
 		robot_resetSensors();
 		usleep(200);
 		left = robot_getLeftExternalCounter();
 		right = robot_getRightExternalCounter();
-	}
+	//}
 
 	//Initialize and clear screen
 	dLcdInit(my_lcd.Lcd);
