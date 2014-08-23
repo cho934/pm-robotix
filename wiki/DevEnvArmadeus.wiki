@@ -4,8 +4,8 @@ Retour sur DevStart
 = L'environnement logiciel APF9328 =
 
 == 1. La compilation et la configuration (réseau, logiciels, système d'exploitation) ==
- * [wiki:DevEnvDistributionLinux]       : L'environnement Linux nécessaire
- * [wiki:DevArmadeusInstallToolchain60] : compilation 6.0
+ * [DevEnvDistributionLinux]       : L'environnement Linux nécessaire
+ * [DevArmadeusInstallToolchain60] : compilation 6.0
  * DevArmadeusBiosUpdate              : Configuration du BIOS de la carte APF9328
  * DevArmadeusSystemConf              : Configuration du système APF9328
 
