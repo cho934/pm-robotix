@@ -1,6 +1,11 @@
 Retour sur DevEnvArmadeus
 
-= Environnement actuel : Linux lUbuntu 10.04 / Netbeans 7.4 =
+= Environnement actuel : Linux lUbuntu 14.04 LTS / Eclipse Luna for C++ =
+[http://www.lubuntu.net/]
+[https://www.eclipse.org/downloads/]
+
+
+= Environnement 2014 : Linux lUbuntu 10.04 / Netbeans 7.4 =
 [http://www.lubuntu.net/]
 
 == Netbeans 7.4 avec Java jdk 7 ==
@@ -53,4 +58,3 @@ Ajouter les lignes suivantes en dessous du "separator":
 a ”A Faster Ubuntu”
 
 [http://crunchbanglinux.org/]
-
