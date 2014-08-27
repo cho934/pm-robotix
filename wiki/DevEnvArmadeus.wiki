@@ -13,6 +13,10 @@ Ancienne version:
  * DevArmadeusInstallToolchain : compilation armadeus 3.4 ([http://www.armadeus.com/wiki/index.php?title=Armadeus_3 Armadeus:Armadeus 3.4])
 
 == 2. Connexion par RS232 avec Kermit (voir [http://www.armadeus.com/wiki/index.php?title=Kermit Armadeus:Kermit]) ==
+ * Install
+{{{
+$ sudo apt-get install ckermit
+}}} 
  * Edit/Create .kermrc file in your $HOME/ directory (ex: /home/pmx/.kermrc) and fill it with:
 {{{
 #set line /dev/ttyS0 
@@ -64,7 +68,10 @@ Stop : 1bit
 }}}
 
 == 4. Configuration TFTP server configuration (hôte) (voir [http://www.armadeus.com/wiki/index.php?title=Communicate Armadeus:Communicate]) ==
- 
+ * Install tftpd : 
+{{{
+$ sudo apt-get install tftpd xinetd
+}}}
  * Créer le répertoire /home/pmx/tftpboot
  * Créer et/ou modifier le fichier /etc/xinetd.d/tftp
 {{{
