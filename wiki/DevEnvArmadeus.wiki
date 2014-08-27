@@ -13,6 +13,24 @@ Ancienne version:
  * DevArmadeusInstallToolchain : compilation armadeus 3.4 ([http://www.armadeus.com/wiki/index.php?title=Armadeus_3 Armadeus:Armadeus 3.4])
 
 == 2. Connexion par RS232 avec Kermit (voir [http://www.armadeus.com/wiki/index.php?title=Kermit Armadeus:Kermit]) ==
+ * Edit/Create .kermrc file in your $HOME/ directory (ex: /home/pmx/.kermrc) and fill it with:
+{{{
+#set line /dev/ttyS0 
+set line /dev/ttyUSB0
+set speed 115200
+set carrier-watch off
+set handshake none
+set flow-control none
+robust
+set file type bin
+set file name lit
+set rec pack 1000
+set send pack 1000
+set window 5
+set transmit linefeed on
+}}}
+
+use ttyUSB0 if you use USB2serial like TU-S9.
 
 *USAGE :*
  * To launch it :
