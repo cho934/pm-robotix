@@ -35,7 +35,7 @@ use ttyUSB0 if you use USB2serial like TU-S9.
 *USAGE :*
  * To launch it :
 {{{
- $ kermit -c
+ $ sudo kermit -c
 }}}
  * To login :
 {{{
