@@ -11,8 +11,8 @@ setenv ipaddr 192.168.7.253
 setenv netmask 255.255.255.0
 setenv serverip 192.168.7.16
 setenv gatewayip 192.168.7.254
-setenv bootdelay 6
-setenv bootcmd run unlock_regs; run jffsboot
+setenv bootdelay 5
+setenv "bootcmd run unlock_regs; run jffsboot"
 saveenv 
 }}}
 ce qui donne:
@@ -29,7 +29,7 @@ hostname="apf9328"
 gatewayip=192.168.7.254
 bootcmd=run unlock_regs; run jffsboot
 ...
-bootdelay=6 (au lieu de 20 secondes par défaut)
+bootdelay=5 (au lieu de 20 secondes par défaut)
 ...
 
 BIOS>
