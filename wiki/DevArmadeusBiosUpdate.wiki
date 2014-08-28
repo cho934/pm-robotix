@@ -6,11 +6,22 @@ Retour sur DevEnvArmadeus
 
  * Configuration :
 {{{
-BIOS> printenv / saveenv / setenv ...
+BIOS> 
+setenv ipaddr 192.168.7.253
+setenv netmask 255.255.255.0
+setenv serverip 192.168.7.16
+setenv gatewayip 192.168.7.254
+setenv bootdelay 6
+setenv bootcmd run unlock_regs; run jffsboot
+saveenv 
+}}}
+ce qui donne:
+{{{
+BIOS> printenv
 
 ipaddr=192.168.7.253
 netmask=255.255.255.0
-serverip=192.168.7.20            (the IP address of your tftp server/PC hosting the files to download)
+serverip=192.168.7.16            (the IP address of your tftp server/PC hosting the files to download)
 rootpath=/tftpboot/apf9328-root  (to boot Linux over NFS)
 ntpserverip=217.147.208.1
 board_name=apf9328
