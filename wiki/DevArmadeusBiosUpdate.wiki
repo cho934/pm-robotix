@@ -67,6 +67,14 @@ Linux version 2.6.29.6 (root@pmx-mint8) (gcc version 4.2.1) #13 PREEMPT Fri Mar 
 = Update FPGA firmware APF9328 =
  * voir [http://www.armadeus.com/wiki/index.php?title=MotionSystem#FPGA_Firmware Armadeus:FPGA_Firmware]
 
+ * follow
+{{{
+BIOS> tftpboot ${loadaddr} servo_top.bit
+BIOS> fpga loadb 0 ${loadaddr} ${filesize} 
+BIOS> setenv firmware_autoload 1
+BIOS> saveenv
+}}}
+
  * Si le run flash_firmware donne le message d'erreur suivant :
 {{{
 Erasing FLASH
