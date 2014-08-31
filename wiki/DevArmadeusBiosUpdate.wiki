@@ -71,6 +71,7 @@ Linux version 2.6.29.6 (root@pmx-mint8) (gcc version 4.2.1) #13 PREEMPT Fri Mar 
 {{{
 BIOS> tftpboot ${loadaddr} servo_top.bit
 BIOS> fpga loadb 0 ${loadaddr} ${filesize} 
+BIOS> run flash_firmware
 BIOS> setenv firmware_autoload 1
 BIOS> saveenv
 }}}
