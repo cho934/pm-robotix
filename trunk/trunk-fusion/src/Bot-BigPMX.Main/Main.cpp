@@ -13,10 +13,13 @@ int main(int argc, char** argv)
 {
 	cout << "!!! Hello BigPMX !!!" << endl;
 
+	//Specific Robot
 	BRobotExtended robot;
+
+	//common manager
 	ConsoleUnitTestManager manager;
 
-	//add test managers for this robot
+	//add specific tests for this robot
 	manager.add(new LedBarTest());
 
 	if (argc <= 1)
