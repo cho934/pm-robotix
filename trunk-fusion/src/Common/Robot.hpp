@@ -4,14 +4,15 @@
 #include "../Action/Actions.hpp"
 #include "ConsoleUnitTestManager.hpp"
 
-
 class Robot
 {
 public:
 
 	//Action => RobotElement
 	Actions actions;
+
 	//Asserv
+
 	//IA
 
 	/*!
@@ -31,6 +32,9 @@ public:
 	Robot(Robot const&);              // Don't Implement
 	void operator=(Robot const&); // Don't implement
 
+	/*!
+	 * \brief Start the robot (console for tests or main program)..
+	 */
 	void start(ConsoleUnitTestManager manager, int argc, char** argv);
 
 };
