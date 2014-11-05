@@ -1,8 +1,6 @@
 /*
  * Robot.cpp
  *
- *  Created on: Sep 18, 2014
- *      Author: pmx
  */
 
 #include <string.h>
