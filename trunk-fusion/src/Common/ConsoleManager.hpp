@@ -1,26 +1,26 @@
 /*!
  * \file
- * \brief Définition de la classe ConsoleUnitTestManager.
+ * \brief Définition de la classe ConsoleManager.
  */
 
-#ifndef CONSOLEUNITTESTMANAGER_HPP
-#define	CONSOLEUNITTESTMANAGER_HPP
+#ifndef CONSOLEMANAGER_HPP
+#define	CONSOLEMANAGER_HPP
 
 #include <vector>
 #include <cstdlib>
-#include "ConsoleUnitTest.hpp"
+#include "FunctionalTest.hpp"
 
 /*!
  * \brief Classe de gestion de l'ensemble des tests de fonctionnement du
  * robot.
  */
-class ConsoleUnitTestManager //TODO Rename Functional test
+class ConsoleManager
 {
 public:
 	/*!
 	 * \brief Type associé aux stockages des tests.
 	 */
-	typedef std::vector<ConsoleUnitTest *> data_type;
+	typedef std::vector<FunctionalTest *> data_type;
 
 private:
 
@@ -34,12 +34,12 @@ public:
 	/*!
 	 * \brief Constructeur de la classe.
 	 */
-	ConsoleUnitTestManager();
+	ConsoleManager();
 
 	/*!
 	 * \brief Destructeur de la classe.
 	 */
-	virtual inline ~ ConsoleUnitTestManager()
+	virtual inline ~ ConsoleManager()
 	{
 	}
 
@@ -48,7 +48,7 @@ public:
 	 * \param test
 	 *        Le nouveau test associé au gestionnaire.
 	 */
-	void add(ConsoleUnitTest * test);
+	void add(FunctionalTest * test);
 
 	/*!
 	 * \brief Affiche un menu de sélection des tests.

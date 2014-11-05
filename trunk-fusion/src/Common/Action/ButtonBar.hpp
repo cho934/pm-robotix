@@ -1,7 +1,7 @@
 
 
-#ifndef PMX_BUTTONBAR_HPP_
-#define PMX_BUTTONBAR_HPP_
+#ifndef BUTTONBAR_HPP_
+#define BUTTONBAR_HPP_
 
 class ButtonBar
 {

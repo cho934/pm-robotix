@@ -3,8 +3,8 @@
  * \brief Définition des macros du projet.
  */
 
-#ifndef PMX_MACRO_HPP
-#define PMX_MACRO_HPP
+#ifndef MACRO_HPP_
+#define MACRO_HPP_
 
 /*!
  * \brief Type de données : unsigned char 0->255.

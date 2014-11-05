@@ -1,12 +1,9 @@
 #include <iostream>
 
+#include "../Common/ConsoleManager.hpp"
 #include "../Common/Action/LedBar.hpp"
-
 #include "../Bot-BigPMX/BRobotExtended.hpp"
 #include "../Bot-BigPMX/LedBarTest.hpp"
-
-#include "../Common/ConsoleUnitTestManager.hpp"
-
 
 using namespace std;
 
@@ -18,12 +15,12 @@ int main(int argc, char** argv)
 	BRobotExtended robot;
 
 	//common manager
-	ConsoleUnitTestManager manager;
+	ConsoleManager manager;
 
 	//add specific tests for this robot
 	manager.add(new LedBarTest());
 
-	//start the Robot
+	//start the Robot (functional tests or match)
 	robot.start(manager, argc, argv);
 
 	return 0;

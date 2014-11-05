@@ -1,10 +1,10 @@
 /*!
  * \file
- * \brief Définition de la classe ConsoleUnitTest. //TODO Functional test
+ * \brief Définition de la classe Functional test.
  */
 
-#ifndef CONSOLEUNITTEST_HPP
-#define	CONSOLEUNITTEST_HPP
+#ifndef FUNCTIONALTEST_HPP
+#define	FUNCTIONALTEST_HPP
 
 #include <string>
 
@@ -12,7 +12,7 @@
  * \brief Classe abstraite servant de base pour les tests de fonctionnement
  * du robot.
  */
-class ConsoleUnitTest
+class FunctionalTest
 {
 private:
 
@@ -28,7 +28,7 @@ protected:
 	 * \param name
 	 *        Nom du test.
 	 */
-	ConsoleUnitTest(const std::string & name) :
+	FunctionalTest(const std::string & name) :
 			name_(name)
 	{
 	}
@@ -38,7 +38,7 @@ public:
 	/*!
 	 * Destructeur de la classe.
 	 */
-	virtual inline ~ ConsoleUnitTest()
+	virtual inline ~ FunctionalTest()
 	{
 	}
 

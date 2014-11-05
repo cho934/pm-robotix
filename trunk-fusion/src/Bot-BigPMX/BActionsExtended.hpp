@@ -1,5 +1,5 @@
-#ifndef PMX_B_ACTIONSEXTENDED_HPP
-#define PMX_B_ACTIONSEXTENDED_HPP
+#ifndef PMX_B_ACTIONSEXTENDED_HPP_
+#define PMX_B_ACTIONSEXTENDED_HPP_
 
 #include "../Common/Action/LedBar.hpp"
 #include "../Common/Action/Actions.hpp"

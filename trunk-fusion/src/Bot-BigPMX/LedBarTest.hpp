@@ -6,13 +6,13 @@
 #ifndef LEDBARTEST_HPP
 #define	LEDBARTEST_HPP
 
-#include "../Common/ConsoleUnitTest.hpp"
+#include "../Common/FunctionalTest.hpp"
 //#include "../../common/cpp/LoggerFactory.hpp"
 
 /*!
  * \brief Effectue un test de clignotement des LEDs du tableau d'affichage.
  */
-class LedBarTest: public ConsoleUnitTest
+class LedBarTest: public FunctionalTest
 {
 private:
 
@@ -30,7 +30,7 @@ public:
 	 * \brief Constructeur de la classe.
 	 */
 	LedBarTest() :
-			ConsoleUnitTest("LedBarTest : Blink Led board directly")
+		FunctionalTest("LedBarTest : Blink Led board directly")
 	{
 	}
 

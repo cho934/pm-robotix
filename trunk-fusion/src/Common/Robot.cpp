@@ -8,11 +8,11 @@
 #include <iostream>
 
 #include "Robot.hpp"
-#include "ConsoleUnitTestManager.hpp"
+#include "ConsoleManager.hpp"
 
 using namespace std;
 
-void Robot::start(ConsoleUnitTestManager manager, int argc, char** argv)
+void Robot::start(ConsoleManager manager, int argc, char** argv)
 {
 
 	if (argc <= 1)
