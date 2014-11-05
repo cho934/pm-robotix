@@ -1,8 +1,8 @@
-#ifndef PMX_ROBOT_HPP
-#define PMX_ROBOT_HPP
+#ifndef ROBOT_HPP_
+#define ROBOT_HPP_
 
 #include "./Action/Actions.hpp"
-#include "ConsoleUnitTestManager.hpp"
+#include "ConsoleManager.hpp"
 
 class Robot
 {
@@ -35,7 +35,7 @@ public:
 	/*!
 	 * \brief Start the robot (console for tests or main program)..
 	 */
-	void start(ConsoleUnitTestManager manager, int argc, char** argv);
+	void start(ConsoleManager manager, int argc, char** argv);
 
 };
 

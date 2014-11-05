@@ -1,5 +1,5 @@
-#ifndef PMX_LEDBAR_HPP_
-#define PMX_LEDBAR_HPP_
+#ifndef LEDBAR_HPP_
+#define LEDBAR_HPP_
 
 #include "../Action.Driver/ALedDriver.hpp"
 #include "../../Common/Macro.hpp"

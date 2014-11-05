@@ -1,5 +1,5 @@
-#ifndef PMX_ALEDDRIVER_HPP_
-#define PMX_ALEDDRIVER_HPP_
+#ifndef ALEDDRIVER_HPP_
+#define ALEDDRIVER_HPP_
 
 #define LD_ORANGE 3
 

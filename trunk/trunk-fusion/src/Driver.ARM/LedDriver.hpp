@@ -1,5 +1,5 @@
-#ifndef PMX_LEDDRIVER_HPP_
-#define PMX_LEDDRIVER_HPP_
+#ifndef LEDDRIVER_HPP_
+#define LEDDRIVER_HPP_
 
 #include "../Common/Action.Driver/ALedDriver.hpp"
 

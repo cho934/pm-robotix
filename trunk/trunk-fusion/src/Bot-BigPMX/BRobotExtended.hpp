@@ -1,5 +1,5 @@
-#ifndef PMX_BOTBIGPMX_ROBOTEXTENDED_HPP
-#define PMX_BOTBIGPMX_ROBOTEXTENDED_HPP
+#ifndef PMX_BOTBIGPMX_ROBOTEXTENDED_HPP_
+#define PMX_BOTBIGPMX_ROBOTEXTENDED_HPP_
 
 #include "../Common/Robot.hpp"
 #include "BActionsExtended.hpp"
