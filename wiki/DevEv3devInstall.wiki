@@ -1,6 +1,6 @@
 #summary One-sentence summary of this page.
 
-= EV3DEV Installation =
+= 1. EV3DEV Installation =
 
  * Download latest ev3dev image file : *ev3dev-jessie-2015-02-24* 
 https://github.com/ev3dev/ev3dev/releases
@@ -11,7 +11,7 @@ For Windows : http://www.ev3dev.org/docs/tutorials/writing-sd-card-image-win32di
 
  * Then Boot ev3dev
 
-= USB Connection =
+= 2. USB Connection =
  * For Windows : http://www.ev3dev.org/docs/tutorials/setting-up-ethernet-over-usb-on-windows
 
  * For linux : http://www.ev3dev.org/docs/tutorials/setting-up-ethernet-over-usb-on-linux-networkmanager
@@ -37,19 +37,19 @@ user@host:~$ ssh root@10.42.0.3
 }}}
  * Default password : r00tme
 
-= Grow your root file system =
+= 3. Grow your root file system =
 {{{
 root@ev3dev:~# lvextend --extents +100%FREE --resizefs /dev/ev3devVG/root /dev/mmcblk0p3
 }}}
 
-= update system and last kernel = 
+= 4. Update system and last kernel = 
 {{{
 user@host:~$ apt-get update
 user@host:~$ apt-get upgrade
 user@host:~$ apt-get dist-upgrade
 }}}
 
-= Power Off =
+= 5. Power Off =
 {{{
 user@ev3dev:~# poweroff
 }}}
