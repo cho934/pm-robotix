@@ -16,5 +16,16 @@ For Windows : http://www.ev3dev.org/docs/tutorials/writing-sd-card-image-win32di
 = USB Connection =
 
 For linux : http://www.ev3dev.org/docs/tutorials/setting-up-ethernet-over-usb-on-linux-networkmanager
+ * In brickman, enable CDC driver 
+ * In brickman, enable Tethering/Gadget
+ * In linux host, System Settings > Network > change the Method to *Shared to other computers*
+ * In brickman, on the IPv4 tab, choose *Load Linux Defaults*
+ * In brickman, tick the checkbox *Connect automatically*
+ * connect with 
+{{{
+user@host:~$ ssh root@10.42.0.3
+}}}
+
+
 
 For Windows : http://www.ev3dev.org/docs/tutorials/setting-up-ethernet-over-usb-on-windows
