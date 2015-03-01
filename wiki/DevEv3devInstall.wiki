@@ -13,3 +13,8 @@ For Windows : http://www.ev3dev.org/docs/tutorials/writing-sd-card-image-win32di
 
  * Then Boot ev3dev
 
+= USB Connection =
+
+For linux : http://www.ev3dev.org/docs/tutorials/setting-up-ethernet-over-usb-on-linux-networkmanager
+
+For Windows : http://www.ev3dev.org/docs/tutorials/setting-up-ethernet-over-usb-on-windows
