@@ -1,24 +1,21 @@
 #labels Featured
-Retour sur WikiStart
-
 = 1. Lego Mindstorm NXT =
 == Présentation ==
 
 == Environnement de développement en C ==
+http://www.robotc.net/
+
 
 = 2. Lego Mindstorm EV3 =
 == Présentation ==
 
-== Environnement de développement ==
-
+== Environnements de développement ==
+=== LEGO ===
 Pour compiler:
 https://developer.ridgerun.com/wiki/index.php/Code_Sourcery_ARM_toolchain_2009q1-203
 
-Pour les maj
-http://shukra.cedt.iisc.ernet.in/emsys/docs/codesourcery/html/getting-started/chap-release.html
+Le firmware Mindstorm EV3 : V1.06H
+http://www.lego.com/en-us/mindstorms/mindstormservices/firmware-download-page/?assetid=%7B9C3FD4CD-42E7-4390-8298-83DDF5321F3A%7D
 
-== Communication ==
-
-== Tests unitaires ==
-
-== Asservissement == 
+=== EV3DEV ===
+http://www.ev3dev.org/
