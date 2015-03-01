@@ -1,0 +1,15 @@
+#summary One-sentence summary of this page.
+
+= Installation =
+
+
+ * Download latest ev3dev image file : *ev3dev-jessie-2015-02-24*
+
+https://github.com/ev3dev/ev3dev/releases
+
+ * Copy ev3dev image on the SDcard
+For linux: http://www.ev3dev.org/docs/tutorials/writing-sd-card-image-ubuntu-disk-image-writer
+For Windows : http://www.ev3dev.org/docs/tutorials/writing-sd-card-image-win32diskimager
+
+ * Then Boot ev3dev
+
