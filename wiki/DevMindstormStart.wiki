@@ -19,3 +19,5 @@ http://www.lego.com/en-us/mindstorms/mindstormservices/firmware-download-page/?a
 
 === EV3DEV ===
 http://www.ev3dev.org/
+
+How to install : DevEv3devInstall
