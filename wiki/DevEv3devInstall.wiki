@@ -34,8 +34,9 @@ user@host:~$ ssh root@10.42.0.3
 root@ev3dev:~# lvextend --extents +100%FREE --resizefs /dev/ev3devVG/root /dev/mmcblk0p3
 }}}
 
-= update system = 
+= update system and last kernel = 
 {{{
 user@host:~$ apt-get update
 user@host:~$ apt-get upgrade
+user@host:~$ apt-get dist-upgrade
 }}}
