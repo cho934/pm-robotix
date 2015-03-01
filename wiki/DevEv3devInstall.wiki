@@ -51,13 +51,15 @@ root@ev3dev:~$ apt-get dist-upgrade
 }}}
 
 
-= 5. Wifi using Connman=
+= 5. Wifi using Connman =
+_Reference_ : https://wiki.archlinux.org/index.php/Connman
  * enable Wifi
 {{{
 root@ev3dev:~$ connmanctl enable wifi
 }}}
  * list the available networks found after a scan run
 {{{
+root@ev3dev:~$ connmanctl scan wifi
 root@ev3dev:~$ connmanctl services
 *AO Wired                gadget_..._usb
     SSID       wifi_..._managed_psk
