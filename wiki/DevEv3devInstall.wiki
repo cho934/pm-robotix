@@ -27,7 +27,7 @@ For linux : http://www.ev3dev.org/docs/tutorials/setting-up-ethernet-over-usb-on
 {{{
 user@host:~$ ssh root@10.42.0.3
 }}}
-
+ * Default password : r00tme
 
 
 = Grow your root file system =
