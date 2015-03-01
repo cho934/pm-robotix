@@ -54,3 +54,22 @@ user@host:~$ apt-get dist-upgrade
 {{{
 user@ev3dev:~# poweroff
 }}}
+
+= 6. Wifi using Connman=
+ * enable Wifi
+{{{
+connmanctl enable wifi
+}}}
+
+
+
+= 7. Deactivate Brickman during startup
+
+ * Stop brickman
+{{{
+systemctl stop brickman.service
+}}}
+ * Disable brickman
+{{{
+systemctl disable brickman.service
+}}}
