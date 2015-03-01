@@ -2,11 +2,7 @@
 
 = EV3DEV Installation =
 
-
- * Download latest ev3dev image file : *ev3dev-jessie-2014-12-01* 
-
-(*ev3dev-jessie-2015-02-24* is under testing...)
-
+ * Download latest ev3dev image file : *ev3dev-jessie-2015-02-24* 
 https://github.com/ev3dev/ev3dev/releases
 
  * Copy ev3dev image on the SDcard
@@ -16,16 +12,26 @@ For Windows : http://www.ev3dev.org/docs/tutorials/writing-sd-card-image-win32di
  * Then Boot ev3dev
 
 = USB Connection =
+ * For Windows : http://www.ev3dev.org/docs/tutorials/setting-up-ethernet-over-usb-on-windows
 
-For Windows : http://www.ev3dev.org/docs/tutorials/setting-up-ethernet-over-usb-on-windows
+ * For linux : http://www.ev3dev.org/docs/tutorials/setting-up-ethernet-over-usb-on-linux-networkmanager
 
-For linux : http://www.ev3dev.org/docs/tutorials/setting-up-ethernet-over-usb-on-linux-networkmanager
+== for image ev3dev-jessie-2015-02-24 ==
  * In brickman, enable CDC driver 
- * In brickman, enable Networking > Gadget (or Tethering > Gadget)
+ * (In brickman, DON'T activate Tethering > Gadget)
  * In linux host, System Settings > Network > change the Method to *Shared to other computers*
  * In brickman, on the IPv4 tab, choose *Load Linux Defaults*
  * In brickman, tick the checkbox *Connect automatically*
- * connect with 
+ 
+== for old image ev3dev-jessie-2014-12-01 ==
+ * In brickman, enable CDC driver 
+ * In brickman, enable Networking > Gadget
+ * In linux host, System Settings > Network > change the Method to *Shared to other computers*
+ * In brickman, on the IPv4 tab, choose *Load Linux Defaults*
+ * In brickman, tick the checkbox *Connect automatically*
+
+== Connection ==
+* Connect to the EV3 using ssh 
 {{{
 user@host:~$ ssh root@10.42.0.3
 }}}
