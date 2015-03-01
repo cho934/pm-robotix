@@ -6,20 +6,20 @@ Voici toutes les explications sur le "déjà fait". Tout ce qui a été créé d
 Reprenons la maxime de Lavoisier « *Rien ne se perd, rien ne se crée, tout se transforme* ».
 
 = 1. Environnements de développement =
-== Généralités ==
+== 1.1 Généralités ==
  * DevConfig - L'environnement de développement
  * DevStandards - Les standards de codage
  * DevHelp - L'aide sur les développements
  * DevEnvDebug - Comment déboguer
 
-== Environnement C++ ==
+== 1.2 Environnement C++ ==
  * DevEnvDistributionLinux] - Liste des distributions et des environnements de développements utilisés 
  * DevEnvEclipse - Environnement de développement Eclipse / C++ / SVN
  * DevEnvNetbeans - (Deprecated) Environnement de développement Netbeans / C++ / SVN
  * DevEnvDocumentation - Documentation du code, How To...
  * DevEnvFormatting - Formatage du code
 
-=== C++ pour Armadeus APF9328 ===
+=== 1.2.1 C++ pour Armadeus APF9328 ===
  * DevEnvArmadeus - Liste des installations et de configurations à mettre en place pour utiliser la carte Armadeus APF9328
 *Les 4 binaries générés à la compilation sont :*
  * DEV_TEST : tests unitaires software non liés aux éléments du robot
@@ -27,14 +27,14 @@ Reprenons la maxime de Lavoisier « *Rien ne se perd, rien ne se crée, tout se 
  * ROBOT_TEST : tests unitaires des éléments du robot via les objets Robot.cpp (utilise les fichiers de configuration *robot-test.conf.txt* et loggerInitialize.cpp)
  * PMX : Programme principal pour l'homologation et les matches(utilise les fichiers de configuration *pmx.conf.txt* et loggerInitialize.cpp)
 
-=== C++ pour Mindstorm EV3dev ===
+=== 1.2.2 C++ pour Mindstorm EV3dev ===
 
 TODO
 
-== en C pour Arduino ==
+== 1.3 Environnement C pour Arduino ==
  * ArduinoEnv
 
-== en C pour CMUCAM3 ==
+== 1.4 Environnement C pour CMUCAM3 ==
  * DevEnvEeepc - Environnement natif avec MINT8 utilisé pour la CMUCAM3
 
 
