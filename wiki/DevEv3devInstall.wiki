@@ -42,3 +42,8 @@ user@host:~$ apt-get update
 user@host:~$ apt-get upgrade
 user@host:~$ apt-get dist-upgrade
 }}}
+
+= Power Off =
+{{{
+user@ev3dev:~# poweroff
+}}}
