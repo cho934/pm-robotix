@@ -3,7 +3,9 @@
 = EV3DEV Installation =
 
 
- * Download latest ev3dev image file : *ev3dev-jessie-2015-02-24*
+ * Download latest ev3dev image file : *ev3dev-jessie-2014-12-01* 
+
+(*ev3dev-jessie-2015-02-24* is under testing...)
 
 https://github.com/ev3dev/ev3dev/releases
 
@@ -19,7 +21,7 @@ For Windows : http://www.ev3dev.org/docs/tutorials/setting-up-ethernet-over-usb-
 
 For linux : http://www.ev3dev.org/docs/tutorials/setting-up-ethernet-over-usb-on-linux-networkmanager
  * In brickman, enable CDC driver 
- * In brickman, enable Tethering/Gadget
+ * In brickman, enable Networking > Gadget (or Tethering > Gadget)
  * In linux host, System Settings > Network > change the Method to *Shared to other computers*
  * In brickman, on the IPv4 tab, choose *Load Linux Defaults*
  * In brickman, tick the checkbox *Connect automatically*
