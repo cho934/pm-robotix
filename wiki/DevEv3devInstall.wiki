@@ -29,8 +29,13 @@ user@host:~$ ssh root@10.42.0.3
 }}}
  * Default password : r00tme
 
-
 = Grow your root file system =
 {{{
 root@ev3dev:~# lvextend --extents +100%FREE --resizefs /dev/ev3devVG/root /dev/mmcblk0p3
+}}}
+
+= update system = 
+{{{
+user@host:~$ apt-get update
+user@host:~$ apt-get upgrade
 }}}
