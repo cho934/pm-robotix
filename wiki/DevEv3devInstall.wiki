@@ -45,31 +45,42 @@ then reboot ev3.
 
 = 4. Update system and last kernel = 
 {{{
-user@host:~$ apt-get update
-user@host:~$ apt-get upgrade
-user@host:~$ apt-get dist-upgrade
+root@ev3dev:~$ apt-get update
+root@ev3dev:~$ apt-get upgrade
+root@ev3dev:~$ apt-get dist-upgrade
 }}}
 
-= 5. Power Off =
-{{{
-user@ev3dev:~# poweroff
-}}}
 
-= 6. Wifi using Connman=
+= 5. Wifi using Connman=
  * enable Wifi
 {{{
-connmanctl enable wifi
+root@ev3dev:~$ connmanctl enable wifi
+}}}
+ * list the available networks found after a scan run
+{{{
+root@ev3dev:~$ connmanctl services
+*AO Wired                gadget_..._usb
+    SSID       wifi_..._managed_psk
+}}}
+ * connect to the selected wifi
+{{{
+root@ev3dev:~$ connmanctl connect wifi_...
 }}}
 
 
-
-= 7. Deactivate Brickman during startup
+= 6. Deactivate Brickman during startup =
 
  * Stop brickman
 {{{
-systemctl stop brickman.service
+root@ev3dev:~$ systemctl stop brickman.service
 }}}
  * Disable brickman
 {{{
-systemctl disable brickman.service
+root@ev3dev:~$ systemctl disable brickman.service
+}}}
+
+
+= 10. Power Off =
+{{{
+user@ev3dev:~# poweroff
 }}}
