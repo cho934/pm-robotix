@@ -130,7 +130,7 @@ root@ev3dev:~$ systemctl disable brickman.service
 }}}
 
 
-= 10. Power Off =
+= 10. Power Off and exit ssh =
 {{{
-user@ev3dev:~$ poweroff
+user@ev3dev:~$ poweroff & exit
 }}}
