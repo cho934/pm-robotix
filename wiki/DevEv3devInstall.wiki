@@ -118,13 +118,13 @@ IPv6.method=off
 IPv6.privacy=disabled
 }}}
 
-= 6. Deactivate Brickman during startup =
+= 6. Stop brickman on EV3 LCD =
 
  * Stop brickman
 {{{
 root@ev3dev:~$ systemctl stop brickman.service
 }}}
- * Disable brickman
+ * Disable brickman on startup
 {{{
 root@ev3dev:~$ systemctl disable brickman.service
 }}}
