@@ -43,7 +43,13 @@ root@ev3dev:~# lvextend --extents +100%FREE --resizefs /dev/ev3devVG/root /dev/m
 }}}
 then reboot ev3.
 
-= 4. Update system and last kernel = 
+= 4. Set up a new user =
+{{{
+root@ev3dev:~# adduser user
+root@ev3dev:~# usermod -a -G sudo,ev3dev,plugdev,audio,video,input,bluetooth user
+}}}
+
+= 5. Update system and last kernel = 
 {{{
 root@ev3dev:~$ apt-get update
 root@ev3dev:~$ apt-get upgrade
@@ -51,7 +57,7 @@ root@ev3dev:~$ apt-get dist-upgrade
 }}}
 
 
-= 5. Wifi using connman =
+= 6. Wifi using connman =
 _Reference_ : https://wiki.archlinux.org/index.php/Connman
  * enable Wifi
 {{{
@@ -118,7 +124,7 @@ IPv6.method=off
 IPv6.privacy=disabled
 }}}
 
-= 6. Stop brickman on EV3 LCD =
+= 7. Stop brickman on EV3 LCD =
 
  * Stop brickman
 {{{
@@ -141,12 +147,12 @@ ExecStart=
 ExecStart=-/usr/bin/agetty --autologin root --noclear %I 38400 linux
 }}}
 
-= 7. Launch your program / To get a program to run at boot=
+= 8. Launch your program / To get a program to run at boot=
 
-== 7.1 Using Brickman and his *file browser* ==
+== 8.1 Using Brickman and his *file browser* ==
 Put the program into /home
 
-== 7.2 Create a *systemd service* ==
+== 8.2 Create a *systemd service* ==
 https://github.com/ev3dev/ev3dev/issues/238
 
  * Save the following as /etc/systemd/system/myprogram.service
