@@ -141,6 +141,34 @@ ExecStart=
 ExecStart=-/usr/bin/agetty --autologin root --noclear %I 38400 linux
 }}}
 
+= 7. Launch your program / To get a program to run at boot=
+
+ * Using Brickman and his *file browser*
+
+Put the program into /home
+
+ * Create a *systemd service*
+https://github.com/ev3dev/ev3dev/issues/238
+
+ # Save the following as /etc/systemd/system/myprogram.service
+{{{
+[Unit]
+Description=My Program
+After=multi-user.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/home/user/bin/myprogram
+}}}
+myprogram of course can be replace by the name of your program. Also, ExecStart is not run in a shell and there is no PATH environment variable, so you can't take any shortcuts. For example, if you program is a python script, you would have to write ExecStart=/usr/bin/python /home/user/myprogram.py
+ # Enable the custom service
+{{{
+systemctl daemon-reload
+systemctl enable myprogram.service
+}}}
 
 = 10. Power Off and exit ssh =
 {{{
