@@ -77,6 +77,46 @@ connmanctl> quit
 {{{
 # cat /var/lib/connman/*/settings
 }}}
+verify settings for each connection (AutoConnect and Favorite):
+{{{
+root@ev3dev:~# cat /var/lib/connman/*/settings
+[gadget_..._usb]
+Name=Wired
+Favorite=true
+AutoConnect=true
+Modified=2015-03-02T00:02:45.046284Z
+IPv4.method=manual
+IPv4.netmask_prefixlen=24
+IPv4.local_address=10.42.0.3
+IPv4.gateway=10.42.0.1
+IPv6.method=off
+IPv6.privacy=disabled
+Nameservers=10.42.0.1;
+[wifi_..._managed_psk]
+Name=[SSID_NAME]
+SSID=[SSID_NUMBER]
+Frequency=2457
+Favorite=true
+AutoConnect=true
+Modified=2015-03-02T00:02:12.644730Z
+Passphrase=[passphrase]
+IPv4.method=dhcp
+IPv4.DHCP.LastAddress=192.168.7.44
+IPv6.method=off
+IPv6.privacy=disabled
+[wifi_..._managed_psk]
+Name=[SSID_NAME]
+SSID=[SSID_NUMBER]
+Frequency=2457
+Favorite=true
+AutoConnect=true
+Modified=2015-03-01T23:59:35.241565Z
+Passphrase=[passphrase]
+IPv4.method=dhcp
+IPv4.DHCP.LastAddress=192.168.7.252
+IPv6.method=off
+IPv6.privacy=disabled
+}}}
 
 = 6. Deactivate Brickman during startup =
 
@@ -92,5 +132,5 @@ root@ev3dev:~$ systemctl disable brickman.service
 
 = 10. Power Off =
 {{{
-user@ev3dev:~# poweroff
+user@ev3dev:~$ poweroff
 }}}
