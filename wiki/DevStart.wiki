@@ -29,7 +29,7 @@ Reprenons la maxime de Lavoisier « *Rien ne se perd, rien ne se crée, tout se 
 
 === 1.2.2 C++ pour Mindstorm EV3dev ===
 
-TODO
+ * DevEv3devInstall - Install ev3dev image file : ev3dev-jessie
 
 == 1.3 Environnement C pour Arduino ==
  * ArduinoEnv
