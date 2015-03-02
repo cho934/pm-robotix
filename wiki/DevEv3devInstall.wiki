@@ -75,7 +75,7 @@ connmanctl> quit
 
  * list connman settings
 {{{
-# cat /var/lib/connman/*/settings
+root@ev3dev:~$ cat /var/lib/connman/*/settings
 }}}
 verify settings for each connection (AutoConnect and Favorite):
 {{{
