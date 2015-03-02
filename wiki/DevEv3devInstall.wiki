@@ -128,6 +128,18 @@ root@ev3dev:~$ systemctl stop brickman.service
 {{{
 root@ev3dev:~$ systemctl disable brickman.service
 }}}
+ * Autologin and clear display after boot
+(from https://wiki.archlinux.org/index.php/automatic_login_to_virtual_console)
+{{{
+root@ev3dev:~$ mkdir /etc/systemd/system/getty@tty1.service.d/
+root@ev3dev:~$ nano /etc/systemd/system/getty@tty1.service.d/autologin.conf
+}}}
+and copy/paste the following in autologin.conf
+{{{
+[Service]
+ExecStart=
+ExecStart=-/usr/bin/agetty --autologin root --noclear %I 38400 linux
+}}}
 
 
 = 10. Power Off and exit ssh =
