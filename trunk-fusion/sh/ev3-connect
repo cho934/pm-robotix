@@ -31,21 +31,16 @@ root()
 
 case "$1" in
 	view-doc)
-		view_doc
-	;;
+		view_doc;;
 	all)
-		all
-	;;
+		all;;
 	driver)
-		driver
-	;;
+		driver;;
 	main)
-		main
-	;;
+		main;;
 	
 	user)
-		user
-	;;
+		user;;
 	root)
 		root;;
 
