@@ -8,7 +8,7 @@ ALedDriver * ALedDriver::create(int nb)
 
 LedDriver::LedDriver(int nb)
 {
-	nb=2; //Force number of leds.
+	nb = 2; //Force number of leds.
 	//drivers...EV3
 
 	//open chaque GPIO
@@ -26,25 +26,25 @@ void LedDriver::set(int position, int aValue)
 	{
 		switch (aValue)
 		{
-		case 0: //Off
-			ev3dev::led::red_right.all_off();
-			ev3dev::led::green_right.all_off();
+		case LD_OFF: //Off
+			ev3dev::led::green_right.off();
+			ev3dev::led::red_right.off();
 			break;
-		case 1: //green
+		case LD_GREEN: //green
 			ev3dev::led::green_right.on();
 			ev3dev::led::red_right.off();
 			break;
-		case 2: //red
+		case LD_RED: //red
 			ev3dev::led::green_right.off();
 			ev3dev::led::red_right.on();
 			break;
-		case 3: //orange
+		case LD_ORANGE: //orange
 			ev3dev::led::green_right.on();
 			ev3dev::led::red_right.on();
 			break;
 		default:
-			ev3dev::led::red_right.all_off();
-			ev3dev::led::green_right.all_off();
+			ev3dev::led::green_right.off();
+			ev3dev::led::red_right.off();
 			break;
 		}
 	}
@@ -54,8 +54,8 @@ void LedDriver::set(int position, int aValue)
 		switch (aValue)
 		{
 		case 0: //Off
-			ev3dev::led::red_left.all_off();
-			ev3dev::led::green_left.all_off();
+			ev3dev::led::green_left.off();
+			ev3dev::led::red_left.off();
 			break;
 		case 1: //green
 			ev3dev::led::green_left.on();
@@ -70,8 +70,8 @@ void LedDriver::set(int position, int aValue)
 			ev3dev::led::red_left.on();
 			break;
 		default:
-			ev3dev::led::red_left.all_off();
-			ev3dev::led::green_left.all_off();
+			ev3dev::led::green_left.off();
+			ev3dev::led::red_left.off();
 			break;
 		}
 	}

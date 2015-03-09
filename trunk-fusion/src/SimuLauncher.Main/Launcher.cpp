@@ -142,46 +142,42 @@ bool LWindow::init(int i)
 			else
 			{
 
-				 //Initialize renderer color
-				 mImage =
-				 IMG_Load(
-				 "/home/pmx/workspaceTest/SimuLauncher/Debug/resources/E2015_Sketchup-2-hires-interieur-3000x2000.png");
-				 mTexture = SDL_CreateTextureFromSurface(mRenderer, mImage);
+				//Initialize renderer color
+				mImage =
+						IMG_Load(
+								"/home/pmx/workspaceLuna/SimuLauncher/Debug/resources/test2.png"); //TODO rendre dynamique
+				mTexture = SDL_CreateTextureFromSurface(mRenderer, mImage);
 
-				 dstrect =
-				 {	0, 0, 1000, 666};
+				dstrect =
+				{	0, 0, 1000, 666};
 
-				 render(i);
-
-
+				render(i);
 
 				/*
-					//test SVG
-					double Scalex, Scaley;
+				 //test SVG
+				 double Scalex, Scaley;
 
-					SDL_svg_context *TestImage =
-							SVG_Load(
-									"/home/pmx/workspaceTest/SimuLauncher/Debug/resources/tux.svg");
+				 SDL_svg_context *TestImage =
+				 SVG_Load(
+				 "/home/pmx/workspaceTest/SimuLauncher/Debug/resources/tux.svg");
 
-					SVG_SetOffset(TestImage, SVG_Width(TestImage) / 2,
-							SVG_Height(TestImage) / 2);
+				 SVG_SetOffset(TestImage, SVG_Width(TestImage) / 2,
+				 SVG_Height(TestImage) / 2);
 
-					Scalex = mImage->w / SVG_Width(TestImage);
-					Scaley = mImage->h / SVG_Height(TestImage);
-					//SVG_SetScale(TestImage, Scalex, Scaley);
+				 Scalex = mImage->w / SVG_Width(TestImage);
+				 Scaley = mImage->h / SVG_Height(TestImage);
+				 //SVG_SetScale(TestImage, Scalex, Scaley);
 
-					SVG_RenderToSurface(TestImage, mImage->w / 2 ,
-							mImage->h / 2, mImage);
+				 SVG_RenderToSurface(TestImage, mImage->w / 2 ,
+				 mImage->h / 2, mImage);
 
-					SVG_RenderToSurface(TestImage, mImage->w / 2 ,
-											mImage->h / 2, mImage);
-	*/
-					//Clear screen
-								//SDL_SetRenderDrawColor(mRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-								//SDL_RenderClear(mRenderer);
-					//fin test SVG
-
-
+				 SVG_RenderToSurface(TestImage, mImage->w / 2 ,
+				 mImage->h / 2, mImage);
+				 */
+				//Clear screen
+				//SDL_SetRenderDrawColor(mRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+				//SDL_RenderClear(mRenderer);
+				//fin test SVG
 
 				//Grab window identifier
 				mWindowID = SDL_GetWindowID(mWindow);

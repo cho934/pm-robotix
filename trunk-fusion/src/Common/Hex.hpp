@@ -1,3 +1,6 @@
+#ifndef COMMON_HEX_HPP_
+#define COMMON_HEX_HPP_
+
 #include <iostream>
 
 template<typename T>
@@ -26,3 +29,5 @@ std::ostream& bin(T& value, std::ostream &o)
 	}
 	return o;
 }
+
+#endif

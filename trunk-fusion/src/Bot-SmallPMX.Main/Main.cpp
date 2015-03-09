@@ -1,18 +1,34 @@
+
 #include <iostream>
 
+#include "../Bot-SmallPMX/LedBarTest.hpp"
 #include "../Bot-SmallPMX/SRobotExtended.hpp"
+#include "../Common/ConsoleManager.hpp"
+
 
 using namespace std;
 
-int main()
+
+int main(int argc, char** argv)
 {
-	cout << "!!!Hello SmallPMX EV3!!!" << endl; // prints !!!Hello World!!!
+	cout << "!!!Hello SmallPMX EV3!!!" << endl;
 
 	SRobotExtended robot;
 
-	robot.actions.ledbar_.blink(1, 1, LD_ORANGE);
+	//common manager
+	ConsoleManager manager;
 
-	robot.actions.ledbar_.k2mil(5,200000,1);
+	//add specific tests for this robot
+	manager.add(new LedBarTest());
+	manager.add(new LedBarTest());
+	manager.add(new LedBarTest());
+	manager.add(new LedBarTest());
+	manager.add(new LedBarTest());
+	manager.add(new LedBarTest());
+
+	//start the Robot (functional tests or match)
+	robot.start(manager, argc, argv);
 
 	return 0;
+
 }

@@ -6,17 +6,26 @@
 
 class SActionsExtended: public Actions
 {
-public:
+private:
 
 	/*!
 	 * \brief LED Bar.
 	 */
 	LedBar ledbar_;
 
-
+public:
 	SActionsExtended() :
 			ledbar_(2)
 	{
+	}
+
+	/*!
+	 * \brief Cette methode retourne l'objet ledbar.
+	 * \return ledbar_.
+	 */
+	inline LedBar & ledbar()
+	{
+		return ledbar_;
 	}
 
 };

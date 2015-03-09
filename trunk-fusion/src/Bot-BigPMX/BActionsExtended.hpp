@@ -6,18 +6,27 @@
 
 class BActionsExtended: public Actions
 {
-public:
+private:
 
 	/*!
 	 * \brief other LED Bar element.
 	 */
 	LedBar ledbar_;
 
-
+public:
 	BActionsExtended() :
-				ledbar_(8)
-		{
-		}
+			ledbar_(8)
+	{
+	}
+
+	/*!
+	 * \brief Cette methode retourne l'objet ledbar.
+	 * \return ledbar_.
+	 */
+	inline LedBar & ledbar()
+	{
+		return ledbar_;
+	}
 };
 
 #endif

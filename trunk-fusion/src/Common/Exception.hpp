@@ -3,8 +3,8 @@
  * \brief Définition de la classe Exception.
  */
 
-#ifndef UTILS_EXCEPTION_HPP
-#define	UTILS_EXCEPTION_HPP
+#ifndef COMMON_EXCEPTION_HPP_
+#define	COMMON_EXCEPTION_HPP_
 
 #include <string>
 #include <exception>

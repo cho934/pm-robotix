@@ -24,10 +24,14 @@ LedDriver::~LedDriver()
 {
 }
 
-void LedDriver::set(int position, int aValue)
+void LedDriver::set(int position, int color)
 {
-	gpio[position] = aValue;
+	gpio[position] = color;
 
-	cout << "LED" << position << "=" << aValue << endl;
-
+	//cout << "LED" << position << "=" << color << endl;
+	for (int i = 0; i < nb_; i++)
+	{
+		cout << gpio[i] ;
+	}
+	cout << endl;
 }

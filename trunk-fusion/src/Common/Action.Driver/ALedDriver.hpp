@@ -1,6 +1,9 @@
 #ifndef ALEDDRIVER_HPP_
 #define ALEDDRIVER_HPP_
 
+#define LD_OFF 0
+#define LD_GREEN 1
+#define LD_RED 2
 #define LD_ORANGE 3
 
 class ALedDriver
@@ -17,10 +20,10 @@ public:
 	 *
 	 * \param position
 	 * 				The position of the ledbar.
-	 * \param aValue
+	 * \param color
 	 * 				The color of the led.
 	 */
-	virtual void set(int position, int aValue) = 0;
+	virtual void set(int position, int color) = 0;
 
 	/*!
 	 * \brief Destructor.
