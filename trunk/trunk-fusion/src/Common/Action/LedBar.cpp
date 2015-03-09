@@ -19,20 +19,19 @@ LedBar::~LedBar()
 	delete leddriver;
 }
 
-void LedBar::set(int pos, int status)
+void LedBar::set(int pos, int color)
 {
-	leddriver->set(pos, status);
+	leddriver->set(pos, color);
 }
 
 void LedBar::blink(uint nb, uint timeus, int color)
 {
-	for (uint i = 1; i <= nb; i++)
+	for (uint i = 0; i <= nb; i++)
 	{
 		flash(pow(2, nbLed_) - 1, 0);
 		usleep(timeus);
-		if (i > nb)
+		if (i >= nb)
 			break;
-		i++;
 		flash(pow(2, nbLed_) - 1, color);
 		usleep(timeus);
 	}
@@ -81,33 +80,30 @@ void LedBar::alternate(uint nb, uint timeus, uint beginVal, uint endVal,
 void LedBar::k2mil(uint nb, uint timeus, int color)
 {
 	int j = -1;
-	//cout << "nb=" << nb  << " nbLed_=" << nbLed_ << endl;
 
 	for (uint i = 1; i <= nb; i++)
 	{
-		//cout << "i=" << i << endl;
 		//inc
 		for (int k = 0; k <= nbLed_ - 1; k++)
 		{
-			//cout << "k=" << k << endl;
 			set(k, color);
 			if (j >= 0)
-				set(j, 0);
-
+				if (j != k)
+					set(j, 0);
 			j = k;
 			usleep(timeus);
 		}
-
 		//dec
 		for (int k = nbLed_ - 1; k >= 0; k--)
 		{
-			//cout << "k=" << k << endl;
 			set(k, color);
-			set(j, 0);
-
+			if (j != k)
+				set(j, 0);
 			j = k;
 			usleep(timeus);
 		}
 	}
+	//off
+	set(0, 0);
 }
 

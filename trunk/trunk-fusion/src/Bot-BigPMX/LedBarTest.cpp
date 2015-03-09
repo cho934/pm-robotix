@@ -20,8 +20,8 @@ void LedBarTest::run(int, char *[])
 
 	BRobotExtended robot;
 
-	robot.actions.ledbar_.blink(1, 1000000);
-	robot.actions.ledbar_.k2mil(5, 200000, 1);
+	robot.actions.ledbar().blink(1, 1000000);
+	robot.actions.ledbar().k2mil(2, 500000, 1);
 
 	cout << "End of LedBarTest." << endl;
 }

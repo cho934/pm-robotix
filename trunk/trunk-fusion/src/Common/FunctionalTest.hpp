@@ -1,16 +1,15 @@
 /*!
  * \file
- * \brief Définition de la classe Functional test.
+ * \brief Class definition for functional tests.
  */
 
-#ifndef FUNCTIONALTEST_HPP
-#define	FUNCTIONALTEST_HPP
+#ifndef COMMON_FUNCTIONALTEST_HPP_
+#define	COMMON_FUNCTIONALTEST_HPP_
 
 #include <string>
 
 /*!
- * \brief Classe abstraite servant de base pour les tests de fonctionnement
- * du robot.
+ * \brief Abstract class to implement functional tests using ConsoleManager.
  */
 class FunctionalTest
 {

@@ -3,11 +3,13 @@
  * \brief Définition de la classe ConsoleManager.
  */
 
-#ifndef CONSOLEMANAGER_HPP
-#define	CONSOLEMANAGER_HPP
+#ifndef COMMON_CONSOLEMANAGER_HPP_
+#define	COMMON_CONSOLEMANAGER_HPP_
 
+#include <sys/types.h>
+#include <string>
 #include <vector>
-#include <cstdlib>
+
 #include "FunctionalTest.hpp"
 
 /*!
@@ -53,7 +55,11 @@ public:
 	/*!
 	 * \brief Affiche un menu de sélection des tests.
 	 */
-	void run(char *argv0);
+	void displayMenuFunctionalTestsAndRun(char *argv0);
+
+
+	std::string displayMenuFirstArgu();
+
 
 	/*!
 	 * \brief Détermine un test a lancer en fonction des paramètres
