@@ -9,8 +9,8 @@
 #include <iostream>
 #include <string>
 
-
-#include "BRobotExtended.hpp"
+#include "../Bot-BigPMX/BActionsExtended.hpp"
+#include "../Bot-BigPMX/BRobotExtended.hpp"
 
 using namespace std;
 

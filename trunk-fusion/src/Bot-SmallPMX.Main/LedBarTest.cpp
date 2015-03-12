@@ -10,14 +10,14 @@
 #include <iostream>
 #include <string>
 
-#include "SActionsExtended.hpp"
-#include "SRobotExtended.hpp"
+#include "../Bot-SmallPMX/SActionsExtended.hpp"
+#include "../Bot-SmallPMX/SRobotExtended.hpp"
 
 using namespace std;
 
 void LedBarTest::run(int, char *[])
 {
-	cout << "Executing " << this->name() << endl;
+	logger().info() << "Executing - " << this->desc() << logs::end;
 
 	SRobotExtended robot;
 
@@ -43,6 +43,6 @@ void LedBarTest::run(int, char *[])
 
 	robot.actions.ledbar().k2mil(4, 100000, LD_RED);
 
-	cout << "End of LedBarTest." << endl;
+	logger().info() << this->name() << " - Happy End." << logs::end;
 }
 

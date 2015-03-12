@@ -9,8 +9,8 @@ spawn ./ev3-connect $cmd
 expect {
 password: {
 send "pmx\r";
-exp_continue
-#interact
+#exp_continue
+interact
 }
 }
 

@@ -95,5 +95,5 @@ void Robot::start(ConsoleManager manager, int argc, char** argv)
 			cout << "Command " << argv[1] << " not found !" << endl;
 		}
 	}
-	cout << "PMX - Happy End" << endl;
+	//cout << "PMX - Happy End" << endl;
 }
