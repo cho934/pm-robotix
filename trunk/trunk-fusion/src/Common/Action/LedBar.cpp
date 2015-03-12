@@ -1,10 +1,7 @@
 #include "LedBar.hpp"
 
 #include <unistd.h>
-#include <iostream>
-#include <stdio.h>
-#include <math.h>
-#include "../../Common/Hex.hpp"
+#include <cmath>
 
 using namespace std;
 
@@ -62,8 +59,8 @@ void LedBar::blinkPin(int position, uint nb, uint timeus, int color)
 	}
 }
 
-void LedBar::alternate(uint nb, uint timeus, uint beginVal, uint endVal,
-		int beginColor, int endColor)
+void LedBar::alternate(uint nb, uint timeus, uint beginVal, uint endVal, int beginColor,
+		int endColor)
 {
 	for (uint i = 1; i <= nb; i++)
 	{

@@ -19,6 +19,7 @@ private:
 	 * \brief Nom du test.
 	 */
 	std::string name_;
+	std::string description_;
 
 protected:
 
@@ -27,8 +28,8 @@ protected:
 	 * \param name
 	 *        Nom du test.
 	 */
-	FunctionalTest(const std::string & name) :
-			name_(name)
+	FunctionalTest(const std::string & name, const std::string & desc) :
+			name_(name), description_(desc)
 	{
 	}
 
@@ -47,6 +48,14 @@ public:
 	inline const std::string & name() const
 	{
 		return name_;
+	}
+
+	/*!
+	 * \return Description du test.
+	 */
+	inline const std::string & desc() const
+	{
+		return description_;
 	}
 
 	/*!

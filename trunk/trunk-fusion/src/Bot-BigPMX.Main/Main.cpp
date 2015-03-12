@@ -1,9 +1,9 @@
 #include <iostream>
 
-#include "../Common/ConsoleManager.hpp"
-#include "../Common/Action/LedBar.hpp"
 #include "../Bot-BigPMX/BRobotExtended.hpp"
-#include "../Bot-BigPMX/LedBarTest.hpp"
+#include "../Common/ConsoleManager.hpp"
+#include "LedBarTest.hpp"
+
 
 using namespace std;
 

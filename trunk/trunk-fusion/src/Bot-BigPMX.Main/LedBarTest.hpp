@@ -7,6 +7,7 @@
 #define	LEDBARTEST_HPP
 
 #include "../Common/FunctionalTest.hpp"
+
 //#include "../../common/cpp/LoggerFactory.hpp"
 
 /*!
@@ -30,7 +31,7 @@ public:
 	 * \brief Constructeur de la classe.
 	 */
 	LedBarTest() :
-		FunctionalTest("LedBarTest : Blink Led board directly")
+		FunctionalTest("LedBarTest", "Blink Leds")
 	{
 	}
 
