@@ -21,6 +21,7 @@ void ActionManager::execute()
 	int size = 0;
 	while (!stop_)
 	{
+
 		lock();
 		size = actions_.size();
 		unlock();
@@ -34,7 +35,6 @@ void ActionManager::execute()
 			}
 			actions_.pop_front();
 			unlock();
-			//bool persist = action->execute(out);
 			bool persist = action->execute();
 			lock();
 			if (persist)
@@ -57,7 +57,7 @@ void ActionManager::execute()
 void ActionManager::debug()
 {
 	lock();
-	logger().info() << "Defined actions" << logs::end;
+	//logger().info() << "Defined actions" << logs::end;
 	utils::PointerList<IAction *>::iterator i = actions_.begin();
 	while (i != actions_.end())
 	{
@@ -66,5 +66,5 @@ void ActionManager::debug()
 		i++;
 	}
 	unlock();
-	logger().info() << "End of defined actions" << logs::end;
+	//logger().info() << "End of defined actions" << logs::end;
 }

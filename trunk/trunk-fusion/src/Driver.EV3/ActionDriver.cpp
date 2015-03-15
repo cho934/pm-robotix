@@ -1,6 +1,6 @@
-#include "../Common/Action.Driver/ActionDriver.hpp"
+#include "../Common/Action.Driver/AActionDriver.hpp"
 
-void ActionDriver::driverSetPin(int numled, int value)
+void AActionDriver::function(int value)
 {
 	//drivers...EV3
 

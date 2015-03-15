@@ -50,30 +50,28 @@ void ConsoleManager::displayMenuFunctionalTestsAndRun(char *argv0)
 		tab[i + 1] = out.str();
 	}
 
-	while (cInput != 10)
+	do
 	{
 		cInput = mygetch();
 		switch (cInput)
 		{
-		case 65:
+			case 65:
 			//printf("Up arrow key!\n");
 			if (lindex > 0)
 			{
 				setPrintPos(lindex + 1, 1);
-				std::cout << default_console << tab[lindex + 1] << "  "
-						<< std::flush;
+				std::cout << default_console << tab[lindex + 1] << "  " << std::flush;
 				lindex--;
 				setPrintPos(lindex + 1, 1);
 				std::cout << color << "> " << tab[lindex + 1] << std::flush;
 			}
 			break;
-		case 66:
+			case 66:
 			if (lindex < (int) tests_.size() - 1)
 			{
 				//printf("Down arrow key!\n");
 				setPrintPos(lindex + 1, 1);
-				std::cout << default_console << tab[lindex + 1] << "  "
-						<< std::flush;
+				std::cout << default_console << tab[lindex + 1] << "  " << std::flush;
 				lindex++;
 				setPrintPos(lindex + 1, 1);
 				std::cout << color << "> " << tab[lindex + 1] << std::flush;
@@ -86,10 +84,10 @@ void ConsoleManager::displayMenuFunctionalTestsAndRun(char *argv0)
 			 case 68:
 			 printf("Left arrow key!\n");
 			 break;*/
-		case 10:
+			case 10:
 			//printf("Enter key!\n");
 			break;
-		case 127:
+			case 127:
 			//printf("BACK key!\n");
 			cout << default_console << endl;
 			exit(0);
@@ -97,7 +95,8 @@ void ConsoleManager::displayMenuFunctionalTestsAndRun(char *argv0)
 		}
 
 		usleep(1000);
-	}
+	} while (cInput != 10);
+
 	cout << default_console << flush;
 	clearScreen();
 
@@ -118,7 +117,7 @@ string ConsoleManager::displayMenuFirstArgu()
 	setPrintPos(5, 1);
 	cout << "  (T)ESTS" << flush;
 
-	while (cInput != 10)
+	do
 	{
 		cInput = mygetch();
 		switch (cInput)
@@ -155,7 +154,7 @@ string ConsoleManager::displayMenuFirstArgu()
 			break;
 		}
 		usleep(1000);
-	}
+	} while (cInput != 10);
 	cout << default_console << endl;
 	clearScreen();
 	return select;
@@ -174,8 +173,7 @@ void ConsoleManager::executeTest(uint nTest, int argc, char *argv[])
 	}
 	else
 	{
-		std::cout << "The N° must be between 0 and " << tests_.size()
-				<< std::endl;
+		std::cout << "The N° must be between 0 and " << tests_.size() << std::endl;
 	}
 }
 
@@ -189,14 +187,12 @@ void ConsoleManager::executeTest(uint nTest, char * argv0)
 		argv[1] = (char *) calloc(1, 12);
 		sprintf(argv[1], "%d", nTest);
 
-		std::cout << "Launch test n°" << nTest << " / " << tests_.size()
-				<< std::endl;
+		std::cout << "Launch test n°" << nTest << " / " << tests_.size() << std::endl;
 		//launch the test
 		tests_[nTest - 1]->run(1, argv);
 	}
 	else
 	{
-		std::cout << "The N° must be between 0 and " << tests_.size()
-				<< std::endl;
+		std::cout << "The N° must be between 0 and " << tests_.size() << std::endl;
 	}
 }

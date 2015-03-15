@@ -398,7 +398,6 @@ bool LedBarAction::execute()
 			return !ledBar_.stop(); //renvoi 0 pour supprimer l'action
 			break;
 
-
 	default:
 		logger().error() << "Bad execute command !!" << logs::end;
 		return false;

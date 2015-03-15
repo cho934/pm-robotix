@@ -18,9 +18,21 @@ void SoundBarTest::run(int, char *[])
 
 	SRobotExtended robot;
 
-	robot.actions.soundbar().speakPMX();
+	//robot.actions.soundbar().beep(5);
+	//robot.actions.soundbar().speakPMX(50);
+
+
+	robot.actions.start();
+
+	robot.actions.soundbar().startBeep(25);
+	robot.actions.soundbar().startBeep(50);
+
+	sleep(1);
+
+	robot.actions.stop();
 
 	logger().info() << this->name() << " - Happy End." << logs::end;
+	robot.actions.soundbar().beep(5);
 
 }
 

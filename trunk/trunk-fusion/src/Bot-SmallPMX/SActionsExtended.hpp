@@ -14,11 +14,14 @@ private:
 	 */
 	LedBar ledbar_;
 
+	/*!
+	 * \brief Sound Bar.
+	 */
 	SoundBar soundbar_;
 
 public:
 	SActionsExtended() :
-			ledbar_(*this, 2)
+			ledbar_(*this, 2), soundbar_(*this)
 	{
 	}
 

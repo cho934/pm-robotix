@@ -21,9 +21,7 @@ int main(int argc, char** argv)
 
 	//add specific tests for this robot
 	manager.add(new LedBarTest());
-
 	manager.add(new SoundBarTest());
-
 
 	//start the Robot (functional tests or match)
 	robot.start(manager, argc, argv);
