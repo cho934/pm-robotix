@@ -369,7 +369,7 @@ bool LedBarAction::execute()
 
 				ledBar_.setOff(j_);
 
-				if ((k_ == 7 && !inc_) || (k_ == 0 && inc_))
+				if ((k_ == ledBar_.nb()-1 && !inc_) || (k_ == 0 && inc_))
 					i_++;
 				j_ = k_;
 				if (inc_)
@@ -380,9 +380,9 @@ bool LedBarAction::execute()
 				{
 					k_--;
 				}
-				if (k_ >= 7)
+				if (k_ >= ledBar_.nb()-1)
 				{
-					k_ = 7;
+					k_ = ledBar_.nb()-1;
 					inc_ = false;
 				}
 				if (k_ <= 0)

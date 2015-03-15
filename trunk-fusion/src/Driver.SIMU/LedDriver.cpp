@@ -42,24 +42,23 @@ void LedDriver::setBit(int index, int color)
 	 */
 	hexa ^= (-1 ^ hexa) & (1 << index);
 
-	//logger().info() << "LED " << std::bitset<8>(hexa) << " (POS=" << index << ")" << logs::end;
-	logger().info() << "LED " << logs::end;
+	ostringstream ost;
+	ost << "LED ";
 	for (int i = 0; i < nb_; i++)
 	{
-		logger().info() << gpio[i] << logs::end;
+		if (i == index)
+			ost << "\033[1m" << "\033[4;31m" << gpio[i] << "\033[0m";
+		else
+			ost << "\033[0m" << gpio[i];
 	}
-	/*
-	 << gpio[0] << gpio[1]
-	 << gpio[2] << gpio[3]
-	 << gpio[4] << gpio[5]
-	 << gpio[6] << gpio[7]*/
-	logger().info() << " (POS=" << index << ")" << logs::end;
+	ost << " (POS=" << index << ")";
+	logger().info() << ost.str() << logs::end;
 
+	//logger().info() << "LED " << std::bitset<8>(hexa) << " (POS=" << index << ")" << logs::end;
 }
 
 void LedDriver::setBytes(uint hex, int color)
 {
-
 	hexa = hex;
 
 	for (int i = 0; i < nb_; i++)
@@ -73,15 +72,14 @@ void LedDriver::setBytes(uint hex, int color)
 			gpio[i] = 0;
 		}
 	}
-	logger().info() << "LED " << logs::end;
+
+	ostringstream ost;
+	ost << "LED ";
 	for (int i = 0; i < nb_; i++)
 	{
-		logger().info() << gpio[i] << logs::end;
+		ost << gpio[i];
 	}
-	//<< gpio[0] << gpio[1]
-	/*<< gpio[2] << gpio[3]
-	 << gpio[4] << gpio[5]
-	 << gpio[6] << gpio[7]*/
-	//<< logs::end;
+	logger().info() << ost.str() << logs::end;
+
 	//logger().info() << "LED " << std::bitset<8>(hexa) << logs::end;
 }

@@ -24,7 +24,7 @@ void LedBarTest::run(int, char *[])
 
 	robot.actions.ledbar().resetAll();
 
-/*
+
 	robot.actions.ledbar().setOff(0);
 	robot.actions.ledbar().setOff(1);
 	usleep(500000);
@@ -46,16 +46,18 @@ void LedBarTest::run(int, char *[])
 	robot.actions.ledbar().blink(5, 200000, LED_ORANGE);
 
 	robot.actions.ledbar().k2mil(4, 100000, LED_RED);
-*/
-/*
+
+
 	robot.actions.start();
 
 	//robot.actions.ledbar().startSet(0,1);
-	//robot.actions.ledbar().startAlternate(10, 500000, 0x03, 0x01, LED_GREEN, true);
+	robot.actions.ledbar().startAlternate(10, 500000, 0x03, 0x01, LED_GREEN, true);
 
-	robot.actions.ledbar().startK2mil(2, 100000, LED_ORANGE, true);
-	robot.actions.ledbar().startBlinkPin(10, 500000, 4, LED_ORANGE, true);
-	robot.actions.stop();*/
+	robot.actions.ledbar().startK2mil(2, 100000, LED_ORANGE, false);
+	sleep(3);
+	robot.actions.ledbar().startBlinkPin(10, 100000, 0, LED_ORANGE, false);
+	sleep(3);
+	robot.actions.stop();
 
 	robot.actions.ledbar().resetAll();
 
