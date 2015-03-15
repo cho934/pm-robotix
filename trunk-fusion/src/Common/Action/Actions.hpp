@@ -3,7 +3,6 @@
 
 #include "../LogAppender/LoggerFactory.hpp"
 #include "ActionManager.hpp"
-#include "ARobotElement.hpp"
 
 /*!
  * List of robot actions. It contains all common RobotElement.
@@ -13,7 +12,7 @@ class Actions
 private:
 
 	/*!
-	 * \brief Retourne le \ref Logger associé à la classe \ref LedBar.
+	 * \brief Retourne le \ref Logger associé à la classe \ref Actions.
 	 */
 	static inline const logs::Logger & logger()
 	{
@@ -31,7 +30,6 @@ public:
 	/*!
 	 * \brief Constructor.
 	 *
-	 * \param nb Number of leds in the LedBar.
 	 */
 	Actions()
 	{

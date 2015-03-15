@@ -14,20 +14,25 @@ void Actions::start()
 
 void Actions::stop()
 {
-	this->stopDevices();
-	this->stopManagers();
+	//this->stopDevices();
+	this->stopManagers(); // wait end of tasks in managers
 
 	logger().debug("Actions is stopped");
 }
 
 void Actions::stopDevices()
 {
-	//this->ledBar().stop(true);
+
 }
 
 void Actions::stopManagers()
 {
+	while (actionManager_.count() > 0) //TODO mettre un timeout !!
+	{
+		logger().debug() << actionManager_.count() << logs::end;
+		usleep(300000);
+	}
 	actionManager_.stop();
 
-	usleep(5000);//TODO  créer une Attente de la fin de l'actionManager à la place du usleep
+	usleep(5000); //TODO  créer une Attente avec timeout de la fin de l'actionManager à la place du usleep
 }
