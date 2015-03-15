@@ -19,6 +19,8 @@ private:
 		return instance;
 	}
 
+	int vol_;
+
 public:
 
 	virtual void beep();

@@ -13,6 +13,7 @@ ASoundDriver * ASoundDriver::create()
 
 SoundDriver::SoundDriver()
 {
+	vol_ = 5;
 }
 
 SoundDriver::~SoundDriver()
@@ -21,14 +22,17 @@ SoundDriver::~SoundDriver()
 
 void SoundDriver::beep()
 {
+	logger().info() << "BEEP" << logs::end;
 }
 
 void SoundDriver::tone(unsigned frequency, unsigned ms)
 {
+	logger().info() << "TONE" << logs::end;
 }
 
 void SoundDriver::play(const std::string &soundfile, bool bSynchronous = false)
 {
+	logger().info() << "PLAY" << logs::end;
 }
 
 void SoundDriver::speak(const std::string &text, bool bSynchronous = false)
@@ -38,9 +42,11 @@ void SoundDriver::speak(const std::string &text, bool bSynchronous = false)
 
 unsigned int SoundDriver::volume()
 {
-	return 0;
+	return vol_;
 }
 
-void SoundDriver::set_volume(unsigned)
+void SoundDriver::set_volume(unsigned int volume)
 {
+	vol_ = volume;
+	logger().info() << "VOLUME=" << vol_ << logs::end;
 }
