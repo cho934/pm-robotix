@@ -23,5 +23,6 @@ void logs::LoggerFactory::initialize()
 	add(logs::Level::DEBUG, "LedBarAction", "console");
 
 	//DRIVER
-	add(logs::Level::DEBUG, "LedDriver.SIMU", "console");
+	add(logs::Level::INFO, "LedDriver.SIMU", "console");
+	add(logs::Level::INFO, "SoundDriver.SIMU", "console");
 }

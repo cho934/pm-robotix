@@ -4,9 +4,20 @@
 #include <string>
 
 #include "../Common/Action.Driver/ASoundDriver.hpp"
+#include "../Common/LogAppender/LoggerFactory.hpp"
 
 class SoundDriver: public ASoundDriver
 {
+private:
+
+	/*!
+	 * \brief Retourne le \ref Logger associé à la classe \ref SoundDriver(SIMU).
+	 */
+	static inline const logs::Logger & logger()
+	{
+		static const logs::Logger & instance = logs::LoggerFactory::logger("SoundDriver.SIMU");
+		return instance;
+	}
 
 public:
 

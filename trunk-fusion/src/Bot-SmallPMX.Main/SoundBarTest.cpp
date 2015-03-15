@@ -18,6 +18,8 @@ void SoundBarTest::run(int, char *[])
 
 	SRobotExtended robot;
 
+	robot.actions.soundbar().speakPMX();
+
 	logger().info() << this->name() << " - Happy End." << logs::end;
 
 }
