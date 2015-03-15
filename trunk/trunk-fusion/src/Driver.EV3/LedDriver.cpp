@@ -1,4 +1,5 @@
 #include "LedDriver.hpp"
+
 #include "ev3dev.h"
 
 ALedDriver * ALedDriver::create(int nb)
@@ -8,37 +9,32 @@ ALedDriver * ALedDriver::create(int nb)
 
 LedDriver::LedDriver(int nb)
 {
-	nb = 2; //Force number of leds.
-	//drivers...EV3
-
-	//open chaque GPIO
-
+	nb_ = nb; //Force number of leds.
 }
 
 LedDriver::~LedDriver()
 {
-	//close chaque GPIO
 }
 
-void LedDriver::set(int position, int aValue)
+void LedDriver::setBit(int index, int color)
 {
-	if (position == 0) //Right
+	if (index == 0) //Right
 	{
-		switch (aValue)
+		switch (color)
 		{
-		case LD_OFF: //Off
+		case LED_OFF: //Off
 			ev3dev::led::green_right.off();
 			ev3dev::led::red_right.off();
 			break;
-		case LD_GREEN: //green
+		case LED_GREEN: //green
 			ev3dev::led::green_right.on();
 			ev3dev::led::red_right.off();
 			break;
-		case LD_RED: //red
+		case LED_RED: //red
 			ev3dev::led::green_right.off();
 			ev3dev::led::red_right.on();
 			break;
-		case LD_ORANGE: //orange
+		case LED_ORANGE: //orange
 			ev3dev::led::green_right.on();
 			ev3dev::led::red_right.on();
 			break;
@@ -49,23 +45,23 @@ void LedDriver::set(int position, int aValue)
 		}
 	}
 
-	if (position == 1) //Left
+	if (index == 1) //Left
 	{
-		switch (aValue)
+		switch (color)
 		{
-		case 0: //Off
+		case LED_OFF: //Off
 			ev3dev::led::green_left.off();
 			ev3dev::led::red_left.off();
 			break;
-		case 1: //green
+		case LED_GREEN: //green
 			ev3dev::led::green_left.on();
 			ev3dev::led::red_left.off();
 			break;
-		case 2: //red
+		case LED_RED: //red
 			ev3dev::led::green_left.off();
 			ev3dev::led::red_left.on();
 			break;
-		case 3: //orange
+		case LED_ORANGE: //orange
 			ev3dev::led::green_left.on();
 			ev3dev::led::red_left.on();
 			break;
@@ -73,6 +69,21 @@ void LedDriver::set(int position, int aValue)
 			ev3dev::led::green_left.off();
 			ev3dev::led::red_left.off();
 			break;
+		}
+	}
+}
+
+void LedDriver::setBytes(uint hex, int color)
+{
+	for (int i = 0; i < nb_; i++)
+	{
+		if (((hex >> i) & 0x01) == 1)
+		{
+			setBit(i, color);
+		}
+		else
+		{
+			setBit(i, LED_OFF);
 		}
 	}
 }

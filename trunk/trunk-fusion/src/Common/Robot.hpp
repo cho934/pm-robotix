@@ -1,11 +1,23 @@
 #ifndef ROBOT_HPP_
 #define ROBOT_HPP_
 
-#include "./Action/Actions.hpp"
-#include "ConsoleManager.hpp"
+#include "Action/Actions.hpp"
+
+class ConsoleManager;
 
 class Robot
 {
+private:
+
+	/*!
+	 * \brief Retourne le \ref Logger associé à la classe \ref Robot.
+	 */
+	static inline const logs::Logger & logger()
+	{
+		static const logs::Logger & instance = logs::LoggerFactory::logger("Robot");
+		return instance;
+	}
+
 public:
 
 	//Action => RobotElement
@@ -16,11 +28,9 @@ public:
 	//IA
 
 	/*!
-	 * \brief Constructor.
+	 * \brief Constructeur de la classe.
 	 */
-	Robot()
-	{
-	}
+	Robot();
 
 	/*!
 	 * \brief Destructor.

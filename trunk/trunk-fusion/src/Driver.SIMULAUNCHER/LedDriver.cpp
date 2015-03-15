@@ -16,7 +16,12 @@ LedDriver::~LedDriver()
 
 }
 
-void LedDriver::set(int position, int aValue)
+void LedDriver::setBit(int index, int color)
+{
+
+}
+
+void LedDriver::setBytes(uint hex, int color)
 {
 
 }

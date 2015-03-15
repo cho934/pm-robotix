@@ -10,16 +10,35 @@ inline T highbit(T& t)
 }
 
 /*!
+ *  Display binary value with 8 digits directly in C++
+ *
+ *  #include <bitset>
+ *
+ *  cout << std::bitset<8>(unsigned long number) << endl;
+ */
+
+/*!
+ *  Display hexadecimal value with 4 digits directly in C++
+ *
+ *  #include <iostream>
+ *  #include  <iomanip>
+ *
+ *  cout << setfill('0') << setw(4) << std::hex << hexa << endl;
+ *  or
+ *  cout << setfill('-') << setw(4) << std::hex << hexa << endl;
+ */
+
+/*!
  *  Display binary value
  * @param value
  * @param o (= std::cout)
  * @return
  */
 /* example:
-	 cout << "hexPosition=" << hex << hexPosition << " dec=" << dec << hexPosition << " bin=";
-	 bin(hexPosition, cout);
-	 cout << endl;
-*/
+ cout << "hexPosition=" << hex << hexPosition << " dec=" << dec << hexPosition << " bin=";
+ bin(hexPosition, cout);
+ cout << endl;
+ */
 template<typename T>
 std::ostream& bin(T& value, std::ostream &o)
 {

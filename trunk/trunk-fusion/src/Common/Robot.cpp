@@ -9,8 +9,15 @@
 #include <string.h>
 #include <cstdlib>
 #include <iostream>
+#include <string>
+
+#include "ConsoleManager.hpp"
 
 using namespace std;
+
+Robot::Robot()
+{
+}
 
 void Robot::start(ConsoleManager manager, int argc, char** argv)
 {
