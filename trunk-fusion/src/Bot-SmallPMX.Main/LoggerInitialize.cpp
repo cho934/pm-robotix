@@ -3,7 +3,6 @@
  * \brief Ce fichier contient l'initialisation du système de Log.
  */
 
-
 #include "../Common/LogAppender/ConsoleAppender.hpp"
 #include "../Common/LogAppender/FileAppender.hpp"
 #include "../Common/LogAppender/Level.hpp"
@@ -19,4 +18,10 @@ void logs::LoggerFactory::initialize()
 
 	add(logs::Level::INFO, "LedBarTest", "console");
 	add(logs::Level::INFO, "SoundBarTest", "console");
+
+	add(logs::Level::DEBUG, "LedBar", "console");
+	add(logs::Level::DEBUG, "LedBarAction", "console");
+
+	//DRIVER
+	add(logs::Level::DEBUG, "LedDriver.SIMU", "console");
 }

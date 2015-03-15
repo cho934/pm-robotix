@@ -8,7 +8,9 @@ class LedDriver: public ALedDriver
 
 public:
 
-	virtual void set(int position, int aValue);
+	virtual void setBit(int position, int color);
+
+	virtual void setBytes(uint hexPosition, int color);
 
 	/*!
 	 * \brief Constructor.

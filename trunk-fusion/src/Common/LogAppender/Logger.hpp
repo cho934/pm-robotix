@@ -374,6 +374,7 @@ namespace logs
      * fonctionnalité que std::endl est basée.
      */
     void end(logs::Logger::LoggerBuffer & buffer);
+
 }
 
 #endif

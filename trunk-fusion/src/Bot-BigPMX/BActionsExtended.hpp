@@ -15,7 +15,7 @@ private:
 
 public:
 	BActionsExtended() :
-			ledbar_(8)
+			ledbar_(*this, 8)
 	{
 	}
 

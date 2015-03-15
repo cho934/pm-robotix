@@ -18,13 +18,13 @@ class LedBarTest: public FunctionalTest
 private:
 
 	/*!
-	 * \brief //TODO Retourne le \ref Logger associé à la classe \ref LedBarTest.
+	 * \brief Retourne le \ref Logger associé à la classe \ref LedBarTest.
 	 */
-	//static inline const utils::Logger & logger()
-	//{
-	//	static const utils::Logger & instance = utils::LoggerFactory::logger("LedBarTest");
-	//	return instance;
-	//}
+	static inline const logs::Logger & logger()
+	{
+		static const logs::Logger & instance = logs::LoggerFactory::logger("LedBarTest");
+		return instance;
+	}
 public:
 
 	/*!

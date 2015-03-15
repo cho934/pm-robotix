@@ -10,13 +10,18 @@
 #include "../Common/LogAppender/LoggerFactory.hpp"
 #include "../Common/LogAppender/SvgAppender.hpp"
 
-void utils::LoggerFactory::initialize()
+void logs::LoggerFactory::initialize()
 {
 	add("console", new ConsoleAppender());
 	add("memory", new MemoryAppender());
 
-	add(utils::Level::ERROR, "", "console");
+	add(logs::Level::ERROR, "", "console");
 
-	add(utils::Level::INFO, "LedBarTest", "console");
+	add(logs::Level::INFO, "LedBarTest", "console");
+	add(logs::Level::DEBUG, "LedBar", "console");
+	add(logs::Level::DEBUG, "LedBarAction", "console");
+
+	//DRIVER
+	add(logs::Level::DEBUG, "LedDriver.SIMU", "console");
 
 }

@@ -15,7 +15,7 @@ private:
 
 public:
 	SActionsExtended() :
-			ledbar_(2)
+			ledbar_(*this, 2)
 	{
 	}
 
