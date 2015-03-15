@@ -33,6 +33,7 @@ void SoundDriver::play(const std::string &soundfile, bool bSynchronous = false)
 
 void SoundDriver::speak(const std::string &text, bool bSynchronous = false)
 {
+	logger().info() << "SPEAK: " << text << logs::end;
 }
 
 unsigned int SoundDriver::volume()

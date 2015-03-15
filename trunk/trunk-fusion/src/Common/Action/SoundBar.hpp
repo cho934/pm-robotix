@@ -32,9 +32,9 @@ public:
 	~SoundBar();
 
 	/*!
-	 * \brief Clignote toutes les leds nb fois.
+	 * \brief Prononce PMX.
 	 */
-	void playPMX();
+	void speakPMX();
 
 };
 
