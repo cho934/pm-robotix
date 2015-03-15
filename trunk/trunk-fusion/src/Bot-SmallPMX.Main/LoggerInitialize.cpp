@@ -22,10 +22,10 @@ void logs::LoggerFactory::initialize()
 
 	//add(logs::Level::DEBUG, "ActionManager", "console");
 	//add(logs::Level::DEBUG, "Actions", "console");
-	add(logs::Level::DEBUG, "LedBar", "console");
-	add(logs::Level::DEBUG, "LedBarAction", "console");
-	add(logs::Level::DEBUG, "SoundBar", "console");
-	add(logs::Level::DEBUG, "SoundBarAction", "console");
+	add(logs::Level::INFO, "LedBar", "console");
+	add(logs::Level::INFO, "LedBarAction", "console");
+	add(logs::Level::INFO, "SoundBar", "console");
+	add(logs::Level::INFO, "SoundBarAction", "console");
 
 	//DRIVER
 	add(logs::Level::INFO, "LedDriver.SIMU", "console");
