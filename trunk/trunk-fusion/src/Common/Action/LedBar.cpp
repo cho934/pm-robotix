@@ -400,8 +400,8 @@ bool LedBarAction::execute()
 
 
 	default:
-		logger().error() << "Bad LedBarAction execute command !!" << logs::end;
-		exit(0);
+		logger().error() << "Bad execute command !!" << logs::end;
+		return false;
 		break;
 	}
 	return false;
