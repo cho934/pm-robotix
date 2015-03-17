@@ -97,7 +97,7 @@ It looks like xinetd configuration is not sufficient in some recent versions of 
 
 Edit (as root user) - if necessary - the /etc/inetd.conf file and add this line:
 {{{
-tftp		dgram	udp	wait	nobody	/usr/sbin/tcpd	/usr/sbin/in.tftpd -s /tftpboot
+tftp		dgram	udp	wait	nobody	/usr/sbin/tcpd	/usr/sbin/in.tftpd -s /home/pmx/tftpboot
 }}}
 
  * Install inetd tools
