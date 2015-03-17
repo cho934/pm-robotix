@@ -91,6 +91,22 @@ service tftp
 #       disable                 = yes
 }
 }}}
+ * Errata (if you have troubles)
+
+It looks like xinetd configuration is not sufficient in some recent versions of this tool. IPv6 is enabled by default and seems to be not compatible with the TFTP protocol. A simple inetd configuration should work for people who have this problem (connection refused in system logs with addresses like ::ffff:192.168.0.100).
+
+Edit (as root user) - if necessary - the /etc/inetd.conf file and add this line:
+{{{
+tftp		dgram	udp	wait	nobody	/usr/sbin/tcpd	/usr/sbin/in.tftpd -s /tftpboot
+}}}
+
+ * Install inetd tools
+On Ubuntu/Debian
+{{{
+$ sudo apt-get install inetutils-tools
+}}}
+
+
  * Redémarrer xinetd service
 {{{
 $ sudo killall -HUP xinetd
