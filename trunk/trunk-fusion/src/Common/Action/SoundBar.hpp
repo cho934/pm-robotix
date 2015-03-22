@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "../LogAppender/LoggerFactory.hpp"
+#include "../../Log/LoggerFactory.hpp"
 #include "AActionsElement.hpp"
 #include "IAction.hpp"
 #include "../Action.Driver/ASoundDriver.hpp"

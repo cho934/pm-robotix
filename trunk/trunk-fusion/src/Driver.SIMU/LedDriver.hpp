@@ -2,8 +2,8 @@
 #define SIMU_LEDDRIVER_HPP_
 
 #include "../Common/Action.Driver/ALedDriver.hpp"
-#include "../Common/LogAppender/LoggerFactory.hpp"
 #include "../Common/Utils/Macro.hpp"
+#include "../Log/LoggerFactory.hpp"
 
 #define NB_GPIO 8 //max number of led
 

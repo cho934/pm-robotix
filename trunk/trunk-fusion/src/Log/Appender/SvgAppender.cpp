@@ -3,7 +3,7 @@
  * \brief Implémentation de la classe SvgAppender.
  */
 
-#include "SvgAppender.hpp"
+#include "../Appender/SvgAppender.hpp"
 
 #include <cstdlib>
 #include <string>

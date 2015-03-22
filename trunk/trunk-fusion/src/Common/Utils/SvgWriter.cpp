@@ -4,11 +4,9 @@
  */
 
 #include "SvgWriter.hpp"
-
 #include <cmath>
-
-#include "../LogAppender/Level.hpp"
-#include "../LogAppender/Logger.hpp"
+#include "../../Log/Level.hpp"
+#include "../../Log/Logger.hpp"
 
 SvgWriter::SvgWriter()
 {

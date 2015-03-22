@@ -7,7 +7,7 @@
 #define	SOUNDBARTEST_HPP_
 
 #include "../Common/FunctionalTest.hpp"
-#include "../Common/LogAppender/LoggerFactory.hpp"
+#include "../Log/LoggerFactory.hpp"
 
 /*!
  * \brief Effectue un test de clignotement de haut parleur.

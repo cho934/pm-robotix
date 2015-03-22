@@ -2,8 +2,8 @@
 #define EV3_LEDDRIVER_EV3_HPP_
 
 #include "../Common/Action.Driver/ALedDriver.hpp"
-#include "../Common/LogAppender/LoggerFactory.hpp"
 #include "../Common/Utils/Macro.hpp"
+#include "../Log/LoggerFactory.hpp"
 
 class LedDriver: public ALedDriver
 {

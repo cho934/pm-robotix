@@ -2,8 +2,7 @@
 #define EV3_ASSERVDRIVER_HPP_
 
 #include "../Common/Asserv.Driver/AAsservDriver.hpp"
-#include "../Common/LogAppender/LoggerFactory.hpp"
-#include "../Common/Utils/Macro.hpp"
+#include "../Log/LoggerFactory.hpp"
 #include "ev3dev.h"
 
 using namespace std;

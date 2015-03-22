@@ -1,7 +1,7 @@
 #ifndef ASSERV_HPP_
 #define ASSERV_HPP_
 
-#include "../LogAppender/LoggerFactory.hpp"
+#include "../../Log/LoggerFactory.hpp"
 
 
 class Asserv

@@ -10,10 +10,11 @@
 #include <string>
 #include <fstream>
 
-#include "../Thread/Thread.hpp"
-#include "Level.hpp"
-#include "Logger.hpp"
-#include "MemoryAppender.hpp"
+#include "../../Log/Level.hpp"
+#include "../../Log/Logger.hpp"
+#include "../../Thread/Thread.hpp"
+#include "../Appender/MemoryAppender.hpp"
+
 
 namespace logs
 {

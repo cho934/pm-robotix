@@ -2,8 +2,7 @@
 #define ARMA_ASSERVDRIVER_HPP_
 
 #include "../Common/Asserv.Driver/AAsservDriver.hpp"
-#include "../Common/LogAppender/LoggerFactory.hpp"
-#include "../Common/Utils/Macro.hpp"
+#include "../Log/LoggerFactory.hpp"
 
 using namespace std;
 

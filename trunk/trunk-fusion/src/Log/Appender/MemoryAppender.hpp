@@ -10,9 +10,9 @@
 #include <sstream>
 #include <string>
 
-#include "../Thread/Mutex.hpp"
-#include "Level.hpp"
-#include "Logger.hpp"
+#include "../../Log/Level.hpp"
+#include "../../Log/Logger.hpp"
+#include "../../Thread/Mutex.hpp"
 
 namespace logs
 {

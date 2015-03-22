@@ -3,7 +3,7 @@
  * \brief Implémentation de la classe Level.
  */
 
-#include "../LogAppender/Level.hpp"
+#include "Level.hpp"
 
 logs::Level logs::Level::DEBUG(5, "DEBUG");
 

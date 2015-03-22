@@ -8,8 +8,8 @@
 
 #include <list>
 
-#include "../LogAppender/LoggerFactory.hpp"
-#include "../Thread/Thread.hpp"
+#include "../../Log/LoggerFactory.hpp"
+#include "../../Thread/Thread.hpp"
 #include "../Utils/PointerList.hpp"
 #include "IAction.hpp"
 
