@@ -1,5 +1,5 @@
-#ifndef SOUNDDRIVER_HPP_
-#define SOUNDDRIVER_HPP_
+#ifndef EV3_SOUNDDRIVER_HPP_
+#define EV3_SOUNDDRIVER_HPP_
 
 #include <string>
 

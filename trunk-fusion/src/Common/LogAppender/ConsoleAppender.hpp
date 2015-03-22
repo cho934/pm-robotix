@@ -13,7 +13,7 @@
 #include "../LogAppender/Level.hpp"
 #include "../LogAppender/Logger.hpp"
 #include "../LogAppender/MemoryAppender.hpp"
-#include "../Thread.hpp"
+#include "../Thread/Thread.hpp"
 
 namespace logs
 {

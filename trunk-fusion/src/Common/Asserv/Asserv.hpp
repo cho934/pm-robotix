@@ -37,7 +37,7 @@ public:
 	/*!
 	 * \brief Active les actions.
 	 *
-	 * Cette méthode lance le thread gérant le ActionManager.
+	 * Cette méthode lance le thread gérant le AsservManager.
 	 */
 	void start();
 

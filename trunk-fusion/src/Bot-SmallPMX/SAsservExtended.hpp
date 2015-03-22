@@ -9,19 +9,31 @@
 #define PMX_S_ASSERVEXTENDED_HPP_
 
 #include "../Common/Asserv/Asserv.hpp"
+#include "../Common/Asserv/EncoderControl.hpp"
 
 class SAsservExtended: public Asserv
 {
 private:
 
-
+	/*!
+	 * \brief LED Bar.
+	 */
+	EncoderControl encoders_;
 
 public:
-	SAsservExtended()
+	SAsservExtended() :
+			encoders_(*this)
 	{
 	}
 
-
+	/*!
+	 * \brief Cette methode retourne l'objet EncoderControl.
+	 * \return encoders_.
+	 */
+	inline EncoderControl & encoders()
+	{
+		return encoders_;
+	}
 };
 
-#endif /* ASSERVEXTENDED_HPP_ */
+#endif

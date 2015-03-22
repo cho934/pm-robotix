@@ -9,7 +9,7 @@
 #include <fstream>
 #include <string>
 
-#include "../Mutex.hpp"
+#include "../Thread/Mutex.hpp"
 #include "Logger.hpp"
 
 namespace logs

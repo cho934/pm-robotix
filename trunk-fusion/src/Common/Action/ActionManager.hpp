@@ -8,10 +8,10 @@
 
 #include <list>
 
-#include "../IAction.hpp"
 #include "../LogAppender/LoggerFactory.hpp"
-#include "../Thread.hpp"
+#include "../Thread/Thread.hpp"
 #include "../Utils/PointerList.hpp"
+#include "IAction.hpp"
 
 /*!
  * \brief Classe de gestion des actions du robot.

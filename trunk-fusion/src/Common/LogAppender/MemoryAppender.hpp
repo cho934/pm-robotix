@@ -10,7 +10,7 @@
 #include <sstream>
 #include <string>
 
-#include "../Mutex.hpp"
+#include "../Thread/Mutex.hpp"
 #include "Level.hpp"
 #include "Logger.hpp"
 

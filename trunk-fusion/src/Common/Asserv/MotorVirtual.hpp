@@ -8,7 +8,7 @@
 #ifndef COMMON_ASSERV_MOTORVIRTUAL_HPP_
 #define COMMON_ASSERV_MOTORVIRTUAL_HPP_
 
-
+//defini les moteurs virtuel M1+M2 et M1-M2
 
 
 

@@ -5,6 +5,7 @@
 #include "../Common/ConsoleManager.hpp"
 #include "LedBarTest.hpp"
 #include "SoundBarTest.hpp"
+#include "EncoderTest.hpp"
 
 
 using namespace std;
@@ -22,6 +23,7 @@ int main(int argc, char** argv)
 	//add specific tests for this robot
 	manager.add(new LedBarTest());
 	manager.add(new SoundBarTest());
+	manager.add(new EncoderTest());
 
 	//start the Robot (functional tests or match)
 	robot.start(manager, argc, argv);
