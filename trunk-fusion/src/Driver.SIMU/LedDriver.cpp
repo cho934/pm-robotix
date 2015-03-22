@@ -2,10 +2,10 @@
 
 #include "LedDriver.hpp"
 
+#include <sstream>
 #include <bitset>
 #include <cmath>
-
-#include "../Common/LogAppender/Logger.hpp"
+#include "../Log/Logger.hpp"
 
 using namespace std;
 

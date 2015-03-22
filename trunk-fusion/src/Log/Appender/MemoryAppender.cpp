@@ -3,7 +3,7 @@
  * \brief Implementation de la classe MemoryAppender.
  */
 
-#include "MemoryAppender.hpp"
+#include "../Appender/MemoryAppender.hpp"
 
 #include <iostream>
 

@@ -3,7 +3,7 @@
  * \brief Implémentation de la classe ConsoleAppender.
  */
 
-#include "ConsoleAppender.hpp"
+#include "../Appender/ConsoleAppender.hpp"
 
 #include <unistd.h>
 #include <list>

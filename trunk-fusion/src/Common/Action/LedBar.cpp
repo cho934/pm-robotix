@@ -7,7 +7,7 @@
 #include  <stdlib.h>
 
 #include "../Action.Driver/ALedDriver.hpp"
-#include "../LogAppender/Logger.hpp"
+#include "../../Log/Logger.hpp"
 #include "Actions.hpp"
 
 using namespace std;

@@ -10,10 +10,10 @@
 #include <sstream>
 #include <string>
 
-#include "../LogAppender/Level.hpp"
-#include "../LogAppender/Logger.hpp"
-#include "../LogAppender/MemoryAppender.hpp"
-#include "../Thread/Thread.hpp"
+#include "../../Log/Level.hpp"
+#include "../../Log/Logger.hpp"
+#include "../../Thread/Thread.hpp"
+#include "../Appender/MemoryAppender.hpp"
 
 namespace logs
 {

@@ -9,7 +9,7 @@
 
 #include <string>
 
-#include "../LogAppender/LoggerFactory.hpp"
+#include "../../Log/LoggerFactory.hpp"
 
 
 /*!

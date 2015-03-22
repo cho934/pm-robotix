@@ -3,11 +3,12 @@
  * \brief Ce fichier contient l'initialisation du système de Log.
  */
 
-#include "../Common/LogAppender/ConsoleAppender.hpp"
-#include "../Common/LogAppender/FileAppender.hpp"
-#include "../Common/LogAppender/Level.hpp"
-#include "../Common/LogAppender/LoggerFactory.hpp"
-#include "../Common/LogAppender/SvgAppender.hpp"
+
+#include "../Log/Appender/FileAppender.hpp"
+#include "../Log/Appender/SvgAppender.hpp"
+#include "../Log/Appender/ConsoleAppender.hpp"
+#include "../Log/Level.hpp"
+#include "../Log/LoggerFactory.hpp"
 
 void logs::LoggerFactory::initialize()
 {

@@ -1,11 +1,5 @@
 #include "EncoderControl.hpp"
 
-#include <unistd.h>
-
-#include "../LogAppender/Logger.hpp"
-#include "../Asserv.Driver/AAsservDriver.hpp"
-#include "Asserv.hpp"
-
 using namespace std;
 
 EncoderControl::EncoderControl(Asserv & asserv) :

@@ -1,8 +1,6 @@
 #include "Asserv.hpp"
 
-#include <unistd.h>
-
-#include "../LogAppender/Logger.hpp"
+#include "../../Log/Logger.hpp"
 
 void Asserv::start()
 {

@@ -9,8 +9,8 @@
 #include <fstream>
 #include <string>
 
-#include "../Thread/Mutex.hpp"
-#include "Logger.hpp"
+#include "../../Log/Logger.hpp"
+#include "../../Thread/Mutex.hpp"
 
 namespace logs
 {

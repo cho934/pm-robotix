@@ -1,7 +1,7 @@
 #ifndef ACTIONS_HPP_
 #define ACTIONS_HPP_
 
-#include "../LogAppender/LoggerFactory.hpp"
+#include "../../Log/LoggerFactory.hpp"
 #include "ActionManager.hpp"
 
 /*!

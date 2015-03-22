@@ -4,7 +4,7 @@
 #include <string>
 
 #include "../Common/Action.Driver/ASoundDriver.hpp"
-#include "../Common/LogAppender/LoggerFactory.hpp"
+#include "../Log/LoggerFactory.hpp"
 
 class SoundDriver: public ASoundDriver
 {
