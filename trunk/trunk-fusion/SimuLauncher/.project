@@ -46,9 +46,19 @@
 			<locationURI>WORKSPACE_LOC/src/Driver.SIMULAUNCHER</locationURI>
 		</link>
 		<link>
+			<name>Log</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/src/Log</locationURI>
+		</link>
+		<link>
 			<name>SimuLauncher.Main</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/src/SimuLauncher.Main</locationURI>
+		</link>
+		<link>
+			<name>Thread</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/src/Thread</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
