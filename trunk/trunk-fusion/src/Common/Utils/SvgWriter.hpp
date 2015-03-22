@@ -7,7 +7,9 @@
 #define	SVGWRITER_HPP_
 
 
-#include "LogAppender/LoggerFactory.hpp"
+#include <string>
+
+#include "../LogAppender/LoggerFactory.hpp"
 
 
 /*!

@@ -7,7 +7,7 @@
 
 #include <utility>
 
-#include "../Mutex.hpp"
+#include "../Thread/Mutex.hpp"
 #include "Level.hpp"
 
 logs::LoggerFactory::LoggerFactory()

@@ -10,7 +10,7 @@
 #include <string>
 #include <fstream>
 
-#include "../Thread.hpp"
+#include "../Thread/Thread.hpp"
 #include "Level.hpp"
 #include "Logger.hpp"
 #include "MemoryAppender.hpp"

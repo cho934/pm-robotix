@@ -1,6 +1,6 @@
 #include "Mutex.hpp"
 
-#include "LogAppender/LoggerFactory.hpp"
+#include <stddef.h>
 
 utils::Mutex::Mutex() {
     pthread_mutex_init(& mutex_, NULL);

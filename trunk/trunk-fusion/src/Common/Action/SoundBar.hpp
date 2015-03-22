@@ -1,11 +1,12 @@
 #ifndef SOUNDBAR_HPP_
 #define SOUNDBAR_HPP_
 
+#include <string>
+
 #include "../LogAppender/LoggerFactory.hpp"
-#include "../Macro.hpp"
-#include "../Action.Driver/ASoundDriver.hpp"
-#include "../IAction.hpp"
 #include "AActionsElement.hpp"
+#include "IAction.hpp"
+#include "../Action.Driver/ASoundDriver.hpp"
 
 /*!
  * \brief Enumération des libellés des actions de la barre de leds.
@@ -37,6 +38,7 @@ private:
 	bool actionStopped_;
 
 	ASoundDriver* sounddriver;
+
 public:
 
 	/*!

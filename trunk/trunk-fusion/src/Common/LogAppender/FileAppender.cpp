@@ -3,10 +3,11 @@
  * \brief Implémentation de la classe FileAppender.
  */
 
-#include "../LogAppender/FileAppender.hpp"
-#include "../Mutex.hpp"
+#include "FileAppender.hpp"
+
 #include <unistd.h>
 #include <list>
+
 
 logs::FileAppender::~FileAppender() {
     static_cast<Thread *>(this)->lock();
