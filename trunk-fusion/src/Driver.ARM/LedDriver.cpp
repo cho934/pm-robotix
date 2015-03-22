@@ -13,7 +13,7 @@ LedDriver::LedDriver(int nb)
 {
 
 	nb = 8; //force 8 leds.
-
+/*
 	gpio[0] = new AsGpio(4); //A4
 	gpio[1] = new AsGpio(5); //A5
 	gpio[2] = new AsGpio(6); //A6
@@ -27,15 +27,20 @@ LedDriver::LedDriver(int nb)
 	{
 		gpio[i]->setPinDirection(OUT);
 		gpio[i]->setPinValue(0);
-	}
+	}*/
 }
 
 LedDriver::~LedDriver()
 {
-	delete (gpio);
+	//delete (gpio);
 }
 
-void LedDriver::set(int position, int aValue)
+void LedDriver::setBit(int index, int color)
 {
-	gpio[position]->setPinValue(aValue);
+	//gpio[position]->setPinValue(aValue);
+}
+
+void LedDriver::setBytes(uint hex, int color)
+{
+
 }

@@ -1,5 +1,5 @@
-#ifndef LEDDRIVER_HPP_
-#define LEDDRIVER_HPP_
+#ifndef SIMU_LEDDRIVER_HPP_
+#define SIMU_LEDDRIVER_HPP_
 
 #include "../Common/Action.Driver/ALedDriver.hpp"
 #include "../Common/LogAppender/LoggerFactory.hpp"

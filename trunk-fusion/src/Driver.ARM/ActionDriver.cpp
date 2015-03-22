@@ -1,6 +1,6 @@
-#include "../Common/Action.Driver/ActionDriver.hpp"
+#include "../Common/Action.Driver/AActionDriver.hpp"
 
-void ActionDriver::driverSetPin(int pos, int value)
+void AActionDriver::function(int value)
 {
 	//drivers ARM
 

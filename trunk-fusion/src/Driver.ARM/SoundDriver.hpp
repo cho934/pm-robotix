@@ -1,12 +1,25 @@
-#ifndef SIMULAUNCHER_SOUNDDRIVER_HPP_
-#define SIMULAUNCHER_SOUNDDRIVER_HPP_
+#ifndef ARMA_SOUNDDRIVER_HPP_
+#define ARMA_SOUNDDRIVER_HPP_
 
 #include <string>
 
 #include "../Common/Action.Driver/ASoundDriver.hpp"
+#include "../Common/LogAppender/LoggerFactory.hpp"
 
 class SoundDriver: public ASoundDriver
 {
+private:
+
+	/*!
+	 * \brief Retourne le \ref Logger associé à la classe \ref SoundDriver(ARMADEUS).
+	 */
+	static inline const logs::Logger & logger()
+	{
+		static const logs::Logger & instance = logs::LoggerFactory::logger("SoundDriver.ARMA");
+		return instance;
+	}
+
+	int vol_;
 
 public:
 

@@ -1,5 +1,5 @@
-#ifndef LEDDRIVER_HPP_
-#define LEDDRIVER_HPP_
+#ifndef SIMULAUNCHER_LEDDRIVER_HPP_
+#define SIMULAUNCHER_LEDDRIVER_HPP_
 
 #include "../Common/Action.Driver/ALedDriver.hpp"
 
