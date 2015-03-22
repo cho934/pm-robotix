@@ -42,7 +42,7 @@
 									<listOptionValue builtIn="false" value="as_devices_cpp"/>
 									<listOptionValue builtIn="false" value="native"/>
 								</option>
-								<option id="gnu.cpp.link.option.strip.1843269631" superClass="gnu.cpp.link.option.strip" value="true" valueType="boolean"/>
+								<option id="gnu.cpp.link.option.strip.1843269631" name="Omit all symbol information (-s)" superClass="gnu.cpp.link.option.strip" value="true" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.320518524" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>

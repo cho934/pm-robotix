@@ -1,9 +1,9 @@
-#ifndef LEDDRIVER_HPP_
-#define LEDDRIVER_HPP_
+#ifndef ARMA_LEDDRIVER_HPP_
+#define ARMA_LEDDRIVER_HPP_
 
 #include "../Common/Action.Driver/ALedDriver.hpp"
 
-#include <as_devices/cpp/as_gpio.hpp>
+//#include <as_devices/cpp/as_gpio.hpp>
 
 #define IN (char*)0
 #define OUT (char*)1
@@ -16,9 +16,11 @@ public:
 	/*!
 	 * \brief Liste des gpio à utiliser.
 	 */
-	AsGpio * gpio[8];
+	//AsGpio * gpio[8];
 
-	virtual void set(int position, int aValue);
+	virtual void setBit(int index, int color);
+
+	virtual void setBytes(uint hex, int color);
 
 	/*!
 	 * \brief Constructor.
