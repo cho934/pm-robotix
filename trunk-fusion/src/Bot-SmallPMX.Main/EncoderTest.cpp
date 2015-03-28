@@ -20,7 +20,7 @@ void EncoderTest::run(int, char *[])
 	int nb = 10;
 	int timeSpan = 1000;
 
-	//TODO if connected_
+	//TODO if asserv connected_
 
 	long left = robot.asserv.encoders().getLeftEncoder();
 	long right = robot.asserv.encoders().getLeftEncoder();

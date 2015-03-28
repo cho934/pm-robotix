@@ -11,3 +11,20 @@ MotorControl::MotorControl(Asserv & asserv) :
 MotorControl::~MotorControl()
 {
 }
+
+void MotorControl::runMotorLeft(int power, int timeus)
+{
+	asservdriver->setMotorLeftPower(power, timeus);
+}
+
+void MotorControl::runMotorRight(int power, int timeus)
+{
+	asservdriver->setMotorRightPower(power, timeus);
+}
+
+void MotorControl::stopMotors()
+{
+	asservdriver->stopMotorLeft();
+	asservdriver->stopMotorRight();
+
+}
