@@ -23,27 +23,35 @@ void MotorTest::run(int argc, char *argv[])
 
 	int power = 0;
 	int timems = 1000;
-
-	if (argc > 3)
+	std::cout << "argc: " << argc << std::endl;
+	if (argc == 1)
 	{
-		power = atoi(argv[3]);
-		std::cout << "power: " << atoi(argv[3]) << std::endl;
+		power= 300;
+		timems = 5000;
 	}
 	else
 	{
-		std::cout << "power(-900/+900)? " << std::flush;
-		std::cin >> power;
-	}
+		if (argc > 3)
+		{
+			power = atoi(argv[3]);
+			std::cout << "power: " << atoi(argv[3]) << std::endl;
+		}
+		else
+		{
+			std::cout << "power(-900/+900)? " << std::flush;
+			std::cin >> power;
+		}
 
-	if (argc > 4)
-	{
-		timems = atoi(argv[4]);
-		std::cout << "time ms: " << atoi(argv[4]) << std::endl;
-	}
-	else
-	{
-		std::cout << "time ms? " << std::flush;
-		std::cin >> timems;
+		if (argc > 4)
+		{
+			timems = atoi(argv[4]);
+			std::cout << "time ms: " << atoi(argv[4]) << std::endl;
+		}
+		else
+		{
+			std::cout << "time ms? " << std::flush;
+			std::cin >> timems;
+		}
 	}
 
 	SRobotExtended &robot = SRobotExtended::instance();
