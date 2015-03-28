@@ -30,10 +30,15 @@
 #include <stdio.h>
 #include "robot.h"
 
-pidSystemValues systemValues[MAX_PID_SYSTEM_NUMBER];
 
+
+pidSystemValues systemValues[MAX_PID_SYSTEM_NUMBER];
 //number of system created so far
 PID_SYSTEM pid_Nb;
+
+int SampleTime = 1; //... millisec
+
+
 
 void pid_Init()
 {
@@ -47,7 +52,7 @@ PID_SYSTEM pid_Create()
 	if (pid_Nb >= MAX_PID_SYSTEM_NUMBER)
 		return -1;
 
-	//init configuration variables
+	//init configuration variables by default
 	systemValues[pid_Nb].conf.kP = 0.0010;
 	systemValues[pid_Nb].conf.kI = 0.0008;
 	systemValues[pid_Nb].conf.kD = 0.000002;
@@ -74,9 +79,7 @@ void signalErrorOverflow(PID_SYSTEM system)
 	}
 }
 
-int SampleTime = 1; //... millisec
-double outMin = -1.0f * MAX_PWM_VALUE;
-double outMax = 1.0f * MAX_PWM_VALUE;
+
 
 void pid_Config(PID_SYSTEM system, double kp, double ki, double kd)
 {
@@ -118,6 +121,8 @@ void pid_Config(PID_SYSTEM system, double kp, double ki, double kd)
  * */
 double pid_Compute(PID_SYSTEM system, double setpoint, double input, double speed)
 {
+	double outMin = (-1.0 * maxPwmValue);
+	double outMax = (1.0 * maxPwmValue);
 
 	pidSystemValues* val = &(systemValues[system]);
 	pidConfig conf = val->conf;
@@ -176,7 +181,7 @@ int32 pid_Compute_rcva_chaff(PID_SYSTEM system, int32 error, double vitesse)
 	double P, I, D;
 	double pwm;
 
-	error /= VTOPS_PER_TICKS;
+	error /= vtopsPerTicks;
 
 	//printf("motor_PID.c pid_Compute %d, err:%d ", system, error);
 	val = &(systemValues[system]);
@@ -194,13 +199,13 @@ int32 pid_Compute_rcva_chaff(PID_SYSTEM system, int32 error, double vitesse)
 	pwm /= 256.0f;
 	printf("motor_PID.c pid_Compute pid P:%f I:%f D:%f -> pwm:%f\n", P, I, D, pwm);
 	//bound the resulting pwm
-	if (pwm > MAX_PWM_VALUE)
+	if (pwm > maxPwmValue)
 	{
-		pwm = MAX_PWM_VALUE;
+		pwm = maxPwmValue;
 	}
-	else if (pwm < -MAX_PWM_VALUE)
+	else if (pwm < -maxPwmValue)
 	{
-		pwm = -MAX_PWM_VALUE;
+		pwm = -maxPwmValue;
 	}
 
 	return (int32) pwm;
@@ -228,8 +233,8 @@ int32 pid_ComputeRcva(PID_SYSTEM system, int32 error, int32 vitesse)
 // 		writeDebugStreamLine("cpid.c : before error=%d vitesse=%d", error, vitesse);
 // 	#endif
 
-	error /= VTOPS_PER_TICKS; //=[Ticks/sample]
-	vitesse /= VTOPS_PER_TICKS; //=[Ticks/sample]
+	error /= vtopsPerTicks; //=[Ticks/sample]
+	vitesse /= vtopsPerTicks; //=[Ticks/sample]
 
 	int32 cmd = error * val->conf.kP;
 	int32 pwm = cmd - val->conf.kD * vitesse;
@@ -245,13 +250,13 @@ int32 pid_ComputeRcva(PID_SYSTEM system, int32 error, int32 vitesse)
 // 	#endif
 
 	//bound the resulting pwm
-	if (pwm > MAX_PWM_VALUE)
+	if (pwm > maxPwmValue)
 	{
-		pwm = MAX_PWM_VALUE;
+		pwm = maxPwmValue;
 	}
-	else if (pwm < -MAX_PWM_VALUE)
+	else if (pwm < -maxPwmValue)
 	{
-		pwm = -MAX_PWM_VALUE;
+		pwm = -maxPwmValue;
 	}
 
 	return pwm;

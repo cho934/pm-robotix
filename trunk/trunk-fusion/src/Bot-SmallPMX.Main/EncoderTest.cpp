@@ -16,9 +16,11 @@ void EncoderTest::run(int, char *[])
 {
 	logger().info() << "Executing - " << this->desc() << logs::end;
 
-	SRobotExtended robot;
+	SRobotExtended &robot = SRobotExtended::instance();
 	int nb = 10;
 	int timeSpan = 1000;
+
+	//TODO if connected_
 
 	long left = robot.asserv.encoders().getLeftEncoder();
 	long right = robot.asserv.encoders().getLeftEncoder();

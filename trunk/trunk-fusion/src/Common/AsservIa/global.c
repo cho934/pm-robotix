@@ -9,3 +9,13 @@ uint32 distEncoder;
 //distance between both encoder wheels in meters
 float distEncoderMeter;
 float valueVTops;
+
+
+int defaultSamplingFreq;
+float valueSample;
+int vtopsPerTicks;
+int maxPwmValue;
+float defaultVmax;
+float defaultAcc;
+float defaultDec;
+

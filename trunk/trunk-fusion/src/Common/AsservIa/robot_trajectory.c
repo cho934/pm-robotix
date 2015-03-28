@@ -303,7 +303,8 @@ void motion_SpeedControlADMaxTime(RobotCommand *out_cmd, float spAlpha,
 	out_cmd->cmdType = SPEED_COMMAND;
 	out_cmd->mcType = ALPHA_DELTA;
 
-	time = (DEFAULT_SAMPLING_FREQ * duringMs) / 1000;
+	//time = (DEFAULT_SAMPLING_FREQ * duringMs) / 1000;
+	time = (defaultSamplingFreq * duringMs) / 1000;
 
 	ComputeSpeedCommandMaxTime(&(out_cmd->cmd.speedCmd[ALPHA_MOTOR]),
 			getMotorSpeed(&motors[ALPHA_DELTA][ALPHA_MOTOR]),

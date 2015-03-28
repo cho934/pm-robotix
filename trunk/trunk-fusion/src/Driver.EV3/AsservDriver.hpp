@@ -20,11 +20,26 @@ private:
 		static const logs::Logger & instance = logs::LoggerFactory::logger("AsservDriver.EV3");
 		return instance;
 	}
+
+
+	int connected_;
+	large_motor _motor_left;
+	large_motor _motor_right;
+
 protected:
-  large_motor     _motor_left;
-  large_motor     _motor_right;
 
 public:
+	/*!
+	 * \brief Constructor.
+	 */
+	AsservDriver();
+
+	/*!
+	 * \brief Destructor.
+	 */
+	virtual inline ~AsservDriver()
+	{
+	}
 
 	virtual void setMotorLeftPower(int power, int time);
 	virtual void setMotorRightPower(int power, int time);
@@ -42,16 +57,6 @@ public:
 	virtual int getMotorRightCurrent();
 
 	virtual void enableHardRegulation(bool enable);
-
-	/*!
-	 * \brief Constructor.
-	 */
-	AsservDriver();
-
-	/*!
-	 * \brief Destructor.
-	 */
-	virtual ~AsservDriver();
 
 };
 

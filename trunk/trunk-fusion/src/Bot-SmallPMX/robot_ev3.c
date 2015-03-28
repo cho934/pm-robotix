@@ -1,5 +1,5 @@
 //#include "../cpp/Md25.hpp"
-#include "encoder.h"
+#include "../Common/AsservIa/encoder.h"
 
 #ifndef SIMULATED
 
@@ -11,8 +11,8 @@
 #include <sys/mman.h>
 #include <sys/ioctl.h>
 #include <sys/time.h>
-#include "robot.h"
-#include "motion.h"
+#include "../Common/AsservIa/robot.h"
+#include "../Common/AsservIa/motion.h"
 //#include "../cpp/Robot.hpp"
 
 /**
@@ -37,6 +37,7 @@ void robot_init()
 
 	rightCounter = 0;
 	leftCounter = 0;
+
 	/*
 	 //reset external encoder
 	 pmx::Robot &robot = pmx::Robot::instance();
@@ -49,6 +50,19 @@ void robot_init()
 	struct timeval te;
 	gettimeofday(&te, NULL); // get current time
 	timeOffset = (te.tv_sec * 1000LL + te.tv_usec / 1000);
+
+
+	//config
+	defaultSamplingFreq = 100;// en Hz (cad combien de fois par seconde)
+	valueSample = 0.01f; //(1f/DEFAULT_SAMPLING_FREQ)
+
+	vtopsPerTicks = 1000;
+
+	maxPwmValue = 128;
+
+	defaultVmax = 1.0f;
+	defaultAcc = 1.0f;
+	defaultDec = 1.0f;
 
 	//printf("Init time %ld\n", currentTimeInMillis());
 }
@@ -127,6 +141,7 @@ long robot_getLeftExternalCounter() //en tick
 	long leftCounter = -1 * robot.encoderLeft().readCounter();
 
 	return leftCounter;*/
+	return 0;
 }
 long robot_getRightExternalCounter()
 {
@@ -136,6 +151,7 @@ long robot_getRightExternalCounter()
 	long rightCounter = robot.encoderRight().readCounter();
 
 	return rightCounter;*/
+	return 0;
 }
 
 long robot_getLeftInternalCounter()

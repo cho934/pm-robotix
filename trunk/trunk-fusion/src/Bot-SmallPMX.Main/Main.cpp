@@ -15,7 +15,8 @@ int main(int argc, char** argv)
 {
 	cout << "!!!Hello SmallPMX EV3!!!" << endl;
 
-	SRobotExtended robot;
+	//SRobotExtended robot;
+	SRobotExtended &robot = SRobotExtended::instance();
 
 	//common manager
 	ConsoleManager manager;
@@ -28,6 +29,6 @@ int main(int argc, char** argv)
 	//start the Robot (functional tests or match)
 	robot.start(manager, argc, argv);
 
+	cout << "001" << endl;
 	return 0;
-
 }

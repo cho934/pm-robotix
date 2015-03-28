@@ -20,13 +20,6 @@ private:
 
 public:
 
-	//Action => RobotElement
-	Actions actions;
-
-	//Asserv
-
-	//IA
-
 	/*!
 	 * \brief Constructeur de la classe.
 	 */
@@ -41,6 +34,15 @@ public:
 
 	Robot(Robot const&);              // Don't Implement
 	void operator=(Robot const&); // Don't implement
+
+
+
+	//Action => RobotElement
+	Actions actions;
+
+	//Asserv
+
+	//IA
 
 	/*!
 	 * \brief Start the robot (console for tests or main program)..

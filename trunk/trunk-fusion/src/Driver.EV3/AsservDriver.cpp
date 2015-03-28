@@ -2,34 +2,80 @@
 
 #include "AsservDriver.hpp"
 
-#include "ev3dev.h"
+#include <unistd.h>
+#include <ctime>
+#include <iostream>
+#include <string>
+
+#include "../Common/Utils/Exception.hpp"
 
 using namespace std;
 using namespace ev3dev;
 
+
 AAsservDriver * AAsservDriver::create()
 {
-	return new AsservDriver();
+	static AsservDriver *instance = new AsservDriver();
+	return instance;
 }
 
 AsservDriver::AsservDriver() :
-		_motor_left(OUTPUT_A), _motor_right(OUTPUT_D)
+		connected_(0)
 {
-	_motor_left.reset();
-	_motor_right.reset();
-	_motor_left.set_run_mode(motor::run_mode_forever);
-	_motor_right.set_run_mode(motor::run_mode_forever);
+	cout << "AsservDriver" << endl;
+	//TEST Motors if connected
+	motor arrMotors[4] =
+	{
+	{ OUTPUT_A },
+	{ OUTPUT_B },
+	{ OUTPUT_C },
+	{ OUTPUT_D } };
 
-	_motor_left.set_position_mode(motor::position_mode_absolute);
-	_motor_right.set_position_mode(motor::position_mode_absolute);
+	for (unsigned i = 0; i < 4; ++i)
+	{
 
-	_motor_left.set_stop_mode(motor::stop_mode_brake);
-	_motor_right.set_stop_mode(motor::stop_mode_brake);
+		motor &m = arrMotors[i];
+		if (m.connected())
+		{
+			cout << "(" << 1 + i << ") " << m.type() << " motor on port " << m.port_name() << endl;
+			if (m.port_name() == OUTPUT_A)
+			{
+				_motor_left = OUTPUT_A;
+				cout << "A Connected" << endl;
+				connected_++;
+			}
+			if (m.port_name() == OUTPUT_D)
+			{
+				_motor_right = OUTPUT_D;
+				cout << "D Connected" << endl;
+				connected_++;
+			}
 
-}
+		}
+		else
+		{
+			cout << "(" << 1 + i << ") " << "No Motor" << endl;
+		}
 
-AsservDriver::~AsservDriver()
-{
+	}
+
+//TODO ajouter un parametre pour que les tests moteurs ne s'execute pas si les moteurs ne sont pas connectés
+	sleep(1);
+
+	if (connected_ >= 2) //if both motors are connected, then initialize each motor.
+	{
+		_motor_left.reset();
+		_motor_right.reset();
+		_motor_left.set_run_mode(motor::run_mode_forever);
+		_motor_right.set_run_mode(motor::run_mode_forever);
+
+		_motor_left.set_position_mode(motor::position_mode_absolute);
+		_motor_right.set_position_mode(motor::position_mode_absolute);
+
+		_motor_left.set_stop_mode(motor::stop_mode_brake);
+		_motor_right.set_stop_mode(motor::stop_mode_brake);
+	}
+
 }
 
 void AsservDriver::setMotorLeftPower(int power, int timems)

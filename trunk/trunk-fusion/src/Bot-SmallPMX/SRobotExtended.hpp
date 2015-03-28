@@ -9,6 +9,12 @@ class SRobotExtended: public Robot
 {
 public:
 
+	static SRobotExtended & instance()
+	{
+		static SRobotExtended instance;
+		return instance;
+	}
+
 	//on etend les actions possibles
 	SActionsExtended actions;
 

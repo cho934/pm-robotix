@@ -10,19 +10,22 @@
 
 #include "../Common/Asserv/Asserv.hpp"
 #include "../Common/Asserv/EncoderControl.hpp"
+#include "../Common/Asserv/MotorControl.hpp"
 
 class SAsservExtended: public Asserv
 {
 private:
 
 	/*!
-	 * \brief LED Bar.
+	 * \brief Left and Right Encoder.
 	 */
 	EncoderControl encoders_;
 
+	MotorControl motors_;
+
 public:
 	SAsservExtended() :
-			encoders_(*this)
+			encoders_(*this), motors_(*this)
 	{
 	}
 
@@ -33,6 +36,15 @@ public:
 	inline EncoderControl & encoders()
 	{
 		return encoders_;
+	}
+
+	/*!
+	 * \brief Cette methode retourne l'objet MotorControl.
+	 * \return motors_.
+	 */
+	inline MotorControl & motors()
+	{
+		return motors_;
 	}
 };
 
