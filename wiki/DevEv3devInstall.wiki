@@ -69,10 +69,13 @@ root@ev3dev:~$ connmanctl
 }}}
 {{{
 connmanctl> scan wifi
+Scan completed for wifi
 connmanctl> services
 *AO Wired                gadget_..._usb
     SSID       wifi_..._managed_psk
 
+connmanctl> agent on
+Agent registered
 connmanctl>  connect wifi_...
 (and enter your passphrase)
 connmanctl> quit
