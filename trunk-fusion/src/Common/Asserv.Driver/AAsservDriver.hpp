@@ -7,10 +7,23 @@ class AAsservDriver
 public:
 
 	/*!
-	 * \brief instance creation.
+	 * \brief single instance creation.
 	 */
 	static AAsservDriver * create();
 
+	/*!
+	 * \brief Destructor.
+	 */
+	virtual ~AAsservDriver()
+	{
+	}
+
+	/*!
+	 * \brief Constructor.
+	 */
+	AAsservDriver()
+	{
+	}
 
 	virtual void setMotorLeftPower(int power, int timems) = 0;
 	virtual void setMotorRightPower(int power, int timems)= 0;
@@ -29,22 +42,9 @@ public:
 
 	virtual void enableHardRegulation(bool enable)= 0;
 
-
-	/*!
-	 * \brief Destructor.
-	 */
-	virtual ~AAsservDriver()
-	{
-	}
+private:
 
 protected:
-
-	/*!
-	 * \brief Constructor.
-	 */
-	AAsservDriver()
-	{
-	}
 
 };
 

@@ -6,7 +6,8 @@ using namespace std;
 
 AAsservDriver * AAsservDriver::create()
 {
-	return new AsservDriver();
+	static AsservDriver *instance = new AsservDriver();
+	return instance;
 }
 
 AsservDriver::AsservDriver()

@@ -121,7 +121,8 @@ void motion_Init() {
 		exit(1);
 	}
 
-	motion_InitTimer(DEFAULT_SAMPLING_FREQ);
+	//motion_InitTimer(DEFAULT_SAMPLING_FREQ);
+	motion_InitTimer(defaultSamplingFreq);
 	traj_Init();
 	slippage_Init();
 
@@ -358,18 +359,18 @@ void *motion_ITTask(void *p_arg) {
 			//output pwm to motors
 			if (motionCommand.mcType == LEFT_RIGHT) {
 				//	printf("motion.c : LEFT_RIGHT mode, pid result : %d %d \n",	pwm0, pwm1);
-				BOUND_INT(pwm0, MAX_PWM_VALUE);
-				BOUND_INT(pwm1, MAX_PWM_VALUE);
+				BOUND_INT(pwm0, maxPwmValue);
+				BOUND_INT(pwm1, maxPwmValue);
 				pwm0b = pwm0;
 				pwm1b = pwm1;
 				setPWM(pwm0b, pwm1b);
 			} else if (motionCommand.mcType == ALPHA_DELTA) {
 				// printf("motion.c : ALPHA_DELTA mode, pid result : %d %d \n", pwm0, pwm1);
 				pwm0b = pwm1 - pwm0;
-				BOUND_INT(pwm0b, MAX_PWM_VALUE);
+				BOUND_INT(pwm0b, maxPwmValue);
 
 				pwm1b = pwm1 + pwm0;
-				BOUND_INT(pwm1b, MAX_PWM_VALUE);
+				BOUND_INT(pwm1b, maxPwmValue);
 
 				setPWM(pwm0b, pwm1b);
 			}

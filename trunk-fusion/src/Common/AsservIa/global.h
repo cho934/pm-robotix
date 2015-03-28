@@ -57,21 +57,28 @@ typedef int boolean;
 #define BACK_SHOCK 1
 #define isSendErrorsEnabled 0
 
-#define MAX_PWM_VALUE 128
+//#define MAX_PWM_VALUE 128
+extern int maxPwmValue;
 
 #define MAX_PID_SYSTEM_NUMBER	6
 
 
-#define defaultVmax 		1.0f
-#define defaultAcc 		1.0f
-#define defaultDec		1.0f
+//#define defaultVmax 		1.0f
+extern float defaultVmax;
+//#define defaultAcc 		1.0f
+extern float defaultAcc;
+//#define defaultDec		1.0f
+extern float defaultDec;
 
 //vTops is a virtual measure distance to avoid floating point computation
-#define VTOPS_PER_TICKS 1000 //1000 => ROBOT_TEST 13 -700  1.0 0.8 1.5  0.0015 0.0008 0.000002
+//#define VTOPS_PER_TICKS 1000 //1000 => ROBOT_TEST 13 -700  1.0 0.8 1.5  0.0015 0.0008 0.000002
+extern int vtopsPerTicks;
 
 // Attention ces valeurs sont couplées
-#define DEFAULT_SAMPLING_FREQ 100 // en Hz (cad combien de fois par seconde)
-#define valueSample 0.01f //(1f/DEFAULT_SAMPLING_FREQ)
+//#define DEFAULT_SAMPLING_FREQ 100 // en Hz (cad combien de fois par seconde)
+extern int defaultSamplingFreq;
+//#define valueSample 0.01f //(1f/DEFAULT_SAMPLING_FREQ)
+extern float valueSample;
 
 //some values goes in pair :
 //the first one is the measured/real one

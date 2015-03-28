@@ -10,7 +10,6 @@ EncoderControl::EncoderControl(Asserv & asserv) :
 
 EncoderControl::~EncoderControl()
 {
-	delete asservdriver;
 }
 
 long EncoderControl::getLeftEncoder()

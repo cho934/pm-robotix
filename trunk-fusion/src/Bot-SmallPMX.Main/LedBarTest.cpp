@@ -17,7 +17,8 @@ void LedBarTest::run(int, char *[])
 {
 	logger().info() << "Executing - " << this->desc() << logs::end;
 
-	SRobotExtended robot;
+	//SRobotExtended robot;
+	SRobotExtended &robot = SRobotExtended::instance();
 
 	robot.actions.ledbar().resetAll();
 
@@ -44,7 +45,7 @@ void LedBarTest::run(int, char *[])
 
 	robot.actions.ledbar().k2mil(4, 100000, LED_RED);
 
-
+	logger().info() << "start ActionManager..." << logs::end;
 	robot.actions.start();
 
 	//robot.actions.ledbar().startSet(0,1);
