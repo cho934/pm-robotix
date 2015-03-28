@@ -3,9 +3,10 @@
 
 #include "../Bot-SmallPMX/SRobotExtended.hpp"
 #include "../Common/ConsoleManager.hpp"
-#include "LedBarTest.hpp"
-#include "SoundBarTest.hpp"
 #include "EncoderTest.hpp"
+#include "LedBarTest.hpp"
+#include "MotorTest.hpp"
+#include "SoundBarTest.hpp"
 
 
 using namespace std;
@@ -25,10 +26,10 @@ int main(int argc, char** argv)
 	manager.add(new LedBarTest());
 	manager.add(new SoundBarTest());
 	manager.add(new EncoderTest());
+	manager.add(new MotorTest());
 
 	//start the Robot (functional tests or match)
 	robot.start(manager, argc, argv);
 
-	cout << "001" << endl;
 	return 0;
 }

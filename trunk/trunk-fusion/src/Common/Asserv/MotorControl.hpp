@@ -3,8 +3,6 @@
 #ifndef COMMON_ASSERV_MOTORCONTROL_HPP_
 #define COMMON_ASSERV_MOTORCONTROL_HPP_
 
-
-
 #include "../../Log/LoggerFactory.hpp"
 #include "AAsservElement.hpp"
 
@@ -37,15 +35,31 @@ public:
 	 */
 	~MotorControl();
 
-	//motorLeft(power)
+	/*!
+	 * \brief runMotorLeft by power -900/+900.
+	 */
+	void runMotorLeft(int power, int timeus);
+	/*!
+	 * \brief runMotorRight by power -900/+900.
+	 */
+	void runMotorRight(int power, int timeus);
+
+	/*!
+	 * \brief stop both motors.
+	 */
+	void stopMotors();
+
 	//motorLeft(speed)
+
+
+
 	//moveForward(power)
 	//moveForward(speed)
-
+	//moveForwardWithRamp(int distmm)
 
 	//turn()
-	//turnLeft()
-	//turnRight()
+	//turnLeft(float deg)
+	//turnRight(float deg)
 };
 
 #endif
