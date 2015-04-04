@@ -6,6 +6,7 @@
 #ifndef LOGS_LOGGER_HPP_
 #define LOGS_LOGGER_HPP_
 
+
 #include <sstream>
 #include <string>
 

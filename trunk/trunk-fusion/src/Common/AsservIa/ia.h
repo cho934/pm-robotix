@@ -10,6 +10,12 @@
 
 #include "global.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+
 typedef boolean (*RobotAction)(void);
 
 typedef struct {
@@ -50,5 +56,9 @@ void ia_setPath(const char* zone1Name, const char* zone2Name, float x, float y);
 ZONE_PATH* ia_getZonePath(ZONE *z1, ZONE *z2);
 
 void ia_addAction(const char* name, RobotAction action);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* IA_H_ */

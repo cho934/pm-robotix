@@ -29,6 +29,10 @@
 
 #include "motion_priv.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //LEFT - RIGHT
 #define LEFT_MOTOR		0
 #define RIGHT_MOTOR		1
@@ -41,7 +45,7 @@
 #define MOTOR_PER_TYPE	2
 
 //Number of period used to compute motor speed
-#define MOTOR_SPEED_PERIOD_NB		9
+#define MOTOR_SPEED_PERIOD_NB	9
 
 //! structure used internally for stocking current value for each motors
 typedef struct {
@@ -65,5 +69,9 @@ void updateMotor(MOTOR *motor, int32 delta);
 
 //! Compute current motor speed
 int32 getMotorSpeed(MOTOR *motor);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif//_MOTOR_H_

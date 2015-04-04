@@ -56,6 +56,11 @@ void AsservDriver::stopMotorRight()
 
 }
 
+void AsservDriver::resetEncoder()
+{
+
+}
+
 int AsservDriver::getMotorLeftCurrent()
 {
 	return 0;

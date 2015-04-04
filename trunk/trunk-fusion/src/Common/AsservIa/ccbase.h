@@ -1,4 +1,3 @@
-
 /*
  * ccbase.h
  *
@@ -11,12 +10,14 @@
 
 /* Some useful constants.  */
 
-
-
-
 #include "global.h"
 #include "path_manager.h"
 #include "robot_trajectory.h"
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 
 TRAJ_STATE launchAndWait(RobotCommand* cmd);
 
@@ -33,7 +34,7 @@ TRAJ_STATE cc_rotateRight(float degres);
 TRAJ_STATE cc_rotateTo(float theta);
 
 //x,y en mm
-void cc_setPosition(float xMM, float yMM, float theta,int color);
+void cc_setPosition(float xMM, float yMM, float theta, int color);
 float cc_getRelativeX(float x);
 // position x,x in mm
 float cc_getX();
@@ -55,5 +56,9 @@ void cc_AssistedHandling();
 void cc_setMirrorCoordinates(boolean b);
 
 TRAJ_STATE cc_goToZone(const char *zoneName);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

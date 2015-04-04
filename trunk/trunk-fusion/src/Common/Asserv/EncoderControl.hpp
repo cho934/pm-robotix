@@ -43,6 +43,11 @@ public:
 	 */
 	long getRightEncoder();
 
+	/*!
+	 * \brief reset encoders.
+	 */
+	void reset();
+
 };
 
 #endif

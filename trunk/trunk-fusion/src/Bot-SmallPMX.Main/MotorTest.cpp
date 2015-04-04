@@ -56,11 +56,16 @@ void MotorTest::run(int argc, char *argv[])
 
 	SRobotExtended &robot = SRobotExtended::instance();
 
-	robot.asserv.motors().runMotorLeft(power, 0);
-	robot.asserv.motors().runMotorRight(power, 0);
+	robot.asserv.motors().turnRight(400, 1000);
 
-	usleep(timems * 1000.0);
+
+	robot.asserv.motors().moveForward(power, 0);
+	robot.actions.trackSystem().moveForward(power+200, 0);
+
+	usleep(timems * 1000);
+
 	robot.asserv.motors().stopMotors();
+	robot.actions.trackSystem().stopMotor();
 
 	logger().info() << this->name() << " - Happy End." << logs::end;
 }

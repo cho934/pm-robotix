@@ -29,6 +29,10 @@
 
 #include "global.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // The following functions are helpers for convertion between units used
 // in the motion control program :
 //vTops is a virtual measure distance to avoid floating point computation
@@ -48,5 +52,9 @@ int32 convertSpeedTovTopsPerPeriod(float speed);
 //!
 //! \param accel The acceleration in meter/second^2 to convert
 int32 convertAccelTovTopsPerPeriodSqd(float accel);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif//_ROBOT_UNIT_CONVERSION_H_

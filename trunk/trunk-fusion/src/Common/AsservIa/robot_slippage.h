@@ -29,6 +29,10 @@
 
 #include "global.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //! Initialise module
 void slippage_Init(void);
 
@@ -37,5 +41,9 @@ void slippage_Init(void);
 //! \param dWheel displacement value of the wheel (motor encoder)
 //! \param dRobot displacement value of the robot (wheel encoder / mouse sensor)
 void slippage_Update(int motor, int32 dWheel, int32 dRobot);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif//_ROBOT_SLIPPAGE_H_

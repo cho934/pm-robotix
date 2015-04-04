@@ -29,6 +29,9 @@
 
 #include "global.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 
 //PID system are identified by a number
@@ -70,5 +73,9 @@ double pid_Compute(PID_SYSTEM system, double setpoint, double input, double spee
 int32 pid_Compute_rcva_chaff(PID_SYSTEM system, int32 error, double vitesse);
 
 int32 pid_ComputeRcva(PID_SYSTEM system, int32 error, int32 vitesse);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif//_MOTOR_PID_H_

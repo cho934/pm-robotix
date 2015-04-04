@@ -30,6 +30,10 @@
 #include "global.h"
 #include "robot_trajectory.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //! possible return state of a trajectory
 typedef enum
 {
@@ -94,5 +98,9 @@ void path_InterruptTrajectory(void);
 
 void path_CollisionOnTrajectory();
 void path_CollisionRearOnTrajectory();
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif//_PATH_MANAGER_H_

@@ -38,11 +38,11 @@ public:
 	/*!
 	 * \brief runMotorLeft by power -900/+900.
 	 */
-	void runMotorLeft(int power, int timeus);
+	void runMotorLeft(int power, int timems);
 	/*!
 	 * \brief runMotorRight by power -900/+900.
 	 */
-	void runMotorRight(int power, int timeus);
+	void runMotorRight(int power, int timems);
 
 	/*!
 	 * \brief stop both motors.
@@ -51,10 +51,12 @@ public:
 
 	//motorLeft(speed)
 
+	void moveForward(int power, int timems);
 
+	void turnRight(int power, int timems);
 
-	//moveForward(power)
-	//moveForward(speed)
+	void moveForward(int distmm);
+
 	//moveForwardWithRamp(int distmm)
 
 	//turn()

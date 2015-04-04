@@ -38,13 +38,13 @@ AsservDriver::AsservDriver() :
 			cout << "(" << 1 + i << ") " << m.type() << " motor on port " << m.port_name() << flush;
 			if (m.port_name() == OUTPUT_A)
 			{
-				_motor_left = OUTPUT_A;
-				cout << " - Motor A Connected" << endl;
+				_motor_right = OUTPUT_A;
+				cout << " - Motor A Connected (RIGHT)" << endl;
 				connected_++;
 			}else if (m.port_name() == OUTPUT_D)
 			{
-				_motor_right = OUTPUT_D;
-				cout << " - Motor D Connected" << endl;
+				_motor_left = OUTPUT_D;
+				cout << " - Motor D Connected (LEFT)" << endl;
 				connected_++;
 			}else
 				cout << endl;
@@ -181,6 +181,11 @@ void AsservDriver::stopMotorRight()
 {
 	//_motor_right.set_duty_cycle_sp(0);
 	_motor_right.stop();
+}
+
+void AsservDriver::resetEncoder()
+{
+
 }
 
 int AsservDriver::getMotorLeftCurrent()
