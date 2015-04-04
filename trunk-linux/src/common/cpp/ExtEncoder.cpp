@@ -4,9 +4,12 @@
  * Interface library for chip LS7366R that does quadrature decoding of rotary encoders.
  */
 
-#include <iostream>
 #include "ExtEncoder.hpp"
-#include "HostGpioPort.hpp"
+
+#include <unistd.h>
+
+#include "Exception.hpp"
+#include "Logger.hpp"
 
 /*!
  * External Encoder constructor.

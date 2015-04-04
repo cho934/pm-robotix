@@ -3,16 +3,22 @@
  * \brief Implémentation de la classe GpioPort.
  */
 
-#include <iostream>
-#include <as_devices/as_gpio.h>
-
 #include "GpioPort.hpp"
+
+#include <as_devices/as_gpio.h>
+#include <fcntl.h>
+#include <sys/ioctl.h>
+#include <unistd.h>
+#include <iostream>
 #include <sstream>
+#include <string>
+#include <iostream>
 
 //IOCTL
 #include <sys/ioctl.h>
 #include <fcntl.h>
 #include <linux/ppdev.h>
+
 #define GPIORDDIRECTION	_IOR(PP_IOCTL, 0xF0, int)
 #define GPIOWRDIRECTION	_IOW(PP_IOCTL, 0xF1, int)
 #define GPIORDDATA	_IOR(PP_IOCTL, 0xF2, int)

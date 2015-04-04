@@ -78,9 +78,9 @@ size_t len;
         msg = msg >> 1;
     }
 
-    xfer[0].tx_buf = (uint32_t)buf;
+    xfer[0].tx_buf = (__u64)buf;
     xfer[0].len = len;
-    xfer[0].rx_buf = (uint32_t)buf_read;
+    xfer[0].rx_buf = (__u64)buf_read;
     xfer[0].speed_hz = aSpeed;
     xfer[0].bits_per_word = 1;
 

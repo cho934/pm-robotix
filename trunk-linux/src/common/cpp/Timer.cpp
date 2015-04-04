@@ -3,9 +3,11 @@
  * \brief Implémentation de la classe Timer.
  */
 
-#include <iostream>
 #include "Timer.hpp"
-#include "Chronometer.hpp"
+
+#include <unistd.h>
+
+#include "Logger.hpp"
 
 utils::Timer::Timer(int timeSpanMax, int timeSpanMin, utils::ITimerListener* listener)
 		: timeSpan_(timeSpanMax), timeSpanMin_(timeSpanMin), listener_(listener), stop_(false)

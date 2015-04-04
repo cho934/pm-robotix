@@ -3,11 +3,13 @@
  * \brief Implémentation de la classe Thread.
  */
 
-#include <iostream>
 #include "Thread.hpp"
-#include <sys/types.h>
-#include <sys/syscall.h>
+
 #include <pthread.h>
+#include <sched.h>
+#include <syscall.h>
+#include <unistd.h>
+#include <string>
 
 #ifndef EAGAIN
 #define EAGAIN 11

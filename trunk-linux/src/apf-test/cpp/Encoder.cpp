@@ -8,11 +8,14 @@
  http://pendulum.binghamsite.com/rotary-encoders
  */
 
-#include <iostream>
 #include "Encoder.hpp"
 
 #include <as_devices/as_gpio.h>
 #include <as_devices/as_spi.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <iostream>
 
 /*
  * Encoder constructor.

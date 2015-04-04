@@ -7,6 +7,14 @@
 
 #ifndef _DUMMYTHREAD_HPP
 #define	_DUMMYTHREAD_HPP
+
+#include <unistd.h>
+#include <ctime>
+#include <string>
+
+#include "../../common/cpp/LoggerFactory.hpp"
+#include "../../common/cpp/Thread.hpp"
+
 /*!
  * \brief Classe implémentant un thread pour la réalisation des tests
  * unitaires.

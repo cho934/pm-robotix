@@ -215,7 +215,7 @@ int cc_getMatchColor() {
 	return matchColor;
 }
 
-void cc_setMirrorCoordinates(boolean) {
+void cc_setMirrorCoordinates(boolean b) {
 
 }
 

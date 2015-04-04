@@ -5,6 +5,10 @@
 
 #include "MutexTest.hpp"
 
+#include <unistd.h>
+
+#include "../../common/cpp/Logger.hpp"
+
 void test::MutexTest::testSimpleThread() {
     test::mutex::Counter* c = new test::mutex::Counter();
 
