@@ -22,6 +22,7 @@ Dans la partie :# Logging junk
 
  * Accès à la microSD (voir [http://www.armadeus.com/wiki/index.php?title=MultiMediaCard Armadeus:MultiMediaCard])
 {{{
+# mkdir /pmx
 # mount -t vfat /dev/mmcblk0p1 /pmx
 }}}
 
