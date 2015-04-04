@@ -24,18 +24,13 @@
 // $LastChangedDate$
 /******************************************************************************/
 
-#include "time.h"
-#include "unistd.h"
-
 #include "motion.h"
 
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/types.h>
 
 #include "encoder.h"
-#include "global.h"
 #include "motion_priv.h"
 #include "motor.h"
 #include "motor_positionCommand.h"
@@ -481,7 +476,7 @@ void *motion_ITTask(void *p_arg)
 		long duration = stopTime - startTime;
 		if (duration < loopDelayInMillis && duration >= 0)
 		{
-			__useconds_t d = 1000 * (loopDelayInMillis - duration);
+			int d = 1000 * (loopDelayInMillis - duration);
 			usleep(d);
 		}
 
