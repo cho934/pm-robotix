@@ -137,8 +137,8 @@ USAGE:
 
 Pour automatiser le changement dans le BIOS:
 {{{
-BIOS>setenv bootcmd run unlock_regs\; run jffsboot
-BIOS>saveenv
+BIOS> setenv bootcmd run unlock_regs\; run jffsboot
+BIOS> saveenv
 }}}
 
 
