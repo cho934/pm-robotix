@@ -3,8 +3,13 @@
  * \brief Implémentation de la classe ActionManager.
  */
 
-#include <iostream>
 #include "ActionManager.hpp"
+
+#include <stddef.h>
+#include <unistd.h>
+#include <list>
+
+#include "Logger.hpp"
 
 pmx::ActionManager::ActionManager()
 		: stop_(false)

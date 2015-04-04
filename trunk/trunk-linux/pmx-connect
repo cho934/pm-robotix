@@ -1,4 +1,7 @@
-#! /bin/bash
+#!/bin/bash
+
+IP="192.168.7.251"
+
 
 view_doc()
 {
@@ -7,59 +10,59 @@ view_doc()
 
 all()
 {
-	scp src/apf-test/sh/*.sh PMXArmadeusBinaries/* root@192.168.7.253:/pmx/
+	scp src/apf-test/sh/*.sh PMXArmadeusBinaries/* root@$IP:/pmx/
 }
 
 conf()
 {
-	scp PMXArmadeusBinaries/*.conf.txt root@192.168.7.253:/pmx/
+	scp PMXArmadeusBinaries/*.conf.txt root@$IP:/pmx/
 }
 
 tsh()
 {
-	scp src/apf-test/sh/*.sh root@192.168.7.253:/pmx/
+	scp src/apf-test/sh/*.sh root@$IP:/pmx/
 }
 
 robottest()
 {
-	scp PMXArmadeusBinaries/ROBOT_TEST root@192.168.7.253:/pmx/
+	scp PMXArmadeusBinaries/ROBOT_TEST root@$IP:/pmx/
 }
 
 pmx()
 {
-    ssh root@192.168.7.253 "killall pmx"
-	scp "PMXArmadeusBinaries/PMX" root@192.168.7.253:/pmx/
+    ssh root@$IP "killall pmx"
+	scp "PMXArmadeusBinaries/PMX" root@$IP:/pmx/
 }
 
 devtest()
 {
-	scp PMXArmadeusBinaries/DEV_TEST root@192.168.7.253:/pmx/
+	scp PMXArmadeusBinaries/DEV_TEST root@$IP:/pmx/
 }
 
 apftest()
 {
-	scp PMXArmadeusBinaries/APF_TEST root@192.168.7.253:/pmx/
+	scp PMXArmadeusBinaries/APF_TEST root@$IP:/pmx/
 }
 
 recupcsvhost()
 {
     #recup sur le PC Host
-	scp root@192.168.7.253:/pmx/*.* /mnt/hgfs/pmx_xls/
+	scp root@$IP:/pmx/*.* /mnt/hgfs/pmx_xls/
 }
 
 recupcsv()
 {
-        scp root@192.168.7.253:/pmx/*.* /home/pmx/Arecup/.
+        scp root@$IP:/pmx/*.* /home/pmx/Arecup/.
 }
 
 recupsvg()
 {
-        scp root@192.168.7.253:/pmx/*.svg /home/pmx/workspace/ARM/SVG/.
+        scp root@$IP:/pmx/*.svg /home/pmx/workspace/ARM/SVG/.
 }
 
 connect()
 {
-	ssh root@192.168.7.253
+	ssh root@$IP
 }
 
 case "$1" in

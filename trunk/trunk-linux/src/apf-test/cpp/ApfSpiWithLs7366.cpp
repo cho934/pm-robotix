@@ -3,10 +3,11 @@
  * \brief Implémentation de la classe ApfSpiWithLs7366, utilisation des LS7366 sur les encodeurs.
  */
 
+#include "ApfSpiWithLs7366.hpp"
+
+#include <unistd.h>
 #include <iostream>
 
-#include "ApfSpiWithLs7366.hpp"
-//#include <as_devices/as_spi.h>
 #include "Encoder.hpp"
 
 void test::ApfSpiWithLs7366::run(int, char*[])

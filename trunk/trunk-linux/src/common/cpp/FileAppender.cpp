@@ -3,8 +3,10 @@
  * \brief Implémentation de la classe FileAppender.
  */
 
-#include <iostream>
 #include "FileAppender.hpp"
+
+#include <unistd.h>
+#include <list>
 
 utils::FileAppender::~FileAppender() {
     static_cast<Thread *>(this)->lock();

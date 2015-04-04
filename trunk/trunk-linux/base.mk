@@ -12,12 +12,12 @@ XENO=/media/Armadeus/armadeus-3.4/buildroot/project_build_armv4t/apf9328/root/us
 ifeq ($(wildcard $(XENO)), )
     CXX = g++
     INCLUDE = /usr
-    CXXFLAGS_EXTRA = -O2 -DSIMU -I$(DEVSIMU)/$(CPPSOURCE) -I$(DEVSIMU)/$(CSOURCE)
+    CXXFLAGS_EXTRA = -Os -DSIMU -I$(DEVSIMU)/$(CPPSOURCE) -I$(DEVSIMU)/$(CSOURCE)
     LDFLAGS_EXTRA = -s -lrt ../../build/dev-simu/*.o
 else
     CXX = arm-linux-uclibcgnueabi-g++
     INCLUDE = $(XENO)
-    CXXFLAGS_EXTRA =  -O2 -I$(INCLUDE)/include/native -I$(INCLUDE)/include/rtdm 
+    CXXFLAGS_EXTRA =  -Os -I$(INCLUDE)/include/native -I$(INCLUDE)/include/rtdm 
     LDFLAGS_EXTRA =  -s -lnative -lrtdm -las_devices -Xlinker $(INCLUDE)/lib/libnative.a $(INCLUDE)/lib/librtdm.a
 endif
 

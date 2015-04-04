@@ -30,11 +30,11 @@ void robottest::MoveTest::run(int argc, char *argv[])
 	if (argc > 2)
 	{
 		dist = atoi(argv[2]);
-		std::cout << "dist: " << atoi(argv[2]) << std::endl;
+		std::cout << "power: " << atoi(argv[2]) << std::endl;
 	}
 	else
 	{
-		std::cout << "dist: " << std::flush;
+		std::cout << "power: " << std::flush;
 		std::cin >> dist;
 	}
 

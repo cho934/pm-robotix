@@ -3,8 +3,14 @@
  * \brief Implémentation de la classe ConfigurationTest.
  */
 
-#include <dirent.h>
+#include "../../common/cpp/Configuration.hpp"
 #include "ConfigurationTest.hpp"
+
+#include <sstream>
+#include <dirent.h>
+#include <unistd.h>
+
+#include "../../common/cpp/Logger.hpp"
 
 void
 test::ConfigurationTest::suite()

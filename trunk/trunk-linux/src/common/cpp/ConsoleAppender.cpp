@@ -4,9 +4,9 @@
  */
 
 #include "ConsoleAppender.hpp"
-#include <iostream>
-#include <sys/types.h>
-#include <sys/syscall.h>
+
+#include <unistd.h>
+#include <list>
 
 void
 utils::ConsoleAppender::flush() {

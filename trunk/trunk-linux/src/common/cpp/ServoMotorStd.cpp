@@ -3,13 +3,17 @@
  * \brief Implémentation de la classe ServoMotorStd.
  */
 
+#include "ServoMotorStd.hpp"
+
 #include <fcntl.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <cstdio>
+#include <cstring>
 #include <fstream>
 #include <string>
-#include <iostream>
-#include <cstring>
-#include "ServoMotorStd.hpp"
+
+#include "Logger.hpp"
 
 //Definition de l'attribut de classe
 int* utils::ServoMotorStd::servoEnableBuffer_ = NULL;

@@ -5,12 +5,14 @@
 #ifndef PMX_LEDBAR_HPP
 #define	PMX_LEDBAR_HPP
 
+#include <unistd.h>
+#include <string>
+
 #include "ARobotElement.hpp"
-#include "LoggerFactory.hpp"
-#include "LoggerFactory.hpp"
-#include "IAction.hpp"
-#include "Macro.hpp"
 #include "Chronometer.hpp"
+#include "IAction.hpp"
+#include "LoggerFactory.hpp"
+#include "Macro.hpp"
 
 namespace pmx
 {
