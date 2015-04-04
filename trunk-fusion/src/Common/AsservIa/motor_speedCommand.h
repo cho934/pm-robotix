@@ -30,6 +30,10 @@
 #include "motor.h"
 #include "motion_priv.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //possible phase of a speed trajectory :
 typedef enum {
 	SP_PRE_PHASE,			//trajectory not yet started
@@ -118,5 +122,9 @@ void LoadSpeedCommand(SpeedCommand *out_cmd, int32 lastPos, int32 periodNb);
 //! \return Is the path completed ?
 EXPORTED_FUNCTION BOOL GetSpeedOrder(SpeedCommand *speedCommand, int32 Tn,
 int32 *out_order);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif//_MOTOR_SPEED_ORDER_H_

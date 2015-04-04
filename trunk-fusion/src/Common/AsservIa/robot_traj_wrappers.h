@@ -30,6 +30,10 @@
 #include "robot_trajectory.h"
 #include "path_manager.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //! This module provide higher level control on the motion control module
 //! AI and strategy software can use this primitives directly
 
@@ -69,5 +73,9 @@ TRAJ_STATE motion_GoToSpeedPath(const Position *pos, int nb);
 
 //! Orient toward the given angle
 TRAJ_STATE motion_OrientTo(float angle);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif//_ROBOT_TRAJ_WRAPPERS_H_

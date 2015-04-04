@@ -27,7 +27,9 @@
 #ifndef _CLOTHOID_H_
 #define _CLOTHOID_H_
 
-
+#ifdef __cplusplus
+extern "C" {
+#endif
 //! Taylor decomposition of FresnelC( sqrt(x/Pi) ) / FresnelS( sqrt(x/Pi) )
 //! at x = Pi/2 and 3*Pi/2
 //! the function should only be used with abs(x) > 0.5
@@ -41,6 +43,8 @@ float FresnelSSqrt(float x);
 //! an arc of clothoid
 //! This is a test function
 void CreateTwoSegmentTraj(float V0, float distD1, float distD2, float A0, float beta, float epsilon);
-
+#ifdef __cplusplus
+}
+#endif
 #endif//_CLOTHOID_H_
 

@@ -30,6 +30,10 @@
 #include "motor.h"
 #include "motion_priv.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 //possible phase of a position trajectory :
 typedef enum {
@@ -95,5 +99,9 @@ int32 periodNb);
 EXPORTED_FUNCTION BOOL GetPositionOrder(PositionCommand *posCommand,
 int32 Tn,
 int32 *out_Order);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif//_MOTOR_POSITION_ORDER_H_

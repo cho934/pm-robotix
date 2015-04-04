@@ -28,6 +28,12 @@
 #define _ENCODER_H_
 
 #include "global.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 extern int useExternalEncoders;
 
 //! Initialisation
@@ -53,5 +59,9 @@ long encoder_getRightCounter();
 //! \param dDelta delta motor motion
 void encoder_ReadSensor(int32 *dLeft, int32 *dRight, int32 *dAlpha,
 		int32 *dDelta);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif//_ENCODER_H_

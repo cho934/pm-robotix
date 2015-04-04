@@ -1,32 +1,33 @@
 #! /bin/bash
 
+IP="192.168.7.252"
 
 all()
 {
-    #ssh root@192.168.7.252 "killall Bot-SmallPMX-EV3"
+    #ssh root@$IP "killall Bot-SmallPMX-EV3"
 	scp "../Bot-SmallPMX-EV3/Debug/Bot-SmallPMX-EV3" "../Driver-EV3-UnitTest/Debug/Driver-EV3-UnitTest" user@192.168.7.252:/home/user/
 	
 }
 
 main()
 {
-	scp "../Bot-SmallPMX-EV3/Debug/Bot-SmallPMX-EV3" user@192.168.7.252:/home/user/	
+	scp "../Bot-SmallPMX-EV3/Debug/Bot-SmallPMX-EV3" user@$IP:/home/user/	
 }
 
 driver()
 {
-	scp "../Driver-EV3-UnitTest/Debug/Driver-EV3-UnitTest" user@192.168.7.252:/home/user/	
+	scp "../Driver-EV3-UnitTest/Debug/Driver-EV3-UnitTest" user@$IP:/home/user/	
 }
 
 
 user()
 {
-	ssh user@192.168.7.252
+	ssh user@$IP
 }
 
 root()
 {
-	ssh root@192.168.7.252
+	ssh root@$IP
 }
 
 case "$1" in

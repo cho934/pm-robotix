@@ -8,7 +8,9 @@
 #ifndef GLOBAL_H_
 #define GLOBAL_H_
 
-
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 //dupliquer de math.h car inexistant dans le compilo EV3
 # define M_E		2.7182818284590452354	/* e */
@@ -105,5 +107,9 @@ typedef struct Position {
 	float y;
 
 } Position;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* GLOBAL_H_ */

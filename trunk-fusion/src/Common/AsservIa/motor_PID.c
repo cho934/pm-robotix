@@ -24,11 +24,14 @@
 // $LastChangedDate$
 /******************************************************************************/
 
-#include "motor.h"
 #include "motor_PID.h"
-#include "global.h"
+
 #include <stdio.h>
-#include "robot.h"
+
+#include "motion_priv.h"
+#include "motor.h"
+#include "robot.hpp"
+
 
 
 

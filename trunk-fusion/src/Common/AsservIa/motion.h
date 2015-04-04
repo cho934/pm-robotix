@@ -27,7 +27,12 @@
 #ifndef _MOTION_H_
 #define _MOTION_H_
 
+#include "global.h"
 #include "robot_trajectory.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 typedef enum {
 	TRAJECTORY_RUNNING,
@@ -63,5 +68,9 @@ void motion_StopTimer(void);
 
 //! Directly set the pwm for the motor (used both internally and for test)
 void setPWM(int16 pwmLeft, int16 pwmRight);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif//_MOTION_H_

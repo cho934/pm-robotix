@@ -47,6 +47,11 @@ long AsservDriver::getRightInternalEncoder()
 	return 0;
 }
 
+void AsservDriver::resetEncoder()
+{
+
+}
+
 void AsservDriver::stopMotorLeft()
 {
 

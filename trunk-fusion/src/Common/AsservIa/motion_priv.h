@@ -30,6 +30,12 @@
 #include "motor_PID.h"
 
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+
 //! Macro that correct integer overflow for a difference of two value
 //! typically when you calculate an error using error = new-old, and new has overflowed
 //! the macro substract or add the maximum value if needed to compensate the overflow of new
@@ -61,5 +67,8 @@ typedef enum
 	MAX_MOTION_CONTROL_TYPE_NUMBER,
 } MOTION_CONTROL_TYPE;
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif//_MOTION_PRIV_H_

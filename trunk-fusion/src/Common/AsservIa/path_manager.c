@@ -27,9 +27,7 @@
 #include "path_manager.h"
 
 #include <semaphore.h>
-//#include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 
 #include "motion.h"
 

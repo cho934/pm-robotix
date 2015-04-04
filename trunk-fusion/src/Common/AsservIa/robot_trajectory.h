@@ -36,13 +36,17 @@
 #include "motor_speedCommand.h"
 #include "motor_stepCommand.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //! structure used internally to define a robot trajectory command
 typedef struct {
 	MOTOR_COMMAND_TYPE cmdType;
 	MOTION_CONTROL_TYPE mcType;
 
 	//anonymous union that stock data structure for every possible type of motor command
-	//structures share the same memory (wich you can interpret as needed)
+	//structures share the same memory (which you can interpret as needed)
 	union {
 		PositionCommand posCmd[MOTOR_PER_TYPE];
 		SpeedCommand speedCmd[MOTOR_PER_TYPE];
@@ -136,5 +140,9 @@ void motion_StepOrderLR(RobotCommand *out_cmd, int32 posLeft, int32 posRight,
 //! \param out_cmd Resulting command that will be interpreted by path_manager
 void motion_StepOrderAD(RobotCommand *out_cmd, int32 posAlpha, int32 posDelta,
 		int seconds);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif//_ROBOT_TRAJECTORY_H_

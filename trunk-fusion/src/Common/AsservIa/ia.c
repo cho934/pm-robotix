@@ -15,7 +15,7 @@
 
 //#include "../SvgWriter.hpp"
 #include "ccbase.h"
-#include "robot.h"
+//#include "robot.h"
 
 int _zones_count = 0;
 ZONE* _zones[100];
@@ -173,9 +173,9 @@ for (i = 0; i < _actions_count; i++)
 	ACTIONS *z = _actions[i];
 	if (z->completed == FALSE)
 	{
-		printf("\n== ia is executing actions [%d/%d] : %s\n", i + 1, _actions_count, z->name);
-		printf("state before actions : %s : (%f,%f) %f\n", z->name, cc_getX(), cc_getY(), cc_getThetaInDegree());
-		printf("encoders: %ld,%ld\n",robot_getLeftExternalCounter(),robot_getRightExternalCounter());
+		//printf("\n== ia is executing actions [%d/%d] : %s\n", i + 1, _actions_count, z->name);
+		//printf("state before actions : %s : (%f,%f) %f\n", z->name, cc_getX(), cc_getY(), cc_getThetaInDegree());
+		//printf("encoders: %ld,%ld\n",robot_getLeftExternalCounter(),robot_getRightExternalCounter());
 		boolean done = (*z->action)();
 		if (!done)
 		{

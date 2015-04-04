@@ -16,24 +16,23 @@ void SoundBarTest::run(int, char *[])
 {
 	logger().info() << "Executing - " << this->desc() << logs::end;
 
-	//SRobotExtended robot; //todo une seule instance
 	SRobotExtended &robot = SRobotExtended::instance();
 
-	robot.actions.soundbar().beep(5);
-	robot.actions.soundbar().speakPMX(50);
+	robot.actions.soundBar().beep(5);
+	robot.actions.soundBar().speakPMX(50);
 
 
 	robot.actions.start();
 
-	robot.actions.soundbar().startBeep(25);
-	robot.actions.soundbar().startBeep(50);
+	robot.actions.soundBar().startBeep(25);
+	robot.actions.soundBar().startBeep(50);
 
 	sleep(1);
 
 	robot.actions.stop();
 
 	logger().info() << this->name() << " - Happy End." << logs::end;
-	robot.actions.soundbar().beep(5);
+	robot.actions.soundBar().beep(5);
 
 }
 

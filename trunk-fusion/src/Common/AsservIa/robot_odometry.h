@@ -29,6 +29,10 @@
 
 #include "global.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //! \brief Compute robot position using odometry
 //!
 //! \param dTheta displacement (rotation) of the robot in radian 
@@ -52,5 +56,9 @@ EXPORTED_FUNCTION void odo_GetPositionXYTheta(float *x, float *y, float *theta);
 //!
 //! \return Robot position in meters and angle in radian
 EXPORTED_FUNCTION RobotPosition odo_GetPosition(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif//_ROBOT_ODOMETRY_H_

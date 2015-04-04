@@ -6,7 +6,6 @@
 #include "Logger.hpp"
 
 #include <iostream>
-#include <string>
 
 logs::Logger::Logger(const logs::Level & level, const std::string & name, logs::Appender & appender)
 : level_(level), name_(name), appender_(appender)

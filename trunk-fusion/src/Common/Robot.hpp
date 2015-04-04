@@ -1,5 +1,5 @@
-#ifndef ROBOT_HPP_
-#define ROBOT_HPP_
+#ifndef COMMON_ROBOT_HPP_
+#define COMMON_ROBOT_HPP_
 
 #include "Action/Actions.hpp"
 

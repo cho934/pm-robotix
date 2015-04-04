@@ -29,6 +29,10 @@
 
 #include "global.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef int32 StepCommand;
 
 //! Set a step movement for a given motor
@@ -45,5 +49,9 @@ void ComputeStepOrder(StepCommand *out_command, int32 steporder, int seconds);
 //! \param motor Id number of motor
 //! \param order StepOrder that will be interpreted
 BOOL GetStepOrder(StepCommand *order, int32 *out_order);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif//_MOTOR_STEP_ORDER_H_

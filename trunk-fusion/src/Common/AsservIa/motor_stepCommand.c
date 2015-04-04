@@ -25,7 +25,8 @@
 /******************************************************************************/
 
 #include "motor_stepCommand.h"
-#include "robot.h"
+
+#include "robot.hpp"
 
 //well, genericity isn't always optimisation-friendly...
 static long stopAt;

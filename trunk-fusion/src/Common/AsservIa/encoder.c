@@ -26,28 +26,33 @@
 
 #include "encoder.h"
 
-#include "global.h"
-#include "robot.h"
-#include <stdio.h>
 #include <stdlib.h>
-#include "ccbase.h"
 
-void encoder_Init() {
+#include "global.h"
+#include "robot.hpp"
+
+void encoder_Init()
+{
 
 }
 
-void encoder_SetDist(float dist) {
+void encoder_SetDist(float dist)
+{
 	distEncoderMeter = dist;
 	distEncoder = dist / valueVTops;
 }
 
-void encoder_SetResolution(uint32 leftTicksPerM, uint32 rightTicksPerM) {
+void encoder_SetResolution(uint32 leftTicksPerM, uint32 rightTicksPerM)
+{
 
-	if (leftTicksPerM > rightTicksPerM) {
+	if (leftTicksPerM > rightTicksPerM)
+	{
 		leftEncoderRatio = vtopsPerTicks;
 		rightEncoderRatio = vtopsPerTicks * rightTicksPerM / (float) leftTicksPerM;
 		valueVTops = 1 / (float) (vtopsPerTicks * leftTicksPerM);
-	} else {
+	}
+	else
+	{
 		leftEncoderRatio = vtopsPerTicks * leftTicksPerM / (float) rightTicksPerM;
 		rightEncoderRatio = vtopsPerTicks;
 		valueVTops = 1 / (float) (vtopsPerTicks * rightTicksPerM);
@@ -67,22 +72,27 @@ int32 lastLeft = 0;
 int32 lastRight = 0;
 int useExternalEncoders = 0;
 
-long encoder_getLeftCounter() {
-	if (useExternalEncoders) {
+long encoder_getLeftCounter()
+{
+	if (useExternalEncoders)
+	{
 		long encl = robot_getLeftExternalCounter();
 		return encl;
 	}
 	return robot_getLeftInternalCounter();
 }
-long encoder_getRightCounter() {
-	if (useExternalEncoders) {
+long encoder_getRightCounter()
+{
+	if (useExternalEncoders)
+	{
 		return robot_getRightExternalCounter();
 	}
 	return robot_getRightInternalCounter();
 }
 
 void encoder_ReadSensor(int32 *dLeft, int32 *dRight, int32 *dAlpha,
-int32 *dDelta) {
+int32 *dDelta)
+{
 
 	int32 left, right;
 
@@ -98,20 +108,26 @@ int32 *dDelta) {
 	right *= rightEncoderRatio;
 
 //compute delta for left wheel
-	if(abs(left - lastLeft)<1000000) {
+	if (abs(left - lastLeft) < 1000000)
+	{
 		*dLeft = left - lastLeft;
 		lastLeft = left;
-	} else {
-		*dLeft=0;
+	}
+	else
+	{
+		*dLeft = 0;
 	}
 //verify left encoder overflow
 //CORRECT_DELTA_OVERFLOW(*dLeft, MAX_ENCODER_ABS_VTOPS);
 
 //compute delta for right wheel
-	if (abs(right - lastRight) < 1000000) {
+	if (abs(right - lastRight) < 1000000)
+	{
 		*dRight = right - lastRight;
 		lastRight = right;
-	} else {
+	}
+	else
+	{
 		*dRight = 0;
 	}
 //verify right encoder overflow
