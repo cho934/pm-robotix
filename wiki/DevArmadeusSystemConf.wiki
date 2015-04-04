@@ -41,7 +41,12 @@ Chargement manuel des GPIO, lancer la commande :
 /usr/bin/loadgpio.sh 
 }}}
 Pour le chargement de l'initialisation du programme PMX :
-Copier le fichier S60loadgpio dans /etc/init.d/
+
+Créer un lien symbolique
+{{{
+$ ln -s /pmx/S60loadgpio.sh  /etc/init.d/S60loadgpio
+}}}
+ou copier le fichier S60loadgpio dans /etc/init.d/
 {{{
 $ cp /pmx/S60loadgpio /etc/init.d/.
 }}}
