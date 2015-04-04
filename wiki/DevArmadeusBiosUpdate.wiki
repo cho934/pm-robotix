@@ -64,7 +64,7 @@ Linux version 2.6.29.6 (root@pmx-mint8) (gcc version 4.2.1) #13 PREEMPT Fri Mar 
  * Installation du fichier '''apf9328-rootfs.jffs2''' compilé avec le kernel [http://www.armadeus.com/wiki/index.php?title=Target_Software_Installation#rootfs_installation Armadeus:rootfs_installation]
 
 
-= Update FPGA firmware APF9328 =
+= Update FPGA firmware APF9328 for servomotors =
  * voir [http://www.armadeus.com/wiki/index.php?title=MotionSystem#FPGA_Firmware Armadeus:FPGA_Firmware]
 
  * follow
@@ -74,6 +74,23 @@ BIOS> fpga loadb 0 ${loadaddr} ${filesize}
 BIOS> run flash_firmware
 BIOS> setenv firmware_autoload 1
 BIOS> saveenv
+}}}
+
+ * Show the FPGA Memory Register:
+{{{
+BIOS> md.w 12000000
+}}}
+
+Result:
+{{{
+12000000: 7207 0003 0020 0000 0000 0000 0000 0000    .r.. ...........
+12000010: 0800 0800 0800 0800 0800 0800 0800 0800    ................
+12000020: 0800 0800 0800 0800 0800 0800 0800 0800    ................
+12000030: 0800 0800 0800 0800 0800 0800 0800 0800    ................
+12000040: 0800 0800 0800 0800 0800 0800 0800 0800    ................
+12000050: 0000 0000 0000 0000 0000 0000 0000 0000    ................
+12000060: 0000 0000 0000 0000 0000 0000 0000 0000    ................
+12000070: 0000 0000 0000 0000 0000 0000 0000 0000    ................
 }}}
 
  * Si le run flash_firmware donne le message d'erreur suivant :
