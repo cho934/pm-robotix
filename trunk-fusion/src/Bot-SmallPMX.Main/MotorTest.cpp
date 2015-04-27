@@ -56,14 +56,51 @@ void MotorTest::run(int argc, char *argv[])
 
 	SRobotExtended &robot = SRobotExtended::instance();
 
+	robot.actions.supportSystem().setPosition(0);
+
+	robot.actions.supportSystem().straighten(600, 2000);
+
+	robot.asserv.motors().moveD(570, 900);
+	robot.asserv.motors().turnRight(90.0, 800);
+
+	robot.asserv.motors().moveD(400, 800);
+	//arrivée devant les marches
+	//abaisse doucement le mat
+	robot.actions.supportSystem().incline(400, 2000);
+	sleep(1);
+	robot.actions.trackSystem().moveForward(800, 0);
+
+	//on monte les marches
+	robot.asserv.motors().moveD(520, 300);
+
+	robot.actions.supportSystem().straighten(400, 2000);
+	sleep(1);
+
+	robot.actions.trackSystem().stopMotor();
+	//lacher du tapis rouge droit
+	robot.actions.redcarpetSystem().leftDeploy();
+
+
+	robot.asserv.motors().turnLeft(90.0, 500);
+	robot.asserv.motors().moveD(220, 500);
+	robot.asserv.motors().turnRight(90.0, 500);
+
+	//lacher du tapis rouge gauche
+	robot.asserv.motors().turnRight(10.0, 500);
+	robot.actions.redcarpetSystem().rightDeploy();
+
+
+/*
+	logger().info() << "Turn" << logs::end;
 	robot.asserv.motors().turnRight(400, 1000);
 
-
+	logger().info() << "Move forward" << logs::end;
 	robot.asserv.motors().moveForward(power, 0);
 	robot.actions.trackSystem().moveForward(power+200, 0);
 
 	usleep(timems * 1000);
-
+*/
+	logger().info() << "Stop" << logs::end;
 	robot.asserv.motors().stopMotors();
 	robot.actions.trackSystem().stopMotor();
 

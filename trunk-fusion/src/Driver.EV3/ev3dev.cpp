@@ -191,7 +191,7 @@ bool device::connect(const std::string &dir,
         try
         {
           _path = dir + dp->d_name + '/';
-
+//cout << "path" << _path << endl;
           bool bMatch = true;
           for (auto &m : match)
           {

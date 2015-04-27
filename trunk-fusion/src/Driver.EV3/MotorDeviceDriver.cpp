@@ -21,6 +21,8 @@ AMotorDeviceDriver * AMotorDeviceDriver::create()
 MotorDeviceDriver::MotorDeviceDriver() :
 		connected_(0)
 {
+
+	logger().debug() << "MotorDeviceDriver()" << logs::end;
 	//TEST Motors if connected
 	motor arrMotors[4] =
 	{

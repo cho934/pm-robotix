@@ -41,12 +41,14 @@ AsservDriver::AsservDriver() :
 				_motor_right = OUTPUT_A;
 				cout << " - Motor A Connected (RIGHT)" << endl;
 				connected_++;
-			}else if (m.port_name() == OUTPUT_D)
+			}
+			else if (m.port_name() == OUTPUT_D)
 			{
 				_motor_left = OUTPUT_D;
 				cout << " - Motor D Connected (LEFT)" << endl;
 				connected_++;
-			}else
+			}
+			else
 				cout << endl;
 		}
 		else
@@ -63,14 +65,45 @@ AsservDriver::AsservDriver() :
 		_motor_left.reset();
 		_motor_right.reset();
 
-		_motor_left.set_position_mode(motor::position_mode_absolute);
-		_motor_right.set_position_mode(motor::position_mode_absolute);
+		//_motor_left.set_position_mode(motor::position_mode_absolute);
+		//_motor_right.set_position_mode(motor::position_mode_absolute);
 
 		_motor_left.set_stop_mode(motor::stop_mode_brake);
 		_motor_right.set_stop_mode(motor::stop_mode_brake);
 
 		enableHardRegulation(true);
 	}
+}
+
+void AsservDriver::setMotorLeftPosition(int ticks, int power)
+{
+	_motor_left.reset();
+	enableHardRegulation(true);
+	_motor_left.set_stop_mode(motor::stop_mode_brake);
+	_motor_left.set_position_mode(motor::position_mode_relative);
+	_motor_left.set_run_mode(motor::run_mode_position);
+
+	_motor_left.set_position_sp(ticks);
+	_motor_left.set_pulses_per_second_sp(power);
+	_motor_left.set_ramp_up_sp(3000);
+	_motor_left.set_ramp_down_sp(4000);
+	_motor_left.start();
+
+}
+
+void AsservDriver::setMotorRightPosition(int ticks, int power)
+{
+	_motor_right.reset();
+	enableHardRegulation(true);
+	_motor_right.set_stop_mode(motor::stop_mode_brake);
+	_motor_right.set_position_mode(motor::position_mode_relative);
+	_motor_right.set_run_mode(motor::run_mode_position);
+
+	_motor_right.set_position_sp(ticks);
+	_motor_right.set_pulses_per_second_sp(power);
+	_motor_right.set_ramp_up_sp(3000);
+	_motor_right.set_ramp_down_sp(4000);
+	_motor_right.start();
 }
 
 // -900 < power < +900

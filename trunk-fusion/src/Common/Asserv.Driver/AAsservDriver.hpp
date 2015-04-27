@@ -25,6 +25,9 @@ public:
 	{
 	}
 
+	virtual void setMotorLeftPosition(int pulse, int power) = 0;
+	virtual void setMotorRightPosition(int pulse, int power)= 0;
+
 	virtual void setMotorLeftPower(int power, int timems) = 0;
 	virtual void setMotorRightPower(int power, int timems)= 0;
 

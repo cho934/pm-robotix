@@ -33,8 +33,8 @@ void ConsoleManager::displayMenuFunctionalTestsAndRun(char *argv0)
 	std::string default_console = "\033[0m";
 
 	std::string tab[tests_.size() + 1];
-	clearScreen();
-	setPrintPos(1, 1);
+	ConsoleKeyInput::clearScreen();
+	ConsoleKeyInput::setPrintPos(1, 1);
 	//display unit tests
 	for (data_type::size_type i = 0; i < tests_.size(); i++)
 	{
@@ -52,17 +52,17 @@ void ConsoleManager::displayMenuFunctionalTestsAndRun(char *argv0)
 
 	do
 	{
-		cInput = mygetch();
+		cInput = ConsoleKeyInput::mygetch();
 		switch (cInput)
 		{
 			case 65:
 			//printf("Up arrow key!\n");
 			if (lindex > 0)
 			{
-				setPrintPos(lindex + 1, 1);
+				ConsoleKeyInput::setPrintPos(lindex + 1, 1);
 				std::cout << default_console << tab[lindex + 1] << "  " << std::flush;
 				lindex--;
-				setPrintPos(lindex + 1, 1);
+				ConsoleKeyInput::setPrintPos(lindex + 1, 1);
 				std::cout << color << "> " << tab[lindex + 1] << std::flush;
 			}
 			break;
@@ -70,10 +70,10 @@ void ConsoleManager::displayMenuFunctionalTestsAndRun(char *argv0)
 			if (lindex < (int) tests_.size() - 1)
 			{
 				//printf("Down arrow key!\n");
-				setPrintPos(lindex + 1, 1);
+				ConsoleKeyInput::setPrintPos(lindex + 1, 1);
 				std::cout << default_console << tab[lindex + 1] << "  " << std::flush;
 				lindex++;
-				setPrintPos(lindex + 1, 1);
+				ConsoleKeyInput::setPrintPos(lindex + 1, 1);
 				std::cout << color << "> " << tab[lindex + 1] << std::flush;
 			}
 			break;
@@ -98,7 +98,7 @@ void ConsoleManager::displayMenuFunctionalTestsAndRun(char *argv0)
 	} while (cInput != 10);
 
 	cout << default_console << flush;
-	clearScreen();
+	ConsoleKeyInput::clearScreen();
 
 	executeTest(lindex + 1, argv0);
 }
@@ -111,30 +111,30 @@ string ConsoleManager::displayMenuFirstArgu()
 	std::string default_console = "\033[0m";
 
 	//Request input parameters
-	clearScreen();
-	setPrintPos(3, 1);
+	ConsoleKeyInput::clearScreen();
+	ConsoleKeyInput::setPrintPos(3, 1);
 	cout << "  (M)ATCHES" << flush;
-	setPrintPos(5, 1);
+	ConsoleKeyInput::setPrintPos(5, 1);
 	cout << "  (T)ESTS" << flush;
 
 	do
 	{
-		cInput = mygetch();
+		cInput = ConsoleKeyInput::mygetch();
 		switch (cInput)
 		{
 		case 65:
 			//printf("Up arrow key!\n");
-			setPrintPos(3, 1);
+			ConsoleKeyInput::setPrintPos(3, 1);
 			cout << color << "> (M)ATCHES" << flush;
-			setPrintPos(5, 1);
+			ConsoleKeyInput::setPrintPos(5, 1);
 			cout << default_console << "  (T)ESTS  " << flush;
 			select[0] = 'M';
 			break;
 		case 66:
 			//printf("Down arrow key!\n");
-			setPrintPos(3, 1);
+			ConsoleKeyInput::setPrintPos(3, 1);
 			cout << default_console << "  (M)ATCHES" << flush;
-			setPrintPos(5, 1);
+			ConsoleKeyInput::setPrintPos(5, 1);
 			cout << color << "> (T)ESTS  " << flush;
 			select[0] = 'T';
 			break;
@@ -150,13 +150,14 @@ string ConsoleManager::displayMenuFirstArgu()
 		case 127:
 			//printf("BACK key!\n");
 			cout << default_console << endl;
+			cout << "Exit !\n" << endl;
 			exit(0);
 			break;
 		}
 		usleep(1000);
 	} while (cInput != 10);
 	cout << default_console << endl;
-	clearScreen();
+	ConsoleKeyInput::clearScreen();
 	return select;
 }
 

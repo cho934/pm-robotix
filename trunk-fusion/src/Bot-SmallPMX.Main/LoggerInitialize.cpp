@@ -19,7 +19,10 @@ void logs::LoggerFactory::initialize()
 
 	add(logs::Level::INFO, "LedBarTest", "console");
 	add(logs::Level::INFO, "SoundBarTest", "console");
-
+	add(logs::Level::INFO, "MotorTest", "console");
+	add(logs::Level::INFO, "MoveTest", "console");
+	add(logs::Level::INFO, "EncoderTest", "console");
+	add(logs::Level::INFO, "SupportTest", "console");
 
 	//add(logs::Level::DEBUG, "ActionManager", "console");
 	//add(logs::Level::DEBUG, "Actions", "console");
@@ -28,7 +31,14 @@ void logs::LoggerFactory::initialize()
 	add(logs::Level::INFO, "SoundBar", "console");
 	add(logs::Level::INFO, "SoundBarAction", "console");
 
+	add(logs::Level::DEBUG, "MotorControl", "console");
+
+
+
 	//DRIVER
 	add(logs::Level::INFO, "LedDriver.SIMU", "console");
 	add(logs::Level::INFO, "SoundDriver.SIMU", "console");
+
+	add(logs::Level::DEBUG, "MotorDeviceDriver.EV3", "console");
+
 }
