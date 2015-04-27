@@ -35,6 +35,7 @@ int main(int argc, char** argv)
 	manager.add(new SupportTest());
 	manager.add(new ServoTest());
 
+/*
 	char cInput;
 	cout << "Press Enter key to continue ...\n" << endl;
 	do
@@ -54,6 +55,7 @@ int main(int argc, char** argv)
 		}
 		usleep(1000);
 	} while (cInput != 10);
+*/
 
 	//start the Robot (functional tests or match)
 	robot.start(manager, argc, argv);

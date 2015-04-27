@@ -8,12 +8,6 @@
 using namespace std;
 using namespace ev3dev;
 
-/*
-const port_type SV0  { "0" };  //!< servo sv0
-const port_type SV1  { "1" };  //!< servo sv1
-const port_type SV6  { "6" };  //!< servo sv6
-const port_type SV7  { "7" };  //!< servo sv7
-*/
 
 #ifndef FSTREAM_CACHE_SIZE
 #define FSTREAM_CACHE_SIZE 16
@@ -33,16 +27,9 @@ private:
 	}
 
 	int connected_;
-	//servo_motor m_;
+	servo_motor sv1_;
+	servo_motor sv8_;
 
-	char* positionOpFileName_;
-
-	std::string _path;
-	std::string _pathSV1;
-	std::string _pathSV8;
-
-	void set_attr_int(const std::string &name, int value);
-	void set_attr_string(const std::string &name, const std::string &value);
 
 protected:
 
