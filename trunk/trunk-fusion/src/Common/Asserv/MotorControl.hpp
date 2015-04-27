@@ -49,19 +49,21 @@ public:
 	 */
 	void stopMotors();
 
-	//motorLeft(speed)
+	//runmotorLeft(speed)
 
 	void moveForward(int power, int timems);
 
-	void turnRight(int power, int timems);
+	void turnRightTime(int power, int timems);
 
-	void moveForward(int distmm);
+	void turnLeftTime(int power, int timems);
 
-	//moveForwardWithRamp(int distmm)
+	void turn(float degree, int timems);
 
-	//turn()
-	//turnLeft(float deg)
-	//turnRight(float deg)
+	void turnLeft(float degree, int timems);
+	void turnRight(float degree, int timems);
+
+	void moveD(int distmm, int power);
+
 };
 
 #endif

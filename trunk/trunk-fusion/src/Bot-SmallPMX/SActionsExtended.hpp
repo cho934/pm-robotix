@@ -5,6 +5,8 @@
 #include "../Common/Action/SoundBar.hpp"
 #include "../Common/Action/Actions.hpp"
 #include "../Common/Action/TrackSystem.hpp"
+#include "../Common/Action/SupportSystem.hpp"
+#include "../Common/Action/RedCarpetSystem.hpp"
 
 class SActionsExtended: public Actions
 {
@@ -25,11 +27,21 @@ private:
 	 */
 	TrackSystem tracksystem_;
 
+	/*!
+	 * \brief SupportSystem.
+	 */
+	SupportSystem supportsystem_;
+
+	/*!
+	 * \brief SupportSystem.
+	 */
+	RedCarpetSystem redcarpetsystem_;
+
 public:
 	SActionsExtended() :
-			ledbar_(*this, 2)
-			, soundbar_(*this)
-			, tracksystem_(*this)
+			ledbar_(*this, 2), soundbar_(*this), tracksystem_(*this)
+, supportsystem_(*this), redcarpetsystem_(*this)
+
 	{
 	}
 
@@ -58,6 +70,24 @@ public:
 	inline TrackSystem & trackSystem()
 	{
 		return tracksystem_;
+	}
+
+	/*!
+	 * \brief Cette methode retourne l'objet SupportSystem.
+	 * \return supportsystem_.
+	 */
+	inline SupportSystem & supportSystem()
+	{
+		return supportsystem_;
+	}
+
+	/*!
+	 * \brief Cette methode retourne l'objet RedCarpetSystem.
+	 * \return supportsystem_.
+	 */
+	inline RedCarpetSystem & redcarpetSystem()
+	{
+		return redcarpetsystem_;
 	}
 
 };
