@@ -21,18 +21,18 @@ SupportSystem::~SupportSystem()
 void SupportSystem::incline(int power, int timems)
 {
 	logger().debug() << "incline" << logs::end;
-	servodevicedriver->setMotorPosition(50, timems);
+	servodevicedriver->setMotorPosition(50, timems, power);
 }
 
 void SupportSystem::straighten(int power, int timems)
 {
 	logger().debug() << "straighten" << logs::end;
-	servodevicedriver->setMotorPosition(0, timems);
+	servodevicedriver->setMotorPosition(0, timems, power);
 }
 
-void SupportSystem::setPosition(int pos)
+void SupportSystem::resetPosition(int pos)
 {
-	logger().debug() << "setPosition" << logs::end;
+	logger().debug() << "resetPosition" << logs::end;
 	servodevicedriver->resetEncoder(pos);
 }
 

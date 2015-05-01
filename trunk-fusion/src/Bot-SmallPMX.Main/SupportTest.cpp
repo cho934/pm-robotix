@@ -56,20 +56,20 @@ void SupportTest::run(int argc, char *argv[])
 
 	SRobotExtended &robot = SRobotExtended::instance();
 
-	//todo setposition
-	robot.actions.supportSystem().setPosition(10);
+	//repositionnement
+	robot.actions.supportSystem().resetPosition(10);
 
 	logger().info() << "straighten..." << logs::end;
 	robot.actions.supportSystem().straighten(power, timems);
-	sleep(2);
+	sleep(5);
 
 	logger().info() << "incline..." << logs::end;
 	robot.actions.supportSystem().incline(power, timems);
-	sleep(2);
+	sleep(5);
 
 	logger().info() << "straighten..." << logs::end;
 	robot.actions.supportSystem().straighten(power, timems);
-	sleep(1);
+	sleep(5);
 
 	logger().info() << "stopMotor..." << logs::end;
 	robot.actions.supportSystem().stopMotor();

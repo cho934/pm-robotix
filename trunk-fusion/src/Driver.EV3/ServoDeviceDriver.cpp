@@ -65,14 +65,15 @@ ServoDeviceDriver::ServoDeviceDriver() :
 	}
 }
 
-void ServoDeviceDriver::setMotorPosition(int pos, int ramptimems)
+void ServoDeviceDriver::setMotorPosition(int pos, int ramptimems, int power)
 {
+
 	_servo_device.set_position_sp(pos);
 	enableHardRegulation(true);
 	_servo_device.set_run_mode(motor::run_mode_position);
 	_servo_device.set_position_mode(motor::position_mode_absolute);
 	_servo_device.set_stop_mode(motor::stop_mode_hold);
-	_servo_device.set_pulses_per_second_sp(600);
+	_servo_device.set_pulses_per_second_sp(power);
 	_servo_device.set_ramp_up_sp(ramptimems);
 	_servo_device.set_ramp_down_sp(ramptimems);
 	_servo_device.start();

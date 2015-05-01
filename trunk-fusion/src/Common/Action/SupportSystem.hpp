@@ -47,7 +47,7 @@ public:
 	/*!
 	 * \brief setPosition.
 	 */
-	void setPosition(int pos);
+	void resetPosition(int pos);
 
 	/*!
 	 * \brief stop motor.

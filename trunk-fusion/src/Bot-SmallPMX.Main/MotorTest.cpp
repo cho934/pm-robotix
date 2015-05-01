@@ -56,24 +56,24 @@ void MotorTest::run(int argc, char *argv[])
 
 	SRobotExtended &robot = SRobotExtended::instance();
 
-	robot.actions.supportSystem().setPosition(0);
+	//robot.actions.supportSystem().resetPosition(10);
 
-	robot.actions.supportSystem().straighten(600, 2000);
+	//robot.actions.supportSystem().straighten(600, 2000);
 
-	robot.asserv.motors().moveD(570, 900);
+	robot.asserv.motors().moveD(550, 900);
 	robot.asserv.motors().turnRight(90.0, 800);
 
-	robot.asserv.motors().moveD(400, 800);
+	robot.asserv.motors().moveD(380, 800);
 	//arrivée devant les marches
 	//abaisse doucement le mat
-	robot.actions.supportSystem().incline(400, 2000);
+	//robot.actions.supportSystem().incline(400, 2000);
 	sleep(1);
-	robot.actions.trackSystem().moveForward(800, 0);
+	robot.actions.trackSystem().moveForward(600, 0);
 
 	//on monte les marches
-	robot.asserv.motors().moveD(520, 300);
+	robot.asserv.motors().moveD(520, 800);
 
-	robot.actions.supportSystem().straighten(400, 2000);
+	//robot.actions.supportSystem().straighten(400, 2000);
 	sleep(1);
 
 	robot.actions.trackSystem().stopMotor();
