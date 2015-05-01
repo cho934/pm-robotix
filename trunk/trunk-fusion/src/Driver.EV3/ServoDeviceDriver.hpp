@@ -39,7 +39,7 @@ public:
 	{
 	}
 
-	virtual void setMotorPosition(int pos, int timems);
+	virtual void setMotorPosition(int pos, int timems, int power);
 
 	virtual long getInternalEncoder();
 

@@ -109,6 +109,7 @@ void AsservDriver::setMotorRightPosition(int ticks, int power)
 // -900 < power < +900
 void AsservDriver::setMotorLeftPower(int power, int timems)
 {
+
 	if ((power < -900))
 	{
 		cout << "ERROR setMotorLeftPower exceed -900!" << endl;
@@ -125,6 +126,7 @@ void AsservDriver::setMotorLeftPower(int power, int timems)
 		{
 			_motor_left.set_run_mode(motor::run_mode_time);
 			_motor_left.set_time_sp(timems);
+			usleep(timems*1000);
 		}
 		else
 		{
@@ -164,6 +166,7 @@ void AsservDriver::setMotorRightPower(int power, int timems)
 		{
 			_motor_right.set_run_mode(motor::run_mode_time);
 			_motor_right.set_time_sp(timems);
+			usleep(timems*1000);
 		}
 		else
 		{

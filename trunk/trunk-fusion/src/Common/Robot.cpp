@@ -11,7 +11,15 @@
 #include <iostream>
 #include <string>
 
+#include "../Log/Logger.hpp"
 #include "ConsoleManager.hpp"
+#include "State/Automate.hpp"
+#include "State/Data.hpp"
+#include "State/StateAdjustRobotPosition.hpp"
+#include "State/StateIADecisionMaker.hpp"
+#include "State/StateInitialize.hpp"
+#include "State/StateWaitForReboot.hpp"
+#include "State/StateWaitForStart.hpp"
 
 using namespace std;
 
@@ -42,9 +50,8 @@ void Robot::start(ConsoleManager manager, int argc, char** argv)
 	if (argv[1])
 	{
 		if (strcmp(argv[1], "U") == 0 || strcmp(argv[1], "-usage") == 0
-				|| strcmp(argv[1], "-USAGE") == 0
-				|| strcmp(argv[1], "help") == 0 || strcmp(argv[1], "-help") == 0
-				|| strcmp(argv[1], "-h") == 0)
+				|| strcmp(argv[1], "-USAGE") == 0 || strcmp(argv[1], "help") == 0
+				|| strcmp(argv[1], "-help") == 0 || strcmp(argv[1], "-h") == 0)
 		{
 			cout << "USAGE" << endl;
 			cout << argv[0]
@@ -58,32 +65,34 @@ void Robot::start(ConsoleManager manager, int argc, char** argv)
 		if (strcmp(argv[1], "M") == 0 || strcmp(argv[1], "m") == 0)
 		{
 			//init Automate for Match
-			/*
-			 // Create the data used to run the automate
-			 Data *data = new Data();
-			 data->isEmpty(true);
 
-			 //launch state machine / Automate / IAExtend
-			 IAutomateState* waitForReboot = new pmx::StateWaitForReboot();
-			 IAutomateState* initialize = new pmx::StateInitialize();
-			 IAutomateState* waitForStart = new pmx::StateWaitForStart();
+			// Create the data used to run the automate
+			Data *data = new Data();
+			data->isEmpty(true);
 
-			 waitForReboot->addState("next", initialize);
+			logger().info() << "Start of PMX, the robot..." << logs::end;
 
-			 initialize->addState("next", ajustRobotPosition);
-			 initialize->addState("waitForReboot", waitForReboot);
+			IAutomateState* waitForReboot = new StateWaitForReboot();
+			IAutomateState* initialize = new StateInitialize();
+			IAutomateState* ajustRobotPosition = new StateAdjustRobotPosition();
+			IAutomateState* waitForStart = new StateWaitForStart();
 
-			 ajustRobotPosition->addState("next", waitForStart);
+			waitForReboot->addState("next", initialize);
+			initialize->addState("next", ajustRobotPosition);
+			initialize->addState("waitForReboot", waitForReboot);
+			ajustRobotPosition->addState("next", waitForStart);
 
-			 waitForStart->addState("rebootInitialize", initialize);
-			 waitForStart->addState("decisionMaker", data->decisionMaker);
+			waitForStart->addState("rebootInitialize", initialize);
+			waitForStart->addState("decisionMaker", data->decisionMaker);
 
-			 // Start the automate and wait for its return
-			 Automate *automate = new Automate();
-			 automate->run(robot, waitForReboot, data);
+			// Start the automate and wait for its return
+			Automate *automate = new Automate();
+			automate->run(*this, waitForReboot, data);
 
-			 //TODO : stop all
-			 */
+			logger().info() << "PMX - Happy End" << logs::end;
+
+			//TODO : stop all ?
+
 		}
 		//Case to display or run a functional test.
 		else if (strcmp(argv[1], "T") == 0 || strcmp(argv[1], "t") == 0)
@@ -102,5 +111,4 @@ void Robot::start(ConsoleManager manager, int argc, char** argv)
 			cout << "Command " << argv[1] << " not found !" << endl;
 		}
 	}
-	//cout << "PMX - Happy End" << endl;
 }

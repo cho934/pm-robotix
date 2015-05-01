@@ -1,5 +1,5 @@
-#ifndef EV3_SERVODEVICEDRIVER_HPP_
-#define EV3_SERVODEVICEDRIVER_HPP_
+#ifndef SIMU_SERVODEVICEDRIVER_HPP_
+#define SIMU_SERVODEVICEDRIVER_HPP_
 
 #include "../Common/Action.Driver/AServoDeviceDriver.hpp"
 #include "../Log/LoggerFactory.hpp"
@@ -11,7 +11,7 @@ class ServoDeviceDriver: public AServoDeviceDriver
 private:
 
 	/*!
-	 * \brief Retourne le \ref Logger associé à la classe \ref ServoDeviceDriver(SIMU).
+	 * \brief Retourne le \ref Logger associé à la classe \ref ServoDeviceDriver(EV3).
 	 */
 	static inline const logs::Logger & logger()
 	{
@@ -37,7 +37,7 @@ public:
 	{
 	}
 
-	virtual void setMotorPosition(int pos, int timems);
+	virtual void setMotorPosition(int pos, int timems, int power);
 
 	virtual long getInternalEncoder();
 

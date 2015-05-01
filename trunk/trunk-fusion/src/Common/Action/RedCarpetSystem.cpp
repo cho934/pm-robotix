@@ -22,7 +22,7 @@ RedCarpetSystem::~RedCarpetSystem()
 void RedCarpetSystem::leftDeploy()
 {
 	holdLeft();
-	servodriver->setPosition(1, 50);
+	servodriver->setPosition(1, 60);
 	sleep(1);
 	servodriver->setPosition(1, 0);
 	sleep(1);
@@ -32,7 +32,7 @@ void RedCarpetSystem::leftDeploy()
 void RedCarpetSystem::rightDeploy()
 {
 	holdRight();
-	servodriver->setPosition(8, 50);
+	servodriver->setPosition(8, 60);
 	sleep(1);
 	servodriver->setPosition(8, 0);
 	sleep(1);

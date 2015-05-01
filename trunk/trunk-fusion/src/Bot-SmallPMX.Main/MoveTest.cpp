@@ -70,9 +70,12 @@ void MoveTest::run(int argc, char *argv[])
 	SRobotExtended &robot = SRobotExtended::instance();
 
 	logger().info() << "moveD " << mm << " mm, power max=" << power << logs::end;
-	robot.actions.trackSystem().moveForward(power, 0);
-	robot.asserv.motors().moveD(mm, power);
 
+	robot.actions.trackSystem().moveForward(power, 0);
+	//robot.asserv.motors().moveD(50, 800);
+	//robot.asserv.motors().runMotorRight(900,0);
+	//usleep(800000);
+	robot.asserv.motors().moveD(mm, power);
 
 	//robot.asserv.motors().turn(mm, power);
 

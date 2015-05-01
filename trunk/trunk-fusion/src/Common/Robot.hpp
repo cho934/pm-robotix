@@ -1,7 +1,9 @@
 #ifndef COMMON_ROBOT_HPP_
 #define COMMON_ROBOT_HPP_
 
+#include "../Log/LoggerFactory.hpp"
 #include "Action/Actions.hpp"
+#include "Utils/Chronometer.hpp"
 
 class ConsoleManager;
 
@@ -17,6 +19,8 @@ private:
 		static const logs::Logger & instance = logs::LoggerFactory::logger("Robot");
 		return instance;
 	}
+
+	utils::Chronometer chrono_;
 
 public:
 
@@ -35,7 +39,14 @@ public:
 	Robot(Robot const&);              // Don't Implement
 	void operator=(Robot const&); // Don't implement
 
-
+	/*!
+	 * \brief Cette methode retourne l'objet de manipulation du chronometer.
+	 * \return Le chronometer.
+	 */
+	inline utils::Chronometer & chrono()
+	{
+		return chrono_;
+	}
 
 	//Action => RobotElement
 	Actions actions;

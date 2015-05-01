@@ -24,6 +24,13 @@ void logs::LoggerFactory::initialize()
 	add(logs::Level::INFO, "EncoderTest", "console");
 	add(logs::Level::INFO, "SupportTest", "console");
 
+	add(logs::Level::INFO, "StateWaitForReboot", "console");
+	add(logs::Level::INFO, "StateInitialize", "console");
+	add(logs::Level::INFO, "StateAdjustRobotPosition", "console");
+	add(logs::Level::INFO, "StateWaitForStart", "console");
+	add(logs::Level::INFO, "Robot", "console");
+
+
 	//add(logs::Level::DEBUG, "ActionManager", "console");
 	//add(logs::Level::DEBUG, "Actions", "console");
 	add(logs::Level::INFO, "LedBar", "console");
@@ -31,6 +38,7 @@ void logs::LoggerFactory::initialize()
 	add(logs::Level::INFO, "SoundBar", "console");
 	add(logs::Level::INFO, "SoundBarAction", "console");
 
+	//DEBUG
 	add(logs::Level::DEBUG, "MotorControl", "console");
 
 

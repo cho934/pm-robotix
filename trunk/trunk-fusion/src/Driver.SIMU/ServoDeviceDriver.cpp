@@ -1,4 +1,4 @@
-//drivers...EV3
+//drivers...SIMU
 
 #include "ServoDeviceDriver.hpp"
 
@@ -26,7 +26,7 @@ ServoDeviceDriver::ServoDeviceDriver() :
 
 }
 
-void ServoDeviceDriver::setMotorPosition(int pos, int timems)
+void ServoDeviceDriver::setMotorPosition(int pos, int ramptimems, int power)
 {
 
 }
