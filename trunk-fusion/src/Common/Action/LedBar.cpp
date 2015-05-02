@@ -12,12 +12,12 @@
 
 using namespace std;
 
-LedBar::LedBar(Actions & actions, int nb) :
-		AActionsElement(actions), nbLed_(nb), actionStopped_(false), actionRunning_(false), position_(
+LedBar::LedBar(Actions & actions, int nbLed) :
+		AActionsElement(actions), nbLed_(nbLed), actionStopped_(false), actionRunning_(false), position_(
 				0), color_(0), nb_(0), timeus_(0), hex_(0), hexNext_(0)
 
 {
-	leddriver = ALedDriver::create(nb);
+	leddriver = ALedDriver::create(nbLed);
 }
 
 LedBar::~LedBar()
@@ -99,7 +99,7 @@ void LedBar::alternate(uint nb, uint timeus, uint beginVal, uint endVal, uint be
 
 void LedBar::k2mil(uint nb, uint timeus, uint color)
 {
-	logger().debug() << "k2mil" << logs::end;
+	logger().debug() << "k2mil nbLed_=" << nbLed_<< logs::end;
 	int j = -1;
 
 	for (uint i = 1; i <= nb; i++)
@@ -190,10 +190,12 @@ void LedBar::startAlternate(uint nb, uint timeus, uint hexValue, uint hexValueNe
 
 void LedBar::startBlink(uint nb, uint timeus, uint color, bool wait)
 {
+	logger().debug() << "startBlink before while" << logs::end;
 	while (this->actionRunning_)
 	{
 		usleep(1000);
 	}
+	logger().debug() << "startBlink after while" << logs::end;
 	this->actionStopped_ = false;
 	this->nb_ = nb;
 	this->timeus_ = timeus;
@@ -201,10 +203,13 @@ void LedBar::startBlink(uint nb, uint timeus, uint color, bool wait)
 	this->actions().addAction(new LedBarAction(*this, LEDBARBLINK));
 	if (wait)
 	{
+		logger().debug() << "while !this->actionRunning_..." << logs::end;
 		while (!this->actionRunning_)
 		{
 			usleep(1000);
+
 		}
+		logger().debug() << "while this->actionRunning_..." << logs::end;
 		while (this->actionRunning_)
 		{
 			usleep(1000);

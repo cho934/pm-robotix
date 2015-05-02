@@ -19,7 +19,7 @@ void LedBarTest::run(int, char *[])
 
 	//SRobotExtended robot;
 	SRobotExtended &robot = SRobotExtended::instance();
-
+/*
 	robot.actions.ledBar().resetAll();
 
 
@@ -44,17 +44,22 @@ void LedBarTest::run(int, char *[])
 	robot.actions.ledBar().blink(5, 200000, LED_ORANGE);
 
 	robot.actions.ledBar().k2mil(4, 100000, LED_RED);
-
+*/
 	logger().info() << "start ActionManager..." << logs::end;
 	robot.actions.start();
 
 	//robot.actions.ledbar().startSet(0,1);
-	robot.actions.ledBar().startAlternate(10, 500000, 0x03, 0x01, LED_GREEN, true);
-
+	//robot.actions.ledBar().startAlternate(10, 500000, 0x03, 0x01, LED_GREEN, true);
+/*
 	robot.actions.ledBar().startK2mil(2, 100000, LED_ORANGE, false);
 	sleep(3);
 	robot.actions.ledBar().startBlinkPin(10, 100000, 0, LED_ORANGE, false);
 	sleep(3);
+
+	*/
+	robot.actions.ledBar().startK2mil(5, 1000000, LED_ORANGE, true);
+
+
 	robot.actions.stop();
 
 	robot.actions.ledBar().resetAll();

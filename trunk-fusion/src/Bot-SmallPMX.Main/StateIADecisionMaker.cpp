@@ -3,42 +3,47 @@
  * \brief Implémentation de la classe StateIADecisionMaker.
  */
 
-#include "StateIADecisionMaker.hpp"
+#include "../Common/State/StateIADecisionMaker.hpp"
 
 #include <unistd.h>
 #include <cstdio>
 
-#include "../../Log/Logger.hpp"
-#include "../Robot.hpp"
-#include "../Utils/Chronometer.hpp"
-#include "Data.hpp"
-
+#include "../Bot-SmallPMX/SRobotExtended.hpp"
+#include "../Common/State/Data.hpp"
+#include "../Log/Logger.hpp"
 
 IAutomateState*
-StateIADecisionMaker::execute(Robot&robot, void *data)
+StateIADecisionMaker::execute(Robot&r, void *data)
 {
+	logger().info() << "start 5" << logs::end;
 	//IAutomateState* result;
 
 	Data* sharedData = (Data*) data;
+	SRobotExtended* robot = (SRobotExtended*) &r;
 
 	//detection adversaire
 	//robot.irSensorsGroup().startTimer();
 
 	//launch IA
 
-
 	//robot.irSensorsGroup().stopTimer();
 
 	//Arret des moteurs
 
-
 	//wait the execution Wait90
 	while (!sharedData->end90s()) //&& robot.chronometerRobot().getElapsedTimeInSec() < 35)
 	{
-		printf("sharedData->end90s=%d time=%f\n", sharedData->end90s(),
-				robot.chrono().getElapsedTimeInSec());
+		//printf("sharedData->end90s=%d time=%f\n", sharedData->end90s(),
+		//		robot->chrono().getElapsedTimeInSec());
+		logger().info() << "sharedData->end90s=" << sharedData->end90s() << " time="
+				<< robot->chrono().getElapsedTimeInSec() << logs::end;
 		usleep(1000000);
 	}
+
+	//Stop
+	logger().info() << "PMX - Stop All..." << logs::end;
+	robot->actions.stop();
+	//TODO robot->asserv.stop();
 
 	return NULL;
 }

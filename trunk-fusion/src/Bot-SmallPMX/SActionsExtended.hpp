@@ -1,12 +1,14 @@
 #ifndef PMX_S_ACTIONSEXTENDED_HPP_
 #define PMX_S_ACTIONSEXTENDED_HPP_
 
-#include "../Common/Action/LedBar.hpp"
-#include "../Common/Action/SoundBar.hpp"
 #include "../Common/Action/Actions.hpp"
-#include "../Common/Action/TrackSystem.hpp"
-#include "../Common/Action/SupportSystem.hpp"
+#include "../Common/Action/ButtonBar.hpp"
+#include "../Common/Action/LedBar.hpp"
 #include "../Common/Action/RedCarpetSystem.hpp"
+#include "../Common/Action/SoundBar.hpp"
+#include "../Common/Action/SupportSystem.hpp"
+#include "../Common/Action/Tirette.hpp"
+#include "../Common/Action/TrackSystem.hpp"
 
 class SActionsExtended: public Actions
 {
@@ -16,6 +18,16 @@ private:
 	 * \brief LED Bar.
 	 */
 	LedBar ledbar_;
+
+	/*!
+	 * \brief Button Bar.
+	 */
+	ButtonBar buttonbar_;
+
+	/*!
+	 * \brief Tirette.
+	 */
+	Tirette tirette_;
 
 	/*!
 	 * \brief Sound Bar.
@@ -39,8 +51,8 @@ private:
 
 public:
 	SActionsExtended() :
-			ledbar_(*this, 2), soundbar_(*this), tracksystem_(*this)
-, supportsystem_(*this), redcarpetsystem_(*this)
+			ledbar_(*this, 2), buttonbar_(*this), tirette_(*this), soundbar_(*this), tracksystem_(*this), supportsystem_(
+					*this), redcarpetsystem_(*this)
 
 	{
 	}
@@ -52,6 +64,24 @@ public:
 	inline LedBar & ledBar()
 	{
 		return ledbar_;
+	}
+
+	/*!
+	 * \brief Cette methode retourne l'objet buttonBar.
+	 * \return buttonbar_.
+	 */
+	inline ButtonBar & buttonBar()
+	{
+		return buttonbar_;
+	}
+
+	/*!
+	 * \brief Cette methode retourne l'objet tirette.
+	 * \return tirette_.
+	 */
+	inline Tirette & tirette()
+	{
+		return tirette_;
 	}
 
 	/*!

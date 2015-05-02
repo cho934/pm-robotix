@@ -1,18 +1,16 @@
-#include <unistd.h>
-#include <cstdio>
-#include <cstdlib>
 #include <iostream>
 
 #include "../Bot-SmallPMX/SRobotExtended.hpp"
-#include "../Common/ConsoleKeyInput.hpp"
 #include "../Common/ConsoleManager.hpp"
+#include "ButtonBarTest.hpp"
 #include "EncoderTest.hpp"
 #include "LedBarTest.hpp"
 #include "MotorTest.hpp"
-#include "SoundBarTest.hpp"
 #include "MoveTest.hpp"
-#include "SupportTest.hpp"
 #include "ServoTest.hpp"
+#include "SoundBarTest.hpp"
+#include "SupportTest.hpp"
+#include "TiretteTest.hpp"
 
 using namespace std;
 
@@ -28,12 +26,15 @@ int main(int argc, char** argv)
 
 	//add specific tests for this robot
 	manager.add(new LedBarTest());
+	manager.add(new ButtonBarTest());
+	manager.add(new TiretteTest());
 	manager.add(new SoundBarTest());
 	manager.add(new EncoderTest());
 	manager.add(new MotorTest());
 	manager.add(new MoveTest());
 	manager.add(new SupportTest());
 	manager.add(new ServoTest());
+
 
 /*
 	char cInput;
@@ -60,5 +61,6 @@ int main(int argc, char** argv)
 	//start the Robot (functional tests or match)
 	robot.start(manager, argc, argv);
 
+	//sleep(1);
 	return 0;
 }
