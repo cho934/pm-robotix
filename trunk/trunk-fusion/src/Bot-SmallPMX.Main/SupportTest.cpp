@@ -59,19 +59,20 @@ void SupportTest::run(int argc, char *argv[])
 	//repositionnement
 	robot.actions.supportSystem().resetPosition(10);
 
-	logger().info() << "straighten..." << logs::end;
+	logger().info() << "straighten..." << robot.actions.supportSystem().getPosition() << logs::end;
+
 	robot.actions.supportSystem().straighten(power, timems);
 	sleep(5);
 
-	logger().info() << "incline..." << logs::end;
+	logger().info() << "incline..." << robot.actions.supportSystem().getPosition() << logs::end;
 	robot.actions.supportSystem().incline(power, timems);
 	sleep(5);
 
-	logger().info() << "straighten..." << logs::end;
+	logger().info() << "straighten..." << robot.actions.supportSystem().getPosition() << logs::end;
 	robot.actions.supportSystem().straighten(power, timems);
 	sleep(5);
 
-	logger().info() << "stopMotor..." << logs::end;
+	logger().info() << "stopMotor..." << robot.actions.supportSystem().getPosition() << logs::end;
 	robot.actions.supportSystem().stopMotor();
 
 	logger().info() << this->name() << " - Happy End." << logs::end;

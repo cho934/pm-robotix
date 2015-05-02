@@ -50,6 +50,11 @@ public:
 	void resetPosition(int pos);
 
 	/*!
+	 * \brief get position.
+	 */
+	long getPosition();
+
+	/*!
 	 * \brief stop motor.
 	 */
 	void stopMotor();

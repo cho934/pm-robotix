@@ -3,19 +3,21 @@
  * \brief Implémentation de la classe StateAdjustRobotPosition.
  */
 
-#include "StateAdjustRobotPosition.hpp"
+#include "../Common/State/StateAdjustRobotPosition.hpp"
 
-#include "../../Log/Logger.hpp"
-#include "Data.hpp"
+#include "../Bot-SmallPMX/SRobotExtended.hpp"
+#include "../Common/State/Data.hpp"
+#include "../Log/Logger.hpp"
 
 IAutomateState*
-StateAdjustRobotPosition::execute(Robot& robot, void *data)
+StateAdjustRobotPosition::execute(Robot& r, void *data)
 {
 	IAutomateState* result;
 
-	this->logger().info() << "start" << logs::end;
+	this->logger().info() << "start 3" << logs::end;
 
 	Data* sharedData = (Data*) data;
+		SRobotExtended *robot = (SRobotExtended*) &r;
 
 	/*
 	 if (!sharedData->skipSetup())

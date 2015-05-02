@@ -10,6 +10,6 @@ void Asserv::start()
 
 void Asserv::stop()
 {
-
+//TODO ramener motor et encoder sur asserv
 	logger().debug("Asserv is stopped");
 }

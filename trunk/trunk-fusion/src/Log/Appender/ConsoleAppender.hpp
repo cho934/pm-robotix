@@ -44,8 +44,8 @@ public:
 	 * \brief Constructeur par défaut.
 	 * L'appender sera associé au flux de sortie standard.
 	 */
-	ConsoleAppender()
-			: out_(&std::cout)
+	ConsoleAppender() :
+			out_(&std::cout)
 	{
 	}
 
@@ -53,8 +53,8 @@ public:
 	 * \brief Constructeur initialisé de la classe.
 	 * \param out Le flux de sortie associé à cet Appender.
 	 */
-	ConsoleAppender(std::ostream * out)
-			: out_(out)
+	ConsoleAppender(std::ostream * out) :
+			out_(out)
 	{
 	}
 
@@ -65,28 +65,8 @@ public:
 	{
 	}
 
-	/*!
-	 * \brief Méthode générique de trace d'un message.
-	 * \param logger
-	 *        Logger de référence du message.
-	 * \param level
-	 *        Niveau de référence du message.
-	 * \param message
-	 *        Message à tracer.
-	 */
-	virtual void inline writeMessage(const logs::Logger & logger, const logs::Level & level,
-			const std::string & message)
-	{
-		if (this->state() == utils::CREATED)
-		{
-			//printf(" Thread ConsoleAppender start \n");
-			std::ostringstream msg;
-			msg << "ConsoleAppender created by " << logger.name() << " " << level.name();
-			this->start(msg.str());
-		}
-
-		logs::MemoryAppender::writeMessage(logger, level, message);
-	}
+	virtual void writeMessage(const logs::Logger & logger, const logs::Level & level,
+			const std::string & message);
 
 	virtual void execute();
 

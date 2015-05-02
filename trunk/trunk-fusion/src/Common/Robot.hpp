@@ -7,6 +7,11 @@
 
 class ConsoleManager;
 
+enum RobotColor
+{
+	PMXNOCOLOR, PMXYELLOW, PMXGREEN
+};
+
 class Robot
 {
 private:
@@ -22,7 +27,16 @@ private:
 
 	utils::Chronometer chrono_;
 
+	RobotColor myColor_;
+
 public:
+
+	//Action => RobotElement
+	Actions actions;
+
+	//Asserv
+
+	//IA
 
 	/*!
 	 * \brief Constructeur de la classe.
@@ -36,7 +50,6 @@ public:
 	{
 	}
 
-	Robot(Robot const&);              // Don't Implement
 	void operator=(Robot const&); // Don't implement
 
 	/*!
@@ -48,12 +61,21 @@ public:
 		return chrono_;
 	}
 
-	//Action => RobotElement
-	Actions actions;
+	/*!
+	 * \brief Retourne la couleur du robot.
+	 */
+	inline RobotColor getMyColor() const
+	{
+		return myColor_;
+	}
 
-	//Asserv
-
-	//IA
+	/*!
+	 * \brief Enregistre la couleur du robot.
+	 */
+	inline void setMyColor(RobotColor color)
+	{
+		this->myColor_ = color;
+	}
 
 	/*!
 	 * \brief Start the robot (console for tests or main program)..

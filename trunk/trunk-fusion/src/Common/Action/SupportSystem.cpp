@@ -36,6 +36,12 @@ void SupportSystem::resetPosition(int pos)
 	servodevicedriver->resetEncoder(pos);
 }
 
+long SupportSystem::getPosition()
+{
+	logger().debug() << "getPosition" << logs::end;
+	return servodevicedriver->getInternalEncoder();
+}
+
 void SupportSystem::stopMotor()
 {
 	servodevicedriver->stopMotor();

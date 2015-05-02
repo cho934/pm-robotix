@@ -25,6 +25,7 @@ void ActionManager::execute()
 		lock();
 		size = actions_.size();
 		unlock();
+		//logger().debug() << "size : " << size << logs::end;
 		if (size > 0)
 		{
 			lock();

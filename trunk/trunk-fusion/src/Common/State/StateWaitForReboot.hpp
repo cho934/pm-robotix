@@ -11,6 +11,7 @@
 #include "../../Log/LoggerFactory.hpp"
 #include "AAutomateState.hpp"
 
+
 class StateWaitForReboot: public AAutomateState
 {
 private:

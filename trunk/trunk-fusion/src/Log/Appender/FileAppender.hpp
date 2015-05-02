@@ -60,21 +60,8 @@ public:
 	 * \param message
 	 *        Message à tracer.
 	 */
-	virtual void inline writeMessage(const logs::Logger & logger, const logs::Level & level,
-			const std::string & message)
-	{
-		if (this->state() == utils::CREATED)
-		{
-			//std::cout << "Thread FileAppender Start : Name=" <<  logger.name() << " " << level.name() << std::endl;
-			//printf(" Thread ConsoleAppender Start. \n");
-
-			std::ostringstream msg;
-			msg << "FileAppender " << logger.name() << " " << level.name();
-			this->start(msg.str());
-		}
-
-		logs::MemoryAppender::writeMessageOnly(message);
-	}
+	virtual void writeMessage(const logs::Logger & logger, const logs::Level & level,
+			const std::string & message);
 
 	virtual void execute();
 
