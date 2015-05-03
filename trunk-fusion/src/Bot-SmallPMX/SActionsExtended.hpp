@@ -3,6 +3,7 @@
 
 #include "../Common/Action/Actions.hpp"
 #include "../Common/Action/ButtonBar.hpp"
+#include "../Common/Action/DetectionSensor.hpp"
 #include "../Common/Action/LedBar.hpp"
 #include "../Common/Action/RedCarpetSystem.hpp"
 #include "../Common/Action/SoundBar.hpp"
@@ -35,6 +36,11 @@ private:
 	SoundBar soundbar_;
 
 	/*!
+	 * \brief DetectionSensor.
+	 */
+	DetectionSensor detectsensor_;
+
+	/*!
 	 * \brief TrackSystem.
 	 */
 	TrackSystem tracksystem_;
@@ -51,8 +57,8 @@ private:
 
 public:
 	SActionsExtended() :
-			ledbar_(*this, 2), buttonbar_(*this), tirette_(*this), soundbar_(*this), tracksystem_(*this), supportsystem_(
-					*this), redcarpetsystem_(*this)
+			ledbar_(*this, 2), buttonbar_(*this), tirette_(*this), soundbar_(*this), detectsensor_(
+					*this), tracksystem_(*this), supportsystem_(*this), redcarpetsystem_(*this)
 
 	{
 	}
@@ -91,6 +97,15 @@ public:
 	inline SoundBar & soundBar()
 	{
 		return soundbar_;
+	}
+
+	/*!
+	 * \brief Cette methode retourne l'objet soundBar.
+	 * \return soundbar_.
+	 */
+	inline DetectionSensor & detectionSensor()
+	{
+		return detectsensor_;
 	}
 
 	/*!

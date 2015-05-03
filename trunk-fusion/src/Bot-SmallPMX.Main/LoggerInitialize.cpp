@@ -15,7 +15,6 @@ void logs::LoggerFactory::initialize()
 	//add("memory", new MemoryAppender());
 	//add("file", new FileAppender("log.txt"));
 
-
 	add(logs::Level::ERROR, "", "console");
 
 	add(logs::Level::INFO, "LedBarTest", "console");
@@ -26,6 +25,7 @@ void logs::LoggerFactory::initialize()
 	add(logs::Level::INFO, "MoveTest", "console");
 	add(logs::Level::INFO, "EncoderTest", "console");
 	add(logs::Level::INFO, "SupportTest", "console");
+	add(logs::Level::INFO, "DetectionTest", "console");
 
 	add(logs::Level::INFO, "StateWaitForReboot", "console");
 	add(logs::Level::INFO, "StateInitialize", "console");
@@ -36,17 +36,18 @@ void logs::LoggerFactory::initialize()
 
 	add(logs::Level::INFO, "Robot", "console");
 
-	//add(logs::Level::DEBUG, "ActionManager", "console");
-	//add(logs::Level::DEBUG, "Actions", "console");
 	add(logs::Level::INFO, "LedBar", "console");
 	add(logs::Level::INFO, "LedBarAction", "console");
 	add(logs::Level::INFO, "SoundBar", "console");
 	add(logs::Level::INFO, "SoundBarAction", "console");
 	add(logs::Level::INFO, "ButtonBar", "console");
 	add(logs::Level::INFO, "Tirette", "console");
+	add(logs::Level::INFO, "DetectionSensor", "console");
 
 	//DEBUG
-	add(logs::Level::DEBUG, "MotorControl", "console");
+	//add(logs::Level::DEBUG, "MotorControl", "console");
+	//add(logs::Level::DEBUG, "ActionManager", "console");
+	//add(logs::Level::DEBUG, "Actions", "console");
 
 	//DRIVER
 	add(logs::Level::INFO, "LedDriver.SIMU", "console");
