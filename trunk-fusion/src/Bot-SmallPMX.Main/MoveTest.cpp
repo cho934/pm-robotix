@@ -7,13 +7,12 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <sstream>
 #include <string>
 
-#include "../Bot-SmallPMX/SActionsExtended.hpp"
 #include "../Bot-SmallPMX/SRobotExtended.hpp"
-#include "../Common/Action/TrackSystem.hpp"
-#include "../Common/Asserv/Asserv.hpp"
-#include "../Common/Asserv/MotorControl.hpp"
+#include "../Common/State/Data.hpp"
+#include "../Common/State/Wait90SecondsAction.hpp"
 #include "../Log/Logger.hpp"
 
 using namespace std;
@@ -63,19 +62,22 @@ void MoveTest::run(int argc, char *argv[])
 	}
 	logger().info() << out.str() << logs::end;
 
-	SRobotExtended* robot = (SRobotExtended*) &SRobotExtended::instance();
+	SRobotExtended &robot = SRobotExtended::instance();
+
+	//lancement de l'etape Wait90Seconds
+	Data *data = new Data();
+	Wait90SecondsAction* action = new Wait90SecondsAction(robot, (void *) data);
+
+	action->start("Wait90SecondsAction");
 
 	logger().info() << "moveD " << mm << " mm, power max=" << power << logs::end;
 
 	//robot->actions.trackSystem().moveForward(power, timems);
 
-	robot->asserv.moveD(mm, power);
-	robot->asserv.waitMoveDTrajectory();
-
+	robot.moveForward(mm, power);
 
 	logger().info() << "Stop" << logs::end;
-	robot->asserv.motors().stopMotors();
-	robot->actions.trackSystem().stopMotor();
+	robot.stop();
 
 	logger().info() << this->name() << " - Happy End." << logs::end;
 }

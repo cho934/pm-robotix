@@ -33,10 +33,10 @@ private:
 public:
 
 	//Action => RobotElement
-	Actions actions;
+	Actions  actions;
 
 	//Asserv
-	Asserv asserv;
+	Asserv  asserv;
 
 	//IA
 
@@ -83,6 +83,10 @@ public:
 	 * \brief Start the robot (console for tests or main program)..
 	 */
 	void start(ConsoleManager manager, int argc, char** argv);
+
+	void moveForward(int mm, int power);
+
+
 
 	void stop(); //TODO fonction implénetée dans SRobotExtended...avec les objets extended. Ne peut pas créer de cpp sinon impossible d'instancier plusieurs robots dans simulation.
 

@@ -21,11 +21,8 @@ StateIADecisionMaker::execute(Robot&r, void *data)
 	Data* sharedData = (Data*) data;
 	SRobotExtended& robot = dynamic_cast<SRobotExtended&>(r);
 
-	robot.actions.supportSystem().straighten(900, 1500);
-	//robot->asserv.motors().moveD(550, 900);
-	robot.asserv.moveD(550, 900);
-	robot.asserv.waitMoveDTrajectory();
-		//robot->actions.trackSystem().moveForward(300, 0);
+
+	robot.moveForward(600, 600);
 
 
 	//wait the execution Wait90

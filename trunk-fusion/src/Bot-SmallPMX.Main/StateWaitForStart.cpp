@@ -120,9 +120,7 @@ StateWaitForStart::execute(Robot& r, void *data)
 	 robot.lcdBoard().setBacklight(LCD_OFF);
 	 }
 	 */
-	logger().info() << "Start Chronometer" << logs::end;
-	//démarrage du chrono
-	robot.chrono().start();
+
 
 	//lancement de l'etape Wait90Seconds
 	Wait90SecondsAction* action = new Wait90SecondsAction(robot, (void *) sharedData);
