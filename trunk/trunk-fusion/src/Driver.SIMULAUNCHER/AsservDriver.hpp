@@ -15,13 +15,16 @@ private:
 	 */
 	static inline const logs::Logger & logger()
 	{
-		static const logs::Logger & instance = logs::LoggerFactory::logger("AsservDriver.SIMULAUNCHER");
+		static const logs::Logger & instance = logs::LoggerFactory::logger(
+				"AsservDriver.SIMULAUNCHER");
 		return instance;
 	}
 protected:
 
-
 public:
+
+	virtual void setMotorLeftPosition(int ticks, int power);
+	virtual void setMotorRightPosition(int ticks, int power);
 
 	virtual void setMotorLeftPower(int power, int time);
 	virtual void setMotorRightPower(int power, int time);
