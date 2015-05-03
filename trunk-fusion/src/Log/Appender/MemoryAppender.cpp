@@ -39,18 +39,18 @@ void logs::MemoryAppender::flush()
 void logs::MemoryAppender::writeMessage(const logs::Logger & logger, const logs::Level & level,
 		const std::string & message)
 {
-	this->lockMessages();
 	std::ostringstream out;
 	out << logger.name() << " " << level.name() << " " << message;
+	this->lockMessages();
 	this->messages_.push_back(out.str());
 	this->unlockMessages();
 }
 
 void logs::MemoryAppender::writeMessageOnly(const std::string & message)
 {
-	this->lockMessages();
 	std::ostringstream out;
 	out << message;
+	this->lockMessages();
 	this->messages_.push_back(out.str());
 	this->unlockMessages();
 }

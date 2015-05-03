@@ -21,41 +21,25 @@ AMotorDeviceDriver * AMotorDeviceDriver::create()
 MotorDeviceDriver::MotorDeviceDriver() :
 		connected_(0)
 {
-
 	logger().debug() << "MotorDeviceDriver()" << logs::end;
 	//TEST Motors if connected
-	motor arrMotors[4] =
-	{
-	{ OUTPUT_A },
-	{ OUTPUT_B },
-	{ OUTPUT_C },
-	{ OUTPUT_D } };
 
-	for (unsigned i = 0; i < 4; ++i)
+	motor m = motor(OUTPUT_B);
+	if (m.connected())
 	{
-
-		motor &m = arrMotors[i];
-		if (m.connected())
+		if (m.port_name() == OUTPUT_B)
 		{
-			cout << "(" << 1 + i << ") " << m.type() << " motor on port " << m.port_name() << flush;
-			if (m.port_name() == OUTPUT_B)
-			{
-				_motor_device = OUTPUT_B;
-				cout << " - Motor B Connected" << endl;
-				connected_++;
-			}else
-				cout << endl;
-		}
-		else
-		{
-			cout << "(" << 1 + i << ") " << "No Motor" << endl;
+			_motor_device = OUTPUT_B;
+			logger().debug() << m.type() << " motor on port " << m.port_name() << " - Connected" << logs::end;
+			connected_++;
 		}
 	}
+	else
+	{
+		logger().error() << " Motor B " << " not connected !!" << logs::end;
+	}
 
-//TODO ajouter un parametre pour que les tests moteurs ne s'execute pas si les moteurs ne sont pas connectés
-	//sleep(1);
-
-	if (connected_ >= 1) //if both motors are connected, then initialize each motor.
+	if (connected_ == 1) //if  motor is connected, then initialize it.
 	{
 		_motor_device.reset();
 
@@ -70,56 +54,67 @@ MotorDeviceDriver::MotorDeviceDriver() :
 // -900 < power < +900
 void MotorDeviceDriver::setMotorPower(int power, int timems)
 {
-	power = -power;
+	if (connected_ == 1)
+	{
+		power = -power;
 
-	if ((power < -900))
-	{
-		cout << "ERROR setMotorLeftPower exceed -900!" << endl;
-		power = -900;
-	}
-	else if (power > 900)
-	{
-		cout << "ERROR setMotorLeftPower exceed +900!" << endl;
-		power = 900;
-	}
-	else
-	{
-		if (timems > 0)
+		if ((power < -900))
 		{
-			_motor_device.set_run_mode(motor::run_mode_time);
-			_motor_device.set_time_sp(timems);
+			cout << "ERROR setMotorLeftPower exceed -900!" << endl;
+			power = -900;
+		}
+		else if (power > 900)
+		{
+			cout << "ERROR setMotorLeftPower exceed +900!" << endl;
+			power = 900;
 		}
 		else
 		{
-			_motor_device.set_run_mode(motor::run_mode_forever);
-		}
-		if (_motor_device.regulation_mode() == motor::mode_on)
-		{
-			//avec regulation
-			//TODO verif de -900 à +900
-			_motor_device.set_pulses_per_second_sp(power);
-		}
-		else
-		{
-			//sans regulation
-			//TODO verif de -100 à +100
-			_motor_device.set_duty_cycle_sp(power / 9);
-		}
+			if (timems > 0)
+			{
+				_motor_device.set_run_mode(motor::run_mode_time);
+				_motor_device.set_time_sp(timems);
+			}
+			else
+			{
+				_motor_device.set_run_mode(motor::run_mode_forever);
+			}
+			if (_motor_device.regulation_mode() == motor::mode_on)
+			{
+				//avec regulation
+				//TODO verif de -900 à +900
+				_motor_device.set_pulses_per_second_sp(power);
+			}
+			else
+			{
+				//sans regulation
+				//TODO verif de -100 à +100
+				_motor_device.set_duty_cycle_sp(power / 9);
+			}
 
-		_motor_device.start();
+			_motor_device.start();
+		}
 	}
 }
 
 long MotorDeviceDriver::getInternalEncoder()
 {
-	//+/- 2,147,483,648
-	return _motor_device.position();
-
+	if (connected_ == 1)
+	{
+		//+/- 2,147,483,648
+		return _motor_device.position();
+	}
+	else
+		return 0;
 }
 
 void MotorDeviceDriver::stopMotor()
 {
-	_motor_device.stop();
+	if (connected_ == 1)
+	{
+		setMotorPower(0, 0);
+		_motor_device.stop();
+	}
 }
 
 void MotorDeviceDriver::resetEncoder()
@@ -132,15 +127,17 @@ int MotorDeviceDriver::getMotorCurrent()
 	return 0;
 }
 
-
 void MotorDeviceDriver::enableHardRegulation(bool enable)
 {
-	if (enable)
+	if (connected_ == 1)
 	{
-		_motor_device.set_regulation_mode(motor::mode_on);
-	}
-	else
-	{
-		_motor_device.set_regulation_mode(motor::mode_off);
+		if (enable)
+		{
+			_motor_device.set_regulation_mode(motor::mode_on);
+		}
+		else
+		{
+			_motor_device.set_regulation_mode(motor::mode_off);
+		}
 	}
 }

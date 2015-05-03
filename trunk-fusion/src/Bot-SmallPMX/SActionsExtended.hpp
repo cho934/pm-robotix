@@ -67,7 +67,7 @@ public:
 	 * \brief Cette methode retourne l'objet ledbar.
 	 * \return ledbar_.
 	 */
-	inline LedBar & ledBar()
+	LedBar & ledBar()
 	{
 		return ledbar_;
 	}
@@ -76,7 +76,7 @@ public:
 	 * \brief Cette methode retourne l'objet buttonBar.
 	 * \return buttonbar_.
 	 */
-	inline ButtonBar & buttonBar()
+	ButtonBar & buttonBar()
 	{
 		return buttonbar_;
 	}
@@ -85,7 +85,7 @@ public:
 	 * \brief Cette methode retourne l'objet tirette.
 	 * \return tirette_.
 	 */
-	inline Tirette & tirette()
+	Tirette & tirette()
 	{
 		return tirette_;
 	}
@@ -94,7 +94,7 @@ public:
 	 * \brief Cette methode retourne l'objet soundBar.
 	 * \return soundbar_.
 	 */
-	inline SoundBar & soundBar()
+	SoundBar & soundBar()
 	{
 		return soundbar_;
 	}
@@ -103,7 +103,7 @@ public:
 	 * \brief Cette methode retourne l'objet soundBar.
 	 * \return soundbar_.
 	 */
-	inline DetectionSensor & detectionSensor()
+	DetectionSensor & detectionSensor()
 	{
 		return detectsensor_;
 	}
@@ -112,7 +112,7 @@ public:
 	 * \brief Cette methode retourne l'objet TrackSystem.
 	 * \return tracksystem_.
 	 */
-	inline TrackSystem & trackSystem()
+	TrackSystem & trackSystem()
 	{
 		return tracksystem_;
 	}
@@ -121,7 +121,7 @@ public:
 	 * \brief Cette methode retourne l'objet SupportSystem.
 	 * \return supportsystem_.
 	 */
-	inline SupportSystem & supportSystem()
+	SupportSystem & supportSystem()
 	{
 		return supportsystem_;
 	}
@@ -130,9 +130,17 @@ public:
 	 * \brief Cette methode retourne l'objet RedCarpetSystem.
 	 * \return supportsystem_.
 	 */
-	inline RedCarpetSystem & redcarpetSystem()
+	RedCarpetSystem & redcarpetSystem()
 	{
 		return redcarpetsystem_;
+	}
+
+	void emergencyStop()
+	{
+		tracksystem_.stopMotor();
+		supportsystem_.stopMotor();
+		redcarpetsystem_.releaseAll();
+		soundbar_.beep(50);
 	}
 
 };

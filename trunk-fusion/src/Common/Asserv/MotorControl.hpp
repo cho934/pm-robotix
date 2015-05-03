@@ -51,18 +51,8 @@ public:
 
 	//runmotorLeft(speed)
 
-	void moveForward(int power, int timems);
-
-	void turnRightTime(int power, int timems);
-
-	void turnLeftTime(int power, int timems);
-
-	void turn(float degree, int timems);
-
-	void turnLeft(float degree, int timems);
-	void turnRight(float degree, int timems);
-
-	void moveD(int distmm, int power);
+	void setMotorLeftPosition(int tick, int power);
+	void setMotorRightPosition(int tick, int power);
 
 };
 

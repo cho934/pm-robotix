@@ -3,6 +3,7 @@
 
 #include "../Log/LoggerFactory.hpp"
 #include "Action/Actions.hpp"
+#include "Asserv/Asserv.hpp"
 #include "Utils/Chronometer.hpp"
 
 class ConsoleManager;
@@ -35,6 +36,7 @@ public:
 	Actions actions;
 
 	//Asserv
+	Asserv asserv;
 
 	//IA
 
@@ -46,7 +48,7 @@ public:
 	/*!
 	 * \brief Destructor.
 	 */
-	virtual inline ~Robot()
+	virtual ~Robot()
 	{
 	}
 
@@ -56,7 +58,7 @@ public:
 	 * \brief Cette methode retourne l'objet de manipulation du chronometer.
 	 * \return Le chronometer.
 	 */
-	inline utils::Chronometer & chrono()
+	utils::Chronometer & chrono()
 	{
 		return chrono_;
 	}
@@ -64,7 +66,7 @@ public:
 	/*!
 	 * \brief Retourne la couleur du robot.
 	 */
-	inline RobotColor getMyColor() const
+	RobotColor getMyColor() const
 	{
 		return myColor_;
 	}
@@ -72,7 +74,7 @@ public:
 	/*!
 	 * \brief Enregistre la couleur du robot.
 	 */
-	inline void setMyColor(RobotColor color)
+	void setMyColor(RobotColor color)
 	{
 		this->myColor_ = color;
 	}
@@ -81,6 +83,8 @@ public:
 	 * \brief Start the robot (console for tests or main program)..
 	 */
 	void start(ConsoleManager manager, int argc, char** argv);
+
+	void stop(); //TODO fonction implénetée dans SRobotExtended...avec les objets extended. Ne peut pas créer de cpp sinon impossible d'instancier plusieurs robots dans simulation.
 
 };
 
