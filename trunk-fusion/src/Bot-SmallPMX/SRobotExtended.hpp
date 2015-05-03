@@ -16,18 +16,37 @@ public:
 	}
 
 	//on etend les actions possibles
-	SActionsExtended actions;
+	//SActionsExtended* actions;
+	//SAsservExtended*	asserv;
 
-	SAsservExtended asserv;
+private:
+	SAsservExtended* asserv_;
+	SActionsExtended* actions_;
 
-	//on etend le stop avec les actions supplémetaires
-	void stop() //TODO heritage / surcharge ?
+	SRobotExtended();
+
+public:
+
+	~SRobotExtended()
 	{
-		this->asserv.emergencyStop();
 
-		this->actions.emergencyStop();
-		this->actions.stop(); //manager
 	}
+
+	inline SAsservExtended& asserv()
+	{
+
+		SAsservExtended& r_asserv = *asserv_;
+		return r_asserv;
+	}
+
+	inline SActionsExtended& actions()
+	{
+
+		SActionsExtended& r_actions = *actions_;
+		return r_actions;
+	}
+
+	void stop();
 };
 
 #endif

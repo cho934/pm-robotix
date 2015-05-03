@@ -18,7 +18,6 @@ Asserv::Asserv() :
 {
 	//diam_ = 31.7; //en mm
 	//entraxe_ = 145.0; //en mm
-	test_ = 0;
 	adversaryDetected_= false;
 }
 
@@ -29,13 +28,13 @@ void Asserv::moveDTime(int power, int timems)
 	usleep(1000 * timems);
 }
 
-void Asserv::moveD(int tick, int power)
+void Asserv::moveD(long destTick, long restTick, int power)
 {
-	distTicks_ = tick;
+	distTicks_ = destTick;
 
-	logger().debug() << "GO : ticks=" << distTicks_ << logs::end;
-	motors_.setMotorLeftPosition(distTicks_, power);
-	motors_.setMotorRightPosition(distTicks_, power);
+	logger().debug() << "GO : restTick=" << restTick << logs::end;
+	motors_.setMotorLeftPosition(restTick, power);
+	motors_.setMotorRightPosition(restTick, power);
 }
 
 long Asserv::moveDWaitTrajectory()
@@ -51,22 +50,25 @@ long Asserv::moveDWaitTrajectory()
 		//calculate arrived or not
 		l = encoders_.getLeftEncoder();
 		r = encoders_.getRightEncoder();
-		m =((abs(l) + abs(r)) / 2);
+		m = ((abs(l) + abs(r)) / 2.0);
 		if (m >= abs(distTicks_))
 		{
 			arrived = 1;
+			distTicks_ = 0;
+			encoders_.reset();
 		}
-		logger().debug() << "adversaryDetected_=" << adversaryDetected_ << "  test =" << test_<< logs::end;
+
 		//test if adversary then pause
 		if (adversaryDetected_ == 1)
 		{
-			logger().debug() << "emergencyStop" << logs::end;
+			logger().debug() << "emergencyStop m ="  << m << " distTicks_=" << distTicks_ << "l=" << l<< "r=" << r << logs::end;
 			this->emergencyStop();
-			sleep(1);
-			return m;
+			sleep(2);
+			encoders_.reset();
+			return (distTicks_ - m);
 		}
 
-		usleep(500000);
+		usleep(100000);
 	}
 
 	l = encoders_.getLeftEncoder();

@@ -22,16 +22,16 @@ void EncoderTest::run(int, char *[])
 
 	//TODO if asserv connected_
 
-	long left = robot.asserv.encoders().getLeftEncoder();
-	long right = robot.asserv.encoders().getLeftEncoder();
+	long left = robot.asserv().encoders().getLeftEncoder();
+	long right = robot.asserv().encoders().getLeftEncoder();
 
 
 	for (int i = 0; i < nb; i++)
 		{
 			usleep(timeSpan * 1000);
 
-			left = robot.asserv.encoders().getLeftEncoder();
-			right = robot.asserv.encoders().getRightEncoder();
+			left = robot.asserv().encoders().getLeftEncoder();
+			right = robot.asserv().encoders().getRightEncoder();
 
 			std::cout << "counterL = " << left << "\t\t counterR = " << right << std::endl;
 		}

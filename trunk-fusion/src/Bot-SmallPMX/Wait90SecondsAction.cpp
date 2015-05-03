@@ -36,7 +36,7 @@ void Wait90SecondsAction::execute()
 	{
 
 		//test ARU
-		if (robot.actions.tirette().pressed())
+		if (robot.actions().tirette().pressed())
 		{
 			//stop all robot
 			robot.stop();
@@ -45,14 +45,15 @@ void Wait90SecondsAction::execute()
 			exit(0);
 		}
 		//test adversaire
-		if (robot.actions.detectionSensor().isAdversaryDetected())
+		/*
+		if (robot.actions().detectionSensor().isAdversaryDetected())
 		{
-			robot.asserv.emergencyStop();
-			robot.asserv.setAdversaryDetected(1);
-		}
-		//robot.asserv.setAdversaryDetected(robot.actions.detectionSensor().isAdversaryDetected());
+			robot.asserv().emergencyStop();
+			robot.asserv().setAdversaryDetected(1);
+		}*/
+		robot.asserv().setAdversaryDetected(robot.actions().detectionSensor().isAdversaryDetected());
 
-		//set asserv.setadversaryDeteced(true);
+		//set asserv().setadversaryDeteced(true);
 
 		usleep(300000);
 		//this->logger().info() << "chrono " << robot->chrono().getElapsedTimeInSec() << logs::end;

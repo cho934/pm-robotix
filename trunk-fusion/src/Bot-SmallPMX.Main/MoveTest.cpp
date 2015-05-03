@@ -74,9 +74,14 @@ void MoveTest::run(int argc, char *argv[])
 
 	//robot->actions.trackSystem().moveForward(power, timems);
 
+
+	robot.moveForward(mm, power);
+	robot.moveForward(mm, power);
+	robot.moveForward(mm, power);
+	robot.moveForward(mm, power);
 	robot.moveForward(mm, power);
 
-	logger().info() << "Stop" << logs::end;
+	logger().info() << "Stop ..." << logs::end;
 	robot.stop();
 
 	logger().info() << this->name() << " - Happy End." << logs::end;

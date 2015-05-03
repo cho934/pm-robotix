@@ -18,7 +18,7 @@ void DetectionTest::run(int, char *[])
 
 	logger().info() << "Detection status" << logs::end;
 
-	robot.actions.detectionSensor().monitor(10);
+	robot.actions().detectionSensor().monitor(10);
 
 
 	logger().info() << "Happy End." << logs::end;

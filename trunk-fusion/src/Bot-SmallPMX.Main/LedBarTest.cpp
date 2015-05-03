@@ -46,7 +46,7 @@ void LedBarTest::run(int, char *[])
 	robot.actions.ledBar().k2mil(4, 100000, LED_RED);
 */
 	logger().info() << "start ActionManager..." << logs::end;
-	robot.actions.start();
+	robot.actions().start();
 
 	//robot.actions.ledbar().startSet(0,1);
 	//robot.actions.ledBar().startAlternate(10, 500000, 0x03, 0x01, LED_GREEN, true);
@@ -57,12 +57,12 @@ void LedBarTest::run(int, char *[])
 	sleep(3);
 
 	*/
-	robot.actions.ledBar().startK2mil(5, 1000000, LED_ORANGE, true);
+	robot.actions().ledBar().startK2mil(5, 1000000, LED_ORANGE, true);
 
 
-	robot.actions.stop();
+	robot.actions().stop();
 
-	robot.actions.ledBar().resetAll();
+	robot.actions().ledBar().resetAll();
 
 	logger().info() << "Happy End." << logs::end;
 }

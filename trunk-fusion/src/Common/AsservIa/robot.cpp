@@ -105,13 +105,13 @@ void robot_init()
 void robot_setMotorRightSpeed(int power) //-100 à 100
 {
 	SRobotExtended &robot = SRobotExtended::instance();
-	robot.asserv.motors().runMotorRight(power, 0);
+	robot.asserv().motors().runMotorRight(power, 0);
 }
 
 void robot_setMotorLeftSpeed(int power)
 {
 	SRobotExtended &robot = SRobotExtended::instance();
-	robot.asserv.motors().runMotorLeft(power, 0);
+	robot.asserv().motors().runMotorLeft(power, 0);
 
 }
 
@@ -131,7 +131,7 @@ long robot_getLeftInternalCounter()
 	long encoder = 0;
 
 	SRobotExtended &robot = SRobotExtended::instance();
-	encoder = robot.asserv.encoders().getLeftEncoder();
+	encoder = robot.asserv().encoders().getLeftEncoder();
 
 	return encoder;
 }
@@ -140,7 +140,7 @@ long robot_getRightInternalCounter()
 	long encoder = 0;
 
 	SRobotExtended &robot = SRobotExtended::instance();
-	encoder = robot.asserv.encoders().getRightEncoder();
+	encoder = robot.asserv().encoders().getRightEncoder();
 
 	return encoder;
 }
@@ -148,7 +148,7 @@ long robot_getRightInternalCounter()
 void robot_resetEncoders()
 {
 	SRobotExtended &robot = SRobotExtended::instance();
-	robot.asserv.encoders().reset();
+	robot.asserv().encoders().reset();
 }
 
 void robot_initPID()

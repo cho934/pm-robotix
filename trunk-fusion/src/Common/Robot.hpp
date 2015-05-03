@@ -33,10 +33,10 @@ private:
 public:
 
 	//Action => RobotElement
-	Actions  actions;
+	Actions * actions_default;
 
 	//Asserv
-	Asserv  asserv;
+	Asserv * asserv_default;
 
 	//IA
 
@@ -88,7 +88,6 @@ public:
 
 
 
-	void stop(); //TODO fonction implénetée dans SRobotExtended...avec les objets extended. Ne peut pas créer de cpp sinon impossible d'instancier plusieurs robots dans simulation.
 
 };
 

@@ -27,6 +27,8 @@ using namespace std;
 Robot::Robot() :
 		myColor_(PMXNOCOLOR)
 {
+	actions_default = new Actions();
+	asserv_default = new Asserv();
 }
 
 void Robot::start(ConsoleManager manager, int argc, char** argv)
@@ -127,7 +129,8 @@ void Robot::start(ConsoleManager manager, int argc, char** argv)
 		}
 		else
 		{
-			cout << "Command " << argv[1] << " not found !" << endl;
+			logger().error() << "Command " << argv[1] << " not found !" << logs::end;
+			//cout << "Command " << argv[1] << " not found !" << endl;
 		}
 	}
 }
@@ -139,14 +142,15 @@ void Robot::moveForward(int mm, int power)
 	//360 ticks => PI*D = PI*37mm
 	// ?  <= distmm
 	//mm * 360* ticks = 37PI
-	float ticksf = (360.0 * mm) / (M_PI * asserv.diam_);
+	float ticksf = (360.0 * mm) / (M_PI * asserv_default->diam_);
 	int tick = (int) ticksf;
 
 	long rest = tick; //reste à faire en tick
-	while (rest != 0)
+	while (rest > 0)
 	{
-		asserv.moveD(rest, power);
-		rest = asserv.moveDWaitTrajectory();
+		logger().debug() << "rest=" << rest << logs::end;
+		asserv_default->moveD(tick, rest, power);
+		rest = asserv_default->moveDWaitTrajectory();
 	}
 
 }
