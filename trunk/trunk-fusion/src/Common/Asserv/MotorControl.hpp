@@ -51,8 +51,8 @@ public:
 
 	//runmotorLeft(speed)
 
-	void setMotorLeftPosition(int tick, int power);
-	void setMotorRightPosition(int tick, int power);
+	void setMotorLeftPosition(long tick, int power);
+	void setMotorRightPosition(long tick, int power);
 
 };
 

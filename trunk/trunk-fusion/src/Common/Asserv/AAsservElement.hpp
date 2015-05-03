@@ -8,7 +8,7 @@
 
 // Prédéclaration de la classe Asserv.
 /*!
- * \todo Trouver une méthode plus "standardisé" pour la résolution des noms.
+ * \todo Trouver une méthode plus "standardisé" pour la résolution des noms. ne sert plus ?
  */
 class Asserv;
 

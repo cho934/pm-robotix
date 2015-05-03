@@ -57,23 +57,23 @@ void SupportTest::run(int argc, char *argv[])
 	SRobotExtended &robot = SRobotExtended::instance();
 
 	//repositionnement
-	robot.actions.supportSystem().resetPosition(10);
+	robot.actions().supportSystem().resetPosition(10);
 
-	logger().info() << "straighten..." << robot.actions.supportSystem().getPosition() << logs::end;
+	logger().info() << "straighten..." << robot.actions().supportSystem().getPosition() << logs::end;
 
-	robot.actions.supportSystem().straighten(power, timems);
+	robot.actions().supportSystem().straighten(power, timems);
 	sleep(5);
 
-	logger().info() << "incline..." << robot.actions.supportSystem().getPosition() << logs::end;
-	robot.actions.supportSystem().incline(power, timems);
+	logger().info() << "incline..." << robot.actions().supportSystem().getPosition() << logs::end;
+	robot.actions().supportSystem().incline(power, timems);
 	sleep(5);
 
-	logger().info() << "straighten..." << robot.actions.supportSystem().getPosition() << logs::end;
-	robot.actions.supportSystem().straighten(power, timems);
+	logger().info() << "straighten..." << robot.actions().supportSystem().getPosition() << logs::end;
+	robot.actions().supportSystem().straighten(power, timems);
 	sleep(5);
 
-	logger().info() << "stopMotor..." << robot.actions.supportSystem().getPosition() << logs::end;
-	robot.actions.supportSystem().stopMotor();
+	logger().info() << "stopMotor..." << robot.actions().supportSystem().getPosition() << logs::end;
+	robot.actions().supportSystem().stopMotor();
 
 	logger().info() << this->name() << " - Happy End." << logs::end;
 }

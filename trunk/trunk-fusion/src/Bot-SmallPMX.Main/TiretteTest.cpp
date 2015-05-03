@@ -17,7 +17,7 @@ void TiretteTest::run(int, char *[])
 
 	logger().info() << "TIRETTE status" << logs::end;
 
-	robot.actions.tirette().monitor(3);
+	robot.actions().tirette().monitor(3);
 
 
 	logger().info() << "Happy End." << logs::end;

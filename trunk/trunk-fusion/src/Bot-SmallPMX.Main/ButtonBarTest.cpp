@@ -20,10 +20,10 @@ void ButtonBarTest::run(int, char *[])
 	SRobotExtended &robot = SRobotExtended::instance();
 
 	logger().info() << "Please press ENTER" << logs::end;
-	robot.actions.buttonBar().waitPressed(BUTTON_ENTER_KEY);
+	robot.actions().buttonBar().waitPressed(BUTTON_ENTER_KEY);
 
 	logger().info() << "Please press BACK" << logs::end;
-	robot.actions.buttonBar().waitPressed(BUTTON_BACK_KEY);
+	robot.actions().buttonBar().waitPressed(BUTTON_BACK_KEY);
 
 
 	logger().info() << "Happy End." << logs::end;

@@ -19,8 +19,8 @@ void ServoTest::run(int, char *[])
 	SRobotExtended &robot = SRobotExtended::instance();
 
 
-	robot.actions.redcarpetSystem().leftDeploy();
-	robot.actions.redcarpetSystem().rightDeploy();
+	robot.actions().redcarpetSystem().leftDeploy();
+	robot.actions().redcarpetSystem().rightDeploy();
 
 
 

@@ -59,7 +59,7 @@ AsservDriver::AsservDriver() :
 	if (connectedRight_) //if both motors are connected, then initialize each motor.
 	{
 		_motor_right.reset();
-		//_motor_right.set_position_mode(motor::position_mode_absolute);
+
 		_motor_right.set_stop_mode(motor::stop_mode_brake);
 
 		enableHardRegulation(true);
@@ -67,7 +67,7 @@ AsservDriver::AsservDriver() :
 	if (connectedLeft_) //if both motors are connected, then initialize each motor.
 	{
 		_motor_left.reset();
-		//_motor_left.set_position_mode(motor::position_mode_absolute);
+
 		_motor_left.set_stop_mode(motor::stop_mode_brake);
 
 		enableHardRegulation(true);
@@ -75,38 +75,39 @@ AsservDriver::AsservDriver() :
 
 }
 
-void AsservDriver::setMotorLeftPosition(int ticks, int power) // TODO faire un retour d'error de not connected
+void AsservDriver::setMotorLeftPosition(long ticks, int power) // TODO faire un retour d'error de not connected
 {
 	if (connectedLeft_)
 	{
-		_motor_left.reset();
+		logger().debug() << "ticks=" << ticks << " power=" << power << logs::end;
+
 		enableLeftHardRegulation(true);
 		_motor_left.set_stop_mode(motor::stop_mode_brake);
-		_motor_left.set_position_mode(motor::position_mode_relative);
+		_motor_left.set_position_mode(motor::position_mode_absolute);
 		_motor_left.set_run_mode(motor::run_mode_position);
 
 		_motor_left.set_position_sp(ticks);
 		_motor_left.set_pulses_per_second_sp(power);
-		_motor_left.set_ramp_up_sp(3000);
-		_motor_left.set_ramp_down_sp(4000);
+		_motor_left.set_ramp_up_sp(0);
+		_motor_left.set_ramp_down_sp(0);
 		_motor_left.start();
 	}
 }
 
-void AsservDriver::setMotorRightPosition(int ticks, int power)
+void AsservDriver::setMotorRightPosition(long ticks, int power)
 {
 	if (connectedRight_)
 	{
-		_motor_right.reset();
+
 		enableRightHardRegulation(true);
 		_motor_right.set_stop_mode(motor::stop_mode_brake);
-		_motor_right.set_position_mode(motor::position_mode_relative);
+		_motor_right.set_position_mode(motor::position_mode_absolute);
 		_motor_right.set_run_mode(motor::run_mode_position);
 
 		_motor_right.set_position_sp(ticks);
 		_motor_right.set_pulses_per_second_sp(power);
-		_motor_right.set_ramp_up_sp(3000);
-		_motor_right.set_ramp_down_sp(4000);
+		_motor_right.set_ramp_up_sp(0);
+		_motor_right.set_ramp_down_sp(0);
 		_motor_right.start();
 	}
 }
@@ -247,6 +248,11 @@ void AsservDriver::stopMotorRight()
 
 void AsservDriver::resetEncoder()
 {
+	_motor_left.set_position(0);
+	_motor_right.set_position(0);
+
+	//_motor_left.reset();
+	//_motor_right.reset();
 
 }
 

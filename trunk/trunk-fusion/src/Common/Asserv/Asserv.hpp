@@ -28,9 +28,8 @@ private:
 	 */
 	MotorControl motors_;
 
-	int distTicks_;
+	long distTicks_;
 
-	int test_;
 	bool adversaryDetected_;
 
 	float entraxe_; //en mm
@@ -69,15 +68,12 @@ public:
 
 	inline void setAdversaryDetected(bool b)
 	{
-		logger().info() << "setAdversaryDetected = " << b << "adv=" << adversaryDetected_<< logs::end;
 		adversaryDetected_ = b;
-		test_ = b;
-		logger().info() << "after = " << b << "adv=" << adversaryDetected_<< logs::end;
 	}
 
 	void moveDTime(int power, int timems);
 
-	void moveD(int tick, int power);
+	void moveD(long destTick, long restTick, int power);
 	long moveDWaitTrajectory(); //return le reste à parcourir
 
 	void turn(float degree, int timems);

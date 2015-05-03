@@ -35,7 +35,7 @@ void logs::LoggerFactory::initialize()
 	add(logs::Level::INFO, "StateIADecisionMaker", "console");
 	add(logs::Level::INFO, "Wait90SecondsAction", "console");
 
-	add(logs::Level::INFO, "Robot", "console");
+	add(logs::Level::DEBUG, "Robot", "console");
 
 	add(logs::Level::INFO, "LedBar", "console");
 	add(logs::Level::INFO, "LedBarAction", "console");
@@ -55,6 +55,6 @@ void logs::LoggerFactory::initialize()
 	add(logs::Level::INFO, "LedDriver.SIMU", "console");
 	add(logs::Level::INFO, "SoundDriver.SIMU", "console");
 	add(logs::Level::INFO, "MotorDeviceDriver.EV3", "console");
-	add(logs::Level::INFO, "AsservDriver.EV3", "console");
+	add(logs::Level::DEBUG, "AsservDriver.EV3", "console");
 
 }

@@ -22,18 +22,18 @@ StateWaitForReboot::execute(Robot& r, void *data)
 	//SRobotExtended *robot = (SRobotExtended*) &r;
 	SRobotExtended& robot = dynamic_cast<SRobotExtended&>(r);
 
-	robot.actions.start(); //TODO impossible de déplacer dans Robot.cpp
+	robot.actions().start(); //TODO impossible de déplacer dans Robot.cpp
 
 	if (!sharedData->skipSetup())
 	{
 		logger().debug() << "startBlink" << logs::end;
 		//robot.actions.ledBar().blink(3, 500000, LED_RED);
-		robot.actions.ledBar().startBlink(1000, 50000, LED_GREEN, 0);
+		robot.actions().ledBar().startBlink(1000, 50000, LED_GREEN, 0);
 
 		logger().info() << "Please press SELECT..." << logs::end;
-		robot.actions.buttonBar().waitPressed(BUTTON_ENTER_KEY);
+		robot.actions().buttonBar().waitPressed(BUTTON_ENTER_KEY);
 
-		robot.actions.ledBar().stopAndWait(true);
+		robot.actions().ledBar().stopAndWait(true);
 
 	}
 
@@ -88,7 +88,7 @@ StateWaitForReboot::execute(Robot& r, void *data)
 	 */
 
 	//robot.actions.ledBar();
-	robot.actions.ledBar().resetAll();
+	robot.actions().ledBar().resetAll();
 
 	return this->getState("next");
 }

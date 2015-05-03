@@ -58,38 +58,38 @@ void MotorTest::run(int argc, char *argv[])
 
 //TODO test only motors here
 
-	robot.actions.supportSystem().resetPosition(5);
+	robot.actions().supportSystem().resetPosition(5);
 
-	robot.actions.supportSystem().straighten(900, 1500);
+	robot.actions().supportSystem().straighten(900, 1500);
 
-	robot.asserv.moveD(550, 900);
-	robot.asserv.turnRight(90.0, 800);
+	robot.moveForward(550, 900);
+	robot.asserv().turnRight(90.0, 800);
 
-	robot.asserv.moveD(380, 800);
+	robot.moveForward(380, 800);
 	//arrivée devant les marches
 	//abaisse doucement le mat
-	robot.actions.supportSystem().incline(900, 1500);
+	robot.actions().supportSystem().incline(900, 1500);
 	sleep(1);
-	robot.actions.trackSystem().moveForward(600, 0);
+	robot.actions().trackSystem().moveForward(600, 0);
 
 	//on monte les marches
-	robot.asserv.moveD(520, 800);
+	robot.moveForward(520, 800);
 
-	robot.actions.supportSystem().straighten(900, 1500);
+	robot.actions().supportSystem().straighten(900, 1500);
 	sleep(1);
 
-	robot.actions.trackSystem().stopMotor();
+	robot.actions().trackSystem().stopMotor();
 	//lacher du tapis rouge droit
-	robot.actions.redcarpetSystem().leftDeploy();
+	robot.actions().redcarpetSystem().leftDeploy();
 
 
-	robot.asserv.turnLeft(90.0, 500);
-	robot.asserv.moveD(220, 500);
-	robot.asserv.turnRight(90.0, 500);
+	robot.asserv().turnLeft(90.0, 500);
+	robot.moveForward(220, 500);
+	robot.asserv().turnRight(90.0, 500);
 
 	//lacher du tapis rouge gauche
-	robot.asserv.turnRight(10.0, 500);
-	robot.actions.redcarpetSystem().rightDeploy();
+	robot.asserv().turnRight(10.0, 500);
+	robot.actions().redcarpetSystem().rightDeploy();
 
 
 /*
@@ -103,8 +103,7 @@ void MotorTest::run(int argc, char *argv[])
 	usleep(timems * 1000);
 */
 	logger().info() << "Stop" << logs::end;
-	robot.asserv.motors().stopMotors();
-	robot.actions.trackSystem().stopMotor();
+	robot.stop();
 
 	logger().info() << this->name() << " - Happy End." << logs::end;
 }
