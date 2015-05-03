@@ -21,14 +21,9 @@ StateIADecisionMaker::execute(Robot&r, void *data)
 	Data* sharedData = (Data*) data;
 	SRobotExtended* robot = (SRobotExtended*) &r;
 
-	//detection adversaire
-	//robot.irSensorsGroup().startTimer();
 
-	//launch IA
 
-	//robot.irSensorsGroup().stopTimer();
 
-	//Arret des moteurs
 
 	//wait the execution Wait90
 	while (!sharedData->end90s()) //&& robot.chronometerRobot().getElapsedTimeInSec() < 35)
@@ -43,6 +38,7 @@ StateIADecisionMaker::execute(Robot&r, void *data)
 	//Stop
 	logger().info() << "PMX - Stop All..." << logs::end;
 	robot->actions.stop();
+	robot->asserv.motors().stopMotors();
 	//TODO robot->asserv.stop();
 
 	return NULL;

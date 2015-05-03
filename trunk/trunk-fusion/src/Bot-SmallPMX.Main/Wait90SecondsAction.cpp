@@ -26,7 +26,21 @@ void Wait90SecondsAction::execute()
 	this->logger().info() << "Real execution start time: " << robot->chrono().getElapsedTimeInSec()
 				<< logs::end;
 
-	sleep(1);
+	//ARU
+	while(robot->chrono().getElapsedTimeInSec() <= 89)
+	{
+		//test ARU
+		if (robot->actions.tirette().pressed())
+		{
+			//stop robot
+			//robot->asserv.stop();
+			robot->asserv.motors().stopMotors();
+			robot->actions.stop();
+			sharedData->end90s(true);
+			exit(0);
+		}
+		usleep(500000);
+	}
 
 	sharedData->end90s(true); //indique que l'action est effectuée au prog princ
 

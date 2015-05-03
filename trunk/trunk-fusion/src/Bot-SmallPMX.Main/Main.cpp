@@ -3,6 +3,7 @@
 #include "../Bot-SmallPMX/SRobotExtended.hpp"
 #include "../Common/ConsoleManager.hpp"
 #include "ButtonBarTest.hpp"
+#include "DetectionTest.hpp"
 #include "EncoderTest.hpp"
 #include "LedBarTest.hpp"
 #include "MotorTest.hpp"
@@ -30,6 +31,7 @@ int main(int argc, char** argv)
 	manager.add(new TiretteTest());
 	manager.add(new SoundBarTest());
 	manager.add(new EncoderTest());
+	manager.add(new DetectionTest());
 	manager.add(new MotorTest());
 	manager.add(new MoveTest());
 	manager.add(new SupportTest());

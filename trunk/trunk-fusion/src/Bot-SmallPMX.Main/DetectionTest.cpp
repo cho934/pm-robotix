@@ -1,5 +1,6 @@
 
-#include "TiretteTest.hpp"
+
+#include "DetectionTest.hpp"
 
 #include <string>
 
@@ -9,15 +10,15 @@
 
 using namespace std;
 
-void TiretteTest::run(int, char *[])
+void DetectionTest::run(int, char *[])
 {
 	logger().info() << "Executing - " << this->desc() << logs::end;
 
 	SRobotExtended &robot = SRobotExtended::instance();
 
-	logger().info() << "TIRETTE status" << logs::end;
+	logger().info() << "Detection status" << logs::end;
 
-	robot.actions.tirette().monitor(3);
+	robot.actions.detectionSensor().monitor(10);
 
 
 	logger().info() << "Happy End." << logs::end;
