@@ -6,6 +6,7 @@
 
 #include "Robot.hpp"
 
+#include <math.h>
 #include <string.h>
 #include <cstdlib>
 #include <iostream>
@@ -68,11 +69,11 @@ void Robot::start(ConsoleManager manager, int argc, char** argv)
 
 			if (argc > 2)
 			{
-				if ((strcmp(argv[2], "y") == 0)||(strcmp(argv[2], "Y") == 0))
+				if ((strcmp(argv[2], "y") == 0) || (strcmp(argv[2], "Y") == 0))
 				{
 					this->setMyColor(PMXYELLOW);
 				}
-				if ((strcmp(argv[2], "g") == 0)||(strcmp(argv[2], "G") == 0))
+				if ((strcmp(argv[2], "g") == 0) || (strcmp(argv[2], "G") == 0))
 				{
 					this->setMyColor(PMXGREEN);
 				}
@@ -110,7 +111,6 @@ void Robot::start(ConsoleManager manager, int argc, char** argv)
 			Automate *automate = new Automate();
 			automate->run(*this, waitForReboot, data);
 
-
 			logger().info() << "PMX - Happy End" << logs::end;
 		}
 		//Case to display or run a functional test.
@@ -130,4 +130,23 @@ void Robot::start(ConsoleManager manager, int argc, char** argv)
 			cout << "Command " << argv[1] << " not found !" << endl;
 		}
 	}
+}
+
+void Robot::moveForward(int mm, int power)
+{
+	//convert
+	//diametre chenille = 37mm
+	//360 ticks => PI*D = PI*37mm
+	// ?  <= distmm
+	//mm * 360* ticks = 37PI
+	float ticksf = (360.0 * mm) / (M_PI * asserv.diam_);
+	int tick = (int) ticksf;
+
+	long rest = tick; //reste à faire en tick
+	while (rest != 0)
+	{
+		asserv.moveD(rest, power);
+		rest = asserv.moveDWaitTrajectory();
+	}
+
 }

@@ -21,13 +21,18 @@ Wait90SecondsAction::Wait90SecondsAction(Robot& robot, void *data) :
 void Wait90SecondsAction::execute()
 {
 	this->logger().debug() << "start" << logs::end;
+
 	Data* sharedData = (Data*) data_;
 	//SRobotExtended* robot = (SRobotExtended*) robot_;
 	SRobotExtended& robot = dynamic_cast<SRobotExtended&>(robot_);
 	//this->logger().info() << "Real execution start time: " << robot->chrono().getElapsedTimeInSec() << logs::end;
 
-	//ARU
-	while(robot.chrono().getElapsedTimeInSec() <= 5)
+	//démarrage du chrono
+	logger().info() << "Start Chronometer" << logs::end;
+	robot.chrono().start();
+
+	//ARU and adversary
+	while (robot.chrono().getElapsedTimeInSec() <= 89)
 	{
 
 		//test ARU
@@ -40,15 +45,18 @@ void Wait90SecondsAction::execute()
 			exit(0);
 		}
 		//test adversaire
-		//?
+		if (robot.actions.detectionSensor().isAdversaryDetected())
+		{
+			robot.asserv.emergencyStop();
+			robot.asserv.setAdversaryDetected(1);
+		}
+		//robot.asserv.setAdversaryDetected(robot.actions.detectionSensor().isAdversaryDetected());
 
+		//set asserv.setadversaryDeteced(true);
 
 		usleep(300000);
 		//this->logger().info() << "chrono " << robot->chrono().getElapsedTimeInSec() << logs::end;
 	}
-
-
-
 
 	//End of PMX
 	this->logger().info() << "Stop of the Robot : END of MATCH 90 !" << logs::end;
@@ -57,7 +65,8 @@ void Wait90SecondsAction::execute()
 
 	sharedData->end90s(true); //indique que l'action est effectuée au prog princ
 	//sleep(1);
-	this->logger().info() << "end90s...stop... " << robot.chrono().getElapsedTimeInSec() << logs::end;
+	this->logger().info() << "end90s...stop... " << robot.chrono().getElapsedTimeInSec()
+			<< logs::end;
 	//stop all robot to be sure...
 	robot.stop();
 
