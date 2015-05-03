@@ -1,5 +1,5 @@
-#ifndef SIMU_MOTORDEVICEDRIVER_HPP_
-#define SIMU_MOTORDEVICEDRIVER_HPP_
+#ifndef SIMULAUNCHER_MOTORDEVICEDRIVER_HPP_
+#define SIMULAUNCHER_MOTORDEVICEDRIVER_HPP_
 
 #include "../Common/Action.Driver/AMotorDeviceDriver.hpp"
 #include "../Log/LoggerFactory.hpp"
@@ -11,11 +11,11 @@ class MotorDeviceDriver: public AMotorDeviceDriver
 private:
 
 	/*!
-	 * \brief Retourne le \ref Logger associé à la classe \ref MotorDeviceDriver(SIMU).
+	 * \brief Retourne le \ref Logger associé à la classe \ref MotorDeviceDriver(SIMULAUNCHER).
 	 */
 	static inline const logs::Logger & logger()
 	{
-		static const logs::Logger & instance = logs::LoggerFactory::logger("MotorDeviceDriver.SIMU");
+		static const logs::Logger & instance = logs::LoggerFactory::logger("MotorDeviceDriver.SIMULAUNCHER");
 		return instance;
 	}
 

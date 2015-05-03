@@ -6,7 +6,8 @@ using namespace std;
 
 AAsservDriver * AAsservDriver::create()
 {
-	return new AsservDriver();
+	static AsservDriver *instance = new AsservDriver();
+	return instance;
 }
 
 AsservDriver::AsservDriver()
@@ -16,6 +17,17 @@ AsservDriver::AsservDriver()
 
 AsservDriver::~AsservDriver()
 {
+}
+
+
+void AsservDriver::setMotorLeftPosition(int ticks, int power)
+{
+
+}
+
+void AsservDriver::setMotorRightPosition(int ticks, int power)
+{
+
 }
 
 void AsservDriver::setMotorLeftPower(int power, int timems)
@@ -47,16 +59,16 @@ long AsservDriver::getRightInternalEncoder()
 	return 0;
 }
 
+void AsservDriver::resetEncoder()
+{
+
+}
+
 void AsservDriver::stopMotorLeft()
 {
 
 }
 void AsservDriver::stopMotorRight()
-{
-
-}
-
-void AsservDriver::resetEncoder()
 {
 
 }
