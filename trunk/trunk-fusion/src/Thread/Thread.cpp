@@ -56,10 +56,12 @@ bool utils::Thread::start(std::string name)
 	if (code == 0)
 	{
 		//log
+		/*
 		pid_t tid;
 		tid = syscall(SYS_gettid);
 		std::cout << "utils::Thread::start::started:" << &threadId_ << " : " << tid << " name="
 				<< name << std::endl;
+		*/
 		//end log
 		return false;
 	}

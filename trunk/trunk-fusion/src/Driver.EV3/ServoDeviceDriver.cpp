@@ -23,37 +23,23 @@ ServoDeviceDriver::ServoDeviceDriver() :
 {
 	logger().debug() << "ServoDeviceDriver()" << logs::end;
 
-	//TEST Motors if connected
-	motor arrMotors[4] =
+	motor m = motor(OUTPUT_C);
+	if (m.connected())
 	{
-	{ OUTPUT_A },
-	{ OUTPUT_B },
-	{ OUTPUT_C },
-	{ OUTPUT_D } };
-
-	for (unsigned i = 0; i < 4; ++i)
-	{
-
-		motor &m = arrMotors[i];
-		if (m.connected())
+		if (m.port_name() == OUTPUT_C)
 		{
-			cout << "(" << 1 + i << ") " << m.type() << " motor on port " << m.port_name() << flush;
-			if (m.port_name() == OUTPUT_C)
-			{
-				_servo_device = OUTPUT_C;
-				cout << " - Motor C Connected" << endl;
-				connected_++;
-			}
-			else
-				cout << endl;
-		}
-		else
-		{
-			cout << "(" << 1 + i << ") " << "No Motor" << endl;
+			_servo_device = OUTPUT_C;
+			logger().debug() << m.type() << " motor on port " << m.port_name() << " - Connected"
+					<< logs::end;
+			connected_++;
 		}
 	}
+	else
+	{
+		logger().error() << " Motor OUTPUT_C " << " not connected !!" << logs::end;
+	}
 
-	if (connected_ >= 1) //if both motors are connected, then initialize each motor.
+	if (connected_ == 1) //if both motors are connected, then initialize each motor.
 	{
 		_servo_device.reset();
 
@@ -67,40 +53,46 @@ ServoDeviceDriver::ServoDeviceDriver() :
 
 void ServoDeviceDriver::setMotorPosition(int pos, int ramptimems, int power)
 {
-
-	_servo_device.set_position_sp(pos);
-	enableHardRegulation(true);
-	_servo_device.set_run_mode(motor::run_mode_position);
-	_servo_device.set_position_mode(motor::position_mode_absolute);
-	_servo_device.set_stop_mode(motor::stop_mode_hold);
-	_servo_device.set_pulses_per_second_sp(power);
-	_servo_device.set_ramp_up_sp(ramptimems);
-	_servo_device.set_ramp_down_sp(ramptimems);
-	_servo_device.start();
+	if (connected_ == 1)
+	{
+		_servo_device.set_position_sp(pos);
+		enableHardRegulation(true);
+		_servo_device.set_run_mode(motor::run_mode_position);
+		_servo_device.set_position_mode(motor::position_mode_absolute);
+		_servo_device.set_stop_mode(motor::stop_mode_hold);
+		_servo_device.set_pulses_per_second_sp(power);
+		_servo_device.set_ramp_up_sp(ramptimems);
+		_servo_device.set_ramp_down_sp(ramptimems);
+		_servo_device.start();
+	}
 }
 
 long ServoDeviceDriver::getInternalEncoder()
 {
-	//+/- 2,147,483,648
-	return _servo_device.position();
+	if (connected_ == 1)
+	{
+		//+/- 2,147,483,648
+		return _servo_device.position();
+	}
+	else
+		return 0;
 }
 
 void ServoDeviceDriver::stopMotor()
 {
-	//_servo_device.reset();
-	//enableHardRegulation(true);
-	//_servo_device.set_run_mode(motor::run_mode_position);
-	_servo_device.set_stop_mode(motor::stop_mode_brake);
-	//_servo_device.set_pulses_per_second_sp(0);
-	//_servo_device.start();
-	//sleep(1);
-	_servo_device.stop();
-	//sleep(1);
+	if (connected_ == 1)
+	{
+		_servo_device.set_stop_mode(motor::stop_mode_brake);
+		_servo_device.stop();
+	}
 }
 
 void ServoDeviceDriver::resetEncoder(int pos)
 {
-	_servo_device.set_position(pos);
+	if (connected_ == 1)
+	{
+		_servo_device.set_position(pos);
+	}
 }
 
 int ServoDeviceDriver::getMotorCurrent()
@@ -110,12 +102,15 @@ int ServoDeviceDriver::getMotorCurrent()
 
 void ServoDeviceDriver::enableHardRegulation(bool enable)
 {
-	if (enable)
+	if (connected_ == 1)
 	{
-		_servo_device.set_regulation_mode(motor::mode_on);
-	}
-	else
-	{
-		_servo_device.set_regulation_mode(motor::mode_off);
+		if (enable)
+		{
+			_servo_device.set_regulation_mode(motor::mode_on);
+		}
+		else
+		{
+			_servo_device.set_regulation_mode(motor::mode_off);
+		}
 	}
 }

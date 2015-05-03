@@ -29,7 +29,7 @@ private:
 	/*!
 	 * \brief Référence vers le robot.
 	 */
-	Robot * robot_;
+	Robot & robot_;
 
 	void * data_;
 
@@ -38,7 +38,7 @@ public:
 	/*!
 	 * \brief Constructeur de la classe.
 	 */
-	Wait90SecondsAction(Robot* robot, void *data);
+	Wait90SecondsAction(Robot& robot, void *data);
 
 	virtual std::string name()
 	{

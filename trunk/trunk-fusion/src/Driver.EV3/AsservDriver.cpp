@@ -19,172 +19,182 @@ AAsservDriver * AAsservDriver::create()
 }
 
 AsservDriver::AsservDriver() :
-		connected_(0)
+		connectedLeft_(0), connectedRight_(0)
 {
+	logger().debug() << "AsservDriver()" << logs::end;
+
 	//TEST Motors if connected
-	motor arrMotors[4] =
+	motor m = motor(OUTPUT_A);
+	if (m.connected())
 	{
-	{ OUTPUT_A },
-	{ OUTPUT_B },
-	{ OUTPUT_C },
-	{ OUTPUT_D } };
-
-	for (unsigned i = 0; i < 4; ++i)
-	{
-
-		motor &m = arrMotors[i];
-		if (m.connected())
+		if (m.port_name() == OUTPUT_A)
 		{
-			cout << "(" << 1 + i << ") " << m.type() << " motor on port " << m.port_name() << flush;
-			if (m.port_name() == OUTPUT_A)
-			{
-				_motor_right = OUTPUT_A;
-				cout << " - Motor A Connected (RIGHT)" << endl;
-				connected_++;
-			}
-			else if (m.port_name() == OUTPUT_D)
-			{
-				_motor_left = OUTPUT_D;
-				cout << " - Motor D Connected (LEFT)" << endl;
-				connected_++;
-			}
-			else
-				cout << endl;
-		}
-		else
-		{
-			cout << "(" << 1 + i << ") " << "No Motor" << endl;
+			_motor_right = OUTPUT_A;
+			logger().debug() << m.type() << " motor on port " << m.port_name()
+					<< " - Connected (RIGHT)" << logs::end;
+			connectedRight_++;
 		}
 	}
-
-//TODO ajouter un parametre pour que les tests moteurs ne s'execute pas si les moteurs ne sont pas connectés
-	//sleep(1);
-
-	if (connected_ >= 2) //if both motors are connected, then initialize each motor.
+	else
 	{
-		_motor_left.reset();
+		logger().error() << " Motor A " << " not connected !!" << logs::end;
+	}
+
+	motor m2 = motor(OUTPUT_D);
+	if (m2.connected())
+	{
+		if (m2.port_name() == OUTPUT_D)
+		{
+			_motor_left = OUTPUT_D;
+			logger().debug() << m2.type() << " motor on port " << m2.port_name()
+					<< " - Connected (LEFT)" << logs::end;
+			connectedLeft_++;
+		}
+	}
+	else
+	{
+		logger().error() << " Motor D " << " not connected !!" << logs::end;
+	}
+
+	if (connectedRight_) //if both motors are connected, then initialize each motor.
+	{
 		_motor_right.reset();
-
-		//_motor_left.set_position_mode(motor::position_mode_absolute);
 		//_motor_right.set_position_mode(motor::position_mode_absolute);
-
-		_motor_left.set_stop_mode(motor::stop_mode_brake);
 		_motor_right.set_stop_mode(motor::stop_mode_brake);
 
 		enableHardRegulation(true);
 	}
+	if (connectedLeft_) //if both motors are connected, then initialize each motor.
+	{
+		_motor_left.reset();
+		//_motor_left.set_position_mode(motor::position_mode_absolute);
+		_motor_left.set_stop_mode(motor::stop_mode_brake);
+
+		enableHardRegulation(true);
+	}
+
 }
 
-void AsservDriver::setMotorLeftPosition(int ticks, int power)
+void AsservDriver::setMotorLeftPosition(int ticks, int power) // TODO faire un retour d'error de not connected
 {
-	_motor_left.reset();
-	enableHardRegulation(true);
-	_motor_left.set_stop_mode(motor::stop_mode_brake);
-	_motor_left.set_position_mode(motor::position_mode_relative);
-	_motor_left.set_run_mode(motor::run_mode_position);
+	if (connectedLeft_)
+	{
+		_motor_left.reset();
+		enableLeftHardRegulation(true);
+		_motor_left.set_stop_mode(motor::stop_mode_brake);
+		_motor_left.set_position_mode(motor::position_mode_relative);
+		_motor_left.set_run_mode(motor::run_mode_position);
 
-	_motor_left.set_position_sp(ticks);
-	_motor_left.set_pulses_per_second_sp(power);
-	_motor_left.set_ramp_up_sp(3000);
-	_motor_left.set_ramp_down_sp(4000);
-	_motor_left.start();
-
+		_motor_left.set_position_sp(ticks);
+		_motor_left.set_pulses_per_second_sp(power);
+		_motor_left.set_ramp_up_sp(3000);
+		_motor_left.set_ramp_down_sp(4000);
+		_motor_left.start();
+	}
 }
 
 void AsservDriver::setMotorRightPosition(int ticks, int power)
 {
-	_motor_right.reset();
-	enableHardRegulation(true);
-	_motor_right.set_stop_mode(motor::stop_mode_brake);
-	_motor_right.set_position_mode(motor::position_mode_relative);
-	_motor_right.set_run_mode(motor::run_mode_position);
+	if (connectedRight_)
+	{
+		_motor_right.reset();
+		enableRightHardRegulation(true);
+		_motor_right.set_stop_mode(motor::stop_mode_brake);
+		_motor_right.set_position_mode(motor::position_mode_relative);
+		_motor_right.set_run_mode(motor::run_mode_position);
 
-	_motor_right.set_position_sp(ticks);
-	_motor_right.set_pulses_per_second_sp(power);
-	_motor_right.set_ramp_up_sp(3000);
-	_motor_right.set_ramp_down_sp(4000);
-	_motor_right.start();
+		_motor_right.set_position_sp(ticks);
+		_motor_right.set_pulses_per_second_sp(power);
+		_motor_right.set_ramp_up_sp(3000);
+		_motor_right.set_ramp_down_sp(4000);
+		_motor_right.start();
+	}
 }
 
 // -900 < power < +900
 void AsservDriver::setMotorLeftPower(int power, int timems)
 {
-
-	if ((power < -900))
+	if (connectedLeft_)
 	{
-		cout << "ERROR setMotorLeftPower exceed -900!" << endl;
-		power = -900;
-	}
-	else if (power > 900)
-	{
-		cout << "ERROR setMotorLeftPower exceed +900!" << endl;
-		power = 900;
-	}
-	else
-	{
-		if (timems > 0)
+		if ((power < -900))
 		{
-			_motor_left.set_run_mode(motor::run_mode_time);
-			_motor_left.set_time_sp(timems);
-			usleep(timems*1000);
+			cout << "ERROR setMotorLeftPower exceed -900!" << endl;
+			power = -900;
+		}
+		else if (power > 900)
+		{
+			cout << "ERROR setMotorLeftPower exceed +900!" << endl;
+			power = 900;
 		}
 		else
 		{
-			_motor_left.set_run_mode(motor::run_mode_forever);
-		}
-		if (_motor_left.regulation_mode() == motor::mode_on)
-		{
-			//avec regulation
-			//TODO verif de -900 à +900
-			_motor_left.set_pulses_per_second_sp(power);
-		}
-		else
-		{
-			//sans regulation
-			//TODO verif de -100 à +100
-			_motor_left.set_duty_cycle_sp(power / 9);
-		}
+			if (timems > 0)
+			{
+				_motor_left.set_run_mode(motor::run_mode_time);
+				_motor_left.set_time_sp(timems);
+				usleep(timems * 1000);
+			}
+			else
+			{
+				_motor_left.set_run_mode(motor::run_mode_forever);
+			}
+			if (_motor_left.regulation_mode() == motor::mode_on)
+			{
+				//avec regulation
+				//TODO verif de -900 à +900
+				_motor_left.set_pulses_per_second_sp(power);
+			}
+			else
+			{
+				//sans regulation
+				//TODO verif de -100 à +100
+				_motor_left.set_duty_cycle_sp(power / 9);
+			}
 
-		_motor_left.start();
+			_motor_left.start();
+		}
 	}
 }
 void AsservDriver::setMotorRightPower(int power, int timems)
 {
-	if ((power < -900))
+	if (connectedRight_)
 	{
-		cout << "ERROR setMotorRightPower exceed -900!" << endl;
-		power = -900;
-	}
-	else if (power > 900)
-	{
-		cout << "ERROR setMotorRightPower exceed +900!" << endl;
-		power = 900;
-	}
-	else
-	{
-		if (timems > 0)
+		if ((power < -900))
 		{
-			_motor_right.set_run_mode(motor::run_mode_time);
-			_motor_right.set_time_sp(timems);
-			usleep(timems*1000);
+			cout << "ERROR setMotorRightPower exceed -900!" << endl;
+			power = -900;
+		}
+		else if (power > 900)
+		{
+			cout << "ERROR setMotorRightPower exceed +900!" << endl;
+			power = 900;
 		}
 		else
 		{
-			_motor_right.set_run_mode(motor::run_mode_forever);
+			if (timems > 0)
+			{
+				_motor_right.set_run_mode(motor::run_mode_time);
+				_motor_right.set_time_sp(timems);
+				usleep(timems * 1000);
+			}
+			else
+			{
+				_motor_right.set_run_mode(motor::run_mode_forever);
+			}
+			if (_motor_right.regulation_mode() == motor::mode_on)
+			{
+				//avec regulation
+				//TODO verif de -900 à +900
+				_motor_right.set_pulses_per_second_sp(power);
+			}
+			else
+			{
+				//sans regulation
+				//TODO verif de -100 à +100
+				_motor_right.set_duty_cycle_sp(power);
+			}
+			_motor_right.start();
 		}
-		if (_motor_right.regulation_mode() == motor::mode_on)
-		{
-			//avec regulation
-			//TODO verif de -900 à +900
-			_motor_right.set_pulses_per_second_sp(power);
-		}
-		else
-		{
-			//sans regulation
-			//TODO verif de -100 à +100
-			_motor_right.set_duty_cycle_sp(power);
-		}
-		_motor_right.start();
 	}
 }
 
@@ -199,24 +209,40 @@ long AsservDriver::getRightExternalEncoder()
 
 long AsservDriver::getLeftInternalEncoder()
 {
-	//+/- 2,147,483,648
-	return _motor_left.position();
+	if (connectedLeft_)
+	{
+		//+/- 2,147,483,648
+		return _motor_left.position();
+	}
+	else
+		return 0;
 
 }
 long AsservDriver::getRightInternalEncoder()
 {
-	return _motor_right.position();
+	if (connectedRight_)
+	{
+		return _motor_right.position();
+	}
+	else
+		return 0;
 }
 
 void AsservDriver::stopMotorLeft()
 {
-	//_motor_left.set_duty_cycle_sp(0);
-	_motor_left.stop();
+	if (connectedLeft_)
+	{
+		setMotorLeftPower(0, 0);
+		_motor_left.stop();
+	}
 }
 void AsservDriver::stopMotorRight()
 {
-	//_motor_right.set_duty_cycle_sp(0);
-	_motor_right.stop();
+	if (connectedRight_)
+	{
+		setMotorRightPower(0, 0);
+		_motor_right.stop();
+	}
 }
 
 void AsservDriver::resetEncoder()
@@ -233,17 +259,32 @@ int AsservDriver::getMotorRightCurrent()
 	return 0;
 }
 
-void AsservDriver::enableHardRegulation(bool enable)
+void AsservDriver::enableLeftHardRegulation(bool enable)
 {
 	if (enable)
 	{
 		_motor_left.set_regulation_mode(motor::mode_on);
-		_motor_right.set_regulation_mode(motor::mode_on);
 	}
 	else
 	{
 		_motor_left.set_regulation_mode(motor::mode_off);
+	}
+}
+
+void AsservDriver::enableRightHardRegulation(bool enable)
+{
+	if (enable)
+	{
+		_motor_right.set_regulation_mode(motor::mode_on);
+	}
+	else
+	{
 		_motor_right.set_regulation_mode(motor::mode_off);
 	}
+}
 
+void AsservDriver::enableHardRegulation(bool enable)
+{
+	enableLeftHardRegulation(enable);
+	enableRightHardRegulation(enable);
 }

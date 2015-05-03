@@ -1,5 +1,5 @@
-#ifndef PMX_BOTSMALLPMX_ROBOTEXTENDED_HPP_
-#define PMX_BOTSMALLPMX_ROBOTEXTENDED_HPP_
+#ifndef PMX_S_ROBOTEXTENDED_HPP_
+#define PMX_S_ROBOTEXTENDED_HPP_
 
 #include "../Common/Robot.hpp"
 #include "SActionsExtended.hpp"
@@ -19,6 +19,15 @@ public:
 	SActionsExtended actions;
 
 	SAsservExtended asserv;
+
+	//on etend le stop avec les actions supplémetaires
+	void stop() //TODO heritage / surcharge ?
+	{
+		this->asserv.emergencyStop();
+
+		this->actions.emergencyStop();
+		this->actions.stop(); //manager
+	}
 };
 
 #endif

@@ -19,10 +19,13 @@ StateIADecisionMaker::execute(Robot&r, void *data)
 	//IAutomateState* result;
 
 	Data* sharedData = (Data*) data;
-	SRobotExtended* robot = (SRobotExtended*) &r;
+	SRobotExtended& robot = dynamic_cast<SRobotExtended&>(r);
 
-
-
+	robot.actions.supportSystem().straighten(900, 1500);
+	//robot->asserv.motors().moveD(550, 900);
+	robot.asserv.moveD(550, 900);
+	robot.asserv.waitMoveDTrajectory();
+		//robot->actions.trackSystem().moveForward(300, 0);
 
 
 	//wait the execution Wait90
@@ -31,15 +34,16 @@ StateIADecisionMaker::execute(Robot&r, void *data)
 		//printf("sharedData->end90s=%d time=%f\n", sharedData->end90s(),
 		//		robot->chrono().getElapsedTimeInSec());
 		logger().info() << "sharedData->end90s=" << sharedData->end90s() << " time="
-				<< robot->chrono().getElapsedTimeInSec() << logs::end;
+				<< robot.chrono().getElapsedTimeInSec() << logs::end;
 		usleep(1000000);
 	}
 
+	//logger().info() << "PMX - End temporary Pause..." << logs::end;
+	//sleep(2);
+
 	//Stop
 	logger().info() << "PMX - Stop All..." << logs::end;
-	robot->actions.stop();
-	robot->asserv.motors().stopMotors();
-	//TODO robot->asserv.stop();
+	robot.stop();
 
 	return NULL;
 }

@@ -26,6 +26,7 @@ void logs::LoggerFactory::initialize()
 	add(logs::Level::INFO, "EncoderTest", "console");
 	add(logs::Level::INFO, "SupportTest", "console");
 	add(logs::Level::INFO, "DetectionTest", "console");
+	add(logs::Level::INFO, "ServoTest", "console");
 
 	add(logs::Level::INFO, "StateWaitForReboot", "console");
 	add(logs::Level::INFO, "StateInitialize", "console");
@@ -48,11 +49,12 @@ void logs::LoggerFactory::initialize()
 	//add(logs::Level::DEBUG, "MotorControl", "console");
 	//add(logs::Level::DEBUG, "ActionManager", "console");
 	//add(logs::Level::DEBUG, "Actions", "console");
+	add(logs::Level::DEBUG, "Asserv", "console");
 
 	//DRIVER
 	add(logs::Level::INFO, "LedDriver.SIMU", "console");
 	add(logs::Level::INFO, "SoundDriver.SIMU", "console");
-
-	add(logs::Level::DEBUG, "MotorDeviceDriver.EV3", "console");
+	add(logs::Level::INFO, "MotorDeviceDriver.EV3", "console");
+	add(logs::Level::INFO, "AsservDriver.EV3", "console");
 
 }

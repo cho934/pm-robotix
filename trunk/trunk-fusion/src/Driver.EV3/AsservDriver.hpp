@@ -21,8 +21,8 @@ private:
 		return instance;
 	}
 
-
-	int connected_;
+	int connectedLeft_;
+	int connectedRight_;
 	large_motor _motor_left;
 	large_motor _motor_right;
 
@@ -61,6 +61,8 @@ public:
 	virtual int getMotorLeftCurrent();
 	virtual int getMotorRightCurrent();
 
+	virtual void enableRightHardRegulation(bool enable);
+	virtual void enableLeftHardRegulation(bool enable);
 	virtual void enableHardRegulation(bool enable);
 
 };

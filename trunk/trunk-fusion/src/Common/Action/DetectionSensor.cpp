@@ -2,6 +2,8 @@
 
 #include <unistd.h>
 
+#include "../../Log/Logger.hpp"
+
 using namespace std;
 
 DetectionSensor::DetectionSensor(Actions & actions) :

@@ -5,13 +5,14 @@
 
 #include "MoveTest.hpp"
 
-#include <unistd.h>
 #include <cstdlib>
 #include <iostream>
 #include <string>
 
-#include "../Bot-SmallPMX/SAsservExtended.hpp"
+#include "../Bot-SmallPMX/SActionsExtended.hpp"
 #include "../Bot-SmallPMX/SRobotExtended.hpp"
+#include "../Common/Action/TrackSystem.hpp"
+#include "../Common/Asserv/Asserv.hpp"
 #include "../Common/Asserv/MotorControl.hpp"
 #include "../Log/Logger.hpp"
 
@@ -23,65 +24,58 @@ void MoveTest::run(int argc, char *argv[])
 
 	int power = 0;
 	int mm = 0;
-	int timems = 1000;
-	std::cout << "argc: " << argc << std::endl;
+
+	ostringstream out;
+
 	if (argc == 1)
 	{
 		power = 300;
 		mm = 100;
-		timems = 5000;
+
 	}
 	else
 	{
+		out << " power(-900/+900):";
 		if (argc > 3)
 		{
 			power = atoi(argv[3]);
-			std::cout << "power: " << atoi(argv[3]) << std::endl;
+			out << atoi(argv[3]);
 		}
 		else
 		{
-			std::cout << "power(-900/+900)? " << std::flush;
+			logger().error() << out.str() << logs::end;
 			std::cin >> power;
+			out << power;
 		}
 
+		out << " - dist(mm):";
 		if (argc > 4)
 		{
 			mm = atoi(argv[4]);
-			std::cout << "dist mm: " << atoi(argv[4]) << std::endl;
+			out << atoi(argv[4]);
 		}
 		else
 		{
-			std::cout << "dist mm? " << std::flush;
+			logger().error() << out.str() << logs::end;
 			std::cin >> mm;
-		}
-
-		if (argc > 5)
-		{
-			timems = atoi(argv[5]);
-			std::cout << "time ms: " << atoi(argv[5]) << std::endl;
-		}
-		else
-		{
-			std::cout << "time ms? " << std::flush;
-			std::cin >> timems;
+			out << mm;
 		}
 	}
+	logger().info() << out.str() << logs::end;
 
-	SRobotExtended &robot = SRobotExtended::instance();
+	SRobotExtended* robot = (SRobotExtended*) &SRobotExtended::instance();
 
 	logger().info() << "moveD " << mm << " mm, power max=" << power << logs::end;
 
-	robot.actions.trackSystem().moveForward(power, 0);
-	//robot.asserv.motors().moveD(50, 800);
-	//robot.asserv.motors().runMotorRight(900,0);
-	//usleep(800000);
-	robot.asserv.motors().moveD(mm, power);
+	//robot->actions.trackSystem().moveForward(power, timems);
 
-	//robot.asserv.motors().turn(mm, power);
+	robot->asserv.moveD(mm, power);
+	robot->asserv.waitMoveDTrajectory();
+
 
 	logger().info() << "Stop" << logs::end;
-	robot.asserv.motors().stopMotors();
-	robot.actions.trackSystem().stopMotor();
+	robot->asserv.motors().stopMotors();
+	robot->actions.trackSystem().stopMotor();
 
 	logger().info() << this->name() << " - Happy End." << logs::end;
 }
