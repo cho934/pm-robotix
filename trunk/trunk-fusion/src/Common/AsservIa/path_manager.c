@@ -119,7 +119,7 @@ void path_InterruptTrajectory() {
 void path_CollisionOnTrajectory() {
 	if (waitingSemaphore) {
 		motion_FreeMotion();
-		usleep(500000);
+		usleep(1000000);
 		path_TriggerWaypoint(TRAJ_COLLISION);
 	}
 }

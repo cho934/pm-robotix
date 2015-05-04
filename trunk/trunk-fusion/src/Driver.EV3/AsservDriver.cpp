@@ -231,19 +231,16 @@ long AsservDriver::getRightInternalEncoder()
 
 void AsservDriver::stopMotorLeft()
 {
-	if (connectedLeft_)
-	{
-		setMotorLeftPower(0, 0);
-		_motor_left.stop();
-	}
+
+	setMotorLeftPower(0, 0);
+	_motor_left.stop();
+
 }
 void AsservDriver::stopMotorRight()
 {
-	if (connectedRight_)
-	{
-		setMotorRightPower(0, 0);
-		_motor_right.stop();
-	}
+
+	setMotorRightPower(0, 0);
+	_motor_right.stop();
 }
 
 void AsservDriver::resetEncoder()

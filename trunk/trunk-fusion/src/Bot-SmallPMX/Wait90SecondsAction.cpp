@@ -23,9 +23,7 @@ void Wait90SecondsAction::execute()
 	this->logger().debug() << "start" << logs::end;
 
 	Data* sharedData = (Data*) data_;
-	//SRobotExtended* robot = (SRobotExtended*) robot_;
 	SRobotExtended& robot = dynamic_cast<SRobotExtended&>(robot_);
-	//this->logger().info() << "Real execution start time: " << robot->chrono().getElapsedTimeInSec() << logs::end;
 
 	//démarrage du chrono
 	logger().info() << "Start Chronometer" << logs::end;
@@ -42,18 +40,16 @@ void Wait90SecondsAction::execute()
 			robot.stop();
 
 			sharedData->end90s(true);
+			//usleep(200000);
 			exit(0);
 		}
 		//test adversaire
-		/*
 		if (robot.actions().detectionSensor().isAdversaryDetected())
 		{
-			robot.asserv().emergencyStop();
+			//robot.asserv().emergencyStop();
+			this->logger().error() << "AdversaryDetected !" << logs::end;
 			robot.asserv().setAdversaryDetected(1);
-		}*/
-		robot.asserv().setAdversaryDetected(robot.actions().detectionSensor().isAdversaryDetected());
-
-		//set asserv().setadversaryDeteced(true);
+		}
 
 		usleep(300000);
 		//this->logger().info() << "chrono " << robot->chrono().getElapsedTimeInSec() << logs::end;

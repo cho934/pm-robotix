@@ -30,7 +30,7 @@ void Actions::stopManagers()
 	while (actionManager_.count() > 0) //TODO mettre un timeout !!
 	{
 		logger().debug() << actionManager_.count() << logs::end;
-		usleep(300000);
+		usleep(50000);
 	}
 	actionManager_.stop();
 

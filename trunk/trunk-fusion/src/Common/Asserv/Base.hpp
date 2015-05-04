@@ -34,6 +34,8 @@ public:
 
 	void begin(int lResolution, int rResolution, float dist, int startAsserv, int useExtEncoders);
 
+	void stop();
+
 	void printPosition();
 
 	TRAJ_STATE launchAndEndAfterCmd(RobotCommand* cmd);

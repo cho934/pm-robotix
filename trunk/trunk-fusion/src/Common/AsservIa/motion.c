@@ -58,6 +58,8 @@ static RobotCommand motionCommand;
 
 long long timeOffset;
 
+int stop_motion_ITTask = 0;
+
 //motion control task
 void *motion_ITTask(void *p_arg);
 
@@ -90,7 +92,7 @@ void motion_configureRightPID(float p, float i, float d)
 
 void motion_Init()
 {
-	printf("motion_Init===========\n");
+	//printf("motion_Init===========\n");
 	int i, j;
 	RobotMotionState = DISABLE_PID;
 	periodNb = 0;
@@ -161,7 +163,7 @@ void motion_FreeMotion()
 	RobotMotionState = FREE_MOTION;
 	setPWM(0, 0);
 	setPWM(0, 0);
-	printf("============> motion_FreeMotion setPWM(0, 0);\n");
+	//printf("============> motion_FreeMotion setPWM(0, 0);\n");
 }
 
 void motion_AssistedHandling()
@@ -274,8 +276,9 @@ void *motion_ITTask(void *p_arg)
 #ifdef DEBUG_MOTION
 	printf("motion.c : motion_ITTask start\n");
 #endif
-	int stop = 0;
-	while (!stop)
+
+
+	while (!stop_motion_ITTask)
 	{
 
 		//sem_wait(&semMotionIT);
@@ -508,6 +511,7 @@ void motion_InitTimer(int frequency)
 
 void motion_StopTimer()
 {
+	stop_motion_ITTask = 1;
 	setPWM(0, 0);
 	setPWM(0, 0);
 	//TODO kill timer

@@ -159,7 +159,11 @@ void Asserv::start()
 
 void Asserv::stop()
 {
-	//TODO ramener motor et encoder sur asserv
+	this->base().stop();
+	motors_.runMotorLeft(0, 0);
+	motors_.runMotorRight(0, 0);
+
+
 	logger().debug("Asserv is stopped");
 }
 
