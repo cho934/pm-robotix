@@ -73,6 +73,7 @@ void robot_init()
 	rightCounter = 0;
 	leftCounter = 0;
 
+
 	/*
 	 //TODO reset external encoder
 	 pmx::Robot &robot = pmx::Robot::instance();
@@ -92,17 +93,17 @@ void robot_init()
 	//TODO config à déporter
 	defaultSamplingFreq = 100; // en Hz (cad combien de fois par seconde)
 	valueSample = 0.01f; //(1f/DEFAULT_SAMPLING_FREQ)
-	vtopsPerTicks = 1000;
-	maxPwmValue = 128;
-	defaultVmax = 1.0f;
-	defaultAcc = 1.0f;
-	defaultDec = 1.0f;
+	vtopsPerTicks = 2048;
+	maxPwmValue = 900; //128 default
+	defaultVmax = 0.8f;
+	defaultAcc = 0.15f;
+	defaultDec = 0.2f;
 
 	//printf("Init time %ld\n", currentTimeInMillis());
 }
 
 
-void robot_setMotorRightSpeed(int power) //-100 à 100
+void robot_setMotorRightSpeed(int power) //-900 à 900
 {
 	SRobotExtended &robot = SRobotExtended::instance();
 	robot.asserv().motors().runMotorRight(power, 0);
@@ -149,17 +150,22 @@ void robot_resetEncoders()
 {
 	SRobotExtended &robot = SRobotExtended::instance();
 	robot.asserv().encoders().reset();
+
 }
 
 void robot_initPID()
 {
 	if (!useExternalEncoders) //INTERNAL ENCODERS
 	{
-		motion_configureAlphaPID(0.0015f, 0.0008f, 0.000002f); //0.0008 0.00002 0.00003
-		motion_configureDeltaPID(0.0015f, 0.0008f, 0.000002f); //0.0005 0.000008 0.000009 //0.0015 0.0008 0.000002
+		//motion_configureAlphaPID(0.0015f, 0.0008f, 0.000002f); //0.0008 0.00002 0.00003
+		//motion_configureDeltaPID(0.0015f, 0.0008f, 0.000002f); //0.0005 0.000008 0.000009 //0.0015 0.0008 0.000002
+		motion_configureAlphaPID(0.010f, 0.0005f, 0.000005f); //0.0008 0.00002 0.00003
+		motion_configureDeltaPID(0.007f, 0.002f, 0.00000f); //0.0005 0.000008 0.000009 //0.0015 0.0008 0.000002
 
 		motion_configureLeftPID(0.0006, 0.0, 0.0);
 		motion_configureRightPID(0.0006, 0.0, 0.0);
+
+
 	}
 	else //EXTERNAL ENCODERS
 	{

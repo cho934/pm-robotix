@@ -129,11 +129,11 @@ TRAJ_STATE cc_rotateAbs(float degrees)
 		degrees = -degrees;
 	}
 	//reduction de 0 à 360
-	if (degrees > 360)
+	if (degrees > 360.0)
 	{
 		degrees = ((int) (degrees * 1000.0f) % 360000) / 1000.0f;
 	}
-	if (degrees < -360)
+	if (degrees < -360.0)
 	{
 		int d = (int) -(degrees * 1000.0f);
 		d = d % 360000;
@@ -141,10 +141,10 @@ TRAJ_STATE cc_rotateAbs(float degrees)
 	}
 
 	// OPTIMISER la rotation -PI < a < PI
-	if (degrees >= 180)
-		degrees -= 360;
-	if (degrees < -180)
-		degrees += 360;
+	if (degrees >= 180.0)
+		degrees -= 360.0;
+	if (degrees < -180.0)
+		degrees += 360.0;
 
 	RobotCommand* cmd = (RobotCommand*) malloc(sizeof(RobotCommand));
 	float rad = (degrees * M_PI) / 180.0f;

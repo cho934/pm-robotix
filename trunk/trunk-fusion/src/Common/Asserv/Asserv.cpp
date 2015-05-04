@@ -12,13 +12,10 @@ using namespace std;
  * \brief Constructor.
  */
 Asserv::Asserv() :
-		encoders_(*this), motors_(*this), distTicks_(0)
-				, entraxe_(145.0) //mm
+		encoders_(*this), motors_(*this), distTicks_(0), entraxe_(0.145) //m
 				, diam_(31.7) //mm
 {
-	//diam_ = 31.7; //en mm
-	//entraxe_ = 145.0; //en mm
-	adversaryDetected_= false;
+	adversaryDetected_ = false;
 }
 
 void Asserv::moveDTime(int power, int timems)
@@ -32,7 +29,8 @@ void Asserv::moveD(long destTick, long restTick, int power)
 {
 	distTicks_ = destTick;
 
-	logger().debug() << "GO : restTick=" << restTick << logs::end;
+	logger().debug() << "moveD GO : restTick=" << restTick << "  destTick=" << destTick
+			<< logs::end;
 	motors_.setMotorLeftPosition(restTick, power);
 	motors_.setMotorRightPosition(restTick, power);
 }
@@ -61,10 +59,10 @@ long Asserv::moveDWaitTrajectory()
 		//test if adversary then pause
 		if (adversaryDetected_ == 1)
 		{
-			logger().debug() << "emergencyStop m ="  << m << " distTicks_=" << distTicks_ << "l=" << l<< "r=" << r << logs::end;
+			logger().debug() << "moveDWaitTrajectory emergencyStop m =" << m << " distTicks_="
+					<< distTicks_ << "l=" << l << "r=" << r << logs::end;
 			this->emergencyStop();
-			sleep(2);
-			encoders_.reset();
+			sleep(1);
 			return (distTicks_ - m);
 		}
 
@@ -142,16 +140,26 @@ void Asserv::emergencyStop()
 	motors_.stopMotors();
 }
 
-/*
- void Asserv::start()
- {
+void Asserv::start()
+{
+	//config and start asserv
+	int lRes = 0;
+	int rRes = 0;
+	float distRes = 0.0f;
 
- logger().debug("Asserv is started");
- }
+	lRes = 3614; //nombre de tick par metre
+	rRes = lRes;
+	distRes = entraxe_; //entraxe en metre
 
- void Asserv::stop()
- {
- //TODO ramener motor et encoder sur asserv
- logger().debug("Asserv is stopped");
- }
- */
+	this->base().begin(lRes, rRes, distRes, 1, 0);
+
+	logger().debug("Asserv is started");
+
+}
+
+void Asserv::stop()
+{
+	//TODO ramener motor et encoder sur asserv
+	logger().debug("Asserv is stopped");
+}
+

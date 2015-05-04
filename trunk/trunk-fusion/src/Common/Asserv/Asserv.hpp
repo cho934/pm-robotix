@@ -2,6 +2,7 @@
 #define ASSERV_HPP_
 
 #include "../../Log/LoggerFactory.hpp"
+#include "Base.hpp"
 #include "EncoderControl.hpp"
 #include "MotorControl.hpp"
 
@@ -28,11 +29,16 @@ private:
 	 */
 	MotorControl motors_;
 
+	/*!
+	 * \brief Base roulante du robot.
+	 */
+	Base base_;
+
 	long distTicks_;
 
 	bool adversaryDetected_;
 
-	float entraxe_; //en mm
+	float entraxe_; //en metre
 
 public:
 	float diam_;  //en mm
@@ -66,9 +72,15 @@ public:
 		return motors_;
 	}
 
+	inline Base & base()
+	{
+		return base_;
+	}
+
 	inline void setAdversaryDetected(bool b)
 	{
 		adversaryDetected_ = b;
+		this->base().collisionOccured(1);
 	}
 
 	void moveDTime(int power, int timems);
@@ -89,11 +101,11 @@ public:
 	 *
 	 * Cette méthode lance le thread gérant le AsservManager.
 	 */
-	//void start();
+	void start();
 	/*!
 	 * \brief Arrete le robot et libère les ressources associés.
 	 */
-	//void stop();
+	void stop();
 };
 
 #endif
