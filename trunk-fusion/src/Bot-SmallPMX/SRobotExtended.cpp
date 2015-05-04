@@ -19,6 +19,7 @@ SRobotExtended::SRobotExtended()
 //on etend le stop avec les actions supplémetaires
 void SRobotExtended::stop() //TODO heritage / surcharge ?
 {
+	this->asserv().stop();
 	this->asserv().emergencyStop();
 
 	this->actions().emergencyStop();

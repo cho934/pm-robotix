@@ -65,6 +65,12 @@ void Base::begin(int lResolution, int rResolution, float dist, int startAsserv, 
 
 }
 
+void Base::stop()
+{
+	motion_StopTimer();
+}
+
+
 void Base::printPosition()
 {
 	printf("POS: (%f mm,%f mm) %f deg\n", cc_getX(), cc_getY(), cc_getThetaInDegree());

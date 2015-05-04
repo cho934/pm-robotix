@@ -6,11 +6,18 @@
 #include "../Common/State/StateIADecisionMaker.hpp"
 
 #include <unistd.h>
-#include <cstdio>
 
-#include "../Bot-SmallPMX/SRobotExtended.hpp"
+#include "../Common/Asserv/Asserv.hpp"
+#include "../Common/Asserv/Base.hpp"
+#include "../Common/AsservIa/ccbase.h"
+#include "../Common/AsservIa/path_manager.h"
+#include "../Common/Robot.hpp"
 #include "../Common/State/Data.hpp"
+#include "../Common/Utils/Chronometer.hpp"
 #include "../Log/Logger.hpp"
+#include "SRobotExtended.hpp"
+
+
 
 IAutomateState*
 StateIADecisionMaker::execute(Robot&r, void *data)
@@ -21,9 +28,24 @@ StateIADecisionMaker::execute(Robot&r, void *data)
 	Data* sharedData = (Data*) data;
 	SRobotExtended& robot = dynamic_cast<SRobotExtended&>(r);
 
+	robot.asserv().start(); //config + thread
 
-	robot.moveForward(600, 600);
+	cc_setPosition(0.0, 0.0, 0.0, 0);
+	robot.asserv().base().printPosition();
 
+
+	int mm = 300;
+	cc_setIgnoreFrontCollision(false);
+	TRAJ_STATE ret;
+	do
+	{
+		ret = robot.asserv().base().movexyteta(0, mm, 0, 90);
+		logger().info() << "r=" << ret << logs::end;
+		if (ret != TRAJ_OK)
+			sleep(2);
+	}while (ret != TRAJ_OK);
+
+	robot.asserv().base().printPosition();
 
 	//wait the execution Wait90
 	while (!sharedData->end90s()) //&& robot.chronometerRobot().getElapsedTimeInSec() < 35)

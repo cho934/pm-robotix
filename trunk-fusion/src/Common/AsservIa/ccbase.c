@@ -232,12 +232,12 @@ void cc_collisionOccured(int front)
 			ignoreFrontCollision, ignoreRearCollision);
 	if (front && !ignoreFrontCollision)
 	{
-		printf("===>cc_collisionOccured on front ignoreFrontCollision=%d\n ", ignoreFrontCollision);
+		//printf("===>cc_collisionOccured on front ignoreFrontCollision=%d\n ", ignoreFrontCollision);
 		path_CollisionOnTrajectory();
 	}
 	else if (!front && !ignoreRearCollision)
 	{
-		printf("===>cc_collisionOccured on rear ignoreFrontCollision=%d\n ", ignoreRearCollision);
+		//printf("===>cc_collisionOccured on rear ignoreFrontCollision=%d\n ", ignoreRearCollision);
 		path_CollisionRearOnTrajectory();
 	}
 }

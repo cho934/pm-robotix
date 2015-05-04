@@ -73,7 +73,6 @@ void robot_init()
 	rightCounter = 0;
 	leftCounter = 0;
 
-
 	/*
 	 //TODO reset external encoder
 	 pmx::Robot &robot = pmx::Robot::instance();
@@ -95,13 +94,12 @@ void robot_init()
 	valueSample = 0.01f; //(1f/DEFAULT_SAMPLING_FREQ)
 	vtopsPerTicks = 2048;
 	maxPwmValue = 900; //128 default
-	defaultVmax = 0.8f;
-	defaultAcc = 0.15f;
+	defaultVmax = 0.9f;
+	defaultAcc = 0.3f;
 	defaultDec = 0.2f;
 
 	//printf("Init time %ld\n", currentTimeInMillis());
 }
-
 
 void robot_setMotorRightSpeed(int power) //-900 à 900
 {
@@ -155,29 +153,14 @@ void robot_resetEncoders()
 
 void robot_initPID()
 {
-	if (!useExternalEncoders) //INTERNAL ENCODERS
-	{
-		//motion_configureAlphaPID(0.0015f, 0.0008f, 0.000002f); //0.0008 0.00002 0.00003
-		//motion_configureDeltaPID(0.0015f, 0.0008f, 0.000002f); //0.0005 0.000008 0.000009 //0.0015 0.0008 0.000002
-		motion_configureAlphaPID(0.010f, 0.0005f, 0.000005f); //0.0008 0.00002 0.00003
-		motion_configureDeltaPID(0.007f, 0.002f, 0.00000f); //0.0005 0.000008 0.000009 //0.0015 0.0008 0.000002
+	//internal encoder
+	//motion_configureAlphaPID(0.0015f, 0.0008f, 0.000002f); //0.0008 0.00002 0.00003
+	//motion_configureDeltaPID(0.0015f, 0.0008f, 0.000002f); //0.0005 0.000008 0.000009 //0.0015 0.0008 0.000002
+	motion_configureAlphaPID(0.010, 0.0005, 0.000005); //0.0008 0.00002 0.00003
+	motion_configureDeltaPID(0.006, 0.0, 0.0); //0.0005 0.000008 0.000009 //0.0015 0.0008 0.000002
 
-		motion_configureLeftPID(0.0006, 0.0, 0.0);
-		motion_configureRightPID(0.0006, 0.0, 0.0);
-
-
-	}
-	else //EXTERNAL ENCODERS
-	{
-		motion_configureAlphaPID(0.000065f, 0.00001f, 0.00000002f); //(0.000065f, 0.000001f, 0.00000001f);
-		motion_configureDeltaPID(0.00006f, 0.00002f, 0.0000002f);
-
-		//motion_configureLeftPID(0.0004, 0.0004, 0.0000002);
-		//motion_configureRightPID(0.0004, 0.0004, 0.0000002);
-
-		motion_configureLeftPID(0.00003, 0.00004, 0.0000002);
-		motion_configureRightPID(0.00003, 0.00004, 0.0000002);
-	}
+	motion_configureLeftPID(0.0006, 0.0, 0.0);
+	motion_configureRightPID(0.0006, 0.0, 0.0);
 
 }
 void robot_initPID_AD(float Ap, float Ai, float Ad, float Dp, float Di, float Dd)
@@ -191,10 +174,6 @@ void robot_initPID_LR(float Lp, float Li, float Ld, float Rp, float Ri, float Rd
 	motion_configureLeftPID(Lp, Li, Ld);
 	motion_configureRightPID(Rp, Ri, Rd);
 }
-
-
-
-
 
 int robot_isEmergencyPressed()
 {

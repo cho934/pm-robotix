@@ -75,22 +75,43 @@ void MoveTest::run(int argc, char *argv[])
 
 	logger().info() << "moveD " << mm << " mm, power max=" << power << logs::end;
 
-	//robot->actions.trackSystem().moveForward(power, timems);
-	//robot.moveForward(mm, power);
-
 	robot.asserv().start(); //config + thread
 
 	cc_setPosition(0.0, 0.0, 0.0, 0);
 	robot.asserv().base().printPosition();
-	//robot.asserv().base().move(mm);
 
-	robot.asserv().base().movexyteta(0, mm, 0, 90);
+	cc_setIgnoreFrontCollision(false);
+	TRAJ_STATE r;
+	do
+	{
+		r = robot.asserv().base().movexyteta(0, mm, 0, 0);
+		logger().info() << "r=" << r << logs::end;
+		if (r == TRAJ_COLLISION)
+			sleep(2);
+	} while (r != TRAJ_OK);
+
 	robot.asserv().base().printPosition();
-	robot.asserv().base().movexyteta(0, mm, 100, 0);
-	robot.asserv().base().printPosition();
-	robot.asserv().base().movexyteta(0, mm+30, 100, 0);
+/*
+	do
+	{
+		r = robot.asserv().base().movexyteta(0, mm, 100, 0);
+		logger().info() << "r=" << r << logs::end;
+		if (r == TRAJ_COLLISION)
+			sleep(2);
+	} while (r != TRAJ_OK);
+
 	robot.asserv().base().printPosition();
 
+	do
+	{
+		r = robot.asserv().base().movexyteta(0, mm + 30, 100, 0);
+		logger().info() << "r=" << r << logs::end;
+		if (r == TRAJ_COLLISION)
+			sleep(2);
+	} while (r != TRAJ_OK);
+
+	robot.asserv().base().printPosition();
+*/
 	logger().info() << "Stop ..." << logs::end;
 	robot.stop();
 
