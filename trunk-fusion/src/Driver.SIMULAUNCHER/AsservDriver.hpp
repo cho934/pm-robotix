@@ -23,8 +23,8 @@ protected:
 
 public:
 
-	virtual void setMotorLeftPosition(int ticks, int power);
-	virtual void setMotorRightPosition(int ticks, int power);
+	virtual void setMotorLeftPosition(long ticks, int power);
+	virtual void setMotorRightPosition(long ticks, int power);
 
 	virtual void setMotorLeftPower(int power, int time);
 	virtual void setMotorRightPower(int power, int time);

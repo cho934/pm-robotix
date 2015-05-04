@@ -17,7 +17,7 @@
  */
 class Base
 {
-private:
+public:
 
 
 	/*!

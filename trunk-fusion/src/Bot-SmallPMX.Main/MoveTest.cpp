@@ -11,6 +11,9 @@
 #include <string>
 
 #include "../Bot-SmallPMX/SRobotExtended.hpp"
+#include "../Common/Asserv/Asserv.hpp"
+#include "../Common/Asserv/Base.hpp"
+#include "../Common/AsservIa/ccbase.h"
 #include "../Common/State/Data.hpp"
 #include "../Common/State/Wait90SecondsAction.hpp"
 #include "../Log/Logger.hpp"
@@ -73,13 +76,20 @@ void MoveTest::run(int argc, char *argv[])
 	logger().info() << "moveD " << mm << " mm, power max=" << power << logs::end;
 
 	//robot->actions.trackSystem().moveForward(power, timems);
+	//robot.moveForward(mm, power);
 
+	robot.asserv().start(); //config + thread
 
-	robot.moveForward(mm, power);
-	robot.moveForward(mm, power);
-	robot.moveForward(mm, power);
-	robot.moveForward(mm, power);
-	robot.moveForward(mm, power);
+	cc_setPosition(0.0, 0.0, 0.0, 0);
+	robot.asserv().base().printPosition();
+	//robot.asserv().base().move(mm);
+
+	robot.asserv().base().movexyteta(0, mm, 0, 90);
+	robot.asserv().base().printPosition();
+	robot.asserv().base().movexyteta(0, mm, 100, 0);
+	robot.asserv().base().printPosition();
+	robot.asserv().base().movexyteta(0, mm+30, 100, 0);
+	robot.asserv().base().printPosition();
 
 	logger().info() << "Stop ..." << logs::end;
 	robot.stop();

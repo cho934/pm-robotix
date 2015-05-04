@@ -59,18 +59,18 @@ AsservDriver::AsservDriver() :
 	if (connectedRight_) //if both motors are connected, then initialize each motor.
 	{
 		_motor_right.reset();
-
+		_motor_right.set_position_mode(motor::position_mode_absolute);
 		_motor_right.set_stop_mode(motor::stop_mode_brake);
 
-		enableHardRegulation(true);
+		enableRightHardRegulation(true);
 	}
 	if (connectedLeft_) //if both motors are connected, then initialize each motor.
 	{
 		_motor_left.reset();
-
+		_motor_left.set_position_mode(motor::position_mode_absolute);
 		_motor_left.set_stop_mode(motor::stop_mode_brake);
 
-		enableHardRegulation(true);
+		enableLeftHardRegulation(true);
 	}
 
 }
