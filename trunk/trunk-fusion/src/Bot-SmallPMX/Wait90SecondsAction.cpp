@@ -47,7 +47,7 @@ void Wait90SecondsAction::execute()
 		if (robot.actions().detectionSensor().isAdversaryDetected())
 		{
 			//robot.asserv().emergencyStop();
-			this->logger().error() << "AdversaryDetected !" << logs::end;
+			//this->logger().error() << "AdversaryDetected !" << logs::end;
 			robot.asserv().setAdversaryDetected(1);
 		}
 

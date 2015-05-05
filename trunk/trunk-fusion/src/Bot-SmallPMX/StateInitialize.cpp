@@ -83,11 +83,13 @@ StateInitialize::execute(Robot& r, void *data)
 			{
 				robot.actions().ledBar().setOff(1);
 				robot.actions().ledBar().set(0, LED_ORANGE);
+
 			}
 			if (robot.getMyColor() == PMXGREEN)
 			{
 				robot.actions().ledBar().setOff(0);
 				robot.actions().ledBar().set(1, LED_GREEN);
+
 			}
 
 			usleep(800);
@@ -115,9 +117,16 @@ StateInitialize::execute(Robot& r, void *data)
 	}
 
 	if (robot.getMyColor() == PMXGREEN)
+	{
+		robot.asserv().base().setMatchColor(1);
 		logger().info() << "color is : GREEN" << logs::end;
+	}
+
 	if (robot.getMyColor() == PMXYELLOW)
+	{
+		robot.asserv().base().setMatchColor(0);
 		logger().info() << "color is : YELLOW" << logs::end;
+	}
 	if (robot.getMyColor() == PMXNOCOLOR)
 	{
 		logger().error() << "color is : NOCOLOR" << logs::end;
