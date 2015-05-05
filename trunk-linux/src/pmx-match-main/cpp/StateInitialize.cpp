@@ -13,11 +13,11 @@
 #include "../../common/cpp/Robot.hpp"
 #include "../../common/cpp/RobotColor.hpp"
 #include "Data.hpp"
-//#include "StateIADecisionMaker.hpp"
+
 
 pmx::IAutomateState*
 pmx::StateInitialize::execute(Robot& robot, void *data) {
-	this->logger().info() << "start" << utils::end;
+	this->logger().info() << "start 02" << utils::end;
 	pmx::Data* sharedData = (pmx::Data*) data;
 	//bool error = false;
 
@@ -52,9 +52,9 @@ pmx::StateInitialize::execute(Robot& robot, void *data) {
 				}
 				if (buttons & BUTTON_RIGHT) {
 					robot.lcdBoard().setCursor(0, 1);
-					robot.lcdBoard().print("COLOR RED     ");
-					robot.myColorIs(pmx::PMXRED);
-					logger().info() << "=> RED..." << utils::end;
+					robot.lcdBoard().print("COLOR GREEN  ");
+					robot.myColorIs(pmx::PMXGREEN);
+					logger().info() << "=> GREEN..." << utils::end;
 				}
 				if (buttons & BUTTON_SELECT) {
 					logger().info() << "=> SELECT..." << utils::end;
@@ -64,170 +64,30 @@ pmx::StateInitialize::execute(Robot& robot, void *data) {
 					//robot.lcdBoard().setBacklight(LCD_OFF);
 				}
 				if (buttons & BUTTON_DOWN) {
-					logger().info() << "Initialize P4 P6..." << utils::end;
 
-					robot.servoDxlP6front().enable();
-					robot.servoDxlP6front().turnMin();
-					robot.servoDxlP6front().turnMin();
+					logger().info() << "DOWN Initialize mechanical..." << utils::end;
 
-					robot.servoDxlP4().enable();
-					robot.servoDxlP4().turnMin();
-					robot.servoDxlP4().turnMin();
-
-					robot.servoDxlP14().enable();
-					robot.servoDxlP14().turnMin();
-					robot.servoDxlP14().turnMin();
-
-					robot.servoDxlP6front().turnMax();
-					robot.servoDxlP6front().turnMax();
-					robot.servoDxlP6front().freeMotion();
-
-					logger().info() << "Initialize mechanical..." << utils::end;
-					robot.servoDxlP4().turnMax();
-					robot.servoDxlP4().turnMax();
-					robot.servoDxlP4().freeMotion();
-
-					robot.servoDxlLeft().enable();
-					robot.servoDxlLeft().turnMin();
-					robot.servoDxlLeft().turnMax();
-					robot.servoDxlLeft().turnMin();
-					robot.servoDxlLeft().freeMotion();
-
-					robot.servoDxlRight().enable();
-					robot.servoDxlRight().turnMin();
-					robot.servoDxlRight().turnMax();
-					robot.servoDxlRight().turnMin();
-					robot.servoDxlRight().freeMotion();
-
-					robot.servoDxlBallLaunch().enable();
-					robot.servoDxlBallLaunch().turnMin();
-					robot.servoDxlBallLaunch().turnMax();
-					robot.servoDxlBallLaunch().turnMin();
-					robot.servoDxlBallLaunch().freeMotion();
-
-					robot.servoDxlFiletLaunch().enable();
-					robot.servoDxlFiletLaunch().turnMin();
-					robot.servoDxlFiletLaunch().turnMax();
-					robot.servoDxlFiletLaunch().turnMin();
-					robot.servoDxlFiletLaunch().freeMotion();
 
 					logger().info() << "End Initialize mechanical." << utils::end;
 				}
 				if (buttons & BUTTON_UP) {
-					logger().info() << "Initialize mechanical..." << utils::end;
-					robot.servoDxlLeft().enable();
-					robot.servoDxlLeft().turnMin();
-					robot.servoDxlLeft().freeMotion();
+					logger().info() << "UP Initialize mechanical..." << utils::end;
 
-					robot.servoDxlRight().enable();
-					robot.servoDxlRight().turnMin();
-					robot.servoDxlRight().freeMotion();
-
-					robot.servoDxlBallLaunch().enable();
-					robot.servoDxlBallLaunch().turnMin();
-					robot.servoDxlBallLaunch().freeMotion();
-
-					robot.servoDxlFiletLaunch().enable();
-					robot.servoDxlFiletLaunch().turnMin();
-					robot.servoDxlFiletLaunch().freeMotion();
-
-					robot.servoDxlP14().enable();
-					robot.servoDxlP14().turnMin();
-					robot.servoDxlP14().turnMin();
-
-					robot.servoDxlP6front().enable();
-					robot.servoDxlP6front().turnMin();
-					robot.servoDxlP6front().freeMotion();
-
-					robot.servoDxlP4().enable();
-					robot.servoDxlP4().turnMin();
-					robot.servoDxlP4().freeMotion();
 
 					logger().info() << "End Initialize mechanical." << utils::end;
 				}
 			}
+			usleep(300000);
 		}
-		/*
-		 //wait
-		 uint8_t buttons = robot.lcdBoard().readButtons();
-		 while (true ) {
 
-		 if (buttons) {
-		 if (buttons & BUTTON_LEFT) {
-		 robot.lcdBoard().setCursor(0, 1);
-		 robot.lcdBoard().print("COLOR YELLOW ");
-		 robot.myColorIs(pmx::PMXYELLOW);
-		 logger().info() << "=> YELLOW..." << utils::end;
-		 } else if (buttons & BUTTON_RIGHT) {
-		 robot.lcdBoard().setCursor(0, 1);
-		 robot.lcdBoard().print("COLOR RED     ");
-		 robot.myColorIs(pmx::PMXRED);
-		 logger().info() << "=> RED..." << utils::end;
-		 } else if (buttons & BUTTON_SELECT) {
-		 //robot.lcdBoard().clear();
-		 //robot.lcdBoard().setCursor(0, 0);
-		 //robot.lcdBoard().print("NEXT ");
-		 //robot.lcdBoard().setBacklight(LCD_OFF);
-		 if (robot.myColor() != pmx::PMXNOCOLOR)
-		 break;
-		 } else if (buttons & BUTTON_DOWN) {
-		 logger().info() << "Initialize mechanical..." << utils::end;
-		 robot.servoDxlLeft().enable();
-		 robot.servoDxlLeft().turnMin();
-		 robot.servoDxlLeft().turnMax();
-		 robot.servoDxlLeft().turnMin();
-		 robot.servoDxlLeft().freeMotion();
-
-		 robot.servoDxlRight().enable();
-		 robot.servoDxlRight().turnMin();
-		 robot.servoDxlRight().turnMax();
-		 robot.servoDxlRight().turnMin();
-		 robot.servoDxlRight().freeMotion();
-
-		 robot.servoDxlBallLaunch().enable();
-		 robot.servoDxlBallLaunch().turnMin();
-		 robot.servoDxlBallLaunch().turnMax();
-		 robot.servoDxlBallLaunch().turnMin();
-		 robot.servoDxlBallLaunch().freeMotion();
-
-		 robot.servoDxlFiletLaunch().enable();
-		 robot.servoDxlFiletLaunch().turnMin();
-		 robot.servoDxlFiletLaunch().turnMax();
-		 robot.servoDxlFiletLaunch().turnMin();
-		 robot.servoDxlFiletLaunch().freeMotion();
-
-		 logger().info() << "End Initialize mechanical." << utils::end;
-		 } else if (buttons & BUTTON_UP) {
-		 logger().info() << "Initialize mechanical..." << utils::end;
-		 robot.servoDxlLeft().enable();
-		 robot.servoDxlLeft().turnMin();
-		 robot.servoDxlLeft().freeMotion();
-
-		 robot.servoDxlRight().enable();
-		 robot.servoDxlRight().turnMin();
-		 robot.servoDxlRight().freeMotion();
-
-		 robot.servoDxlBallLaunch().enable();
-		 robot.servoDxlBallLaunch().turnMin();
-		 robot.servoDxlBallLaunch().freeMotion();
-
-		 robot.servoDxlFiletLaunch().enable();
-		 robot.servoDxlFiletLaunch().turnMin();
-		 robot.servoDxlFiletLaunch().freeMotion();
-
-		 logger().info() << "End Initialize mechanical." << utils::end;
-		 }
-		 }
-		 buttons = robot.lcdBoard().readButtons();
-		 }*/
 
 		robot.ledBar().startReset();
 		robot.ledBar().stop(true);
 		logger().debug() << "End Initialize color." << utils::end;
 	}
 
-	if (robot.myColor() == pmx::PMXRED)
-		logger().info() << "color: RED" << utils::end;
+	if (robot.myColor() == pmx::PMXGREEN)
+		logger().info() << "color: GREEN" << utils::end;
 	if (robot.myColor() == pmx::PMXYELLOW)
 		logger().info() << "color: YELLOW" << utils::end;
 	if (robot.myColor() == pmx::PMXNOCOLOR) {

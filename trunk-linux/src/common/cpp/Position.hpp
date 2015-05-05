@@ -105,14 +105,14 @@ namespace pmx
 
         inline double y() const
         {
-                return y_; //color RED
+                return y_; //color GREEN
         }
         inline double y_abs() const
         {
             //abs!!
             if(y_>0)
             {
-                return y_; //color RED
+                return y_; //color GREEN
             }else
             {
                 return -1.0*y_; //color BLUE
@@ -120,7 +120,7 @@ namespace pmx
         }
         inline void y(double value, pmx::RobotColor color)
         {
-            if(color == pmx::PMXRED)
+            if(color == pmx::PMXGREEN)
             {
                 this->y_ = value;
             }else
@@ -136,7 +136,7 @@ namespace pmx
 
         inline void angle(double value, pmx::RobotColor color)
         {
-            if(color == pmx::PMXRED)
+            if(color == pmx::PMXGREEN)
             {
                 this->angle_ = value;
             }else

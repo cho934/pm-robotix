@@ -125,45 +125,6 @@ void robottest::MoveXYTest::run(int argc, char *argv[])
 		robot.base().movexyteta(back[j], targetX[j], targetY[j], angle[j]);
 		robot.base().printPosition();
 
-		/*
-		 bool opponentDetected = false;
-
-		 while (robot.base().arrivedDestination() == false)
-		 {
-		 opponentDetected = robot.base().checkOpponent();
-		 if (!opponentDetected)
-		 {
-		 if (angle[y] > 180.0)
-		 {
-		 //opponentDetected = robot.base().movexy(targetX[y], targetY[y], way, detect);
-		 }
-		 else
-		 {
-		 opponentDetected = robot.base().movexyTeta(targetX[y], targetY[y], way, angle[y] * M_PI / 180.0,
-		 detect);
-		 }
-
-		 if (opponentDetected == true)
-		 {
-		 robot.base().stop();
-		 logger().info() << " !! opponentDetected time=" << robot.chronometerRobot().getElapsedTimeInSec()
-		 << utils::end;
-		 }
-		 }
-		 else
-		 {
-		 robot.base().stop();
-		 logger().info() << " sleep" << utils::end;
-		 sleep(1);
-		 }
-		 }
-
-		 if (detect == true)
-		 {
-		 robot.irSensorsGroup().stopTimer();
-		 }
-		 */
-		//sleep(3);
 	}
 
 	if (detect == true)
@@ -177,7 +138,7 @@ void robottest::MoveXYTest::run(int argc, char *argv[])
 	 logger().info() << "Stop Robot assistedHandling" << utils::end;
 	 */
 	robot.stop();
-	sleep(1);
+	//sleep(1);
 	robot.base().printPosition();
 	logger().info() << "End of RobotTest." << utils::end;
 }

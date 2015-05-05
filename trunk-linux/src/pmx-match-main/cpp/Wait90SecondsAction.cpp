@@ -17,54 +17,40 @@
 #include "../../common/cpp/ServoMotorDxlObject.hpp"
 #include "Data.hpp"
 
-pmx::Wait90SecondsAction::Wait90SecondsAction(pmx::Robot* robot, void *data)
-		: robot_(robot), data_(data) {
+pmx::Wait90SecondsAction::Wait90SecondsAction(pmx::Robot* robot, void *data) :
+		robot_(robot), data_(data)
+{
 }
 
-void pmx::Wait90SecondsAction::execute() {
+void pmx::Wait90SecondsAction::execute()
+{
 	this->logger().info() << "start" << utils::end;
 	pmx::Data* sharedData = (pmx::Data*) data_;
 
-	sleep(80);
+	logger().debug() << "Start Chronometer" << utils::end;
+	//démarrage du chrono
+	robot_->chronometerRobot().start();
 
-	int sec1 = robot_->chronometerRobot().getElapsedTimeInSec();
+	sleep(5);
 
-	TRAJ_STATE ts = cc_goToZone("zoneB1");
-	//robot.base().printPosition();
-	cc_rotateTo(-90);
+	/*
+	 this->robot_->ledBar().startAlternate(1000, 50000, 0xF0, 0x0F, false);
 
-	int sec2 = robot_->chronometerRobot().getElapsedTimeInSec();
-	int diff = sec2 - sec1;
+	 usleep(3000000);
 
-	if (diff >0 && diff <10)
-		sleep(10 - diff);
-
-	this->logger().error() << "FUNNY ACTION..." << utils::end;
-
-	//arret de tout les actions
-	//this->robot_->stopDevices();
-
-	//Gonfler le ballon pendant 10s
-	//this->robot_->ledBar().startK2Mil(50000, 10000, false);
-
-	this->robot_->ledBar().startAlternate(1000, 50000, 0xF0, 0x0F, false);
-	robot_->servoDxlFiletLaunch().enable();
-	robot_->servoDxlFiletLaunch().turnMax();
-	robot_->servoDxlFiletLaunch().turnMax();
-	robot_->servoDxlFiletLaunch().turnMax();
-	robot_->servoDxlFiletLaunch().freeMotion();
-	usleep(3000000);
-
-	this->robot_->ledBar().stopAndWait(true);
-	sharedData->end90s(true); //indique que l'action est effectuée au prog princ
+	 this->robot_->ledBar().stopAndWait(true);
+	 */
 
 	//End of PMX
-	this->logger().info() << "Stop of the Robot : END of MATCH 90 !" << utils::end;
-	this->logger().info() << "Real execution time: " << this->robot_->chronometerRobot().getElapsedTimeInSec()
-			<< utils::end;
+	this->logger().info() << "Stop of the Robot : END of MATCH 90 !" << " Real execution time: "
+			<< this->robot_->chronometerRobot().getElapsedTimeInSec() << utils::end;
 
-	//this->robot_->stop();
+	robot_->base().stop(); //TODO robot.base().stop();
+	this->robot_->stop();
+
+	sharedData->end90s(true); //indique que l'action est effectuée au prog princ
 	//printf("Wait 90s EXIT\n");
-	//exit(70);
+	usleep(500000);
+	exit(0);
 
 }

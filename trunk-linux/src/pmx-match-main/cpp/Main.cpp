@@ -78,18 +78,19 @@ int main(int argc, char** argv)
 	else
 	{
 		std::cout << "USE EXTERNAL ENCODER " << std::endl;
+		exit(0); //No external encoder
 		robot.start(1, 1); //start Manager and asserv
 	}
 
 	if (argc > 3)
 	{
 		data->skipSetup(atoi(argv[3]));
-		std::cout << "skip setup: " << atoi(argv[3]) << std::endl;
+		//std::cout << "skip setup: " << atoi(argv[3]) << std::endl;
 	}
 	else
 	{
 		data->skipSetup(0);
-		std::cout << "FULL SETUP" << std::endl;
+		//std::cout << "FULL SETUP" << std::endl;
 	}
 	if (argc > 4)
 	{
@@ -97,21 +98,21 @@ int main(int argc, char** argv)
 		if (color == 0)
 		{
 			robot.myColorIs(pmx::PMXYELLOW);
-			std::cout << " COLOR is YELLOW" << std::endl;
+			//std::cout << " COLOR is YELLOW" << std::endl;
 		}
 		else
 		{
-			robot.myColorIs(pmx::PMXRED);
-			std::cout << " COLOR is RED" << std::endl;
+			robot.myColorIs(pmx::PMXGREEN);
+			//std::cout << " COLOR is GREEN" << std::endl;
 		}
 	}
 	else
 	{
 		robot.myColorIs(pmx::PMXYELLOW);
-		std::cout << " COLOR is YELLOW" << std::endl;
+		//std::cout << " COLOR is YELLOW" << std::endl;
 	}
 
-	logger.info() << "Start of PMX, the robot..." << utils::end;
+	logger.debug() << "Start of PMX, the robot..." << utils::end;
 
 	IAutomateState* waitForReboot = new pmx::StateWaitForReboot();
 	IAutomateState* initialize = new pmx::StateInitialize();
@@ -134,12 +135,14 @@ int main(int argc, char** argv)
 	// Start the automate and wait for its return
 	Automate *automate = new Automate();
 	automate->run(robot, waitForReboot, data);
-	logger.info() << "end automate;" << utils::end;
+
 	robot.lcdBoard().setBacklight(LCD_OFF);
 
-	logger.info() << "robot.stop();" << utils::end;
-	robot.stop();
-	//logger.info() << "Position :" << robot.position().x() << " " << robot.position().y() << " " << (robot.position().angle()*180) / M_PI << utils::end;
+
 	logger.info() << "PMX - Happy End" << utils::end;
+
+	//logger.info() << "robot.stop();" << utils::end;
+	//robot.stop();
+	//logger.info() << "Position :" << robot.position().x() << " " << robot.position().y() << " " << (robot.position().angle()*180) / M_PI << utils::end;
 	return 0;
 }

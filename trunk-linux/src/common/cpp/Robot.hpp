@@ -114,11 +114,12 @@ private:
 	 * \brief Servomotor standard de test.
 	 */
 	//pmx::ServoMotorStdObject servoTest_;
+
 	/*!
 	 * \brief Servomotor ax12 de test.
 	 */
 	pmx::ServoMotorDxlObject servoDxlTest_;
-
+	/*
 	pmx::ServoMotorDxlObject servoDxlLeft_;
 
 	pmx::ServoMotorDxlObject servoDxlRight_;
@@ -127,7 +128,7 @@ private:
 	pmx::ServoMotorDxlObject servoDxlP4_;
 	pmx::ServoMotorDxlObject servoDxlP6front_;
 	pmx::ServoMotorDxlObject servoDxlP14_;
-
+*/
 	/*!
 	 * \brief Groupe de détecteur IR.
 	 */
@@ -194,7 +195,7 @@ public:
 		this->myColor_ = color;
 		if (color == pmx::PMXYELLOW)
 			base().setMatchColor(0);
-		if (color == pmx::PMXRED)
+		if (color == pmx::PMXGREEN)
 			base().setMatchColor(1);
 		if (color == pmx::PMXNOCOLOR)
 			base().setMatchColor(0);
@@ -260,10 +261,11 @@ public:
 	 * \brief Cette methode retourne le servomotor test.
 	 * \return servoTest_.
 	 */
+
 	inline pmx::ServoMotorDxlObject & servoDxlTest() {
 		return servoDxlTest_;
 	}
-
+	/*
 	inline pmx::ServoMotorDxlObject & servoDxlLeft() {
 		return servoDxlLeft_;
 	}
@@ -285,7 +287,7 @@ public:
 
 	inline pmx::ServoMotorDxlObject & servoDxlP14() {
 		return servoDxlP14_;
-	}
+	}*/
 
 	/*!
 	 * \brief Cette methode retourne le groupe de détecteur IR.

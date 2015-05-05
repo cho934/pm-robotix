@@ -17,17 +17,17 @@ utils::LoggerFactory::initialize() {
     add("console", new ConsoleAppender());
     add(utils::Level::ERROR, "", "console");
 
-    add(utils::Level::DEBUG, "main", "console");
+    add(utils::Level::INFO, "main", "console");
     add(utils::Level::INFO, "pmx::StateWaitForReboot", "console");
     add(utils::Level::INFO, "pmx::StateInitialize", "console");
-    add(utils::Level::DEBUG, "pmx::StateAdjustRobotPosition", "console");
+    add(utils::Level::INFO, "pmx::StateAdjustRobotPosition", "console");
     add(utils::Level::INFO, "pmx::StateWaitForStart", "console");
-    add(utils::Level::DEBUG, "pmx::StateIADecisionMaker", "console");
-    add(utils::Level::DEBUG, "pmx::Wait90SecondsAction", "console");
+    add(utils::Level::INFO, "pmx::StateIADecisionMaker", "console");
+    add(utils::Level::INFO, "pmx::Wait90SecondsAction", "console");
 
     add(utils::Level::INFO, "pmx::IrSensorsGroup", "console");
 
-    add(utils::Level::DEBUG, "pmx::Robot", "console");
+    add(utils::Level::INFO, "pmx::Robot", "console");
 
 
 }

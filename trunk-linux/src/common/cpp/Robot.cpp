@@ -11,22 +11,24 @@
 #include "HostSpiBus.hpp"
 #include "LedIndicator.hpp"
 
-pmx::Robot::Robot()
-		: base_(*this), myColor_(pmx::PMXNOCOLOR), runMode_(pmx::ROBOTHOMOLOGATION), groveColorSensor_(*this), ledBar_(
-				*this), md25_(*this), encoderLeft_(*this, 'B', 17), encoderRight_(*this, 'D', 31),
+pmx::Robot::Robot() :
+		base_(*this), myColor_(pmx::PMXNOCOLOR), runMode_(pmx::ROBOTHOMOLOGATION), groveColorSensor_(
+				*this), ledBar_(*this), md25_(*this), encoderLeft_(*this, 'B', 17), encoderRight_(
+				*this, 'D', 31),
 		//servoTest_(*this, 0),
+
 		servoDxlTest_(*this, 1, 475, 841),
-		servoDxlLeft_(*this, 3, 512, 175),
-		servoDxlRight_(*this, 5, 475, 841),
-		servoDxlBallLaunch_(*this, 8, 378, 592),
-		servoDxlFiletLaunch_(*this, 7, 544, 843),
-		servoDxlP14_(*this, 14, 531, 841),
-		servoDxlP4_(*this, 4, 531, 841),
-		servoDxlP6front_(*this, 6, 770, 540),
-		irSensorsGroup_(*this),
-		arduinoBoardDuemilanove_(*this, 0x2A), arduinoBoardMega_(*this, 0x2B), arduinoBoardSeeed_(*this, 0x2C),
-		gpioBoard_(*this),
-		lcdBoard_()
+		/*
+		 servoDxlLeft_(*this, 3, 512, 175),
+		 servoDxlRight_(*this, 5, 475, 841),
+		 servoDxlBallLaunch_(*this, 8, 378, 592),
+		 servoDxlFiletLaunch_(*this, 7, 544, 843),
+		 servoDxlP14_(*this, 14, 531, 841),
+		 servoDxlP4_(*this, 4, 531, 841),
+		 servoDxlP6front_(*this, 6, 770, 540),
+		 */
+		irSensorsGroup_(*this), arduinoBoardDuemilanove_(*this, 0x2A), arduinoBoardMega_(*this,
+				0x2B), arduinoBoardSeeed_(*this, 0x2C), gpioBoard_(*this), lcdBoard_()
 {
 
 	//initialize i2C components
@@ -37,15 +39,16 @@ pmx::Robot::Robot()
 	gpioBoard_.begin();
 	lcdBoard_.begin(16, 2);
 	md25_.begin();
-	//servoDxlTest_.begin();
-	servoDxlLeft_.begin();
-	servoDxlRight_.begin();
-	servoDxlBallLaunch_.begin();
-	servoDxlFiletLaunch_.begin();
-	servoDxlP6front_.begin();
-	servoDxlP4_.begin();
-	servoDxlP14_.begin();
-
+	servoDxlTest_.begin();
+	/*
+	 servoDxlLeft_.begin();
+	 servoDxlRight_.begin();
+	 servoDxlBallLaunch_.begin();
+	 servoDxlFiletLaunch_.begin();
+	 servoDxlP6front_.begin();
+	 servoDxlP4_.begin();
+	 servoDxlP14_.begin();
+	 */
 	//Led indicator begin initialisation
 	pmx::LedIndicator::instance().reset();
 
@@ -80,7 +83,7 @@ void pmx::Robot::start(int useExtEncoders, int startAsserv)
 
 	if (useExtEncoders)
 	{
-		lRes = 20100;//19885
+		lRes = 20100; //19885
 		rRes = 20100; //20360
 		distRes = 0.250f;
 		logger().info("EXTERNAL ENCODERS USED");
@@ -100,7 +103,8 @@ void pmx::Robot::start(int useExtEncoders, int startAsserv)
 
 void pmx::Robot::stop()
 {
-	logger().info("Stop");
+	logger().debug("Stop");
+	this->base().stop();
 
 	this->stopDevices();
 	logger().debug() << "before  stopManagers" << utils::end;
@@ -113,10 +117,7 @@ void pmx::Robot::stop()
 
 void pmx::Robot::stopDevices()
 {
-	//this->base().stop();
-
 	this->ledBar().stop(true);
-
 }
 
 void pmx::Robot::stopManagers()
