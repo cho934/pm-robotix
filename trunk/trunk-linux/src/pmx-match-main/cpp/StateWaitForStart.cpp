@@ -21,7 +21,7 @@
 
 pmx::IAutomateState*
 pmx::StateWaitForStart::execute(Robot& robot, void *data) {
-	logger().info() << "start" << utils::end;
+	logger().info() << "start 04" << utils::end;
 
 	pmx::Data* sharedData = (pmx::Data*) data;
 	IAutomateState* result = NULL;
@@ -34,8 +34,8 @@ pmx::StateWaitForStart::execute(Robot& robot, void *data) {
 		robot.lcdBoard().print("PMX...");
 		if (robot.myColor() == pmx::PMXYELLOW) {
 			robot.lcdBoard().print("YELLOW");
-		} else if (robot.myColor() == pmx::PMXRED) {
-			robot.lcdBoard().print("RED");
+		} else if (robot.myColor() == pmx::PMXGREEN) {
+			robot.lcdBoard().print("GREEN");
 		}
 		robot.lcdBoard().setCursor(0, 1);
 		robot.lcdBoard().print("Wait for Start !");
@@ -68,14 +68,10 @@ pmx::StateWaitForStart::execute(Robot& robot, void *data) {
 		robot.ledBar().startReset();
 		robot.ledBar().stop(true);
 		robot.gpioBoard().setOffP0(0);
-		usleep(500000);
+		//usleep(500000);
 
 		robot.lcdBoard().setBacklight(LCD_OFF);
 	}
-
-	logger().info() << "Start Chronometer" << utils::end;
-	//démarrage du chrono
-	robot.chronometerRobot().start();
 
 	//lancement de l'etape Wait90Seconds
 	pmx::Wait90SecondsAction* action = new pmx::Wait90SecondsAction(&robot, (void *) sharedData);

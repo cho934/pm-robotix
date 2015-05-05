@@ -12,7 +12,7 @@ namespace pmx
      * \brief Enumération de la couleur du robot 2013.
      */
     enum RobotColor
-    { PMXNOCOLOR, PMXYELLOW, PMXRED};
+    { PMXNOCOLOR, PMXYELLOW, PMXGREEN};
         
     enum ObjectForm
     { PMXSQUARE, PMXCIRCLE};

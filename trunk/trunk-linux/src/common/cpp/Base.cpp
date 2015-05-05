@@ -63,6 +63,11 @@ void pmx::Base::begin(int lResolution, int rResolution, float dist, int startAss
 	}
 }
 
+void pmx::Base::stop()
+{
+	motion_FreeMotion();
+}
+
 void pmx::Base::initialize(const std::string& prefix, utils::Configuration&) {
 	logger().debug() << "initialize: " << prefix << utils::end;
 

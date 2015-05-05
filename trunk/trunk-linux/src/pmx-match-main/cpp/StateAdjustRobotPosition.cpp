@@ -25,7 +25,7 @@ pmx::StateAdjustRobotPosition::execute(Robot& robot, void *data)
 {
 	IAutomateState* result;
 
-	this->logger().info() << "start" << utils::end;
+	this->logger().info() << "start 03" << utils::end;
 	pmx::Data* sharedData = (pmx::Data*) data;
 
 	if (!sharedData->skipSetup())
@@ -37,22 +37,16 @@ pmx::StateAdjustRobotPosition::execute(Robot& robot, void *data)
 
 	logger().debug() << "Adjust position in the correct board..." << utils::end;
 
-	logger().debug() << "Color=" << robot.myColor() << " cc_getMatchColor()=" << cc_getMatchColor() << utils::end;
-
-	/*
-	 robot.position().x(130);
-	 robot.position().y(570, robot.myColor());
-	 robot.position().angle(0, robot.myColor());*/
-
+	logger().debug() << "Color=" << robot.myColor() << " cc_getMatchColor()=" << cc_getMatchColor()
+			<< utils::end;
 
 	cc_setPosition(130, 465, 0.0, cc_getMatchColor());
 
-	 logger().debug() << "codeurs ext: robot_getLeftExternalCounter=" << robot_getLeftExternalCounter() << " robot_getRightExternalCounter=" << robot_getRightExternalCounter() << " a="
-	<< utils::end;
+	logger().info() << "cc_getX()=" << cc_getX() << " cc_getY()=" << cc_getY()
+			<< " cc_getThetaInDegree()=" << cc_getThetaInDegree() << utils::end;
 
-
-	 //Ecriture dans le SVG
-	 utils::SvgWriter::writePosition(cc_getX(), cc_getY(), cc_getTheta(), utils::SVG_POS_ROBOT);
+	//Ecriture dans le SVG
+	utils::SvgWriter::writePosition(cc_getX(), cc_getY(), cc_getTheta(), utils::SVG_POS_ROBOT);
 
 	//skip setup
 	if (!sharedData->skipSetup())

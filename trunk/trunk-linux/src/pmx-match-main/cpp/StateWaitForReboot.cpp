@@ -22,10 +22,10 @@
 pmx::IAutomateState*
 pmx::StateWaitForReboot::execute(Robot& robot, void *data)
 {
-	logger().info() << "Start" << utils::end;
+	logger().info() << "Start 01" << utils::end;
 
-	//TODO arret des moteurs
-
+	//arret des moteurs
+	robot.base().stop();
 
 
 	try

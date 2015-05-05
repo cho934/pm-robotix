@@ -92,7 +92,7 @@ EXPORTED_FUNCTION void odo_Integration(float dTheta, float dV) {
 }
 
 EXPORTED_FUNCTION void odo_SetPosition(float x, float y, float theta) {
-	printf("odo_SetPosition %f,%f %f\n",x,y,theta);
+	//printf("odo_SetPosition %f,%f %f\n",x,y,theta);
 	//convert position from meters to ticks
 	xTops = x / valueVTops;
 	yTops = y / valueVTops;

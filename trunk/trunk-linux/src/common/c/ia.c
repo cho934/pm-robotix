@@ -58,7 +58,7 @@ void ia_createZone(const char* name, float minX, float minY, float width, float 
 		z->startX = 3000 - z->startX;
 		z->minX = 3000 - z->width - z->minX;
 		z->startAngle = 180.0 - z->startAngle;
-		printf("ia_createZone %s RED\n",name);
+		printf("ia_createZone %s GREEN\n",name);
 	}else{
 		printf("ia_createZone %s YELLOW\n",name);
 	}
