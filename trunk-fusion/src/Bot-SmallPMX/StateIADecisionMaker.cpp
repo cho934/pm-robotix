@@ -17,8 +17,6 @@
 #include "../Log/Logger.hpp"
 #include "SRobotExtended.hpp"
 
-
-
 IAutomateState*
 StateIADecisionMaker::execute(Robot&r, void *data)
 {
@@ -28,24 +26,39 @@ StateIADecisionMaker::execute(Robot&r, void *data)
 	Data* sharedData = (Data*) data;
 	SRobotExtended& robot = dynamic_cast<SRobotExtended&>(r);
 
-	robot.asserv().start(); //config + thread
 
-	cc_setPosition(0.0, 0.0, 0.0, 0);
+
 	robot.asserv().base().printPosition();
 
-
-	int mm = 300;
 	cc_setIgnoreFrontCollision(false);
 	TRAJ_STATE ret;
 	do
 	{
-		ret = robot.asserv().base().movexyteta(0, mm, 0, 90);
+		ret = robot.asserv().base().movexyteta(0, 1089.0f, 1000.0f, 90);
 		logger().info() << "r=" << ret << logs::end;
 		if (ret != TRAJ_OK)
 			sleep(2);
-	}while (ret != TRAJ_OK);
+	} while (ret != TRAJ_OK);
 
 	robot.asserv().base().printPosition();
+
+	do
+	{
+		ret = robot.asserv().base().movexyteta(0, 1089, 1360, 90);
+		logger().info() << "r=" << ret << logs::end;
+		if (ret != TRAJ_OK)
+			sleep(2);
+	} while (ret != TRAJ_OK);
+
+	robot.asserv().base().printPosition();
+
+
+
+
+
+
+
+
 
 	//wait the execution Wait90
 	while (!sharedData->end90s()) //&& robot.chronometerRobot().getElapsedTimeInSec() < 35)

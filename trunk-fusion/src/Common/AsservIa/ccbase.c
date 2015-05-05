@@ -173,6 +173,7 @@ TRAJ_STATE cc_rotateTo(float thetaInDegree)
 	float turn = ((int) (delta * 1000.0f) % 360000) / 1000.0f;
 
 	//printf("ccbase.c cc_rotateAbs %f deg   delta=%f deg\n ", turn, delta);
+	//printf("cc_getMatchColor=%d",cc_getMatchColor);
 	if (cc_getMatchColor() != 0)
 	{
 		turn = -turn;
@@ -190,6 +191,7 @@ void cc_setPosition(float xMM, float yMM, float thetaDegrees, int matchColor)
 		xMM = 3000 - xMM;
 		thetaDegrees = 180.0 - thetaDegrees;
 	}
+printf("DEBUG %f %f %f", xMM, yMM, thetaDegrees);
 
 	odo_SetPosition(xMM / 1000.0, yMM / 1000.0, thetaDegrees * M_PI / 180.0);
 }
