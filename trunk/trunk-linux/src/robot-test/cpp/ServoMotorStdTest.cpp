@@ -34,25 +34,46 @@ void robottest::ServoMotorStdTest::run(int, char *[])
 	motion_configureDeltaPID(0.0005f, 0.0000f, 0.000000f); //0.0005 0.000008 0.000009 //0.0015 0.0008 0.000002
 
 
+	//robot.clamp().init();
+
+	robot.clamp().openLeftDoor();
+	robot.clamp().openRightDoor();
+	usleep(2000000);
+
+	robot.clamp().closeAll();
+
 	robot.clamp().readyToTakeLeftElement();
+	robot.clamp().readyToTakeRightElement();
 
 	robot.base().movexyteta(0, 150, 0, 0);
 	robot.clamp().takeLeftElement();
+	robot.clamp().takeRightElement();
 	sleep(1);
 	robot.base().movexyteta(0, 300, 0, 0);
+
 	robot.clamp().readyToTakeLeftElement();
-	robot.clamp().takeLeftElement();
+	robot.clamp().readyToTakeRightElement();
+		robot.clamp().takeLeftElement();
+	robot.clamp().takeRightElement();
 	sleep(1);
 	robot.base().movexyteta(0, 450, 0, 0);
 	robot.clamp().readyToTakeLeftElement();
+	robot.clamp().readyToTakeRightElement();
 	robot.clamp().takeLeftElement();
+	robot.clamp().takeRightElement();
+
 	sleep(1);
 
 	robot.base().movexyteta(0, 600, 0, 0);
+
 	robot.clamp().pushLeft();
+	robot.clamp().pushRight();
+
 	usleep(200000);
 
 	robot.base().movexyteta(1, 450, 0, 0);
+
+	robot.clamp().closeAll();
 
 	robot.stop();
 

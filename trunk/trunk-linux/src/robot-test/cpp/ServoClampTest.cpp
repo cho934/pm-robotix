@@ -18,16 +18,27 @@ void robottest::ServoClampTest::run(int, char *[])
 	robot.configure("robot-test.conf.txt");
 	logger().info() << "configure " << currentPath << "/robot-test.conf.txt loaded" << utils::end;
 
+	robot.clamp().closeAll();
+
+
 	robot.clamp().readyToTakeLeftElement();
+	robot.clamp().readyToTakeRightElement();
+
 	sleep(3);
 	robot.clamp().takeLeftElement();
+	robot.clamp().takeRightElement();
 	sleep(3);
 	robot.clamp().readyToTakeLeftElement();
+	robot.clamp().readyToTakeRightElement();
 	sleep(3);
 	robot.clamp().takeLeftElement();
+	robot.clamp().takeRightElement();
 	sleep(3);
 
 	robot.clamp().pushLeft();
+	robot.clamp().pushRight();
+
+	robot.clamp().closeAll();
 
 	robot.stop();
 
