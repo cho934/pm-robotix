@@ -39,6 +39,7 @@ void utils::LoggerFactory::initialize()
 	add(utils::Level::INFO, "robottest::FindPIDDTest", "console");
 	add(utils::Level::INFO, "robottest::FindPIDXYTest", "console");
 	add(utils::Level::INFO, "robottest::MoveXYTest", "console");
+	add(utils::Level::INFO, "robottest::ServoClampTest", "console");
 
 	//add(utils::Level::INFO, "pmx::ServoMotorDxlObject", "console");
 	//add(utils::Level::DEBUG, "pmx::ServoMotorDxlObj", "console");
@@ -56,5 +57,8 @@ void utils::LoggerFactory::initialize()
 	//add(utils::Level::DEBUG, "pmx::ServoMotorDxl", "console");
 	//add(utils::Level::DEBUG, "pmx::GpioBoard", "console");
 	//add(utils::Level::DEBUG, "pmx::Md25", "console");
+	add(utils::Level::DEBUG, "pmx::ServoClamp", "console");
+
+
 
 }

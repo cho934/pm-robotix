@@ -21,17 +21,21 @@ int* utils::ServoMotorStd::servoMinBuffer_ = NULL;
 int* utils::ServoMotorStd::servoMaxBuffer_ = NULL;
 int* utils::ServoMotorStd::servoOffsetBuffer_ = NULL;
 int* utils::ServoMotorStd::servoPositionBuffer_ = NULL;
+int* utils::ServoMotorStd::servoSpeedBuffer_ = NULL;
+int* utils::ServoMotorStd::servoInvertedBuffer_ = NULL;
 
-utils::ServoMotorStd::ServoMotorStd(int ID)
-		: IDServo_(ID)
+utils::ServoMotorStd::ServoMotorStd(int ID) :
+		IDServo_(ID)
 {
+
 	if (IDServo_ < 0)
 	{
 		logger().error() << "ERROR servoID<0 " << IDServo_ << utils::end;
 	}
 	else if (IDServo_ >= NbMaxServo)
 	{
-		logger().error() << "ERROR servoID>NbMaxServo " << IDServo_ << ">" << NbMaxServo << utils::end;
+		logger().error() << "ERROR servoID>NbMaxServo " << IDServo_ << ">" << NbMaxServo
+				<< utils::end;
 	}
 
 	servoEnableBuffer_ = new int[NbMaxServo];
@@ -39,6 +43,8 @@ utils::ServoMotorStd::ServoMotorStd(int ID)
 	servoMaxBuffer_ = new int[NbMaxServo];
 	servoOffsetBuffer_ = new int[NbMaxServo];
 	servoPositionBuffer_ = new int[NbMaxServo];
+	servoSpeedBuffer_ = new int[NbMaxServo];
+	servoInvertedBuffer_ = new int[NbMaxServo];
 	for (int i = 0; i < NbMaxServo; i++)
 	{
 		servoEnableBuffer_[i] = 0;
@@ -46,20 +52,25 @@ utils::ServoMotorStd::ServoMotorStd(int ID)
 		servoMaxBuffer_[i] = 0;
 		servoOffsetBuffer_[i] = 0;
 		servoPositionBuffer_[i] = 0;
+		servoSpeedBuffer_[i] = 0;
+		servoInvertedBuffer_[i] = 0;
 	}
 
 	enableOpFileName_ = getFilename(SERVO_DRIVER_SERVO_ENABLE_FILE);
-	logger().debug() << " ServoMotorStd  " << " operationFileName=" << enableOpFileName_ << utils::end;
+	logger().debug() << " ServoMotorStd  " << " operationFileName=" << enableOpFileName_
+			<< utils::end;
 	offsetOpFileName_ = getFilename(SERVO_DRIVER_SERVO_OFFSET_FILE);
 	positionOpFileName_ = getFilename(SERVO_DRIVER_SERVO_POSITION_FILE);
 	currentPosOpFileName_ = getFilename(SERVO_DRIVER_SERVO_CURRENT_POS);
+	speedOpFileName_ = getFilename(SERVO_DRIVER_SERVO_SPEED_FILE);
 }
 
 char* utils::ServoMotorStd::getFilename(std::string type)
 {
 	char* name = new char[1024];
 	memset(name, 0, 1024);
-	sprintf(name, "%s%s%d/%s", SERVO_DRIVER_SYSFS_BASE, SERVO_DRIVER_SERVO_FILE, IDServo_, type.c_str());
+	sprintf(name, "%s%s%d/%s", SERVO_DRIVER_SYSFS_BASE, SERVO_DRIVER_SERVO_FILE, IDServo_,
+			type.c_str());
 	return name;
 }
 
@@ -69,7 +80,8 @@ void utils::ServoMotorStd::setServoEnable(int value)
 	int file = open(enableOpFileName_, O_WRONLY);
 	if (file == -1)
 	{
-		logger().error() << "MotionServer setServoEnable: failed to open  " << enableOpFileName_ << utils::end;
+		logger().error() << "MotionServer setServoEnable: failed to open  " << enableOpFileName_
+				<< utils::end;
 	}
 	else
 	{
@@ -77,7 +89,8 @@ void utils::ServoMotorStd::setServoEnable(int value)
 		int ret = write(file, data, strlen(data));
 		if (ret == -1)
 		{
-			logger().error() << "MotionServer setServoEnable: failed to write in  " << enableOpFileName_ << utils::end;
+			logger().error() << "MotionServer setServoEnable: failed to write in  "
+					<< enableOpFileName_ << utils::end;
 		}
 		else
 			servoEnableBuffer_[IDServo_] = value; //Keep the value
@@ -87,11 +100,16 @@ void utils::ServoMotorStd::setServoEnable(int value)
 
 void utils::ServoMotorStd::setServoOffset(int value)
 {
+	if (servoInvertedBuffer_[IDServo_] == 1)
+	{
+		value = 4095 - value;
+	}
 	char data[16];
 	int file = open(offsetOpFileName_, O_WRONLY);
 	if (file == -1)
 	{
-		logger().error() << "MotionServer setServoOffset: failed to open  " << offsetOpFileName_ << utils::end;
+		logger().error() << "MotionServer setServoOffset: failed to open  " << offsetOpFileName_
+				<< utils::end;
 	}
 	else
 	{
@@ -99,7 +117,8 @@ void utils::ServoMotorStd::setServoOffset(int value)
 		int ret = write(file, data, strlen(data));
 		if (ret == -1)
 		{
-			logger().error() << "MotionServer setServoOffset: failed to write in " << offsetOpFileName_ << utils::end;
+			logger().error() << "MotionServer setServoOffset: failed to write in "
+					<< offsetOpFileName_ << utils::end;
 		}
 		else
 			servoOffsetBuffer_[IDServo_] = value;
@@ -109,11 +128,17 @@ void utils::ServoMotorStd::setServoOffset(int value)
 
 void utils::ServoMotorStd::setServoPosition(int value)
 {
+	if (servoInvertedBuffer_[IDServo_] == 1)
+	{
+		value = 4095 - value;
+	}
+
 	char data[16];
 	int file = open(positionOpFileName_, O_WRONLY);
 	if (file == -1)
 	{
-		logger().error() << "MotionServer setServoPosition: failed to open " << positionOpFileName_ << utils::end;
+		logger().error() << "MotionServer setServoPosition: failed to open " << positionOpFileName_
+				<< utils::end;
 	}
 	else
 	{
@@ -121,11 +146,38 @@ void utils::ServoMotorStd::setServoPosition(int value)
 		int ret = write(file, data, strlen(data));
 		if (ret == -1)
 		{
-			logger().error() << "MotionServer setServoPosition: failed to write in " << positionOpFileName_
-					<< utils::end;
+			logger().error() << "MotionServer setServoPosition: failed to write in "
+					<< positionOpFileName_ << utils::end;
 		}
 		else
+		{
+
 			servoPositionBuffer_[IDServo_] = value;
+		}
+		close(file);
+	}
+}
+
+void utils::ServoMotorStd::setServoSpeed(int value)
+{
+	char data[16];
+	int file = open(speedOpFileName_, O_WRONLY);
+	if (file == -1)
+	{
+		logger().error() << "MotionServer setServoSpeed: failed to open " << speedOpFileName_
+				<< utils::end;
+	}
+	else
+	{
+		sprintf(data, "%d", value);
+		int ret = write(file, data, strlen(data));
+		if (ret == -1)
+		{
+			logger().error() << "MotionServer setServoSpeed: failed to write in "
+					<< speedOpFileName_ << utils::end;
+		}
+		else
+			servoSpeedBuffer_[IDServo_] = value;
 		close(file);
 	}
 }
@@ -139,7 +191,8 @@ int utils::ServoMotorStd::getServoId()
 	}
 	else if (IDServo_ >= NbMaxServo)
 	{
-		logger().error() << "ERROR servoID>NbMaxServo " << IDServo_ << ">" << NbMaxServo << utils::end;
+		logger().error() << "ERROR servoID>NbMaxServo " << IDServo_ << ">" << NbMaxServo
+				<< utils::end;
 	}
 	else
 	{
@@ -165,16 +218,27 @@ int utils::ServoMotorStd::getServoCurrentPosition()
 		}
 		else
 		{
-			logger().error() << "ERROR getServoCurrentPosition : file not good in " << currentPosOpFileName_
-					<< utils::end;
+			logger().error() << "ERROR getServoCurrentPosition : file not good in "
+					<< currentPosOpFileName_ << utils::end;
 		}
 		file.close();
 	}
 	else
 	{
-		logger().error() << "ERROR getServoCurrentPosition : No file found in " << currentPosOpFileName_ << utils::end;
+		logger().error() << "ERROR getServoCurrentPosition : No file found in "
+				<< currentPosOpFileName_ << utils::end;
 	}
 	result = intValue;
+
+	if (servoInvertedBuffer_[IDServo_] == 1)
+	{
+		result = 4095 - result;
+	}
 	return result;
+}
+
+void utils::ServoMotorStd::isInverted()
+{
+	servoInvertedBuffer_[IDServo_] = 1;
 }
 

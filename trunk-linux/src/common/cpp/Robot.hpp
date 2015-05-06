@@ -17,14 +17,13 @@
 #include "ExtEncoder.hpp"
 #include "GpioBoard.hpp"
 #include "GroveColorSensor.hpp"
-//#include "IInitialized.hpp"
 #include "IrSensorsGroup.hpp"
 #include "LedBar.hpp"
-
 #include "Logger.hpp"
 #include "LoggerFactory.hpp"
 #include "Md25.hpp"
 #include "RobotColor.hpp"
+#include "ServoClamp.hpp"
 #include "ServoMotorDxlObject.hpp"
 
 namespace pmx {
@@ -158,6 +157,9 @@ private:
 	 * \brief Connexion LCD par I2C.
 	 */
 	pmx::Adafruit_RGBLCDShield lcdBoard_;
+
+
+	pmx::ServoClamp clamp_;
 
 	/*!
 	 * \brief Constructeur de la classe.
@@ -338,6 +340,11 @@ public:
 
 	}
 
+	inline pmx::ServoClamp & clamp() {
+			return clamp_;
+
+		}
+
 	/*!
 	 * \brief Retourne le mode de match du robot.
 	 */
@@ -393,10 +400,11 @@ public:
 	 * \brief Lance l'initialisation par fichier de configuration
 	 */
 	void configure(const std::string & configurationFile);
-
+/*
 	void goTo(double x, double y, BaseWay way, bool detection);
 
 	void goToTeta(double x, double y, double teta, BaseWay way, bool detection);
+	*/
 };
 }
 

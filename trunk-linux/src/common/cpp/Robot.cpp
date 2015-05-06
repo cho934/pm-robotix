@@ -28,7 +28,8 @@ pmx::Robot::Robot() :
 		 servoDxlP6front_(*this, 6, 770, 540),
 		 */
 		irSensorsGroup_(*this), arduinoBoardDuemilanove_(*this, 0x2A), arduinoBoardMega_(*this,
-				0x2B), arduinoBoardSeeed_(*this, 0x2C), gpioBoard_(*this), lcdBoard_()
+				0x2B), arduinoBoardSeeed_(*this, 0x2C), gpioBoard_(*this), lcdBoard_(), clamp_(
+				*this)
 {
 
 	//initialize i2C components
@@ -40,6 +41,7 @@ pmx::Robot::Robot() :
 	lcdBoard_.begin(16, 2);
 	md25_.begin();
 	servoDxlTest_.begin();
+
 	/*
 	 servoDxlLeft_.begin();
 	 servoDxlRight_.begin();
@@ -55,10 +57,11 @@ pmx::Robot::Robot() :
 	usleep(300000);
 }
 
-void pmx::Robot::initialize(const std::string& prefix, utils::Configuration&)
+void pmx::Robot::initialize(const std::string& prefix, utils::Configuration& conf)
 {
 	logger().debug() << "initialize: " << prefix << utils::end;
 
+	this->clamp().initialize("servo-", conf);
 }
 
 void pmx::Robot::configure(const std::string & configurationFile)

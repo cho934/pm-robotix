@@ -13,6 +13,7 @@
 #define SERVO_DRIVER_SYSFS_BASE "/sys/class/servo/"
 #define SERVO_DRIVER_SERVO_FILE "servo"
 #define SERVO_DRIVER_SERVO_POSITION_FILE "desired_position"
+#define SERVO_DRIVER_SERVO_SPEED_FILE "speed_step"
 #define SERVO_DRIVER_SERVO_ENABLE_FILE "enable"
 #define SERVO_DRIVER_SERVO_OFFSET_FILE "offset"
 #define SERVO_DRIVER_SERVO_MIN_FILE "lower_boundary"
@@ -46,6 +47,8 @@ private:
 
 	char* offsetOpFileName_;
 
+	char* speedOpFileName_;
+
 	char* positionOpFileName_;
 
 	char* currentPosOpFileName_;
@@ -59,6 +62,10 @@ private:
 	static int *servoOffsetBuffer_;
 
 	static int *servoPositionBuffer_;
+
+	static int *servoSpeedBuffer_;
+
+	static int *servoInvertedBuffer_;
 
 public:
 
@@ -92,6 +99,11 @@ public:
 	virtual void setServoPosition(int);
 
 	/*!
+	 * \brief Change la vitesse.
+	 */
+	virtual void setServoSpeed(int);
+
+	/*!
 	 * \brief indique l'identifiant du servomoteur.
 	 */
 	virtual int getServoId();
@@ -100,6 +112,11 @@ public:
 	 * \brief indique la valeur courante de la position du servo.
 	 */
 	virtual int getServoCurrentPosition();
+
+	/*!
+	 * \brief indique si le servo doit etre inversé.
+	 */
+	virtual void isInverted();
 
 private:
 
