@@ -17,13 +17,13 @@
 namespace pmx
 {
 
-#define LEFT_ELEVATOR 0
-#define LEFT_CLAMP 1
-#define LEFT_DOOR 2
+#define LEFT_ELEVATOR 7
+#define LEFT_CLAMP 6
+#define LEFT_DOOR 5
 
-#define RIGHT_ELEVATOR 7
-#define RIGHT_CLAMP 6
-#define RIGHT_DOOR 5
+#define RIGHT_ELEVATOR 0
+#define RIGHT_CLAMP 1
+#define RIGHT_DOOR 2
 
 /*!
  * \brief Cette classe représente l'un des servomoteurs fonctionnant en 3 positions du robot.
@@ -104,10 +104,6 @@ public:
 	void openLeftDoorALittle();
 	void closeLeftDoor();
 
-	void readyToTakeLeftElement();
-	void takeLeftElement();
-	void pushLeft();
-
 	void closeRightClamp();
 	void openRightClamp();
 	void openRightClampALittle();
@@ -118,6 +114,12 @@ public:
 	void openRightDoorALittle();
 	void closeRightDoor();
 
+
+	void init();
+	void closeAll();
+	void readyToTakeLeftElement();
+	void takeLeftElement();
+	void pushLeft();
 	void readyToTakeRightElement();
 	void takeRightElement();
 	void pushRight();

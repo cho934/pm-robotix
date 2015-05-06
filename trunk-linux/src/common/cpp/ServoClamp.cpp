@@ -20,15 +20,15 @@ pmx::ServoClamp::ServoClamp(pmx::Robot & robot) :
 	//initialise les servos par ID
 
 	servos_[LEFT_CLAMP] = new utils::ServoMotorStd(LEFT_CLAMP);
+	//servos_[LEFT_CLAMP]->isInverted();
 	servos_[LEFT_ELEVATOR] = new utils::ServoMotorStd(LEFT_ELEVATOR);
+	//servos_[LEFT_ELEVATOR]->isInverted();
 	servos_[LEFT_DOOR] = new utils::ServoMotorStd(LEFT_DOOR);
+	//servos_[LEFT_DOOR]->isInverted();
 
 	servos_[RIGHT_CLAMP] = new utils::ServoMotorStd(RIGHT_CLAMP);
-	servos_[RIGHT_CLAMP]->isInverted();
 	servos_[RIGHT_ELEVATOR] = new utils::ServoMotorStd(RIGHT_ELEVATOR);
-	servos_[RIGHT_ELEVATOR]->isInverted();
 	servos_[RIGHT_DOOR] = new utils::ServoMotorStd(RIGHT_DOOR);
-	servos_[RIGHT_DOOR]->isInverted();
 
 }
 
@@ -81,39 +81,32 @@ void pmx::ServoClamp::initialize(const std::string& prefix, utils::Configuration
 
 }
 
+//LEFT
 void pmx::ServoClamp::closeLeftClamp()
 {
 	setPosition(LEFT_CLAMP, clampLMax_, true);
 }
-
 void pmx::ServoClamp::openLeftClamp()
 {
 	setPosition(LEFT_CLAMP, clampLMin_, true);
 }
-
 void pmx::ServoClamp::openLeftClampALittle()
 {
 	setPosition(LEFT_CLAMP, clampLMed_, true);
 }
-
-
-
 void pmx::ServoClamp::upLeftElement()
 {
-	closeLeftClamp();
 	setPosition(LEFT_ELEVATOR, elevatorLMin_, true);
 }
-
 void pmx::ServoClamp::downLeftElement(bool withClampPressure)
 {
 	if (withClampPressure)
 		closeLeftClamp();
 	else
-		openLeftClamp();//setPosition(LEFT_CLAMP, clampLMin_, false);
+		openLeftClamp(); //setPosition(LEFT_CLAMP, clampLMin_, false);
 
 	setPosition(LEFT_ELEVATOR, elevatorLMax_, true);
 }
-
 void pmx::ServoClamp::releaseLeftElement()
 {
 	int pose = getPosition(LEFT_ELEVATOR);
@@ -122,46 +115,96 @@ void pmx::ServoClamp::releaseLeftElement()
 	setPosition(LEFT_CLAMP, posc, false);
 	int posd = getPosition(LEFT_DOOR);
 	setPosition(LEFT_DOOR, posd, false);
-
 }
 void pmx::ServoClamp::openLeftDoor()
 {
-	setPosition(LEFT_DOOR, doorLMax_, false);
+	setPosition(LEFT_DOOR, doorLMin_, false);
 }
 void pmx::ServoClamp::openLeftDoorALittle()
 {
-
 	setPosition(LEFT_DOOR, doorLMed_, false);
 }
 void pmx::ServoClamp::closeLeftDoor()
 {
-	setPosition(LEFT_DOOR, doorLMin_, false);
+	setPosition(LEFT_DOOR, doorLMax_, false);
 }
 
+//RIGHT
 void pmx::ServoClamp::closeRightClamp()
 {
-
+	setPosition(RIGHT_CLAMP, clampRMax_, true);
 }
 void pmx::ServoClamp::openRightClamp()
 {
+	setPosition(RIGHT_CLAMP, clampRMin_, true);
+}
+void pmx::ServoClamp::openRightClampALittle()
+{
+	setPosition(RIGHT_CLAMP, clampRMed_, true);
+}
+void pmx::ServoClamp::upRightElement()
+{
+	setPosition(RIGHT_ELEVATOR, elevatorRMin_, true);
+}
+void pmx::ServoClamp::downRightElement(bool withClampPressure)
+{
+	if (withClampPressure)
+		closeRightClamp();
+	else
+		openRightClamp();
 
+	setPosition(RIGHT_ELEVATOR, elevatorRMax_, true);
 }
 
 void pmx::ServoClamp::releaseRightElement()
 {
-
+	int pose = getPosition(RIGHT_ELEVATOR);
+	setPosition(RIGHT_ELEVATOR, pose, false);
+	int posc = getPosition(RIGHT_CLAMP);
+	setPosition(RIGHT_CLAMP, posc, false);
+	int posd = getPosition(RIGHT_DOOR);
+	setPosition(RIGHT_DOOR, posd, false);
 }
 void pmx::ServoClamp::openRightDoor()
 {
-
+	logger().debug() << "openRightDoor " << utils::end;
+	setPosition(RIGHT_DOOR, doorRMin_, false);
+	sleep(3);
+}
+void pmx::ServoClamp::openRightDoorALittle()
+{
+	setPosition(RIGHT_DOOR, doorRMed_, false);
 }
 void pmx::ServoClamp::closeRightDoor()
 {
-
+	setPosition(RIGHT_DOOR, doorRMax_, false);
 }
 
 //__________________________
 
+void pmx::ServoClamp::init()
+{
+	closeLeftDoor();
+	closeRightDoor();
+	downLeftElement(false);
+	downRightElement(false);
+	closeLeftClamp();
+	closeRightClamp();
+}
+void pmx::ServoClamp::closeAll()
+{
+	closeLeftDoor();
+	closeRightDoor();
+	downLeftElement(false);
+	downRightElement(false);
+	closeLeftClamp();
+	closeRightClamp();
+
+	releaseLeftElement();
+	releaseRightElement();
+}
+
+//LEFT
 void pmx::ServoClamp::readyToTakeLeftElement()
 {
 	logger().debug() << "readyToTakeLeftElement " << utils::end;
@@ -174,9 +217,10 @@ void pmx::ServoClamp::readyToTakeLeftElement()
 void pmx::ServoClamp::takeLeftElement()
 {
 	logger().debug() << "takeLeftElement " << utils::end;
-	openLeftDoorALittle();
 	openLeftClampALittle();
 	downLeftElement(false);
+	openLeftDoorALittle();
+	closeLeftClamp();
 	upLeftElement();
 	closeLeftDoor();
 }
@@ -184,24 +228,42 @@ void pmx::ServoClamp::pushLeft()
 {
 	logger().debug() << "pushLeft " << utils::end;
 	downLeftElement(true);
-	openLeftDoor();
+
 	openLeftClamp();
+	openLeftDoor();
 	releaseLeftElement();
 }
 
-//________________________________
+//RIGHT
 void pmx::ServoClamp::readyToTakeRightElement()
 {
-
+	logger().debug() << "readyToTakeRightElement " << utils::end;
+	openRightClamp();
+	downRightElement(false);
+	closeRightDoor();
+	openRightClamp();
 }
 void pmx::ServoClamp::takeRightElement()
 {
-
+	logger().debug() << "takeRightElement " << utils::end;
+	openRightClampALittle();
+	downRightElement(false);
+	openRightDoorALittle();
+	closeRightClamp();
+	upRightElement();
+	closeRightDoor();
 }
 void pmx::ServoClamp::pushRight()
 {
+	logger().debug() << "pushRight " << utils::end;
+	downRightElement(true);
 
+	openRightClamp();
+	openRightDoor();
+	releaseRightElement();
 }
+
+//________________________________
 
 void pmx::ServoClamp::setPosition(int id, int value, bool hold)
 {

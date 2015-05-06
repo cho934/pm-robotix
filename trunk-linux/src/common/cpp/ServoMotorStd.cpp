@@ -56,6 +56,10 @@ utils::ServoMotorStd::ServoMotorStd(int ID) :
 		servoInvertedBuffer_[i] = 0;
 	}
 
+	servoInvertedBuffer_[5] = 1;
+	servoInvertedBuffer_[6] = 1;
+	servoInvertedBuffer_[7] = 1;
+
 	enableOpFileName_ = getFilename(SERVO_DRIVER_SERVO_ENABLE_FILE);
 	logger().debug() << " ServoMotorStd  " << " operationFileName=" << enableOpFileName_
 			<< utils::end;
@@ -128,6 +132,7 @@ void utils::ServoMotorStd::setServoOffset(int value)
 
 void utils::ServoMotorStd::setServoPosition(int value)
 {
+	//logger().debug() << "setServoPosition " << IDServo_<< " inverted = " << servoInvertedBuffer_[IDServo_] << utils::end;
 	if (servoInvertedBuffer_[IDServo_] == 1)
 	{
 		value = 4095 - value;
@@ -239,6 +244,16 @@ int utils::ServoMotorStd::getServoCurrentPosition()
 
 void utils::ServoMotorStd::isInverted()
 {
+	logger().debug() << "B servoInvertedBuffer_["<< IDServo_<<"]="
+					<< servoInvertedBuffer_[IDServo_] << utils::end;
+
 	servoInvertedBuffer_[IDServo_] = 1;
+
+
+	for (int i = 0; i < NbMaxServo; i++)
+		{
+		logger().debug() << "A servoInvertedBuffer_["<< i<<"]="
+								<< servoInvertedBuffer_[i] << utils::end;
+		}
 }
 
