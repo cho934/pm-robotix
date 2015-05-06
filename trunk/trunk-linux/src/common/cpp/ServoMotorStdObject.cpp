@@ -1,6 +1,6 @@
 /*!
  * \file
- * \brief Implémentation de la classe ServoMotorObject.
+ * \brief Implémentation de la classe ServoMotorStdObject.
  */
 
 #include "ServoMotorStdObject.hpp"
@@ -191,6 +191,6 @@ void pmx::ServoMotorStdObject::startTurnMax(bool freewheeling)
 
 void pmx::ServoMotorStdObject::startFreeWheeling(bool freewheeling)
 {
-	this->robot().addAction(new pmx::ServoMotorObjectAction(*this, pmx::SERVOTURNMAX, freewheeling));
+	this->robot().addAction(new pmx::ServoMotorObjectAction(*this, pmx::FREEWHEELING, freewheeling));
 }
 

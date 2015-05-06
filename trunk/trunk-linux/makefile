@@ -1,5 +1,5 @@
 # Define the default target that build everything
-all: init dev-test apf-test robot-test pmx 
+all: init dev-test apf-test robot-test pmx conf
 
 # Define the targets that should not have dependency check
 .PHONY: all-clean clean doc
@@ -12,6 +12,10 @@ PMXArmadeusBinaries:
 
 init: build/common PMXArmadeusBinaries
 
+conf:
+	expect ./msend conf
+
+
 # Build the main application
 pmx: build/pmx-match-main
 	@(cd src/pmx-match-main && make)
@@ -21,6 +25,7 @@ pmx: build/pmx-match-main
 robot-test: build/robot-test
 	@(cd src/robot-test && make)
 	expect ./msend robottest
+
 	
 # Build the unit tests package
 apf-test: build/apf-test

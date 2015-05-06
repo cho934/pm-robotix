@@ -4,30 +4,32 @@
  * sur le robot.
  */
 
-#include <cstdlib>
-#include <iostream>
+#include <stdlib.h>
 
 #include "../../common/cpp/ConsoleUnitTestManager.hpp"
 #include "ArduinoTest.hpp"
 #include "ExtEncoderTest.hpp"
+#include "FindPIDADTest.hpp"
+#include "FindPIDATest.hpp"
+#include "FindPIDDTest.hpp"
+#include "FindPIDLRTest.hpp"
 #include "GpioBoardTest.hpp"
 #include "GroveColorTest.hpp"
 #include "IrSensorsGroupTest.hpp"
+#include "LcdTest.hpp"
 #include "LedBarTest.hpp"
 #include "LedIndicatorTest.hpp"
-#include "Md25Test.hpp"
 #include "Md25EncoderTest.hpp"
-#include "FindPIDDTest.hpp"
-#include "FindPIDATest.hpp"
-#include "FindPIDADTest.hpp"
-#include "FindPIDLRTest.hpp"
+#include "Md25Test.hpp"
 #include "MoveLineVAccTest.hpp"
 #include "MoveTest.hpp"
 #include "MoveXYTest.hpp"
-#include "ServoMotorDxlTest.hpp"
-#include "ServoMotorStdTest.hpp"
+#include "ServoClampTest.hpp"
 #include "ServoMotorDxlLearnTest.hpp"
-#include "LcdTest.hpp"
+#include "ServoMotorDxlTest.hpp"
+#include "ServoMotorStdLearnTest.hpp"
+#include "ServoMotorStdTest.hpp"
+
 /*!
  * \brief Méthode principale pour le lancement des tests sur le robot.
  *
@@ -49,7 +51,7 @@ int main(int argc, char** argv)
 	manager.add(new robottest::LedBarTest());
 	manager.add(new robottest::GroveColorTest());
 	manager.add(new robottest::ExtEncoderTest());
-	//manager.add(new robottest::ServoMotorStdTest());
+
 	manager.add(new robottest::IrSensorsGroupTest());
 	manager.add(new robottest::ServoMotorDxlTest());
 	manager.add(new robottest::ServoMotorDxlLearnTest());
@@ -66,6 +68,9 @@ int main(int argc, char** argv)
 	manager.add(new robottest::MoveLineVAccTest());
 	manager.add(new robottest::MoveTest());
 	manager.add(new robottest::MoveXYTest());
+	manager.add(new robottest::ServoClampTest());
+	manager.add(new robottest::ServoMotorStdLearnTest);
+	manager.add(new robottest::ServoMotorStdTest);
 
 	if (argc == 1)
 	{

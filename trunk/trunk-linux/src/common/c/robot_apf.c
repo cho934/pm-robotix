@@ -168,6 +168,7 @@ void robot_initPID()
 	}
 	else //EXTERNAL ENCODERS
 	{
+		exit(0);
 		motion_configureAlphaPID(0.000065f, 0.00001f, 0.00000002f); //(0.000065f, 0.000001f, 0.00000001f);
 		motion_configureDeltaPID(0.00006f, 0.00002f, 0.0000002f);
 

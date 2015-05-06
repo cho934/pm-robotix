@@ -1,0 +1,31 @@
+
+servo-elevatorLMin_ : 100
+servo-elevatorLMed_ : 2000
+servo-elevatorLMax_ : 3400
+servo-elevatorLSpeed_ : 75
+
+servo-clampLMin_ : 400
+servo-clampLMed_ : 1000
+servo-clampLMax_ : 3000
+servo-clampLSpeed_ : 100
+
+servo-doorLMin_ : 2000
+servo-doorLMed_ : 2000
+servo-doorLMax_ : 2000
+servo-doorLSpeed_ : 100
+
+
+servo-elevatorRMin_ : 2000
+servo-elevatorRMed_ : 2000
+servo-elevatorRMax_ : 2000
+servo-elevatorRSpeed_ : 75
+
+servo-clampRMin_ : 550
+servo-clampRMed_ : 2000
+servo-clampRMax_ : 1900
+servo-clampRSpeed_ : 100
+
+servo-doorRMin_ : 2000
+servo-doorRMed_ : 2000
+servo-doorRMax_ : 2000
+servo-doorRSpeed_ : 100
