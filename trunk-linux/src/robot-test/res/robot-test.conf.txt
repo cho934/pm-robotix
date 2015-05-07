@@ -1,32 +1,33 @@
 
-servo-elevatorRMin_ : 200
-servo-elevatorRMed_ : 2000
+servo-elevatorRMin_ : 300
+servo-elevatorRMed_ : 1600
 servo-elevatorRMax_ : 3400
 servo-elevatorRSpeed_ : 75
 
 servo-clampRMin_ : 400
 servo-clampRMed_ : 1500
-servo-clampRMax_ : 3000
-servo-clampRSpeed_ : 100
+servo-clampRMax_ : 2400
+servo-clampRSpeed_ : 75
 
 servo-doorRMin_ : 800
-servo-doorRMed_ : 1900
+servo-doorRMed_ : 2100
 servo-doorRMax_ : 2500
-servo-doorRSpeed_ : 100
+servo-doorRSpeed_ : 75
 
 
+
+
+servo-doorLMin_ : 800
+servo-doorLMed_ : 2300
+servo-doorLMax_ : 2700
+servo-doorLSpeed_ : 75
+
+servo-clampLMin_ : 1000
+servo-clampLMed_ : 2300
+servo-clampLMax_ : 3000
+servo-clampLSpeed_ : 75
 
 servo-elevatorLMin_ : 400
 servo-elevatorLMed_ : 2300
 servo-elevatorLMax_ : 3700
 servo-elevatorLSpeed_ : 75
-
-servo-clampLMin_ : 800
-servo-clampLMed_ : 2000
-servo-clampLMax_ : 3200
-servo-clampLSpeed_ : 100
-
-servo-doorLMin_ : 800
-servo-doorLMed_ : 1900
-servo-doorLMax_ : 2500
-servo-doorLSpeed_ : 100
