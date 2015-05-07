@@ -31,14 +31,14 @@ void robottest::ServoMotorStdTest::run(int, char *[])
 	robot.start(0, asserv);
 	cc_setPosition(0, 0, 0.0, cc_getMatchColor());
 	motion_configureAlphaPID(0.0015f, 0.0008f, 0.000002f); //0.0008 0.00002 0.00003
-	motion_configureDeltaPID(0.0005f, 0.0000f, 0.000000f); //0.0005 0.000008 0.000009 //0.0015 0.0008 0.000002
+	motion_configureDeltaPID(0.0015f, 0.0008f, 0.000002f); //0.0005 0.000008 0.000009 //0.0015 0.0008 0.000002
 
 
 	//robot.clamp().init();
 
 	robot.clamp().openLeftDoor();
 	robot.clamp().openRightDoor();
-	usleep(2000000);
+	usleep(1000000);
 
 	robot.clamp().closeAll();
 
@@ -48,33 +48,42 @@ void robottest::ServoMotorStdTest::run(int, char *[])
 	robot.base().movexyteta(0, 150, 0, 0);
 	robot.clamp().takeLeftElement();
 	robot.clamp().takeRightElement();
-	sleep(1);
+	usleep(500000);
+	logger().info() << "avance 300" << utils::end;
 	robot.base().movexyteta(0, 300, 0, 0);
 
 	robot.clamp().readyToTakeLeftElement();
 	robot.clamp().readyToTakeRightElement();
 		robot.clamp().takeLeftElement();
 	robot.clamp().takeRightElement();
-	sleep(1);
+	usleep(500000);
+	logger().info() << "avance 450" << utils::end;
 	robot.base().movexyteta(0, 450, 0, 0);
 	robot.clamp().readyToTakeLeftElement();
 	robot.clamp().readyToTakeRightElement();
 	robot.clamp().takeLeftElement();
 	robot.clamp().takeRightElement();
 
-	sleep(1);
+	usleep(500000);
 
+	logger().info() << "avance 600" << utils::end;
 	robot.base().movexyteta(0, 600, 0, 0);
 
+	logger().info() << "pushLeft" << utils::end;
 	robot.clamp().pushLeft();
+	logger().info() << "pushRight" << utils::end;
 	robot.clamp().pushRight();
 
 	usleep(200000);
 
-	robot.base().movexyteta(1, 450, 0, 0);
+	//recul
+	logger().info() << "recul 450" << utils::end;
+	robot.base().movexyteta(1, 0, 0, 0);
 
+	logger().info() << "Close and release all" << utils::end;
 	robot.clamp().closeAll();
 
+	usleep(500000);
 	robot.stop();
 
 	logger().info() << "End of RobotTest." << utils::end;

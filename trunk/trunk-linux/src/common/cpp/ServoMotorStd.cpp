@@ -56,7 +56,8 @@ utils::ServoMotorStd::ServoMotorStd(int ID) :
 		servoInvertedBuffer_[i] = 0;
 	}
 
-	servoInvertedBuffer_[5] = 1;
+	//LEFT inverted
+	servoInvertedBuffer_[2] = 1;
 	servoInvertedBuffer_[6] = 1;
 	servoInvertedBuffer_[7] = 1;
 

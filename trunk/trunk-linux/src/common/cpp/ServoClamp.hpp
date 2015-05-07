@@ -19,11 +19,11 @@ namespace pmx
 
 #define LEFT_ELEVATOR 7
 #define LEFT_CLAMP 6
-#define LEFT_DOOR 5
+#define LEFT_DOOR 2
 
 #define RIGHT_ELEVATOR 0
 #define RIGHT_CLAMP 1
-#define RIGHT_DOOR 2
+#define RIGHT_DOOR 4
 
 /*!
  * \brief Cette classe représente l'un des servomoteurs fonctionnant en 3 positions du robot.

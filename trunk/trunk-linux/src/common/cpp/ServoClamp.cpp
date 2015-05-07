@@ -169,7 +169,7 @@ void pmx::ServoClamp::openRightDoor()
 {
 	logger().debug() << "openRightDoor " << utils::end;
 	setPosition(RIGHT_DOOR, doorRMin_, false);
-	sleep(3);
+
 }
 void pmx::ServoClamp::openRightDoorALittle()
 {
@@ -200,6 +200,7 @@ void pmx::ServoClamp::closeAll()
 	closeLeftClamp();
 	closeRightClamp();
 
+	usleep(500000);
 	releaseLeftElement();
 	releaseRightElement();
 }
