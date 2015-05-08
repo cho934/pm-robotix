@@ -12,49 +12,62 @@ RedCarpetSystem::RedCarpetSystem(Actions & actions) :
 		AActionsElement(actions)
 {
 	servodriver = AServoDriver::create();
+	releaseAll();
 }
 
 RedCarpetSystem::~RedCarpetSystem()
 {
-	servodriver->setPosition(1, 0);
+	servodriver->setPosition(LEFT_CARPET, 0);
+	servodriver->setPosition(RIGHT_CARPET, 0);
+	releaseAll();
 }
 
-void RedCarpetSystem::leftDeploy()
+void RedCarpetSystem::leftDeploy(int debug)
 {
 	holdLeft();
-	servodriver->setPosition(1, 60);
+	servodriver->setPosition(LEFT_CARPET, 0);
+	usleep(400000);
+	servodriver->setPosition(LEFT_CARPET, 75);
 	sleep(1);
-	servodriver->setPosition(1, 0);
-	sleep(1);
+	if (!debug)
+	{
+		servodriver->setPosition(LEFT_CARPET, 0);
+		sleep(1);
+	}
 	releaseLeft();
 }
 
-void RedCarpetSystem::rightDeploy()
+void RedCarpetSystem::rightDeploy(int debug)
 {
 	holdRight();
-	servodriver->setPosition(8, 60);
+	servodriver->setPosition(RIGHT_CARPET, 0);
+	usleep(400000);
+	servodriver->setPosition(RIGHT_CARPET, 70);
 	sleep(1);
-	servodriver->setPosition(8, 0);
-	sleep(1);
+	if (!debug)
+	{
+		servodriver->setPosition(RIGHT_CARPET, 0);
+		sleep(1);
+	}
 	releaseRight();
 }
 
 void RedCarpetSystem::releaseLeft()
 {
-	servodriver->release(1);
+	servodriver->release(LEFT_CARPET);
 }
 void RedCarpetSystem::releaseRight()
 {
-	servodriver->release(8);
+	servodriver->release(RIGHT_CARPET);
 }
 
 void RedCarpetSystem::holdLeft()
 {
-	servodriver->hold(1);
+	servodriver->hold(LEFT_CARPET);
 }
 void RedCarpetSystem::holdRight()
 {
-	servodriver->hold(8);
+	servodriver->hold(RIGHT_CARPET);
 }
 
 void RedCarpetSystem::releaseAll()

@@ -94,9 +94,9 @@ void robot_init()
 	valueSample = 0.01f; //(1f/DEFAULT_SAMPLING_FREQ)
 	vtopsPerTicks = 2048;
 	maxPwmValue = 900; //128 default
-	defaultVmax = 0.9f;
-	defaultAcc = 0.3f;
-	defaultDec = 0.2f;
+	defaultVmax = 0.9f; // 0.9
+	defaultAcc = 0.3f; //0.3
+	defaultDec = 0.1f; //0.05
 
 	//printf("Init time %ld\n", currentTimeInMillis());
 }

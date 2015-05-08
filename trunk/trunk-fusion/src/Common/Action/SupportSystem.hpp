@@ -37,12 +37,12 @@ public:
 	/*!
 	 * \brief incline.
 	 */
-	void incline(int power, int timems);
+	void incline(int power, int ramptimems);
 
 	/*!
 	 * \brief redresse.
 	 */
-	void straighten(int power, int timems);
+	void straighten(int power, int ramptimems);
 
 	/*!
 	 * \brief setPosition.

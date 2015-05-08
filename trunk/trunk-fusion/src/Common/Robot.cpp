@@ -13,6 +13,7 @@
 #include <string>
 
 #include "../Log/Logger.hpp"
+#include "AsservIa/ccbase.h"
 #include "ConsoleManager.hpp"
 #include "State/Automate.hpp"
 #include "State/Data.hpp"
@@ -35,6 +36,7 @@ void Robot::start(ConsoleManager manager, int argc, char** argv)
 {
 	string select;
 	int skip = 0;
+	int detect = 1;
 	//if no argument, display the textmenu
 	if (argc <= 1)
 	{
@@ -59,7 +61,7 @@ void Robot::start(ConsoleManager manager, int argc, char** argv)
 				|| strcmp(argv[1], "-help") == 0 || strcmp(argv[1], "-h") == 0)
 		{
 			cout << "USAGE" << endl;
-			cout << argv[0] << " [M] [color:y/g] [skip setup:0/1]  " //[IAStrategy:code] [encoder:ext/int]
+			cout << argv[0] << " [M] [color:y/g] [skip setup:0/1] [detect:0/1] " //[IAStrategy:code] [encoder:ext/int]
 					<< endl;
 			cout << argv[0] << " [T] [Test:Num[1-100] [params...]" << endl;
 			exit(0);
@@ -86,6 +88,11 @@ void Robot::start(ConsoleManager manager, int argc, char** argv)
 				skip = atoi(argv[3]);
 			}
 
+			if (argc > 4)
+			{
+				detect = atoi(argv[4]);
+			}
+
 			//init Automate for Match
 
 			// Create the data used to run the automate
@@ -93,6 +100,7 @@ void Robot::start(ConsoleManager manager, int argc, char** argv)
 			data->isEmpty(true);
 
 			data->skipSetup(skip);
+			cc_setIgnoreFrontCollision(!detect);
 
 			logger().info() << "Start of PMX, the robot..." << logs::end;
 
