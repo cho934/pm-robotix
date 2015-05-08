@@ -28,7 +28,7 @@ public:
 	{
 	}
 
-	virtual void setMotorPosition(int pos, int timems, int power) = 0;
+	virtual void setMotorPosition(int pos, int ramptimems, int power) = 0;
 
 	virtual long getInternalEncoder()= 0;
 

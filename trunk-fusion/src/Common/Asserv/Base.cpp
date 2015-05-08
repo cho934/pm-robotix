@@ -126,18 +126,25 @@ void Base::assistedHandling()
 
 TRAJ_STATE Base::move(int mm)
 {
-	return cc_move(mm);
+	return cc_move(mm, cc_motion_GetDefaultSpeed(), cc_motion_GetDefaultAccel(), cc_motion_GetDefaultDecel());
 }
 
 TRAJ_STATE Base::movexyteta(int backward, float x, float y, float thetaInDegree)
 {
+	movexytetaSpeedAcc(backward, x, y, thetaInDegree, cc_motion_GetDefaultSpeed(),
+			cc_motion_GetDefaultAccel(), cc_motion_GetDefaultDecel());
+}
+
+TRAJ_STATE Base::movexytetaSpeedAcc(int backward, float x, float y, float thetaInDegree, float VMax,
+		float Accel, float Decel)
+{
 	if (backward == 0)
 	{
-		return cc_moveForwardAndRotateTo(x, y, thetaInDegree);
+		return cc_moveForwardAndRotateTo(x, y, thetaInDegree, VMax, Accel, Decel);
 	}
 	else
 	{
-		return cc_moveBackwardAndRotateTo(x, y, thetaInDegree);
+		return cc_moveBackwardAndRotateTo(x, y, thetaInDegree, VMax, Accel, Decel);
 	}
 }
 

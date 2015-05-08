@@ -5,6 +5,8 @@
 #include "SActionsExtended.hpp"
 #include "SAsservExtended.hpp"
 
+
+
 class SRobotExtended: public Robot
 {
 public:

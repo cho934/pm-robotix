@@ -1,6 +1,9 @@
+#include <unistd.h>
+#include <cstdlib>
 #include <iostream>
 
 #include "../Bot-SmallPMX/SRobotExtended.hpp"
+#include "../Common/ConsoleKeyInput.hpp"
 #include "../Common/ConsoleManager.hpp"
 #include "ButtonBarTest.hpp"
 #include "DetectionTest.hpp"
@@ -8,7 +11,7 @@
 #include "LedBarTest.hpp"
 #include "MotorTest.hpp"
 #include "MoveTest.hpp"
-#include "ServoTest.hpp"
+#include "RedCarpetTest.hpp"
 #include "SoundBarTest.hpp"
 #include "SupportTest.hpp"
 #include "TiretteTest.hpp"
@@ -35,10 +38,11 @@ int main(int argc, char** argv)
 	manager.add(new MotorTest());
 	manager.add(new MoveTest());
 	manager.add(new SupportTest());
-	manager.add(new ServoTest());
+	manager.add(new RedCarpetTest());
 
 
 /*
+ //Pour debug
 	char cInput;
 	cout << "Press Enter key to continue ...\n" << endl;
 	do

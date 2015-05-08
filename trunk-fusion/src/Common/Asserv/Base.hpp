@@ -51,6 +51,9 @@ public:
 
 	TRAJ_STATE movexyteta(int forward, float x, float y, float thetaInDegree);
 
+	TRAJ_STATE movexytetaSpeedAcc(int backward, float x, float y, float thetaInDegree, float VMax,
+			float Accel, float Decel);
+
 	void findPidAD(float degrees, int mm, int sec);
 
 	void findPidLR(int posLmm, int posRmm, int sec);

@@ -21,7 +21,6 @@ IAutomateState*
 StateIADecisionMaker::execute(Robot&r, void *data)
 {
 	logger().info() << "start 5" << logs::end;
-	//IAutomateState* result;
 
 	Data* sharedData = (Data*) data;
 	SRobotExtended& robot = dynamic_cast<SRobotExtended&>(r);
@@ -30,11 +29,11 @@ StateIADecisionMaker::execute(Robot&r, void *data)
 
 	robot.asserv().base().printPosition();
 
-	cc_setIgnoreFrontCollision(false);
+
 	TRAJ_STATE ret;
 	do
 	{
-		ret = robot.asserv().base().movexyteta(0, 1089.0f, 1000.0f, 90);
+		ret = robot.asserv().base().movexyteta(0, 1089.0, 1000.0, 90.0);
 		logger().info() << "r=" << ret << logs::end;
 		if (ret != TRAJ_OK)
 			sleep(2);
@@ -63,8 +62,6 @@ StateIADecisionMaker::execute(Robot&r, void *data)
 	//wait the execution Wait90
 	while (!sharedData->end90s()) //&& robot.chronometerRobot().getElapsedTimeInSec() < 35)
 	{
-		//printf("sharedData->end90s=%d time=%f\n", sharedData->end90s(),
-		//		robot->chrono().getElapsedTimeInSec());
 		logger().info() << "sharedData->end90s=" << sharedData->end90s() << " time="
 				<< robot.chrono().getElapsedTimeInSec() << logs::end;
 		usleep(1000000);

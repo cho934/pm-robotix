@@ -7,6 +7,9 @@
 #include "AActionsElement.hpp"
 #include "../Action.Driver/AServoDriver.hpp"
 
+#define LEFT_CARPET 8
+#define RIGHT_CARPET 1
+
 class RedCarpetSystem: public AActionsElement
 {
 private:
@@ -34,9 +37,9 @@ public:
 	 */
 	~RedCarpetSystem();
 
-	void leftDeploy();
+	void leftDeploy(int debug = 0);
 
-	void rightDeploy();
+	void rightDeploy(int debug = 0);
 
 	void releaseLeft();
 	void releaseRight();

@@ -1,10 +1,10 @@
 /*!
  * \file
- * \brief Définition de la classe ServoTest.
+ * \brief Définition de la classe RedCarpetTest.
  */
 
-#ifndef SERVOTEST_HPP_
-#define	SERVOTEST_HPP_
+#ifndef REDCARPETTEST_HPP_
+#define	REDCARPETTEST_HPP_
 
 #include "../Common/FunctionalTest.hpp"
 #include "../Log/LoggerFactory.hpp"
@@ -12,7 +12,7 @@
 /*!
  * \brief Effectue un test sur les servomoteurs standards.
  */
-class ServoTest: public FunctionalTest
+class RedCarpetTest: public FunctionalTest
 {
 private:
 
@@ -21,7 +21,7 @@ private:
 	 */
 	static inline const logs::Logger & logger()
 	{
-		static const logs::Logger & instance = logs::LoggerFactory::logger("ServoTest");
+		static const logs::Logger & instance = logs::LoggerFactory::logger("RedCarpetTest");
 		return instance;
 	}
 public:
@@ -29,15 +29,15 @@ public:
 	/*!
 	 * \brief Constructeur de la classe.
 	 */
-	ServoTest() :
-		FunctionalTest("ServoTest", "test servomotors")
+	RedCarpetTest() :
+		FunctionalTest("RedCarpetTest", "test servomotors et tapis rouge")
 	{
 	}
 
 	/*!
 	 * \brief Destructeur de la classe.
 	 */
-	virtual ~ServoTest()
+	virtual ~RedCarpetTest()
 	{
 	}
 
