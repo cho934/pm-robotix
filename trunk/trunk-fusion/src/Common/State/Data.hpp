@@ -6,8 +6,9 @@
 #ifndef STATE_DATA_HPP
 #define STATE_DATA_HPP
 
-#include "StateIADecisionMaker.hpp"
+#include <string>
 
+#include "StateIADecisionMaker.hpp"
 
 /*!
  * \brief Represente les données partagées entre les différents états de l'automate.
@@ -24,6 +25,7 @@ private:
 
 	bool end90s_;
 
+	std::string strategy_;
 
 public:
 
@@ -66,6 +68,15 @@ public:
 		this->empty_ = empty;
 	}
 
+	std::string strategy() const
+	{
+		return this->strategy_;
+	}
+	void strategy(std::string str)
+	{
+		this->strategy_ = str;
+	}
+
 	int useExternalEncoder() const
 	{
 		return this->useExternalEncoder_;
@@ -84,6 +95,5 @@ public:
 		this->skipSetup_ = skip;
 	}
 };
-
 
 #endif

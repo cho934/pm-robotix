@@ -96,7 +96,7 @@ void robot_init()
 	maxPwmValue = 900; //128 default
 	defaultVmax = 0.9f; // 0.9
 	defaultAcc = 0.3f; //0.3
-	defaultDec = 0.1f; //0.05
+	defaultDec = 0.3f; //0.05
 
 	//printf("Init time %ld\n", currentTimeInMillis());
 }

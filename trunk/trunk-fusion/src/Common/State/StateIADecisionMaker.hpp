@@ -35,6 +35,9 @@ public:
 
 	virtual IAutomateState* execute(Robot& robot, void * data);
 
+	void IAFirstCarpet(Robot& robot, void * data);
+	void IAFirstSteps(Robot& robot, void * data);
+
 	void IASetupTableTest();
 	void IASetupHomologation();
 	void IASetupMatches();

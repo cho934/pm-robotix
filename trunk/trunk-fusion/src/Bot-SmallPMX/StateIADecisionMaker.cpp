@@ -25,39 +25,21 @@ StateIADecisionMaker::execute(Robot&r, void *data)
 	Data* sharedData = (Data*) data;
 	SRobotExtended& robot = dynamic_cast<SRobotExtended&>(r);
 
-
-
-	robot.asserv().base().printPosition();
-
-
-	TRAJ_STATE ret;
-	do
+	if (sharedData->strategy() == "FirstSteps")
 	{
-		ret = robot.asserv().base().movexyteta(0, 1089.0, 1000.0, 90.0);
-		logger().info() << "r=" << ret << logs::end;
-		if (ret != TRAJ_OK)
-			sleep(2);
-	} while (ret != TRAJ_OK);
 
-	robot.asserv().base().printPosition();
-
-	do
+		IAFirstSteps(r, data);
+	}
+	else if (sharedData->strategy() == "FirstCarpet")
 	{
-		ret = robot.asserv().base().movexyteta(0, 1089, 1360, 90);
-		logger().info() << "r=" << ret << logs::end;
-		if (ret != TRAJ_OK)
-			sleep(2);
-	} while (ret != TRAJ_OK);
+		IAFirstCarpet(r, data);
 
-	robot.asserv().base().printPosition();
-
-
-
-
-
-
-
-
+	}
+	else
+	{
+		logger().error() << "Bad strategy..." << logs::end;
+		exit(0);
+	}
 
 	//wait the execution Wait90
 	while (!sharedData->end90s()) //&& robot.chronometerRobot().getElapsedTimeInSec() < 35)
@@ -77,19 +59,100 @@ StateIADecisionMaker::execute(Robot&r, void *data)
 	return NULL;
 }
 
+void StateIADecisionMaker::IAFirstSteps(Robot& r, void * data)
+{
+	Data* sharedData = (Data*) data;
+	SRobotExtended& robot = dynamic_cast<SRobotExtended&>(r);
+	logger().debug() << "IAFirstSteps" << logs::end;
+
+	robot.actions().supportSystem().straighten(900, 1500);
+
+	robot.asserv().base().printPosition();
+	TRAJ_STATE ret;
+	do
+	{
+		ret = robot.asserv().base().movexyteta(0, 1100, 1000, 90);
+		logger().debug() << "r=" << ret << logs::end;
+		if (ret != TRAJ_OK)
+			sleep(2);
+	} while (ret != TRAJ_OK);
+	robot.asserv().base().printPosition();
+
+	do
+	{
+		ret = robot.asserv().base().movexyteta(0, 1100, 1360, 90);
+		logger().debug() << "r=" << ret << logs::end;
+		if (ret != TRAJ_OK)
+			sleep(2);
+	} while (ret != TRAJ_OK);
+	robot.asserv().base().printPosition();
+
+	//montée des marches
+
+	robot.actions().supportSystem().incline(900, 1500);
+	robot.actions().trackSystem().moveForward(500, 0);
+	do
+	{
+		ret = robot.asserv().base().movexytetaSpeedAcc(0, 1100, 1968, 90, 0.6, 0.2, 0.05);
+		logger().debug() << "r=" << ret << logs::end;
+		if (ret != TRAJ_OK)
+			sleep(2);
+	} while (ret != TRAJ_OK);
+	robot.asserv().base().printPosition();
+	robot.actions().trackSystem().stopMotor();
+	robot.actions().supportSystem().stopMotor();
+
+	//depose tapis
+	if (robot.getMyColor() == PMXGREEN)
+	{
+		//right
+		robot.actions().redcarpetSystem().rightDeploy();
+	}
+	else if (robot.getMyColor() == PMXYELLOW)
+	{
+		//left
+		robot.actions().redcarpetSystem().leftDeploy();
+	}
+
+	//go to other side
+	do
+	{
+		ret = robot.asserv().base().movexyteta(0, 1367, cc_getY(), 90);
+		logger().debug() << "r=" << ret << logs::end;
+		if (ret != TRAJ_OK)
+			sleep(2);
+	} while (ret != TRAJ_OK);
+	robot.asserv().base().printPosition();
+
+	//depose tapis
+	if (robot.getMyColor() == PMXGREEN)
+	{
+		//right
+		robot.actions().redcarpetSystem().leftDeploy();
+	}
+	else if (robot.getMyColor() == PMXYELLOW)
+	{
+		//left
+		robot.actions().redcarpetSystem().rightDeploy();
+	}
+}
+
+void StateIADecisionMaker::IAFirstCarpet(Robot& r, void * data)
+{
+	Data* sharedData = (Data*) data;
+	SRobotExtended& robot = dynamic_cast<SRobotExtended&>(r);
+	logger().debug() << "IAFirstCarpet" << logs::end;
+}
+
 void StateIADecisionMaker::IASetupTableTest()
 {
 	logger().debug() << "IASetupTableTest" << logs::end;
-
 }
 void StateIADecisionMaker::IASetupHomologation()
 {
 	logger().debug() << "IASetupHomologation" << logs::end;
-
 }
-
 void StateIADecisionMaker::IASetupMatches()
 {
 	logger().debug() << "IASetupMatches" << logs::end;
-
 }
