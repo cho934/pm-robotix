@@ -99,7 +99,7 @@ void MoveTest::run(int argc, char *argv[])
 	}
 	logger().info() << out.str() << logs::end;
 
-	//fct... Bot-SmallPMX-EV3 T 8 0 650 500 0.6 0.2 0.05
+	//fct... Bot-SmallPMX-EV3 T 8 0 650 500 0.6 0.2 0.05 pour monter la pente
 
 	SRobotExtended &robot = SRobotExtended::instance();
 	Data *data = new Data();

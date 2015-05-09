@@ -32,7 +32,7 @@ void logs::LoggerFactory::initialize()
 	add(logs::Level::INFO, "StateInitialize", "console");
 	add(logs::Level::INFO, "StateAdjustRobotPosition", "console");
 	add(logs::Level::INFO, "StateWaitForStart", "console");
-	add(logs::Level::INFO, "StateIADecisionMaker", "console");
+	add(logs::Level::DEBUG, "StateIADecisionMaker", "console");
 	add(logs::Level::INFO, "Wait90SecondsAction", "console");
 
 	add(logs::Level::INFO, "Robot", "console");

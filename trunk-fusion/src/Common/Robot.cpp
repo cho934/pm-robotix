@@ -61,7 +61,8 @@ void Robot::start(ConsoleManager manager, int argc, char** argv)
 				|| strcmp(argv[1], "-help") == 0 || strcmp(argv[1], "-h") == 0)
 		{
 			cout << "USAGE" << endl;
-			cout << argv[0] << " [M] [color:y/g] [skip setup:0/1] [detect:0/1] " //[IAStrategy:code] [encoder:ext/int]
+			cout << argv[0]
+					<< " [M] [color:y/g] [skip setup:0/1] [detect:0/1] [IAStrategy:FirstCarpet/FirstSteps]" // [encoder:ext/int]
 					<< endl;
 			cout << argv[0] << " [T] [Test:Num[1-100] [params...]" << endl;
 			exit(0);
@@ -86,6 +87,7 @@ void Robot::start(ConsoleManager manager, int argc, char** argv)
 			if (argc > 3)
 			{
 				skip = atoi(argv[3]);
+
 			}
 
 			if (argc > 4)
@@ -93,12 +95,33 @@ void Robot::start(ConsoleManager manager, int argc, char** argv)
 				detect = atoi(argv[4]);
 			}
 
-			//init Automate for Match
+			if (argc > 5)
+			{
 
+				if ((strcmp(argv[5], "FirstCarpet") == 0) || (strcmp(argv[5], "firstcarpet") == 0))
+				{
+					logger().info() << "Strategy FirstCarpet..." << logs::end;
+
+				}
+				else if ((strcmp(argv[5], "FirstSteps") == 0)
+						|| (strcmp(argv[5], "firststeps") == 0))
+				{
+					logger().info() << "Strategy FirstSteps..." << logs::end;
+				}
+				else
+				{
+					logger().error() << "ERROR Bad Strategy ..." << logs::end;
+					exit(0);
+				}
+
+			}
+
+			//init Automate for Match
 			// Create the data used to run the automate
 			Data *data = new Data();
-			data->isEmpty(true);
 
+			data->isEmpty(true);
+			data->strategy(argv[5]);
 			data->skipSetup(skip);
 			cc_setIgnoreFrontCollision(!detect);
 

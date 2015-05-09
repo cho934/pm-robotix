@@ -36,7 +36,9 @@ void RedCarpetTest::run(int argc, char *argv[])
 
 
 	robot.actions().redcarpetSystem().rightDeploy(debug);
+	robot.actions().redcarpetSystem().rightDeploy(debug);
 
+	robot.actions().redcarpetSystem().leftDeploy(debug);
 	robot.actions().redcarpetSystem().leftDeploy(debug);
 
 	logger().info() << this->name() << " - Happy End." << logs::end;

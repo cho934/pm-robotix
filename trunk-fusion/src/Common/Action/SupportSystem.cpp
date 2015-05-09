@@ -21,7 +21,7 @@ SupportSystem::~SupportSystem()
 void SupportSystem::incline(int power, int ramptimems)
 {
 	logger().debug() << "incline" << logs::end;
-	servodevicedriver->setMotorPosition(50, ramptimems, power);
+	servodevicedriver->setMotorPosition(40, ramptimems, power);
 }
 
 void SupportSystem::straighten(int power, int ramptimems)
