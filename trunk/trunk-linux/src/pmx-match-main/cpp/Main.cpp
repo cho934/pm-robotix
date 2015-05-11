@@ -41,7 +41,7 @@ int main(int argc, char** argv)
 	//prise en compte des arguments
 
 	logger.info()
-			<< "USAGE: PMX  [0=Matches, 1=Homologation, 2=Tabletest, Default=Homologation] [1=External encoder] [1=don't setup] [0=YELLOW]"
+			<< "USAGE: PMX  [0=Matches, 1=Homologation, 2=Tabletest, Default=Homologation] [1=External encoder] [1=skip setup] [0=YELLOW;1=GREEN]"
 			<< utils::end;
 
 	if (argc > 1)

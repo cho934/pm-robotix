@@ -25,9 +25,10 @@ ZONE_PATH* _zones_path[100];
 
 int _actions_count = 0;
 ACTIONS* _actions[200];
-void ia_clear(){
-	_zones_count=0;
-	_zones_path_count=0;
+void ia_clear()
+{
+	_zones_count = 0;
+	_zones_path_count = 0;
 	_actions_count = 0;
 }
 void ia_addAction(const char* name, RobotAction action)
@@ -40,8 +41,8 @@ void ia_addAction(const char* name, RobotAction action)
 	_actions_count++;
 }
 
-void ia_createZone(const char* name, float minX, float minY, float width, float height, float startX, float startY,
-		float startAngleDeg)
+void ia_createZone(const char* name, float minX, float minY, float width, float height,
+		float startX, float startY, float startAngleDeg)
 {
 	ZONE *z = (ZONE*) calloc(1, sizeof(ZONE));
 	z->minX = minX;
@@ -58,9 +59,11 @@ void ia_createZone(const char* name, float minX, float minY, float width, float 
 		z->startX = 3000 - z->startX;
 		z->minX = 3000 - z->width - z->minX;
 		z->startAngle = 180.0 - z->startAngle;
-		printf("ia_createZone %s GREEN\n",name);
-	}else{
-		printf("ia_createZone %s YELLOW\n",name);
+		printf("ia_createZone %s GREEN\n", name);
+	}
+	else
+	{
+		printf("ia_createZone %s YELLOW\n", name);
 	}
 
 	strcpy(z->name, name);
@@ -74,8 +77,8 @@ void ia_createZone(const char* name, float minX, float minY, float width, float 
 
 void ia_printZone(ZONE *z)
 {
-printf("ZONE: %s (%f,%f) w:%f h:%f start:%f,%f %f degrees\n", z->name, z->minX, z->minY, z->width, z->height, z->startX,
-		z->startY, z->startAngle);
+printf("ZONE: %s (%f,%f) w:%f h:%f start:%f,%f %f degrees\n", z->name, z->minX, z->minY, z->width,
+		z->height, z->startX, z->startY, z->startAngle);
 }
 void ia_checkZones()
 {
@@ -143,56 +146,60 @@ utils
 
 ZONE_PATH* ia_getZonePath(ZONE *z1, ZONE *z2)
 {
-int i;
-for (i = 0; i < _zones_path_count; i++)
-{
-ZONE_PATH *zp = _zones_path[i];
-if ((zp->z1 == z1 && zp->z2 == z2) || (zp->z1 == z2 && zp->z2 == z1))
-{
-	return zp;
-}
-}
-printf("ia_getZonePath return NULL!!!");
-return NULL;
+	int i;
+	for (i = 0; i < _zones_path_count; i++)
+	{
+		ZONE_PATH *zp = _zones_path[i];
+		if ((zp->z1 == z1 && zp->z2 == z2) || (zp->z1 == z2 && zp->z2 == z1))
+		{
+			return zp;
+		}
+	}
+	printf("ia_getZonePath return NULL!!!");
+	return NULL;
 }
 
 void ia_start()
 {
-ia_checkZones();
-if (_actions_count <= 0)
-{
-printf("%s (line %d) : Error : no actions defined\n", __FUNCTION__,
-__LINE__);
-exit(2);
-}
-boolean allDone = FALSE;
-while (!allDone)
-{
-allDone = TRUE;
-int i = 0;
-for (i = 0; i < _actions_count; i++)
-{
-	ACTIONS *z = _actions[i];
-	if (z->completed == FALSE)
+	ia_checkZones();
+	if (_actions_count <= 0)
 	{
-		printf("\n== ia is executing actions [%d/%d] : %s\n", i + 1, _actions_count, z->name);
-		printf("state before actions : %s : (%f,%f) %f\n", z->name, cc_getX(), cc_getY(), cc_getThetaInDegree());
-		printf("encoders: %ld,%ld\n",robot_getLeftExternalCounter(),robot_getRightExternalCounter());
-		boolean done = (*z->action)();
-		if (!done)
-		{
-			allDone = FALSE;
-		}
-		z->completed = done;
-		if(!done){
-			printf("state after actions : %s : (%f,%f) %f FAILED\n", z->name, cc_getX(), cc_getY(), cc_getThetaInDegree());
-		}
-		printf("state after actions : %s : (%f,%f) %f\n", z->name, cc_getX(), cc_getY(), cc_getThetaInDegree());
+	printf("%s (line %d) : Error : no actions defined\n", __FUNCTION__,
+	__LINE__);
+	exit(2);
 	}
+	boolean allDone = FALSE;
+	while (!allDone)
+	{
+		allDone = TRUE;
+		int i = 0;
+		for (i = 0; i < _actions_count; i++)
+		{
+			ACTIONS *z = _actions[i];
+			if (z->completed == FALSE)
+			{
+				printf("\n== ia is executing actions [%d/%d] : %s\n", i + 1, _actions_count, z->name);
+				printf("state before actions : %s : (%f,%f) %f\n", z->name, cc_getX(), cc_getY(),
+						cc_getThetaInDegree());
+				//printf("encoders: %ld,%ld\n",robot_getLeftExternalCounter(),robot_getRightExternalCounter());
+				boolean done = (*z->action)();
+				if (!done)
+				{
+					allDone = FALSE;
+				}
+				z->completed = done;
+				if (!done)
+				{
+					printf("state after actions : %s : (%f,%f) %f FAILED\n", z->name, cc_getX(), cc_getY(),
+							cc_getThetaInDegree());
+				}
+				printf("state after actions : %s : (%f,%f) %f\n", z->name, cc_getX(), cc_getY(),
+						cc_getThetaInDegree());
+			}
 
-}
-sleep(1);
-}
+		}
+	//sleep(1);
+	}
 }
 
 ZONE* ia_getZone(const char* zoneName)
@@ -225,9 +232,11 @@ return NULL;
 
 ZONE* ia_getNearestZoneFrom(float x, float y)
 {
-	ZONE *result=ia_getZoneAt(x, y) ;
-	if (result!= NULL){
-		printf("ia_getNearestZoneFrom is current zone : %s : (%f,%f) \n", result->name, cc_getX(), cc_getY());
+	ZONE *result = ia_getZoneAt(x, y);
+	if (result != NULL)
+	{
+		printf("ia_getNearestZoneFrom is current zone : %s : (%f,%f) \n", result->name, cc_getX(),
+				cc_getY());
 		return result;
 	}
 
@@ -235,22 +244,23 @@ ZONE* ia_getNearestZoneFrom(float x, float y)
 	result = _zones[i];
 	float minDist2 = 8888888888888.0f;
 
-	for (i = 0; i < _zones_count; i++){
+	for (i = 0; i < _zones_count; i++)
+	{
 
-ZONE *z = _zones[i];
-float x1 = z->minX + z->width / 2.0f;
-float y1 = z->minY + z->height / 2.0f;
-float dx = x1 - x;
-float dy = y1 - y;
-float d = dx * dx + dy * dy;
-if (d < minDist2)
-{
-	minDist2 = d;
-	result = z;
-	//printf("0000005result %s \n", result->name);
-}
-//printf("ia_getNearestZoneFrom for %f; %s (%f,%f) ? (%f,%f)\n", d, z->name, x, y, x1, y1);
-}
-printf("end ia_getNearestZoneFrom\n");
-return result;
+		ZONE *z = _zones[i];
+		float x1 = z->minX + z->width / 2.0f;
+		float y1 = z->minY + z->height / 2.0f;
+		float dx = x1 - x;
+		float dy = y1 - y;
+		float d = dx * dx + dy * dy;
+		if (d < minDist2)
+		{
+			minDist2 = d;
+			result = z;
+			//printf("0000005result %s \n", result->name);
+		}
+	//printf("ia_getNearestZoneFrom for %f; %s (%f,%f) ? (%f,%f)\n", d, z->name, x, y, x1, y1);
+	}
+	printf("end ia_getNearestZoneFrom\n");
+	return result;
 }

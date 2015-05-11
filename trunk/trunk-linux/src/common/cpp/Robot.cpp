@@ -121,6 +121,9 @@ void pmx::Robot::stop()
 void pmx::Robot::stopDevices()
 {
 	this->ledBar().stop(true);
+	this->clamp().releaseLeftElement();
+	this->clamp().releaseRightElement();
+		//TODO autres
 }
 
 void pmx::Robot::stopManagers()

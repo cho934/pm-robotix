@@ -46,7 +46,7 @@ typedef int boolean;
 
 
 #define defaultVmax 		1.0f
-#define defaultAcc 		0.2f
+#define defaultAcc 		0.3f
 #define defaultDec		0.5f
 
 //vTops is a virtual measure distance to avoid floating point computation

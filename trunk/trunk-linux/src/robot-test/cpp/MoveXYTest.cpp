@@ -108,6 +108,7 @@ void robottest::MoveXYTest::run(int argc, char *argv[])
 	int asserv=1;
 	robot.start(0, asserv);
 	cc_setPosition(0, 0, 0.0, cc_getMatchColor());
+	//cc_setPosition(220.0, 1021.0, 155.0, cc_getMatchColor());
 
 	robot.base().printPosition();
 

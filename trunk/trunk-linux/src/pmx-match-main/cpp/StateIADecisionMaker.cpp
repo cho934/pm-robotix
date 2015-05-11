@@ -23,30 +23,70 @@
 pmx::IAutomateState*
 pmx::StateIADecisionMaker::execute(Robot&robot, void *data)
 {
+	pmx::StateIADecisionMaker::logger().info() << "execute" << utils::end;
+
 	//IAutomateState* result;
 
 	pmx::Data* sharedData = (pmx::Data*) data;
-
+	TRAJ_STATE r;
 	//detection adversaire
 	robot.irSensorsGroup().startTimer();
 
+	/*
+	 //prendre balle et lever pince
+	 robot.clamp().takeLeftElement();
+	 //reculer de 2cm
+	 robot.base().printPosition();
+	 r = robot.base().move(-20);
+	 robot.base().printPosition();
+
+	 //reculer avec detection adverse jusqu'à B1
+	 r = robot.base().movexyteta(1, 650, 1030, -155);
+	 if (r != TRAJ_OK)
+	 {
+	 pmx::StateIADecisionMaker::logger().debug() << "==>TRAJ_COLLISION" << utils::end;
+	 robot.base().printPosition();
+	 return false;
+	 }
+	 robot.base().printPosition();
+
+	 //prendre gobelet B1
+	 r = robot.base().movexyteta(1, 830, 1130, -155);
+	 if (r != TRAJ_OK)
+	 {
+	 pmx::StateIADecisionMaker::logger().debug() << "==>TRAJ_COLLISION" << utils::end;
+	 robot.base().printPosition();
+	 return false;
+	 }
+	 robot.base().printPosition();
+	 */
+
+	//sortir
+	r = robot.base().movexyteta(0, 650, 1000, 0);
+	if (r != TRAJ_OK)
+	{
+		pmx::StateIADecisionMaker::logger().debug() << "==>TRAJ_COLLISION" << utils::end;
+		robot.base().printPosition();
+		return false;
+	}
+	robot.base().printPosition();
+
 	//launch IA
-	//ia_start();
+	ia_start();
 
 	robot.irSensorsGroup().stopTimer();
 
 	robot.base().stop();
-
+	robot.stopDevices();
 
 	//wait the execution Wait90
 	while (!sharedData->end90s()) //&& robot.chronometerRobot().getElapsedTimeInSec() < 35)
 	{
 		logger().info() << "sharedData->end90s=" << sharedData->end90s() << " time="
-						<< robot.chronometerRobot().getElapsedTimeInSec() << utils::end;
-
+				<< robot.chronometerRobot().getElapsedTimeInSec() << utils::end;
+		robot.base().stop();
 		usleep(300000);
 	}
-
 
 	robot.base().stop();
 	robot.stop();
@@ -249,82 +289,122 @@ pmx::StateIADecisionMaker::execute(Robot&robot, void *data)
  return true;
  }
  */
-void pmx::StateIADecisionMaker::IASetupTableTest()
+
+int takeL1()
 {
-	logger().debug() << "IASetupTableTest" << utils::end;
-	/*
-	 ia_createZone("depart", 0, 0, 450, 800, 400, 520, 0);
-	 ia_createZone("zoneT2", 200, 1000, 400, 400, 400, 850, 90);
-	 ia_createZone("zoneT3", 800, 1200, 200, 400, 1000, 1350, 0);
-	 ia_createZone("zoneB1", 500, 600, 400, 400, 750, 600, -90);
-	 ia_createZone("zonePoseP", 1100, 0, 400, 400, 1100, 400, -90);
-	 ia_createZone("zoneT1", 800, 500, 200, 200, 500, 600, 0);
+	TRAJ_STATE ts = TRAJ_INIT_NONE;
+	pmx::Robot &robot = pmx::Robot::instance();
+	pmx::StateIADecisionMaker::logger().debug() << "==> takeL1" << utils::end;
 
-	 ia_setPath("depart", "zoneT2", 400, 800);
-	 ia_setPath("depart", "zoneT3", 500, 600);
-	 ia_setPath("depart", "zoneB1", 500, 600);
-	 ia_setPath("depart", "zonePoseP", 1100, 690);
-	 ia_setPath("depart", "zoneT1", 500, 600);
+	cc_setIgnoreRearCollision(true);
+	cc_setIgnoreFrontCollision(true);
 
-	 ia_setPath("zoneT2", "zoneT3", 800, 1350);
-	 ia_setPath("zoneT2", "zoneB1", 500, 600);
-	 ia_setPath("zoneT2", "zonePoseP", 1100, 690);
-	 ia_setPath("zoneT2", "zoneT1", 500, 600);
+	do
+	{
+		pmx::StateIADecisionMaker::logger().debug() << "==> goToZone(zoneL1)" << utils::end;
+		ts = cc_goToZone("zoneL1");
+	} while (ts != TRAJ_OK);
+	robot.base().printPosition();
 
-	 ia_setPath("zoneT3", "zoneB1", 300, 900);
-	 ia_setPath("zoneT3", "zonePoseP", 300, 900);
-	 ia_setPath("zoneT3", "zoneT1", 500, 600);
+	pmx::StateIADecisionMaker::logger().debug() << "==> avancer sur L1 et le prendre" << utils::end;
+	//avancer sur L1 et le prendre
+	do
+	{
+		ts = robot.base().movexyteta(0, 760, 650, -90);
+	} while (ts != TRAJ_OK);
+	robot.base().printPosition();
 
-	 ia_setPath("zoneB1", "zonePoseP", 1000, 600);
-	 ia_setPath("zoneB1", "zoneT1", 500, 600);
+	robot.clamp().readyToTakeLeftElement();
+	robot.clamp().takeLeftElement();
 
-	 ia_setPath("zonePoseP", "zoneT1", 1000, 600);
-
-	 ia_addAction("pousserT2", &pousserT2);
-	 ia_addAction("pousserT3", &pousserT3);
-	 ia_addAction("pousserT1", &pousserT1);
-	 ia_addAction("poseP", &poseP);
-	 ia_addAction("tirSurB1", &tirSurB1);
-	 */
-
+	return true; //return true si ok sinon false si interruption
 }
+
+int takeR1R2()
+{
+	TRAJ_STATE ts = TRAJ_INIT_NONE;
+	pmx::Robot &robot = pmx::Robot::instance();
+	pmx::StateIADecisionMaker::logger().debug() << "==> takeR1R2" << utils::end;
+
+	robot.base().printPosition();
+	do
+	{
+		pmx::StateIADecisionMaker::logger().debug() << "==> goToZone(zoneR1R2)" << utils::end;
+		ts = cc_goToZone("zoneR1R2");
+	} while (ts != TRAJ_OK);
+	robot.base().printPosition();
+
+	//Prise du gobelet + R1
+	do
+	{
+		ts = robot.base().movexyteta(0, 240, 300, -135);
+	} while (ts != TRAJ_OK);
+	robot.base().printPosition();
+
+	robot.clamp().readyToTakeRightElement();
+	robot.clamp().takeRightElement();
+
+	//prise R2
+	do
+	{
+		ts = robot.base().movexyteta(0, cc_getX(), cc_getY(), -110);
+	} while (ts != TRAJ_OK);
+	robot.base().printPosition();
+
+	robot.clamp().readyToTakeRightElement();
+	robot.clamp().takeRightElement();
+
+	//
+	do
+	{
+		ts = robot.base().movexyteta(0, cc_getX(), cc_getY(), -45);
+	} while (ts != TRAJ_OK);
+	robot.base().printPosition();
+
+	do
+	{
+		ts = robot.base().movexyteta(0, 220, 280, 0);
+	} while (ts != TRAJ_OK);
+	robot.base().printPosition();
+
+	return true; //return true si ok sinon false si interruption
+}
+
 void pmx::StateIADecisionMaker::IASetupHomologation()
 {
 	logger().debug() << "IASetupHomologation" << utils::end;
-	/*
-	 ia_createZone("depart", 0, 0, 450, 800, 400, 520, 0);
-	 ia_createZone("zoneT2", 200, 1000, 400, 400, 400, 850, 90);
-	 ia_createZone("zoneT3", 800, 1200, 200, 400, 1000, 1350, 0);
-	 ia_createZone("zoneB1", 500, 600, 400, 400, 750, 600, -90);
-	 ia_createZone("zonePoseP", 1350, 0, 400, 400, 1350, 400, -90);
-	 ia_createZone("zoneT1", 800, 500, 200, 200, 500, 600, 0);
 
-	 ia_setPath("depart", "zoneT2", 400, 800);
-	 ia_setPath("depart", "zoneT3", 500, 600);
-	 ia_setPath("depart", "zoneB1", 500, 600);
-	 ia_setPath("depart", "zonePoseP", 1100, 690);
-	 ia_setPath("depart", "zoneT1", 500, 600);
+	ia_createZone("depart", 0, 800, 400, 400, 0, 1000, 180);
+	ia_createZone("zoneL1", 850, 600, 100, 100, 790, 858, -90);
+	ia_createZone("zoneR1R2", 0, 0, 400, 400, 280, 550, -90);
 
-	 ia_setPath("zoneT2", "zoneT3", 800, 1350);
-	 ia_setPath("zoneT2", "zoneB1", 500, 600);
-	 ia_setPath("zoneT2", "zonePoseP", 1100, 690);
-	 ia_setPath("zoneT2", "zoneT1", 500, 600);
+	ia_setPath("depart", "zoneL1", 790, 860);
+	ia_setPath("depart", "zoneR1R2", 600, 600);
 
-	 ia_setPath("zoneT3", "zoneB1", 300, 900);
-	 ia_setPath("zoneT3", "zonePoseP", 300, 900);
-	 ia_setPath("zoneT3", "zoneT1", 500, 600);
+	ia_setPath("zoneL1", "zoneR1R2", 600, 550);
 
-	 ia_setPath("zoneB1", "zonePoseP", 1100, 600);
-	 ia_setPath("zoneB1", "zoneT1", 500, 600);
+	ia_addAction("takeL1", &takeL1);
+	ia_addAction("takeR1R2", &takeR1R2);
 
-	 ia_setPath("zonePoseP", "zoneT1", 1100, 600);
+}
 
-	 ia_addAction("pousserT2", &pousserT2);
-	 ia_addAction("pousserT3", &pousserT3);
-	 ia_addAction("pousserT1", &pousserT1);
-	 ia_addAction("poseP", &poseP);
-	 ia_addAction("tirSurB1", &tirSurB1);
-	 */
+void pmx::StateIADecisionMaker::IASetupTableTest()
+{
+	logger().debug() << "IASetupTableTest" << utils::end;
+
+	ia_createZone("depart", 0, 800, 400, 400, 0, 1000, 180);
+	ia_createZone("zoneL1", 850, 600, 100, 100, 760, 860, -90);
+	//ia_createZone("zoneR1R2", 0, 0, 400, 400, 400, 550, -120);
+	ia_createZone("zoneR1R2", 0, 0, 400, 400, 370, 400, -135);
+
+	ia_setPath("depart", "zoneL1", 770, 860);
+	ia_setPath("depart", "zoneR1R2", 600, 600);
+
+	ia_setPath("zoneL1", "zoneR1R2", 600, 600);
+
+	ia_addAction("takeL1", &takeL1);
+	ia_addAction("takeR1R2", &takeR1R2);
+
 }
 
 void pmx::StateIADecisionMaker::IASetupMatches()

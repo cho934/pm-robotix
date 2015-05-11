@@ -160,8 +160,10 @@ void robot_initPID()
 {
 	if (!useExternalEncoders) //INTERNAL ENCODERS
 	{
-		motion_configureAlphaPID(0.0015f, 0.0008f, 0.000002f); //0.0008 0.00002 0.00003
-		motion_configureDeltaPID(0.0020f, 0.0001f, 0.0f); //0.0005 0.000008 0.000009 //0.0015 0.0008 0.000002
+		motion_configureAlphaPID(0.0009f, 0.00003f, 0.0f);
+		motion_configureDeltaPID(0.0005f, 0.0002f, 0.00000004f);
+		//motion_configureAlphaPID(0.0009f, 0.00003f, 0.0f); //0.0015f, 0.0002f, 0.000002f
+		//motion_configureDeltaPID(0.0006f, 0.0002f, 0.0f); //0.0003f, 0.0009f, 0.0f
 
 		motion_configureLeftPID(0.0006, 0.0, 0.0);
 		motion_configureRightPID(0.0006, 0.0, 0.0);
@@ -169,14 +171,15 @@ void robot_initPID()
 	else //EXTERNAL ENCODERS
 	{
 		exit(0);
-		motion_configureAlphaPID(0.000065f, 0.00001f, 0.00000002f); //(0.000065f, 0.000001f, 0.00000001f);
-		motion_configureDeltaPID(0.00006f, 0.00002f, 0.0000002f);
+		/*
+		 motion_configureAlphaPID(0.000065f, 0.00001f, 0.00000002f); //(0.000065f, 0.000001f, 0.00000001f);
+		 motion_configureDeltaPID(0.00006f, 0.00002f, 0.0000002f);
 
-		//motion_configureLeftPID(0.0004, 0.0004, 0.0000002);
-		//motion_configureRightPID(0.0004, 0.0004, 0.0000002);
+		 //motion_configureLeftPID(0.0004, 0.0004, 0.0000002);
+		 //motion_configureRightPID(0.0004, 0.0004, 0.0000002);
 
-		motion_configureLeftPID(0.00003, 0.00004, 0.0000002);
-		motion_configureRightPID(0.00003, 0.00004, 0.0000002);
+		 motion_configureLeftPID(0.00003, 0.00004, 0.0000002);
+		 motion_configureRightPID(0.00003, 0.00004, 0.0000002);*/
 	}
 
 }
