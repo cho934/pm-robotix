@@ -57,7 +57,7 @@ void utils::LoggerFactory::initialize()
 	//add(utils::Level::DEBUG, "pmx::ServoMotorDxl", "console");
 	//add(utils::Level::DEBUG, "pmx::GpioBoard", "console");
 	//add(utils::Level::DEBUG, "pmx::Md25", "console");
-	add(utils::Level::DEBUG, "pmx::ServoClamp", "console");
+	//add(utils::Level::DEBUG, "pmx::ServoClamp", "console");
 
 
 

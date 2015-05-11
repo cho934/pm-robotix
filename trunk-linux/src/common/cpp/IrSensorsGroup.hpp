@@ -64,7 +64,7 @@ private:
 	/*!
 	 * \brief capteur centre de type \ref IrSensor.
 	 */
-	pmx::IrSensor irRearCenter_;
+	//pmx::IrSensor irRearCenter_;
 
 public:
 
@@ -103,10 +103,10 @@ public:
 	{
 		return irCenter_;
 	}
-	inline pmx::IrSensor irRearCenter()
+	/*inline pmx::IrSensor irRearCenter()
 	{
 		return irRearCenter_;
-	}
+	}*/
 
 	/*!
 	 * \brief Méthode appelée en fonction du chronometer, àla fréquence du \ref Timer utilisé.

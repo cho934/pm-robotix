@@ -102,12 +102,12 @@ private:
 	/*!
 	 * \brief Encoder Left;.
 	 */
-	pmx::ExtEncoder encoderLeft_;
+	//pmx::ExtEncoder encoderLeft_;
 
 	/*!
 	 * \brief Encoder Right;.
 	 */
-	pmx::ExtEncoder encoderRight_;
+	//pmx::ExtEncoder encoderRight_;
 
 	/*!
 	 * \brief Servomotor standard de test.
@@ -118,13 +118,12 @@ private:
 	 * \brief Servomotor ax12 de test.
 	 */
 	pmx::ServoMotorDxlObject servoDxlTest_;
-	/*
-	pmx::ServoMotorDxlObject servoDxlLeft_;
 
+	pmx::ServoMotorDxlObject servoDxlLeft_;
 	pmx::ServoMotorDxlObject servoDxlRight_;
-	pmx::ServoMotorDxlObject servoDxlBallLaunch_;
-	pmx::ServoMotorDxlObject servoDxlFiletLaunch_;
-	pmx::ServoMotorDxlObject servoDxlP4_;
+	pmx::ServoMotorDxlObject servoDxlFront_;
+	pmx::ServoMotorDxlObject servoDxlRear_;
+	/*pmx::ServoMotorDxlObject servoDxlP4_;
 	pmx::ServoMotorDxlObject servoDxlP6front_;
 	pmx::ServoMotorDxlObject servoDxlP14_;
 */
@@ -136,17 +135,17 @@ private:
 	/*!
 	 * \brief Connexion Arduino par I2C.
 	 */
-	pmx::ArduinoBoard arduinoBoardDuemilanove_;
+	//pmx::ArduinoBoard arduinoBoardDuemilanove_;
 
 	/*!
 	 * \brief Connexion Arduino par I2C.
 	 */
-	pmx::ArduinoBoard arduinoBoardMega_;
+	//pmx::ArduinoBoard arduinoBoardMega_;
 
 	/*!
 	 * \brief Connexion Arduino par I2C.
 	 */
-	pmx::ArduinoBoard arduinoBoardSeeed_;
+	//pmx::ArduinoBoard arduinoBoardSeeed_;
 
 	/*!
 	 * \brief Connexion Gpio par I2C.
@@ -239,18 +238,20 @@ public:
 	 * \brief Cette methode retourne le codeur gauche.
 	 * \return encoderLeft_.
 	 */
+	/*
 	inline pmx::ExtEncoder & encoderLeft() {
 		return encoderLeft_;
 	}
-
+*/
 	/*!
 	 * \brief Cette methode retourne le codeur droit.
 	 * \return encoderRight_.
 	 */
+	/*
 	inline pmx::ExtEncoder & encoderRight() {
 		return encoderRight_;
 	}
-
+*/
 	/*!
 	 * \brief Cette methode retourne le servomotor test.
 	 * \return servoTest_.
@@ -267,19 +268,20 @@ public:
 	inline pmx::ServoMotorDxlObject & servoDxlTest() {
 		return servoDxlTest_;
 	}
-	/*
+
 	inline pmx::ServoMotorDxlObject & servoDxlLeft() {
 		return servoDxlLeft_;
 	}
 	inline pmx::ServoMotorDxlObject & servoDxlRight() {
 		return servoDxlRight_;
 	}
-	inline pmx::ServoMotorDxlObject & servoDxlBallLaunch() {
-		return servoDxlBallLaunch_;
+	inline pmx::ServoMotorDxlObject & servoDxlFront() {
+		return servoDxlFront_;
 	}
-	inline pmx::ServoMotorDxlObject & servoDxlFiletLaunch() {
-		return servoDxlFiletLaunch_;
+	inline pmx::ServoMotorDxlObject & servoDxlRear() {
+		return servoDxlRear_;
 	}
+	/*
 	inline pmx::ServoMotorDxlObject & servoDxlP6front() {
 		return servoDxlP6front_;
 	}
@@ -303,25 +305,28 @@ public:
 	 * \brief Cette methode retourne l'objet arduinoBoardDuemilanove.
 	 * \return arduinoBoardDuemilanove_.
 	 */
+	/*
 	inline pmx::ArduinoBoard & arduinoBoardDuemilanove() {
 		return arduinoBoardDuemilanove_;
-	}
+	}*/
 
 	/*!
 	 * \brief Cette methode retourne l'objet arduinoBoardDuemilanove.
 	 * \return arduinoBoardMega_.
 	 */
+	/*
 	inline pmx::ArduinoBoard & arduinoBoardMega() {
 		return arduinoBoardMega_;
-	}
+	}*/
 
 	/*!
 	 * \brief Cette methode retourne l'objet arduinoBoardDuemilanove.
 	 * \return arduinoBoardSeeed_.
 	 */
+	/*
 	inline pmx::ArduinoBoard & arduinoBoardSeeed() {
 		return arduinoBoardSeeed_;
-	}
+	}*/
 
 	/*!
 	 * \brief Cette methode retourne l'objet GpioBoard.

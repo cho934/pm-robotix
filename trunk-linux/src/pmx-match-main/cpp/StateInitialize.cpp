@@ -30,6 +30,10 @@ pmx::StateInitialize::execute(Robot& robot, void *data)
 
 	robot.clamp().readyToTakeLeftElement();
 	robot.clamp().readyToTakeRightElement();
+	robot.servoDxlRight().turnMax();
+	robot.servoDxlLeft().turnMax();
+	robot.servoDxlRight().turnMin();
+	robot.servoDxlLeft().turnMin();
 
 	//skip setup
 	if (!sharedData->skipSetup())

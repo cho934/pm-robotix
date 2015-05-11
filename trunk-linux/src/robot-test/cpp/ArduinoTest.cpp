@@ -46,7 +46,7 @@ void robottest::ArduinoTest::run(int argc, char *argv[])
 	for (int i = 0; i < nb; i++)
 	{
 		// drive some arduino tests
-
+/*
 		robot.arduinoBoardMega().launchCmd("L11", "LED1 on");
 		logger().info() << "L11" << "LED1 on" << utils::end;
 		usleep(timeSpan*1000);
@@ -59,6 +59,7 @@ void robottest::ArduinoTest::run(int argc, char *argv[])
 		robot.arduinoBoardMega().launchCmd("L20", "LED2 off");
 		logger().info() << "L20" << "LED2 off" << utils::end;
 		usleep(timeSpan*1000);
+		*/
 	}
 
 	logger().info() << "End of RobotTest." << utils::end;

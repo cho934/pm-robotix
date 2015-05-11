@@ -118,21 +118,24 @@ void robot_setMotorLeftSpeed(int power)
 
 long robot_getLeftExternalCounter() //en tick
 {
-
+/*
 	pmx
 	::Robot &robot = pmx::Robot::instance();
 	long leftCounter = -1 * robot.encoderLeft().readCounter();
 
-	return leftCounter;
+	return leftCounter;*/
+	return 0;
 }
 long robot_getRightExternalCounter()
 {
-
+	/*
 	pmx
 	::Robot &robot = pmx::Robot::instance();
 	long rightCounter = robot.encoderRight().readCounter();
 
 	return rightCounter;
+	*/
+	return 0;
 }
 
 long robot_getLeftInternalCounter()

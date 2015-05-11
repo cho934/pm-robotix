@@ -21,11 +21,14 @@ void robottest::ServoMotorDxlLearnTest::run(int, char *[])
 	logger().info() << "levier gauche 3 :dxlGetPos= " << pos3 << utils::end;
 	long pos5 = pmx::ServoMotorDxl::instance().dxlGetPos(5);
 	logger().info() << "levier droit  5 :dxlGetPos= " << pos5 << utils::end;
-	long pos7 = pmx::ServoMotorDxl::instance().dxlGetPos(7);
-	logger().info() << "tir filet 7 :dxlGetPos= " << pos7 << utils::end;
-	long pos8 = pmx::ServoMotorDxl::instance().dxlGetPos(8);
-	logger().info() << "tir balle 8 :dxlGetPos= " << pos8 << utils::end;
 
+
+	long pos7 = pmx::ServoMotorDxl::instance().dxlGetPos(7);
+	logger().info() << "front 7 :dxlGetPos= " << pos7 << utils::end;
+	long pos6 = pmx::ServoMotorDxl::instance().dxlGetPos(6);
+	logger().info() << "rear  6 :dxlGetPos= " << pos6 << utils::end;
+
+	/*
 	long pos4 = pmx::ServoMotorDxl::instance().dxlGetPos(4);
 	logger().info() << " p4 :dxlGetPos= " << pos4 << utils::end;
 	long pos6 = pmx::ServoMotorDxl::instance().dxlGetPos(6);
@@ -34,7 +37,7 @@ void robottest::ServoMotorDxlLearnTest::run(int, char *[])
 
 	long pos14 = pmx::ServoMotorDxl::instance().dxlGetPos(14);
 		logger().info() << " p14 :dxlGetPos= " << pos14 << utils::end;
-
+*/
 
 	robot.stop();
 
