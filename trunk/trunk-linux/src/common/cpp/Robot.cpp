@@ -13,41 +13,43 @@
 
 pmx::Robot::Robot() :
 		base_(*this), myColor_(pmx::PMXNOCOLOR), runMode_(pmx::ROBOTHOMOLOGATION), groveColorSensor_(
-				*this), ledBar_(*this), md25_(*this), encoderLeft_(*this, 'B', 17), encoderRight_(
-				*this, 'D', 31),
+				*this), ledBar_(*this), md25_(*this),
+				//encoderLeft_(*this, 'B', 17), encoderRight_(*this, 'D', 31),
 		//servoTest_(*this, 0),
 
 		servoDxlTest_(*this, 1, 475, 841),
-		/*
-		 servoDxlLeft_(*this, 3, 512, 175),
-		 servoDxlRight_(*this, 5, 475, 841),
-		 servoDxlBallLaunch_(*this, 8, 378, 592),
-		 servoDxlFiletLaunch_(*this, 7, 544, 843),
-		 servoDxlP14_(*this, 14, 531, 841),
+
+		 servoDxlLeft_(*this, 3, 520, 200),
+		 servoDxlRight_(*this, 5, 480, 820),
+		 servoDxlFront_(*this, 7, 570, 790),
+		 servoDxlRear_(*this, 6, 570, 790),
+		 /*servoDxlP14_(*this, 14, 531, 841),
 		 servoDxlP4_(*this, 4, 531, 841),
 		 servoDxlP6front_(*this, 6, 770, 540),
 		 */
-		irSensorsGroup_(*this), arduinoBoardDuemilanove_(*this, 0x2A), arduinoBoardMega_(*this,
-				0x2B), arduinoBoardSeeed_(*this, 0x2C), gpioBoard_(*this), lcdBoard_(), clamp_(
-				*this)
+		irSensorsGroup_(*this),
+/* arduinoBoardDuemilanove_(*this, 0x2A)
+, arduinoBoardMega_(*this, 0x2B)
+, arduinoBoardSeeed_(*this, 0x2C), */
+gpioBoard_(*this), lcdBoard_(), clamp_(*this)
 {
 
 	//initialize i2C components
 	groveColorSensor_.begin();
-	arduinoBoardDuemilanove_.begin();
-	arduinoBoardMega_.begin();
-	arduinoBoardSeeed_.begin();
+	//arduinoBoardDuemilanove_.begin();
+	//arduinoBoardMega_.begin();
+	//arduinoBoardSeeed_.begin();
 	gpioBoard_.begin();
 	lcdBoard_.begin(16, 2);
 	md25_.begin();
 	servoDxlTest_.begin();
 
-	/*
+
 	 servoDxlLeft_.begin();
 	 servoDxlRight_.begin();
-	 servoDxlBallLaunch_.begin();
-	 servoDxlFiletLaunch_.begin();
-	 servoDxlP6front_.begin();
+	 servoDxlFront_.begin();
+	 servoDxlRear_.begin();
+		/* servoDxlP6front_.begin();
 	 servoDxlP4_.begin();
 	 servoDxlP14_.begin();
 	 */

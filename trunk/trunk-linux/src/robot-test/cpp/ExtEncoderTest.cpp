@@ -46,7 +46,7 @@ void robottest::ExtEncoderTest::run(int argc, char *argv[])
 	long long counterL = 0;
 
 	pmx::Robot &robot = pmx::Robot::instance();
-
+/*
 	robot.encoderLeft().clearCounter();
 	robot.encoderRight().clearCounter();
 
@@ -59,7 +59,7 @@ void robottest::ExtEncoderTest::run(int argc, char *argv[])
 
 		std::cout << "counterL = " << counterL << "\t\t counterR = " << counterR << std::endl;
 	}
-
+*/
 	logger().info() << "End of RobotTest." << utils::end;
 }
 

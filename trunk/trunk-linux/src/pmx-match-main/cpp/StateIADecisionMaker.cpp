@@ -65,7 +65,7 @@ pmx::StateIADecisionMaker::execute(Robot&robot, void *data)
 	r = robot.base().movexyteta(0, 650, 1000, 0);
 	if (r != TRAJ_OK)
 	{
-		pmx::StateIADecisionMaker::logger().debug() << "==>TRAJ_COLLISION" << utils::end;
+		//pmx::StateIADecisionMaker::logger().debug() << "==>TRAJ_COLLISION" << utils::end;
 		robot.base().printPosition();
 		return false;
 	}
@@ -347,25 +347,52 @@ int takeR1R2()
 	//prise R2
 	do
 	{
-		ts = robot.base().movexyteta(0, cc_getX(), cc_getY(), -110);
+		ts = robot.base().movexyteta(0, cc_getX(), cc_getY(), -45);
 	} while (ts != TRAJ_OK);
 	robot.base().printPosition();
 
 	robot.clamp().readyToTakeRightElement();
 	robot.clamp().takeRightElement();
 
-	//
+	//1er clap
 	do
 	{
 		ts = robot.base().movexyteta(0, cc_getX(), cc_getY(), -45);
 	} while (ts != TRAJ_OK);
 	robot.base().printPosition();
+	if (robot.myColor() == pmx::PMXGREEN)
+		robot.servoDxlLeft().turnMax();
+	if (robot.myColor() == pmx::PMXYELLOW)
+		robot.servoDxlRight().turnMax();
 
+//2ème clap
 	do
 	{
-		ts = robot.base().movexyteta(0, 220, 280, 0);
+		ts = robot.base().movexyteta(0, 850, 220, 90);
 	} while (ts != TRAJ_OK);
 	robot.base().printPosition();
+
+	//recalage
+	do
+	{
+		ts = robot.base().movexyteta(1, 850, 120, 90); //128?
+	} while (ts != TRAJ_OK);
+	robot.base().printPosition();
+	cc_setPosition(850.0, 0.0, 90.0, cc_getMatchColor());
+	do
+	{
+		ts = robot.base().movexyteta(0, 850, 200, 45); //128?
+	} while (ts != TRAJ_OK);
+	robot.base().printPosition();
+
+	//take R3
+	do
+	{
+		ts = robot.base().movexyteta(0, 1000, 300, 90); //128?
+	} while (ts != TRAJ_OK);
+	robot.base().printPosition();
+
+	//depose R
 
 	return true; //return true si ok sinon false si interruption
 }

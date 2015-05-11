@@ -16,8 +16,12 @@
 #include "SvgWriter.hpp"
 
 pmx::IrSensorsGroup::IrSensorsGroup(pmx::Robot & robot)
-		: ARobotElement(robot), timerIrSensorGroup_(PERIOD_IR, 0, this), initDone_(false), irLeft_(robot, 0, 30), irCenter_(
-				robot, 1, 150), irRight_(robot, 2, 30), irRearCenter_(robot, 3, 30) {
+		: ARobotElement(robot), timerIrSensorGroup_(PERIOD_IR, 0, this), initDone_(false)
+, irLeft_(robot, 4, 30)
+, irCenter_(robot, 5, 30)
+, irRight_(robot, 0, 30)
+//, irRearCenter_(robot, 1, 30)
+{
 	//temps de mise en route des capteurs GP2 IR
 	waitSensors();
 }
@@ -41,18 +45,20 @@ void pmx::IrSensorsGroup::onTimer(utils::Chronometer chrono) {
 	this->getValue(&this->irRight_);
 	this->getValue(&this->irLeft_);
 	this->getValue(&this->irCenter_);
-	this->getValue(&this->irRearCenter_);
+	//this->getValue(&this->irRearCenter_);
 
 	logger().debug() << "onTimer : " << chrono.getElapsedTimeInMilliSec() << " ms R=" << this->irRight_.distanceMm()
-			<< " mm C=" << this->irCenter_.distanceMm() << " mm L=" << this->irLeft_.distanceMm() << " mm RC="
-			<< this->irRearCenter_.distanceMm() << " mm" << utils::end;
+			<< " mm C=" << this->irCenter_.distanceMm() << " mm L=" << this->irLeft_.distanceMm()
+			//<< " mm RC=" << this->irRearCenter_.distanceMm() << " mm"
+			<< utils::end;
 
 	//test detection opponent
 	if (irCenter_.distanceMm() <= 270) {
 		logger().info() << "===> opponent detected irCenter_" << utils::end;
 		logger().info() << "onTimer : " << chrono.getElapsedTimeInMilliSec() << " ms R=" << this->irRight_.distanceMm()
-				<< " mm C=" << this->irCenter_.distanceMm() << " mm L=" << this->irLeft_.distanceMm() << " mm RC="
-				<< this->irRearCenter_.distanceMm() << " mm" << utils::end;
+				<< " mm C=" << this->irCenter_.distanceMm() << " mm L=" << this->irLeft_.distanceMm()
+				//<< " mm RC=" << this->irRearCenter_.distanceMm() << " mm"
+				<< utils::end;
 		//log SVG
 	//	std::ostringstream msg;
 	//	msg << " C " << irCenter_.distanceMm() << "mm";
@@ -63,24 +69,27 @@ void pmx::IrSensorsGroup::onTimer(utils::Chronometer chrono) {
 	if (irRight_.distanceMm() <= 170) {
 		logger().info() << "=> opponent detected irRight_" << utils::end;
 		logger().info() << "onTimer : " << chrono.getElapsedTimeInMilliSec() << " ms R=" << this->irRight_.distanceMm()
-				<< " mm C=" << this->irCenter_.distanceMm() << " mm L=" << this->irLeft_.distanceMm() << " mm RC="
-				<< this->irRearCenter_.distanceMm() << " mm" << utils::end;
+				<< " mm C=" << this->irCenter_.distanceMm() << " mm L=" << this->irLeft_.distanceMm()
+				//<< " mm RC=" << this->irRearCenter_.distanceMm() << " mm"
+				<< utils::end;
 		robot().base().collisionOccured(1);
 	}
 	if (irLeft_.distanceMm() <= 170) {
 		logger().info() << "=> opponent detected irLeft_" << utils::end;
 		logger().info() << "onTimer : " << chrono.getElapsedTimeInMilliSec() << " ms R=" << this->irRight_.distanceMm()
-				<< " mm C=" << this->irCenter_.distanceMm() << " mm L=" << this->irLeft_.distanceMm() << " mm RC="
-				<< this->irRearCenter_.distanceMm() << " mm" << utils::end;
+				<< " mm C=" << this->irCenter_.distanceMm() << " mm L=" << this->irLeft_.distanceMm()
+				//<< " mm RC=" << this->irRearCenter_.distanceMm() << " mm"
+				<< utils::end;
 		robot().base().collisionOccured(1);
 	}
+	/*
 	if (irRearCenter_.distanceMm() <= 170) {
 		logger().debug() << "=> opponent detected REAR " << utils::end;
 		logger().debug() << "onTimer : " << chrono.getElapsedTimeInMilliSec() << " ms R=" << this->irRight_.distanceMm()
 				<< " mm C=" << this->irCenter_.distanceMm() << " mm L=" << this->irLeft_.distanceMm() << " mm RC="
 				<< this->irRearCenter_.distanceMm() << " mm" << utils::end;
 		robot().base().collisionOccured(0);
-	}
+	}*/
 
 }
 
@@ -89,7 +98,7 @@ void pmx::IrSensorsGroup::onTimerEnd(utils::Chronometer chrono) {
 	irRight_.reset();
 	irLeft_.reset();
 	irCenter_.reset();
-	irRearCenter_.reset();
+	//irRearCenter_.reset();
 }
 
 void pmx::IrSensorsGroup::getValue(pmx::IrSensor * irSensor) {
