@@ -31,7 +31,11 @@ void pmx::Wait90SecondsAction::execute()
 	//démarrage du chrono
 	robot_->chronometerRobot().start();
 
-	sleep(5);
+	//TODO TEMPORAIRE pour ne pas prendre en compte Wait90SecondsAction
+	sharedData->end90s(true);
+
+
+	sleep(89);
 
 	/*
 	 this->robot_->ledBar().startAlternate(1000, 50000, 0xF0, 0x0F, false);

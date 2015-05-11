@@ -27,7 +27,7 @@ servo-clampLMed_ : 2300
 servo-clampLMax_ : 3000
 servo-clampLSpeed_ : 75
 
-servo-elevatorLMin_ : 400
+servo-elevatorLMin_ : 550
 servo-elevatorLMed_ : 2300
 servo-elevatorLMax_ : 3700
 servo-elevatorLSpeed_ : 75

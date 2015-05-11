@@ -40,7 +40,15 @@ pmx::StateAdjustRobotPosition::execute(Robot& robot, void *data)
 	logger().debug() << "Color=" << robot.myColor() << " cc_getMatchColor()=" << cc_getMatchColor()
 			<< utils::end;
 
-	cc_setPosition(130, 465, 0.0, cc_getMatchColor());
+	if (robot.myRunningMode()== ROBOTHOMOLOGATION)
+	{
+		cc_setPosition(214.0, 1010.0, 150.5, cc_getMatchColor()); //entre 150 et 151°
+	}
+	if (robot.myRunningMode()== ROBOTTABLETEST)
+	{
+		cc_setPosition(198.0, 1000.0, 0.0, cc_getMatchColor());
+	}
+
 
 	logger().info() << "cc_getX()=" << cc_getX() << " cc_getY()=" << cc_getY()
 			<< " cc_getThetaInDegree()=" << cc_getThetaInDegree() << utils::end;
