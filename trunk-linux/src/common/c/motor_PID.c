@@ -224,9 +224,9 @@ int32 pid_ComputeRcva(PID_SYSTEM system, int32 error, int32 vitesse)
 	pidSystemValues *val;
 	val = &(systemValues[system]);
 
-// 	#if(LEVEL_PID <= DEBUG)
-// 		writeDebugStreamLine("cpid.c : before error=%d vitesse=%d", error, vitesse);
-// 	#endif
+ 	#ifdef LEVEL_PID
+ 		printf("\npid_ComputeRcva : before error=%d vitesse=%d", error, vitesse);
+ 	#endif
 
 	error /= VTOPS_PER_TICKS; //=[Ticks/sample]
 	vitesse /= VTOPS_PER_TICKS; //=[Ticks/sample]
@@ -234,15 +234,15 @@ int32 pid_ComputeRcva(PID_SYSTEM system, int32 error, int32 vitesse)
 	int32 cmd = error * val->conf.kP;
 	int32 pwm = cmd - val->conf.kD * vitesse;
 
-// 	#if(LEVEL_PID <= DEBUG)
-// 		writeDebugStreamLine("cpid.c : during error=%d vitesse=%d pwm=%d", error, vitesse, pwm);
-// 	#endif
+ 	#ifdef LEVEL_PID
+	printf("\npid_ComputeRcva : during error=%d vitesse=%d pwm=%d", error, vitesse, pwm);
+ 	#endif
 
 	pwm /= 256; //2048 ou 1024 ou 256??
 
-// 	#if(LEVEL_PID <= DEBUG)
-// 		writeDebugStreamLine("cpid.c : after  error=%d vitesse=%d pwm=%d", error, vitesse, pwm);
-// 	#endif
+ 	#ifdef LEVEL_PID
+	printf("\npid_ComputeRcva : after  error=%d vitesse=%d pwm=%d", error, vitesse, pwm);
+ 	#endif
 
 	//bound the resulting pwm
 	if (pwm > MAX_PWM_VALUE)

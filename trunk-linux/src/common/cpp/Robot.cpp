@@ -88,6 +88,7 @@ void pmx::Robot::start(int useExtEncoders, int startAsserv)
 
 	if (useExtEncoders)
 	{
+		exit(0);
 		lRes = 20100; //19885
 		rRes = 20100; //20360
 		distRes = 0.250f;

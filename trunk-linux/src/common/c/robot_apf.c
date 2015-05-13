@@ -118,23 +118,23 @@ void robot_setMotorLeftSpeed(int power)
 
 long robot_getLeftExternalCounter() //en tick
 {
-/*
-	pmx
-	::Robot &robot = pmx::Robot::instance();
-	long leftCounter = -1 * robot.encoderLeft().readCounter();
+	/*
+	 pmx
+	 ::Robot &robot = pmx::Robot::instance();
+	 long leftCounter = -1 * robot.encoderLeft().readCounter();
 
-	return leftCounter;*/
+	 return leftCounter;*/
 	return 0;
 }
 long robot_getRightExternalCounter()
 {
 	/*
-	pmx
-	::Robot &robot = pmx::Robot::instance();
-	long rightCounter = robot.encoderRight().readCounter();
+	 pmx
+	 ::Robot &robot = pmx::Robot::instance();
+	 long rightCounter = robot.encoderRight().readCounter();
 
-	return rightCounter;
-	*/
+	 return rightCounter;
+	 */
 	return 0;
 }
 
@@ -163,13 +163,23 @@ void robot_initPID()
 {
 	if (!useExternalEncoders) //INTERNAL ENCODERS
 	{
-		motion_configureAlphaPID(0.0009f, 0.00003f, 0.0f);
-		motion_configureDeltaPID(0.0005f, 0.0002f, 0.00000004f);
-		//motion_configureAlphaPID(0.0009f, 0.00003f, 0.0f); //0.0015f, 0.0002f, 0.000002f
-		//motion_configureDeltaPID(0.0006f, 0.0002f, 0.0f); //0.0003f, 0.0009f, 0.0f
+
+		//Pid RCVA
+		motion_configureAlphaPID(2.0f, 0.0f, 0.0f);
+		motion_configureDeltaPID(2.0f, 0.0f, 0.0f);
 
 		motion_configureLeftPID(0.0006, 0.0, 0.0);
 		motion_configureRightPID(0.0006, 0.0, 0.0);
+
+		/*//pid standard
+		 motion_configureAlphaPID(0.0009f, 0.00003f, 0.0f);
+		 motion_configureDeltaPID(0.0005f, 0.0002f, 0.00000004f);
+		 //motion_configureAlphaPID(0.0009f, 0.00003f, 0.0f); //0.0015f, 0.0002f, 0.000002f
+		 //motion_configureDeltaPID(0.0006f, 0.0002f, 0.0f); //0.0003f, 0.0009f, 0.0f
+
+		 motion_configureLeftPID(0.0006, 0.0, 0.0);
+		 motion_configureRightPID(0.0006, 0.0, 0.0);
+		 */
 	}
 	else //EXTERNAL ENCODERS
 	{

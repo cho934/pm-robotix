@@ -1,5 +1,5 @@
 /*******************************************************************************
- * ClubElek Robot motion control software for Eurobot 2007
+p * ClubElek Robot motion control software for Eurobot 2007
  * Copyright (C) 2006-2007 ClubElek
  *
  * This program is free software; you can redistribute it and/or
@@ -275,6 +275,8 @@ void *motion_ITTask(void *p_arg)
 	static BOOL fin0, fin1;
 	static int32 pwm0, pwm1;
 	static int32 pwm0b, pwm1b;
+	static int32 error0, error1;
+
 #ifdef DEBUG_MOTION
 	printf("motion.c : motion_ITTask start\n");
 #endif
@@ -379,15 +381,17 @@ void *motion_ITTask(void *p_arg)
 #endif
 
 			//compute pwm for first motor
-			//	printf("motion.c : pid_Compute : ORDER 0 : %d current:%d\n", ord0,
-			//			motors[motionCommand.mcType][0].lastPos);
-			pwm0 = pid_Compute(motors[motionCommand.mcType][0].PIDSys, ord0,
-					motors[motionCommand.mcType][0].lastPos, dSpeed0);
-			//	printf("motion.c : pid_Compute : ORDER 1 : %d current:%d\n", ord1,
-			//			motors[motionCommand.mcType][1].lastPos);
+			//pwm0 = pid_Compute(motors[motionCommand.mcType][0].PIDSys, ord0, motors[motionCommand.mcType][0].lastPos, dSpeed0);
+			//test with Rcva pid
+			error0 = ord0 - motors[motionCommand.mcType][0].lastPos;
+			pwm0 = pid_ComputeRcva(motors[motionCommand.mcType][0].PIDSys, error0, dSpeed0);
+
+
 			//compute pwm for second motor
-			pwm1 = pid_Compute(motors[motionCommand.mcType][1].PIDSys, ord1,
-					motors[motionCommand.mcType][1].lastPos, dSpeed1);
+			//pwm1 = pid_Compute(motors[motionCommand.mcType][1].PIDSys, ord1, motors[motionCommand.mcType][1].lastPos, dSpeed1);
+
+			error1 = ord1 - motors[motionCommand.mcType][1].lastPos;
+			pwm1 = pid_ComputeRcva(motors[motionCommand.mcType][1].PIDSys, error1, dSpeed1);
 
 			//output pwm to motors
 			if (motionCommand.mcType == LEFT_RIGHT)
@@ -442,16 +446,13 @@ void *motion_ITTask(void *p_arg)
 			dSpeed0 = dLeft;
 			dSpeed1 = dRight;
 			//compute pwm for first motor
-			//pwm0 = pid_Compute(motors[motionCommand.mcType][0].PIDSys, dLeft);
-			//pwm0 = pid_ComputeRcva(motors[motionCommand.mcType][0].PIDSys, dLeft, dSpeed0);
-			pwm0 = pid_Compute(motors[motionCommand.mcType][0].PIDSys, 0,
-					motors[motionCommand.mcType][0].lastPos, dSpeed0);
+			//pwm0 = pid_Compute(motors[motionCommand.mcType][0].PIDSys, 0, motors[motionCommand.mcType][0].lastPos, dSpeed0);
+			pwm0 = pid_ComputeRcva(motors[motionCommand.mcType][0].PIDSys, dLeft, dSpeed0);
 
 			//compute pwm for second motor
-			//pwm1 = pid_Compute(motors[motionCommand.mcType][1].PIDSys, dRight);
-			//pwm1 = pid_ComputeRcva(motors[motionCommand.mcType][1].PIDSys, dRight, dSpeed1);
-			pwm1 = pid_Compute(motors[motionCommand.mcType][1].PIDSys, 0,
-					motors[motionCommand.mcType][1].lastPos, dSpeed1);
+			//pwm1 = pid_Compute(motors[motionCommand.mcType][1].PIDSys, 0, motors[motionCommand.mcType][1].lastPos, dSpeed1);
+			pwm1 = pid_ComputeRcva(motors[motionCommand.mcType][1].PIDSys, dRight, dSpeed1);
+
 			printf("motion_ITTask ASSISTED_HANDLING  pwm0=%d pwm1=%d \n", pwm0, pwm1);
 			//write pwm in registers
 			setPWM(pwm0, pwm1);
