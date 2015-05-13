@@ -13,7 +13,9 @@
 //#define DEBUG_PID
 //#define LOG_PID
 #define LOG_SVG_APPENDER //log c++ pour activer le SVG
-#define LOG_PID_APPENDER  //log c++ pour activer le fileAppender
+//#define LOG_PID_APPENDER  //log c++ pour activer le fileAppender
+
+//#define LEVEL_PID //log PID
 
 #define uint8 unsigned char
 #define uint16 unsigned short
@@ -50,11 +52,11 @@ typedef int boolean;
 #define defaultDec		0.5f
 
 //vTops is a virtual measure distance to avoid floating point computation
-#define VTOPS_PER_TICKS 1000 //1000 => ROBOT_TEST 13 -700  1.0 0.8 1.5  0.0015 0.0008 0.000002
+#define VTOPS_PER_TICKS 2000 //1000 => ROBOT_TEST 13 -700  1.0 0.8 1.5  0.0015 0.0008 0.000002
 
 // Attention ces valeurs sont couplées
-#define DEFAULT_SAMPLING_FREQ 100 // en Hz (cad combien de fois par seconde)
-#define valueSample 0.01f //(1f/DEFAULT_SAMPLING_FREQ)
+#define DEFAULT_SAMPLING_FREQ 400 // en Hz (cad combien de fois par seconde)
+#define valueSample 0.04f //(1f/DEFAULT_SAMPLING_FREQ)
 
 //some values goes in pair :
 //the first one is the measured/real one
