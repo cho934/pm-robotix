@@ -92,7 +92,7 @@ StateInitialize::execute(Robot& r, void *data)
 
 			}
 
-			usleep(800);
+			usleep(100000);
 		}
 
 	}

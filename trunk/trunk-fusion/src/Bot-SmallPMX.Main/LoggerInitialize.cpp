@@ -32,9 +32,9 @@ void logs::LoggerFactory::initialize()
 	add(logs::Level::INFO, "StateInitialize", "console");
 	add(logs::Level::INFO, "StateAdjustRobotPosition", "console");
 	add(logs::Level::INFO, "StateWaitForStart", "console");
-	add(logs::Level::DEBUG, "StateIADecisionMaker", "console");
+	//add(logs::Level::DEBUG, "StateIADecisionMaker", "console");
 	add(logs::Level::INFO, "Wait90SecondsAction", "console");
-
+/*
 	add(logs::Level::INFO, "Robot", "console");
 
 	add(logs::Level::INFO, "LedBar", "console");
@@ -42,19 +42,19 @@ void logs::LoggerFactory::initialize()
 	add(logs::Level::INFO, "SoundBar", "console");
 	add(logs::Level::INFO, "SoundBarAction", "console");
 	add(logs::Level::INFO, "ButtonBar", "console");
-	add(logs::Level::INFO, "Tirette", "console");
+	add(logs::Level::INFO, "Tirette", "console");*/
 	add(logs::Level::INFO, "DetectionSensor", "console");
 
 	//DEBUG
 	//add(logs::Level::DEBUG, "MotorControl", "console");
 	//add(logs::Level::DEBUG, "ActionManager", "console");
 	//add(logs::Level::DEBUG, "Actions", "console");
-	add(logs::Level::INFO, "Asserv", "console");
+	//add(logs::Level::INFO, "Asserv", "console");
 
 	//DRIVER
-	add(logs::Level::INFO, "LedDriver.SIMU", "console");
-	add(logs::Level::INFO, "SoundDriver.SIMU", "console");
-	add(logs::Level::INFO, "MotorDeviceDriver.EV3", "console");
-	add(logs::Level::INFO, "AsservDriver.EV3", "console");
+	//add(logs::Level::INFO, "LedDriver.SIMU", "console");
+	//add(logs::Level::INFO, "SoundDriver.SIMU", "console");
+	//add(logs::Level::INFO, "MotorDeviceDriver.EV3", "console");
+	//add(logs::Level::INFO, "AsservDriver.EV3", "console");
 
 }

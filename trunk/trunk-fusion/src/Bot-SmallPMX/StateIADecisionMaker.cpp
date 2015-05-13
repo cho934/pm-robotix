@@ -25,6 +25,7 @@ StateIADecisionMaker::execute(Robot&r, void *data)
 	Data* sharedData = (Data*) data;
 	SRobotExtended& robot = dynamic_cast<SRobotExtended&>(r);
 
+	logger().info() << "strategy = " << sharedData->strategy() << logs::end;
 	if (sharedData->strategy() == "FirstSteps")
 	{
 
@@ -71,7 +72,7 @@ void StateIADecisionMaker::IAFirstSteps(Robot& r, void * data)
 	TRAJ_STATE ret;
 	do
 	{
-		ret = robot.asserv().base().movexyteta(0, 1100, 1000, 90);
+		ret = robot.asserv().base().movexyteta(0, 1120, 1000, 90);
 		logger().debug() << "r=" << ret << logs::end;
 		if (ret != TRAJ_OK)
 			sleep(2);
@@ -80,7 +81,7 @@ void StateIADecisionMaker::IAFirstSteps(Robot& r, void * data)
 
 	do
 	{
-		ret = robot.asserv().base().movexyteta(0, 1100, 1360, 90);
+		ret = robot.asserv().base().movexyteta(0, 1120, 1360, 90);
 		logger().debug() << "r=" << ret << logs::end;
 		if (ret != TRAJ_OK)
 			sleep(2);
@@ -93,7 +94,7 @@ void StateIADecisionMaker::IAFirstSteps(Robot& r, void * data)
 	robot.actions().trackSystem().moveForward(500, 0);
 	do
 	{
-		ret = robot.asserv().base().movexytetaSpeedAcc(0, 1100, 1968, 90, 0.6, 0.2, 0.05);
+		ret = robot.asserv().base().movexytetaSpeedAcc(0, 1120, 1968, 90, 0.8, 0.2, 0.05);
 		logger().debug() << "r=" << ret << logs::end;
 		if (ret != TRAJ_OK)
 			sleep(2);

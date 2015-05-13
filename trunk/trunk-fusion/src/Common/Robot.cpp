@@ -37,6 +37,9 @@ void Robot::start(ConsoleManager manager, int argc, char** argv)
 	string select;
 	int skip = 0;
 	int detect = 1;
+	std::string strat = "FirstSteps";// "none";
+
+
 	//if no argument, display the textmenu
 	if (argc <= 1)
 	{
@@ -101,12 +104,13 @@ void Robot::start(ConsoleManager manager, int argc, char** argv)
 				if ((strcmp(argv[5], "FirstCarpet") == 0) || (strcmp(argv[5], "firstcarpet") == 0))
 				{
 					logger().info() << "Strategy FirstCarpet..." << logs::end;
-
+					strat = "FirstCarpet";
 				}
 				else if ((strcmp(argv[5], "FirstSteps") == 0)
 						|| (strcmp(argv[5], "firststeps") == 0))
 				{
 					logger().info() << "Strategy FirstSteps..." << logs::end;
+					strat = "FirstSteps";
 				}
 				else
 				{
@@ -121,7 +125,7 @@ void Robot::start(ConsoleManager manager, int argc, char** argv)
 			Data *data = new Data();
 
 			data->isEmpty(true);
-			data->strategy(argv[5]);
+			data->strategy(strat);
 			data->skipSetup(skip);
 			cc_setIgnoreFrontCollision(!detect);
 
@@ -134,10 +138,11 @@ void Robot::start(ConsoleManager manager, int argc, char** argv)
 
 			waitForReboot->addState("next", initialize);
 			initialize->addState("next", ajustRobotPosition);
-			initialize->addState("waitForReboot", waitForReboot);
+			//initialize->addState("waitForReboot", waitForReboot);
 			ajustRobotPosition->addState("next", waitForStart);
+			//ajustRobotPosition->addState("waitForReboot2", waitForReboot);
 
-			waitForStart->addState("rebootInitialize", initialize);
+			//waitForStart->addState("rebootInitialize", initialize);
 			waitForStart->addState("decisionMaker", data->decisionMaker);
 
 			// Start the automate and wait for its return

@@ -45,7 +45,10 @@ StateWaitForStart::execute(Robot& r, void *data)
 
 		if (robot.actions().buttonBar().pressed(BUTTON_DOWN_KEY))
 		{
+
 			robot.actions().ledBar().stopAndWait(true);
+			logger().error() << "=> BACK" << logs::end;
+			exit(0);
 			return this->getState("rebootInitialize");
 		}
 	}
@@ -54,6 +57,7 @@ StateWaitForStart::execute(Robot& r, void *data)
 		logger().info() << "skipSetup..." << logs::end;
 
 	}
+
 	robot.actions().ledBar().stopAndWait(true);
 
 	if (robot.getMyColor() == PMXNOCOLOR)
