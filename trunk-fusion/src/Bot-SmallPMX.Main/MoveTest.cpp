@@ -32,9 +32,13 @@ void MoveTest::run(int argc, char *argv[])
 	int speedT = 0;
 
 	ostringstream out;
-	logger().info() << "USAGE: " << argv[0] << " " << argv[1] << " " << argv[2]
-			<< " [detect(0-1)] [dist(mm)] [SpeedTrackSys] [opt:Vmax] [opt:acc] [opt:dec]" << logs::end;
 
+	if (argc >= 3)
+	{
+		logger().info() << "USAGE: " << argv[0] << " " << argv[1] << " " << argv[2]
+				<< " [detect(0-1)] [dist(mm)] [SpeedTrackSys] [opt:Vmax] [opt:acc] [opt:dec]"
+				<< logs::end;
+	}
 	if (argc <= 4)
 	{
 		mm = 100;
@@ -103,7 +107,9 @@ void MoveTest::run(int argc, char *argv[])
 
 	SRobotExtended &robot = SRobotExtended::instance();
 	Data *data = new Data();
+
 	Wait90SecondsAction* action = new Wait90SecondsAction(robot, (void *) data);
+
 	robot.asserv().start(); //config + thread
 
 	if (argc <= 5)
@@ -145,15 +151,14 @@ void MoveTest::run(int argc, char *argv[])
 			}
 	} while (r != TRAJ_OK);
 
-
 	robot.asserv().base().printPosition();
 	robot.actions().trackSystem().stopMotor();
 	//robot.actions().supportSystem().incline(900, 1500);
 	robot.actions().redcarpetSystem().rightDeploy();
 	robot.actions().redcarpetSystem().leftDeploy();
 	robot.actions().redcarpetSystem().releaseAll();
-	logger().info() << "Stop ..." << logs::end;
-	robot.stop();
 
+	robot.stop();
 	logger().info() << this->name() << " - Happy End." << logs::end;
+
 }
