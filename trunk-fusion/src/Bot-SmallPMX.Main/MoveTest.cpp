@@ -154,8 +154,8 @@ void MoveTest::run(int argc, char *argv[])
 	robot.asserv().base().printPosition();
 	robot.actions().trackSystem().stopMotor();
 	//robot.actions().supportSystem().incline(900, 1500);
-	robot.actions().redcarpetSystem().rightDeploy();
-	robot.actions().redcarpetSystem().leftDeploy();
+	//robot.actions().redcarpetSystem().rightDeploy();
+	//robot.actions().redcarpetSystem().leftDeploy();
 	robot.actions().redcarpetSystem().releaseAll();
 
 	robot.stop();

@@ -95,8 +95,8 @@ void robot_init()
 	vtopsPerTicks = 2048;
 	maxPwmValue = 900; //128 default
 	defaultVmax = 1.2f; // 0.9
-	defaultAcc = 0.6f; //0.3
-	defaultDec = 0.3f; //0.05
+	defaultAcc = 0.9f; //0.3
+	defaultDec = 0.40f; //0.05
 
 	//printf("Init time %ld\n", currentTimeInMillis());
 }
@@ -157,7 +157,7 @@ void robot_initPID()
 	//motion_configureAlphaPID(0.0015f, 0.0008f, 0.000002f); //0.0008 0.00002 0.00003
 	//motion_configureDeltaPID(0.0015f, 0.0008f, 0.000002f); //0.0005 0.000008 0.000009 //0.0015 0.0008 0.000002
 	motion_configureAlphaPID(0.010, 0.0005, 0.000005); //0.0008 0.00002 0.00003
-	motion_configureDeltaPID(0.006, 0.0, 0.0); //0.0005 0.000008 0.000009 //0.0015 0.0008 0.000002
+	motion_configureDeltaPID(0.010, 0.0, 0.0); //0.0005 0.000008 0.000009 //0.0015 0.0008 0.000002
 
 	motion_configureLeftPID(0.0006, 0.0, 0.0);
 	motion_configureRightPID(0.0006, 0.0, 0.0);

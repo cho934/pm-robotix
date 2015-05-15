@@ -7,7 +7,7 @@
 void Actions::start()
 {
 	//start action manager
-	actionManager_.start("ActionManager");
+	//actionManager_.start("ActionManager");
 
 	logger().debug("Actions is started");
 }

@@ -36,17 +36,33 @@ StateWaitForStart::execute(Robot& r, void *data)
 			col = LED_GREEN;
 		}
 		//lance le clignotement
-		robot.actions().ledBar().startAlternate(9000, 100000, 0x03, 0x00, col, 0);
+		//robot.actions().ledBar().startAlternate(9000, 100000, 0x03, 0x00, col, 0);
+
+		robot.actions().ledBar().set(0, LED_RED);
+		robot.actions().ledBar().set(1, LED_RED);
 
 		logger().info() << "Please put the TIRETTE" << logs::end;
 		robot.actions().tirette().waitPressed();
+
+		if (robot.getMyColor() == PMXYELLOW)
+		{
+			robot.actions().ledBar().set(0, LED_ORANGE);
+			robot.actions().ledBar().set(1, LED_ORANGE);
+
+		}
+		if (robot.getMyColor() == PMXGREEN)
+		{
+			robot.actions().ledBar().set(0, LED_GREEN);
+			robot.actions().ledBar().set(1, LED_GREEN);
+		}
+
 		logger().info() << "Wait for TIRETTE" << logs::end;
 		robot.actions().tirette().waitUnpressed();
 
 		if (robot.actions().buttonBar().pressed(BUTTON_DOWN_KEY))
 		{
 
-			robot.actions().ledBar().stopAndWait(true);
+			//robot.actions().ledBar().stopAndWait(true);
 			logger().error() << "=> BACK" << logs::end;
 			exit(0);
 			return this->getState("rebootInitialize");
@@ -58,7 +74,7 @@ StateWaitForStart::execute(Robot& r, void *data)
 
 	}
 
-	robot.actions().ledBar().stopAndWait(true);
+	//robot.actions().ledBar().stopAndWait(true);
 
 	if (robot.getMyColor() == PMXNOCOLOR)
 	{
