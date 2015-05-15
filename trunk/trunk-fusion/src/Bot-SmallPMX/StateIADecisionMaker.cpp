@@ -72,7 +72,7 @@ void StateIADecisionMaker::IAFirstSteps(Robot& r, void * data)
 	TRAJ_STATE ret;
 	do
 	{
-		ret = robot.asserv().base().movexyteta(0, 1120, 1000, 90);
+		ret = robot.asserv().base().movexyteta(0, 1130, 1000, 90);
 		logger().debug() << "r=" << ret << logs::end;
 		if (ret != TRAJ_OK)
 			sleep(2);
@@ -81,7 +81,7 @@ void StateIADecisionMaker::IAFirstSteps(Robot& r, void * data)
 
 	do
 	{
-		ret = robot.asserv().base().movexyteta(0, 1120, 1360, 90);
+		ret = robot.asserv().base().movexyteta(0, 1130, 1360, 80);
 		logger().debug() << "r=" << ret << logs::end;
 		if (ret != TRAJ_OK)
 			sleep(2);
@@ -89,15 +89,16 @@ void StateIADecisionMaker::IAFirstSteps(Robot& r, void * data)
 	robot.asserv().base().printPosition();
 
 	//montée des marches
+	cc_setIgnoreFrontCollision(true);
 
 	robot.actions().supportSystem().incline(900, 1500);
 	robot.actions().trackSystem().moveForward(500, 0);
 	do
 	{
-		ret = robot.asserv().base().movexytetaSpeedAcc(0, 1120, 1968, 90, 0.8, 0.2, 0.05);
-		logger().debug() << "r=" << ret << logs::end;
-		if (ret != TRAJ_OK)
-			sleep(2);
+		ret = robot.asserv().base().movexytetaSpeedAcc(0, 1130, 1968, 90, 1.2, 0.8, 0.4); //battery 0.6, 0.2, 0.05
+		//logger().debug() << "r=" << ret << logs::end;
+		//if (ret != TRAJ_OK)
+		//sleep(2);
 	} while (ret != TRAJ_OK);
 	robot.asserv().base().printPosition();
 	robot.actions().trackSystem().stopMotor();
@@ -118,7 +119,7 @@ void StateIADecisionMaker::IAFirstSteps(Robot& r, void * data)
 	//go to other side
 	do
 	{
-		ret = robot.asserv().base().movexyteta(0, 1367, cc_getY(), 90);
+		ret = robot.asserv().base().movexyteta(0, 1300, cc_getY(), 110); //1317
 		logger().debug() << "r=" << ret << logs::end;
 		if (ret != TRAJ_OK)
 			sleep(2);
@@ -143,6 +144,92 @@ void StateIADecisionMaker::IAFirstCarpet(Robot& r, void * data)
 	Data* sharedData = (Data*) data;
 	SRobotExtended& robot = dynamic_cast<SRobotExtended&>(r);
 	logger().debug() << "IAFirstCarpet" << logs::end;
+
+	robot.actions().supportSystem().straighten(900, 1500);
+
+	robot.asserv().base().printPosition();
+	TRAJ_STATE ret;
+	do
+	{
+		ret = robot.asserv().base().movexyteta(0, 1130, 1000, 90);
+		logger().debug() << "r=" << ret << logs::end;
+		if (ret != TRAJ_OK)
+			sleep(2);
+	} while (ret != TRAJ_OK);
+	robot.asserv().base().printPosition();
+
+	do
+	{
+		ret = robot.asserv().base().movexyteta(0, 1130, 1250, -90);
+		logger().debug() << "r=" << ret << logs::end;
+		if (ret != TRAJ_OK)
+			sleep(2);
+	} while (ret != TRAJ_OK);
+	robot.asserv().base().printPosition();
+
+	//depose tapis
+	if (robot.getMyColor() == PMXGREEN)
+	{
+		//right
+		robot.actions().redcarpetSystem().leftDeploy();
+	}
+	else if (robot.getMyColor() == PMXYELLOW)
+	{
+		//left
+		robot.actions().redcarpetSystem().rightDeploy();
+	}
+
+	//go other side
+	do
+	{
+		ret = robot.asserv().base().movexyteta(0, 1400, 1250, -90);
+		logger().debug() << "r=" << ret << logs::end;
+		if (ret != TRAJ_OK)
+			sleep(2);
+	} while (ret != TRAJ_OK);
+	robot.asserv().base().printPosition();
+
+	//depose tapis
+	if (robot.getMyColor() == PMXGREEN)
+	{
+		//right
+		robot.actions().redcarpetSystem().rightDeploy();
+	}
+	else if (robot.getMyColor() == PMXYELLOW)
+	{
+		//left
+		robot.actions().redcarpetSystem().leftDeploy();
+	}
+
+
+	do
+	{
+		ret = robot.asserv().base().movexyteta(0, 1250, 1360, 90);
+		logger().debug() << "r=" << ret << logs::end;
+		if (ret != TRAJ_OK)
+			sleep(2);
+	} while (ret != TRAJ_OK);
+	robot.asserv().base().printPosition();
+
+
+	//montée des marches
+	cc_setIgnoreFrontCollision(true);
+
+	robot.actions().supportSystem().incline(900, 1500);
+	robot.actions().trackSystem().moveForward(700, 0);
+	do
+	{
+
+		ret = robot.asserv().base().movexytetaSpeedAcc(0, 1130, 1918, 90, 0.6, 0.2, 0.05); //battery 0.6, 0.2, 0.05
+		//ret = robot.asserv().base().movexytetaSpeedAcc(0, 1130, 1988, 90, 1.2, 0.8, 0.4);
+		//logger().debug() << "r=" << ret << logs::end;
+		//if (ret != TRAJ_OK)
+		//sleep(2);
+	} while (ret != TRAJ_OK);
+	robot.asserv().base().printPosition();
+	robot.actions().trackSystem().stopMotor();
+	robot.actions().supportSystem().stopMotor();
+
 }
 
 void StateIADecisionMaker::IASetupTableTest()

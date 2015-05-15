@@ -37,7 +37,7 @@ void Robot::start(ConsoleManager manager, int argc, char** argv)
 	string select;
 	int skip = 0;
 	int detect = 1;
-	std::string strat = "FirstSteps";// "none";
+	std::string strat = "FirstCarpet";//"FirstSteps";// "none";
 
 
 	//if no argument, display the textmenu

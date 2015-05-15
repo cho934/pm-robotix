@@ -89,10 +89,9 @@ StateInitialize::execute(Robot& r, void *data)
 			{
 				robot.actions().ledBar().setOff(0);
 				robot.actions().ledBar().set(1, LED_GREEN);
-
 			}
 
-			usleep(100000);
+			usleep(10000);
 		}
 
 	}
