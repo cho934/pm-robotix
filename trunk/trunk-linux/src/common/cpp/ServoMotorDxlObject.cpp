@@ -85,6 +85,7 @@ void pmx::ServoMotorDxlObject::turnMin()
 	int finished = 0;
 	long moving = 0;
 	pmx::ServoMotorDxl::instance().dxlSetPos(id_, valMin_);
+usleep(1000);
 	while (pmx::ServoMotorDxl::instance().dxlGetAcMoving(id_) == 1)
 	{
 		moving = pmx::ServoMotorDxl::instance().dxlGetAcMoving(id_);
@@ -109,6 +110,7 @@ void pmx::ServoMotorDxlObject::turnMax()
 	int finished = 0;
 	long moving = 0;
 	pmx::ServoMotorDxl::instance().dxlSetPos(id_, valMax_);
+usleep(1000);
 	while (pmx::ServoMotorDxl::instance().dxlGetAcMoving(id_) == 1)
 	{
 		moving = pmx::ServoMotorDxl::instance().dxlGetAcMoving(id_);
@@ -120,10 +122,12 @@ void pmx::ServoMotorDxlObject::turnMax()
 void pmx::ServoMotorDxlObject::freeMotion()
 {
 	pmx::ServoMotorDxl::instance().dxlSetEnableTorque(id_, 0);
+	usleep(1000);
 }
 
 void pmx::ServoMotorDxlObject::enable()
 {
 	pmx::ServoMotorDxl::instance().dxlSetEnableTorque(id_, 1);
+	usleep(1000);
 }
 

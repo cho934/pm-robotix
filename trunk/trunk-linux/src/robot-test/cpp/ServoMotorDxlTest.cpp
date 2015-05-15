@@ -44,25 +44,36 @@ void robottest::ServoMotorDxlTest::run(int argc, char *argv[])
 
 	pmx::Robot &robot = pmx::Robot::instance();
 
-	robot.servoDxlTest().enable();
+	//robot.servoDxlTest().enable();
+	robot.servoDxlRight().enable();
+	robot.servoDxlFront().enable();
 
 	for (int i = 0; i < nb; i++)
 	{
 		//logger().info() << "displayInfos" << utils::end;
-		robot.servoDxlTest().displayInfos();
+		//robot.servoDxlTest().displayInfos();
+		//robot.servoDxlRight().displayInfos();
 
 		//usleep(timeSpan * 1000);
 
-		logger().info() << "turnMin" << utils::end;
-		robot.servoDxlTest().turnMin();
+		logger().info() << "servoDxlRight turnMin" << utils::end;
+		robot.servoDxlRight().turnMin();
+		robot.servoDxlFront().turnMin();
 		usleep(timeSpan * 1000);
 
-		logger().info() << "turnMax" << utils::end;
-		robot.servoDxlTest().turnMax();
+		logger().info() << "servoDxlRight turnMax" << utils::end;
+		robot.servoDxlRight().turnMax();
+		robot.servoDxlFront().turnMax();
 		usleep(timeSpan * 1000);
 
 	}
-	robot.servoDxlTest().freeMotion();
+	robot.servoDxlRight().turnMin();
+	robot.servoDxlRight().freeMotion();
+
+	robot.servoDxlFront().turnMin();
+	robot.servoDxlFront().freeMotion();
+
+	//robot.servoDxlTest().freeMotion();
 
 	robot.stop();
 

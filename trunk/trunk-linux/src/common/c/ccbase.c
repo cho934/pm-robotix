@@ -26,6 +26,28 @@ int matchColor = 0; //0=default color of the match (yellow)
 boolean ignoreFrontCollision = TRUE;
 boolean ignoreRearCollision = TRUE;
 
+// en m/s (d'apres Cho)
+float cc_motion_GetDefaultSpeed() {
+	return defaultVmax;
+}
+float cc_motion_GetDefaultAccel() {
+	return defaultAcc;
+}
+float cc_motion_GetDefaultDecel() {
+	return defaultDec;
+}
+
+float cc_motion_GetDefaultSpeedForRotation() {
+	return rotdefaultVmax;
+}
+float cc_motion_GetDefaultAccelForRotation() {
+	return rotdefaultAcc;
+}
+float cc_motion_GetDefaultDecelForRotation() {
+	return rotdefaultDec;
+}
+
+
 float cc_getRelativeX(float x) {
 	if (cc_getMatchColor() != 0) {
 		return 3000 - x;
@@ -47,13 +69,20 @@ TRAJ_STATE launchAndWait(RobotCommand* cmd) {
 	path_LaunchTrajectory(cmd);
 
 	TRAJ_STATE result = path_WaitEndOfTrajectory();
-	printf("path_WaitEndOfTrajectory returned : %d : TRAJ_OK=%d TRAJ_COLLISION=%d\n", result, TRAJ_OK, TRAJ_COLLISION);
+	printf("path_WaitEndOfTrajectory returned : %d : (TRAJ_OK=%d TRAJ_COLLISION=%d)\n", result, TRAJ_OK, TRAJ_COLLISION);
 	free(cmd);
 	return result;
 }
 
 // if distance <0, move backward
-TRAJ_STATE cc_move(float distanceInMM) {
+TRAJ_STATE cc_move(float distanceInMM, float VMax, float Accel, float Decel) {
+
+
+//printf("\ncc_move old dist=%f  patch ferte 2015\n", distanceInMM);
+	distanceInMM = distanceInMM + (20.0 * distanceInMM/1000.0) ;
+//printf("\ncc_move new dist=%f patch ferte 2015\n", distanceInMM);
+
+
 	if (distanceInMM > 0) {
 		ignoreRearCollision = TRUE;
 	} else {
@@ -61,28 +90,28 @@ TRAJ_STATE cc_move(float distanceInMM) {
 	}
 	RobotCommand* cmd = (RobotCommand*) malloc(sizeof(RobotCommand));
 	float meters = distanceInMM / 1000.0f;
-	motion_Line(cmd, meters);
+	motion_LineSpeedAcc(cmd, meters, VMax, Accel, Decel);
 	return launchAndWait(cmd);
 }
 
-TRAJ_STATE cc_moveForwardTo(float xMM, float yMM) {
+TRAJ_STATE cc_moveForwardTo(float xMM, float yMM, float VMax, float Accel, float Decel) {
 	float dx = cc_getRelativeX(xMM) - cc_getX();
 	float dy = yMM - cc_getY();
 	float aRadian = atan2(dy, dx);
-	TRAJ_STATE ts = cc_rotateTo(cc_getRelativeAngle((aRadian * 180.0f) / M_PI));
+	TRAJ_STATE ts = cc_rotateTo(cc_getRelativeAngle((aRadian * 180.0f) / M_PI), cc_motion_GetDefaultSpeedForRotation(), cc_motion_GetDefaultAccelForRotation(), cc_motion_GetDefaultDecelForRotation());
 	float dist = sqrt(dx * dx + dy * dy);
-	return cc_move(dist);
+	return cc_move(dist, VMax, Accel, Decel);
 }
 TRAJ_STATE cc_moveForwardAndRotateTo(float xMM, float yMM, float thetaInDegree) {
 	TRAJ_STATE ts;
-	ts = cc_moveForwardTo(xMM, yMM);
+	ts = cc_moveForwardTo(xMM, yMM, cc_motion_GetDefaultSpeed(), cc_motion_GetDefaultAccel(), cc_motion_GetDefaultDecel());
 	if (ts != TRAJ_OK)
 		return ts;
 	//printf("thetaInDegree = %f\n", thetaInDegree);
-	ts = cc_rotateTo(thetaInDegree);
+	ts = cc_rotateTo(thetaInDegree, cc_motion_GetDefaultSpeedForRotation(), cc_motion_GetDefaultAccelForRotation(), cc_motion_GetDefaultDecelForRotation());
 	return ts;
 }
-TRAJ_STATE cc_moveBackwardTo(float xMM, float yMM) {
+TRAJ_STATE cc_moveBackwardTo(float xMM, float yMM, float VMax, float Accel, float Decel) {
 	if (cc_getMatchColor() != 0) {
 		xMM = 3000 - xMM;
 	}
@@ -90,24 +119,25 @@ TRAJ_STATE cc_moveBackwardTo(float xMM, float yMM) {
 	float dy = yMM - cc_getY(); //-500 -x = -900
 	float aRadian = atan2(dy, dx);
 
-	TRAJ_STATE ts = cc_rotateTo(cc_getRelativeAngle(((M_PI + aRadian) * 180.0f) / M_PI)); //TODO angle au plus court ?
+	TRAJ_STATE ts = cc_rotateTo(cc_getRelativeAngle(((M_PI + aRadian) * 180.0f) / M_PI), cc_motion_GetDefaultSpeedForRotation(), cc_motion_GetDefaultAccelForRotation(), cc_motion_GetDefaultDecelForRotation()); //TODO angle au plus court ?
 
 	float dist = sqrt(dx * dx + dy * dy);
-	return cc_move(-dist);
+	return cc_move(-dist, VMax, Accel, Decel);
 }
 TRAJ_STATE cc_moveBackwardAndRotateTo(float xMM, float yMM, float thetaInDegree) {
 	TRAJ_STATE ts;
-	ts = cc_moveBackwardTo(xMM, yMM);
+	ts = cc_moveBackwardTo(xMM, yMM, cc_motion_GetDefaultSpeed(), cc_motion_GetDefaultAccel(), cc_motion_GetDefaultDecel());
 	if (ts != TRAJ_OK)
 		return ts;
-	ts = cc_rotateTo(thetaInDegree);
+	ts = cc_rotateTo(thetaInDegree, cc_motion_GetDefaultSpeedForRotation(), cc_motion_GetDefaultAccelForRotation(), cc_motion_GetDefaultDecelForRotation());
 	return ts;
 }
-TRAJ_STATE cc_rotateAbs(float degrees) {
+TRAJ_STATE cc_rotateAbs(float degrees, float VMax, float Accel, float Decel) {
 	int f = ignoreFrontCollision;
 	int b = ignoreRearCollision;
 	ignoreFrontCollision = TRUE;
 	ignoreRearCollision = TRUE;
+
 
 	if (cc_getMatchColor() != 0) {
 		degrees = -degrees;
@@ -130,20 +160,20 @@ TRAJ_STATE cc_rotateAbs(float degrees) {
 
 	RobotCommand* cmd = (RobotCommand*) malloc(sizeof(RobotCommand));
 	float rad = (degrees * M_PI) / 180.0f;
-	motion_Rotate(cmd, rad);
+	motion_RotateSpeedAcc(cmd, rad, VMax, Accel, Decel);
 	TRAJ_STATE ts = launchAndWait(cmd);
 	ignoreFrontCollision = f;
 	ignoreRearCollision = b;
 	return ts;
 }
 TRAJ_STATE cc_rotateLeft(float degrees) {
-	return cc_rotateAbs(degrees);
+	return cc_rotateAbs(degrees, cc_motion_GetDefaultSpeedForRotation(), cc_motion_GetDefaultAccelForRotation(), cc_motion_GetDefaultDecelForRotation());
 }
 TRAJ_STATE cc_rotateRight(float degrees) {
-	return cc_rotateAbs(-degrees);
+	return cc_rotateAbs(-degrees, cc_motion_GetDefaultSpeedForRotation(), cc_motion_GetDefaultAccelForRotation(), cc_motion_GetDefaultDecelForRotation());
 }
 
-TRAJ_STATE cc_rotateTo(float thetaInDegree) {
+TRAJ_STATE cc_rotateTo(float thetaInDegree, float VMax, float Accel, float Decel) {
 
 	float currentThetaInDegree = cc_getThetaInDegree();
 	//printf("ccbase.c cc_rotateTo %f deg   current=%f \n", thetaInDegree, currentThetaInDegree);
@@ -151,11 +181,15 @@ TRAJ_STATE cc_rotateTo(float thetaInDegree) {
 
 	float turn = ((int) (delta * 1000.0f) % 360000) / 1000.0f;
 
+	//printf("\ncc_rotateTo old degrees=%f  patch ferte 2015\n", turn);
+	turn = turn + (5.0 * turn/90.0) ;
+//printf("\ncc_rotateTo new degrees=%f patch ferte 2015\n", turn);
+
 	//printf("ccbase.c cc_rotateAbs %f deg   delta=%f deg\n ", turn, delta);
 	if (cc_getMatchColor() != 0) {
 		turn = -turn;
 	}
-	TRAJ_STATE ts = cc_rotateAbs(turn); //cho use Abs not left!!
+	TRAJ_STATE ts = cc_rotateAbs(turn, VMax, Accel, Decel); //cho use Abs not left!!
 
 	return ts;
 }
@@ -240,7 +274,7 @@ TRAJ_STATE cc_goToZone(const char *zoneName) {
 	if (path != NULL) {
 		printf("%s (line %d) : goToZone FROM %s TO %s using path (%f,%f)\n", __FUNCTION__, __LINE__, zCurrent->name,
 				z->name, path->x, path->y);
-		ts = cc_moveForwardTo(cc_getRelativeX(path->x), path->y);
+		ts = cc_moveForwardTo(cc_getRelativeX(path->x), path->y, cc_motion_GetDefaultSpeed(), cc_motion_GetDefaultAccel(), cc_motion_GetDefaultDecel());
 		if (ts != TRAJ_OK) {
 			return ts;
 		}

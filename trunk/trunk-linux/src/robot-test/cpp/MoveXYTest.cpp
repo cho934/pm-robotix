@@ -5,14 +5,13 @@
 
 #include "MoveXYTest.hpp"
 
-#include <unistd.h>
-#include <cstdlib>
+#include <stdlib.h>
 #include <iostream>
 
-#include "../../common/c/encoder.h"
-#include "../../common/c/robot.h"
 #include "../../common/c/ccbase.h"
 #include "../../common/cpp/Base.hpp"
+#include "../../common/cpp/Chronometer.hpp"
+#include "../../common/cpp/IrSensorsGroup.hpp"
 #include "../../common/cpp/Logger.hpp"
 #include "../../common/cpp/Robot.hpp"
 
@@ -107,10 +106,14 @@ void robottest::MoveXYTest::run(int argc, char *argv[])
 	robot.base().setMatchColor(color);
 	int asserv=1;
 	robot.start(0, asserv);
+
+
 	cc_setPosition(0, 0, 0.0, cc_getMatchColor());
 	//cc_setPosition(220.0, 1021.0, 155.0, cc_getMatchColor());
 
 	robot.base().printPosition();
+
+	logger().info() << "cc_motion_GetDefaultSpeed() " << cc_motion_GetDefaultSpeed() << utils::end;
 
 
 	if (detect == true)

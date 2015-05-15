@@ -432,6 +432,8 @@ void *motion_ITTask(void *p_arg)
 #ifdef LOG_PID
 				closeLog();
 #endif
+
+				//TODO à enlever pour les tests steporder
 				signalEndOfTraj();
 			}
 
@@ -453,7 +455,7 @@ void *motion_ITTask(void *p_arg)
 			//pwm1 = pid_Compute(motors[motionCommand.mcType][1].PIDSys, 0, motors[motionCommand.mcType][1].lastPos, dSpeed1);
 			pwm1 = pid_ComputeRcva(motors[motionCommand.mcType][1].PIDSys, dRight, dSpeed1);
 
-			printf("motion_ITTask ASSISTED_HANDLING  pwm0=%d pwm1=%d \n", pwm0, pwm1);
+			//printf("motion_ITTask ASSISTED_HANDLING  pwm0=%d pwm1=%d \n", pwm0, pwm1);
 			//write pwm in registers
 			setPWM(pwm0, pwm1);
 			break;

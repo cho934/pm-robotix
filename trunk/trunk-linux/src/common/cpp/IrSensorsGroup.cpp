@@ -72,7 +72,7 @@ void pmx::IrSensorsGroup::onTimer(utils::Chronometer chrono) {
 				<< " mm C=" << this->irCenter_.distanceMm() << " mm L=" << this->irLeft_.distanceMm()
 				//<< " mm RC=" << this->irRearCenter_.distanceMm() << " mm"
 				<< utils::end;
-		robot().base().collisionOccured(1);
+		robot().base().collisionOccured(0);
 	}
 	if (irLeft_.distanceMm() <= 170) {
 		logger().info() << "=> opponent detected irLeft_" << utils::end;
@@ -80,7 +80,7 @@ void pmx::IrSensorsGroup::onTimer(utils::Chronometer chrono) {
 				<< " mm C=" << this->irCenter_.distanceMm() << " mm L=" << this->irLeft_.distanceMm()
 				//<< " mm RC=" << this->irRearCenter_.distanceMm() << " mm"
 				<< utils::end;
-		robot().base().collisionOccured(1);
+		robot().base().collisionOccured(0);
 	}
 	/*
 	if (irRearCenter_.distanceMm() <= 170) {

@@ -82,6 +82,16 @@ int main(int argc, char** argv)
 		robot.start(1, 1); //start Manager and asserv
 	}
 
+
+
+
+	//robot.base().setupPID_AD(730.0f, 0.0f, 0.0f, 108.0f, 0.0f, 0.0f );
+
+
+
+
+
+
 	if (argc > 3)
 	{
 		data->skipSetup(atoi(argv[3]));

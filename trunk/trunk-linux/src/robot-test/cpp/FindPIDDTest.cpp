@@ -121,6 +121,9 @@ void robottest::FindPIDDTest::run(int argc, char *argv[])
 		std::cout << "sec: " << atoi(argv[10]) << std::endl;
 	}*/
 
+
+	//Fct ./ROBOT_TEST 13 300 0.05 0.005 0.005   150.0 0.0 1.2 / 188.0 0.0 1.9
+
 	logger().info() << "-------------------------------------------------" << utils::end;
 	logger().info() << "FindPIDDTest - " << utils::end;
 

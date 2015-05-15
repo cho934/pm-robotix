@@ -30,10 +30,47 @@ pmx::StateInitialize::execute(Robot& robot, void *data)
 
 	robot.clamp().readyToTakeLeftElement();
 	robot.clamp().readyToTakeRightElement();
-	robot.servoDxlRight().turnMax();
-	robot.servoDxlLeft().turnMax();
+	robot.clamp().closeAll();
+
+
+	//robot.clamp().readyToTakeLeftElement();
+	//robot.clamp().readyToTakeRightElement();
+	if (robot.myColor() == pmx::PMXGREEN)
+	{
+		robot.clamp().takeRightElement(); // prise de la balle
+		robot.clamp().readyToTakeLeftElement();
+	}
+	else
+	{
+		robot.clamp().takeLeftElement(); // prise de la balle
+		robot.clamp().readyToTakeRightElement();
+	}
+
+
+
+	robot.servoDxlRight().enable();
+	robot.servoDxlLeft().enable();
+	robot.servoDxlFront().enable();
+	//robot.servoDxlRear().enable();
+
+	//robot.servoDxlRight().turnMax();
+	//robot.servoDxlLeft().turnMax();
+
+	//usleep(500000);
 	robot.servoDxlRight().turnMin();
 	robot.servoDxlLeft().turnMin();
+	robot.servoDxlRight().turnMin();
+	robot.servoDxlLeft().turnMin();
+
+	robot.servoDxlFront().turnMin();
+	//robot.servoDxlRear().turnMin();
+	usleep(500000);
+
+	robot.servoDxlRight().freeMotion();
+	robot.servoDxlLeft().freeMotion();
+
+	robot.servoDxlFront().freeMotion();
+	//robot.servoDxlRear().freeMotion();
 
 	//skip setup
 	if (!sharedData->skipSetup())
@@ -84,13 +121,27 @@ pmx::StateInitialize::execute(Robot& robot, void *data)
 					robot.clamp().readyToTakeLeftElement();
 					robot.clamp().readyToTakeRightElement();
 					//TODO rentrer pince latérale
+					robot.servoDxlRight().freeMotion();
+					robot.servoDxlLeft().freeMotion();
 					//TODO rentrer prise ball avant et arrière
+					robot.servoDxlFront().freeMotion();
+					robot.servoDxlRear().freeMotion();
 					logger().info() << "End Initialize mechanical." << utils::end;
 				}
 				if (buttons & BUTTON_UP)
 				{
 					logger().info() << "UP Initialize mechanical..." << utils::end;
 
+					if (robot.myColor() == pmx::PMXGREEN)
+						{
+							robot.clamp().takeRightElement(); // prise de la balle
+
+						}
+						else
+						{
+							robot.clamp().takeLeftElement(); // prise de la balle
+
+						}
 					logger().info() << "End Initialize mechanical." << utils::end;
 				}
 			}
@@ -111,6 +162,18 @@ pmx::StateInitialize::execute(Robot& robot, void *data)
 		logger().error() << "color: NOCOLOR" << utils::end;
 		exit(0);
 	}
+	/*
+	//init des clamp
+	if (robot.myColor() == pmx::PMXGREEN)
+	{
+		robot.clamp().takeRightElement(); // prise de la balle
+		robot.clamp().readyToTakeLeftElement();
+	}
+	else
+	{
+		robot.clamp().takeLeftElement(); // prise de la balle
+		robot.clamp().readyToTakeRightElement();
+	}*/
 
 	//Ajout des stratégies
 	if (robot.myRunningMode() == pmx::ROBOTMATCHES)
