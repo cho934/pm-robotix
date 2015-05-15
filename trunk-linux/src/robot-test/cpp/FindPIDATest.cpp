@@ -27,6 +27,10 @@ void robottest::FindPIDATest::run(int argc, char *argv[])
 	float dec = 0;
     int useExtEnc = 0;
 
+
+    //ROBOT_TEST 14 -45  0.05 0.02 0.09   730.0 0.0 1.9  0
+
+
 	if (argc < 12)
 	{
 		std::cout << "USAGE: PMX_TEST " << argv[1]
@@ -129,14 +133,20 @@ void robottest::FindPIDATest::run(int argc, char *argv[])
 	int asserv=1;
 	robot.start(useExtEnc, asserv);
 
+
+	//./ROBOT_TEST 14 -180   0.023 0.05 0.03   760.0 0.0 0.02  0 2
+
+
 	robot.base().setupPID_AD( Dp, Di, Dd, 0.0, 0.0, 0.0);
 
 	robot.base().printPosition();
 
 	robot.base().RotateSpeedAcc(degrees, vmax, acc, dec);
 
-	robot.stop();
+	robot.base().assistedHandling();
+	robot.base().printPosition();
 	sleep(1);
+	robot.stop();
 	robot.base().printPosition();
 
 	logger().info() << "End of RobotTest." << utils::end;

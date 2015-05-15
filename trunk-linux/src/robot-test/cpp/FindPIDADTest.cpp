@@ -142,13 +142,17 @@ void robottest::FindPIDADTest::run(int argc, char *argv[])
 	int asserv=1;
 	robot.start(useExtEnc, asserv);
 
+//./ROBOT_TEST 13 200   0.1 0.02 0.08   130.0 0.0 0.001  0 2
+	//USAGE: PMX_TEST 14 [angle(deg)] [Vmax] [Acc] [Dec] [P] [I] [D] [option:useExtEncoders=0]
 
 	robot.base().setupPID_AD(Ap, Ai, Ad, Dp, Di, Dd);
 
 	robot.base().printPosition();
 	robot.base().findPidAD(degrees, dist, sec);
 
-	robot.stop();
+
+
+	//robot.stop();
 	robot.base().printPosition();
 
 	logger().info() << "End of RobotTest." << utils::end;

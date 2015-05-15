@@ -51,6 +51,13 @@ typedef struct {
 
 } RobotCommand;
 
+
+float motion_GetDefaultSpeed();
+float motion_GetDefaultAccel() ;
+float motion_GetDefaultDecel();
+
+
+
 //! Initialisation of the module
 void traj_Init(void);
 

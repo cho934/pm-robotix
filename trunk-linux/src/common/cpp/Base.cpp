@@ -86,7 +86,7 @@ TRAJ_STATE pmx::Base::launchAndEndAfterCmd(RobotCommand* cmd) {
 	//printf("path_WaitEndOfTrajectory\n");
 	TRAJ_STATE result = path_WaitEndOfTrajectory();
 	printPosition();
-	printf("path_WaitEndOfTrajectory returned : %d : %d\n", result, TRAJ_OK);
+	//printf("path_WaitEndOfTrajectory returned : %d : %d\n", result, TRAJ_OK);
 
 	//robot_setMotorLeftSpeed(0);
 	//robot_setMotorRightSpeed(0);
@@ -116,7 +116,7 @@ void pmx::Base::assistedHandling() {
 }
 
 TRAJ_STATE pmx::Base::move(int mm) {
-	return cc_move(mm);
+	return cc_move(mm, cc_motion_GetDefaultSpeed(), cc_motion_GetDefaultAccel(), cc_motion_GetDefaultDecel());
 }
 
 TRAJ_STATE pmx::Base::movexyteta(int backward, float x, float y, float thetaInDegree) {
@@ -131,8 +131,15 @@ void pmx::Base::findPidAD(float degrees, int mm, int sec) {
 	RobotCommand* cmd = (RobotCommand*) malloc(sizeof(RobotCommand));
 	float meters = mm / 1000.0f;
 	float radians = (degrees * M_PI) / 180.0f;
-	motion_StepOrderAD(cmd, convertDistTovTops(radians * distEncoderMeter / 2.0f), meters / valueVTops, sec);
-	launchAndEndAfterCmd(cmd);
+
+	//A confirmer
+	//motion_StepOrderAD(cmd, convertDistTovTops(radians * distEncoderMeter / 2.0f), meters / valueVTops, sec);
+	//launchAndEndAfterCmd(cmd);
+
+	motion_StepOrderAD(cmd, (radians * VTOPS_PER_TICKS) + motors[ALPHA_DELTA][DELTA_MOTOR].lastPos,
+			(meters * VTOPS_PER_TICKS)+motors[LEFT_RIGHT][RIGHT_MOTOR].lastPos
+					, sec);
+	path_LaunchTrajectory(cmd);
 }
 
 void pmx::Base::setupPID_AD(float Ap, float Ai, float Ad, float Dp, float Di, float Dd) {

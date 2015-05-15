@@ -13,19 +13,29 @@
 #include "path_manager.h"
 #include "robot_trajectory.h"
 
+float cc_motion_GetDefaultSpeed();
+float cc_motion_GetDefaultAccel();
+float cc_motion_GetDefaultDecel();
+
+float cc_motion_GetDefaultSpeedForRotation();
+float cc_motion_GetDefaultAccelForRotation();
+float cc_motion_GetDefaultDecelForRotation();
+
 TRAJ_STATE launchAndWait(RobotCommand* cmd);
 
 // if distance <0, move backward
-TRAJ_STATE cc_move(float distanceInMM);
+TRAJ_STATE cc_move(float distanceInMM, float VMax, float Accel, float Decel);
 
-TRAJ_STATE cc_moveForwardTo(float x, float y);
+TRAJ_STATE cc_moveForwardTo(float x, float y, float VMax, float Accel, float Decel);
 TRAJ_STATE cc_moveForwardAndRotateTo(float x, float y, float thetaInDegree);
-TRAJ_STATE cc_moveBackwardTo(float x, float y);
+TRAJ_STATE cc_moveBackwardTo(float x, float y, float VMax, float Accel, float Decel);
 TRAJ_STATE cc_moveBackwardAndRotateTo(float x, float y, float thetaInDegree);
 
+TRAJ_STATE cc_rotateAbs(float degrees, float VMax, float Accel, float Decel);
 TRAJ_STATE cc_rotateLeft(float degres);
 TRAJ_STATE cc_rotateRight(float degres);
-TRAJ_STATE cc_rotateTo(float theta);
+TRAJ_STATE cc_rotateTo(float theta, float VMax, float Accel, float Decel);
+
 
 //x,y en mm
 void cc_setPosition(float xMM, float yMM, float theta,int color);

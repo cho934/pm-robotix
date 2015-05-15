@@ -24,11 +24,18 @@ pmx::IAutomateState*
 pmx::StateIADecisionMaker::execute(Robot&robot, void *data)
 {
 	pmx::StateIADecisionMaker::logger().info() << "execute" << utils::end;
+	pmx::Data* sharedData = (pmx::Data*) data;
+	TRAJ_STATE r;
+
+	//TEMPO DE DEMARRAGE PETIT PMX
+	//skip setup
+	if (!sharedData->skipSetup())
+	{
+		sleep(6);
+	}
 
 	//IAutomateState* result;
 
-	pmx::Data* sharedData = (pmx::Data*) data;
-	TRAJ_STATE r;
 	//detection adversaire
 	robot.irSensorsGroup().startTimer();
 
@@ -62,13 +69,19 @@ pmx::StateIADecisionMaker::execute(Robot&robot, void *data)
 	 */
 
 	//sortir
-	r = robot.base().movexyteta(0, 650, 1000, 0);
-	if (r != TRAJ_OK)
+	cc_setIgnoreFrontCollision(false);
+	cc_setIgnoreRearCollision(false);
+	do
 	{
-		//pmx::StateIADecisionMaker::logger().debug() << "==>TRAJ_COLLISION" << utils::end;
-		robot.base().printPosition();
-		return false;
-	}
+		r = robot.base().movexyteta(0, 650, 1000, 0);
+
+		if (r != TRAJ_OK)
+		{
+			robot.base().stop();
+			robot.base().assistedHandling();
+			sleep(2);
+		}
+	} while (r != TRAJ_OK);
 	robot.base().printPosition();
 
 	//launch IA
@@ -296,13 +309,20 @@ int takeL1()
 	pmx::Robot &robot = pmx::Robot::instance();
 	pmx::StateIADecisionMaker::logger().debug() << "==> takeL1" << utils::end;
 
-	cc_setIgnoreRearCollision(true);
-	cc_setIgnoreFrontCollision(true);
+	cc_setIgnoreRearCollision(false);
+	cc_setIgnoreFrontCollision(false);
 
 	do
 	{
 		pmx::StateIADecisionMaker::logger().debug() << "==> goToZone(zoneL1)" << utils::end;
 		ts = cc_goToZone("zoneL1");
+		if (ts != TRAJ_OK)
+		{
+
+			robot.base().stop();
+			robot.base().assistedHandling();
+			sleep(2);
+		}
 	} while (ts != TRAJ_OK);
 	robot.base().printPosition();
 
@@ -311,13 +331,72 @@ int takeL1()
 	do
 	{
 		ts = robot.base().movexyteta(0, 760, 650, -90);
+		if (ts != TRAJ_OK)
+		{
+			robot.base().stop();
+			robot.base().assistedHandling();
+
+			sleep(2);
+		}
 	} while (ts != TRAJ_OK);
 	robot.base().printPosition();
 
-	robot.clamp().readyToTakeLeftElement();
-	robot.clamp().takeLeftElement();
+	if (robot.myColor() == pmx::PMXGREEN)
+	{
+		robot.clamp().readyToTakeRightElement();
+		robot.clamp().takeRightElement();
+	}
+	else
+	{
+		robot.clamp().readyToTakeLeftElement();
+		robot.clamp().takeLeftElement();
+	}
 
 	return true; //return true si ok sinon false si interruption
+}
+
+int dropL1()
+{
+	TRAJ_STATE ts = TRAJ_INIT_NONE;
+	pmx::Robot &robot = pmx::Robot::instance();
+	pmx::StateIADecisionMaker::logger().debug() << "==> dropL1" << utils::end;
+	do
+	{
+		pmx::StateIADecisionMaker::logger().debug() << "==> goToZone(zoneL1)" << utils::end;
+		ts = cc_goToZone("depart");
+		if (ts != TRAJ_OK)
+		{
+			robot.base().stop();
+			robot.base().assistedHandling();
+			sleep(2);
+		}
+	} while (ts != TRAJ_OK);
+	robot.base().printPosition();
+
+	//depose
+	if (robot.myColor() == pmx::PMXGREEN)
+	{
+		robot.clamp().pushRight();
+	}
+	else
+	{
+		//robot.clamp().readyToTakeLeftElement();
+		robot.clamp().pushLeft();
+	}
+
+	do
+	{
+
+		ts = robot.base().move(-100);
+		if (ts != TRAJ_OK)
+		{
+			robot.base().stop();
+			robot.base().assistedHandling();
+			sleep(2);
+		}
+	} while (ts != TRAJ_OK);
+	robot.base().printPosition();
+	return true;
 }
 
 int takeR1R2()
@@ -337,81 +416,250 @@ int takeR1R2()
 	//Prise du gobelet + R1
 	do
 	{
-		ts = robot.base().movexyteta(0, 240, 300, -135);
+		pmx::StateIADecisionMaker::logger().debug() << "==> Prise du gobelet + R1" << utils::end;
+		ts = robot.base().movexyteta(0, 280, 280, -135);
 	} while (ts != TRAJ_OK);
 	robot.base().printPosition();
 
-	robot.clamp().readyToTakeRightElement();
-	robot.clamp().takeRightElement();
-
-	//prise R2
-	do
-	{
-		ts = robot.base().movexyteta(0, cc_getX(), cc_getY(), -45);
-	} while (ts != TRAJ_OK);
-	robot.base().printPosition();
-
-	robot.clamp().readyToTakeRightElement();
-	robot.clamp().takeRightElement();
-
-	//1er clap
-	do
-	{
-		ts = robot.base().movexyteta(0, cc_getX(), cc_getY(), -45);
-	} while (ts != TRAJ_OK);
-	robot.base().printPosition();
 	if (robot.myColor() == pmx::PMXGREEN)
-		robot.servoDxlLeft().turnMax();
-	if (robot.myColor() == pmx::PMXYELLOW)
-		robot.servoDxlRight().turnMax();
-
-//2ème clap
-	do
 	{
-		ts = robot.base().movexyteta(0, 850, 220, 90);
-	} while (ts != TRAJ_OK);
-	robot.base().printPosition();
-
-	//recalage
-	do
+		robot.clamp().readyToTakeLeftElement();
+		robot.clamp().takeLeftElement();
+	}
+	else
 	{
-		ts = robot.base().movexyteta(1, 850, 120, 90); //128?
-	} while (ts != TRAJ_OK);
-	robot.base().printPosition();
-	cc_setPosition(850.0, 0.0, 90.0, cc_getMatchColor());
-	do
-	{
-		ts = robot.base().movexyteta(0, 850, 200, 45); //128?
-	} while (ts != TRAJ_OK);
-	robot.base().printPosition();
+		robot.clamp().readyToTakeRightElement();
+		robot.clamp().takeRightElement();
+	}
 
-	//take R3
-	do
-	{
-		ts = robot.base().movexyteta(0, 1000, 300, 90); //128?
-	} while (ts != TRAJ_OK);
-	robot.base().printPosition();
+	robot.servoDxlFront().enable();
+	robot.servoDxlFront().turnMax();
 
-	//depose R
+	robot.servoDxlFront().freeMotion();
 
+	/*
+	 //prise R2
+	 do
+	 {
+	 pmx::StateIADecisionMaker::logger().debug() << "==> Prise de R2" << utils::end;
+	 //ts = robot.base().movexyteta(0, cc_getX(), cc_getY(), -45);
+	 ts = robot.base().move(40);
+	 } while (ts != TRAJ_OK);
+	 robot.base().printPosition();
+
+	 if (robot.myColor() == pmx::PMXGREEN)
+	 {
+	 robot.clamp().readyToTakeLeftElement();
+	 robot.clamp().takeLeftElement();
+	 }
+	 else
+	 {
+	 robot.clamp().readyToTakeRightElement();
+	 robot.clamp().takeRightElement();
+	 }
+
+	 //1er clap
+	 do
+	 {
+	 pmx::StateIADecisionMaker::logger().debug() << "==> 1er clap" << utils::end;
+	 ts = robot.base().movexyteta(0, cc_getX(), cc_getY(), -45);
+	 } while (ts != TRAJ_OK);
+	 robot.base().printPosition();
+	 robot.servoDxlLeft().enable();
+	 robot.servoDxlRight().enable();
+	 if (robot.myColor() == pmx::PMXGREEN)
+	 robot.servoDxlLeft().turnMax();
+	 if (robot.myColor() == pmx::PMXYELLOW)
+	 robot.servoDxlRight().turnMax();
+
+	 robot.servoDxlRight().freeMotion();
+	 robot.servoDxlLeft().freeMotion();
+	 */
+	/*
+	 //2ème clap
+	 do
+	 {
+	 ts = robot.base().movexyteta(0, 850, 220, 90);
+	 } while (ts != TRAJ_OK);
+	 robot.base().printPosition();
+
+	 //recalage
+	 do
+	 {
+	 ts = robot.base().movexyteta(1, 850, 120, 90); //128?
+	 } while (ts != TRAJ_OK);
+	 robot.base().printPosition();
+	 cc_setPosition(850.0, 0.0, 90.0, cc_getMatchColor());
+	 do
+	 {
+	 ts = robot.base().movexyteta(0, 850, 200, 45); //128?
+	 } while (ts != TRAJ_OK);
+	 robot.base().printPosition();
+
+	 //take R3
+	 do
+	 {
+	 ts = robot.base().movexyteta(0, 1000, 300, 90); //128?
+	 } while (ts != TRAJ_OK);
+	 robot.base().printPosition();
+
+	 //depose R
+	 */
 	return true; //return true si ok sinon false si interruption
+}
+
+int takeL1L2AndDrop()
+{
+	TRAJ_STATE ts = TRAJ_INIT_NONE;
+	pmx::Robot &robot = pmx::Robot::instance();
+	pmx::StateIADecisionMaker::logger().debug() << "==> takeL1L2AndDrop" << utils::end;
+
+	//L2
+	do
+	{
+		pmx::StateIADecisionMaker::logger().debug() << "==> goTo(takeL1L2AndDrop)" << utils::end;
+		ts = robot.base().movexyteta(0, 960, 250, -65);
+		if (ts != TRAJ_OK)
+		{
+			robot.base().stop();
+			robot.base().assistedHandling();
+			sleep(2);
+		}
+	} while (ts != TRAJ_OK);
+	robot.base().printPosition();
+
+	//takeL2
+	if (robot.myColor() == pmx::PMXGREEN)
+	{
+		robot.clamp().readyToTakeRightElement();
+		robot.clamp().takeRightElement();
+		robot.clamp().pushRight();
+	}
+	else
+	{
+		robot.clamp().readyToTakeLeftElement();
+		robot.clamp().takeLeftElement();
+		robot.clamp().pushLeft();
+	}
+	do
+	{
+		ts = robot.base().move(40);
+
+	} while (ts != TRAJ_OK);
+	robot.base().printPosition();
+
+	//on recule
+	do
+	{
+		ts = robot.base().move(-100);
+
+	} while (ts != TRAJ_OK);
+	robot.base().printPosition();
+
+	//on prend R1
+	do
+	{
+		pmx::StateIADecisionMaker::logger().debug() << "==> on prend R1" << utils::end;
+		ts = robot.base().movexyteta(0, 1150, 550, 45);
+		if (ts != TRAJ_OK)
+		{
+			robot.base().stop();
+			robot.base().assistedHandling();
+			sleep(2);
+		}
+	} while (ts != TRAJ_OK);
+	robot.base().printPosition();
+
+	//takeR1
+	if (robot.myColor() == pmx::PMXGREEN)
+	{
+		//robot.clamp().readyToTakeLeftElement();
+		robot.clamp().takeLeftElement();
+	}
+	else
+	{
+		//robot.clamp().readyToTakeRightElement();
+		robot.clamp().takeRightElement();
+	}
+
+	//on depose R1
+	do
+	{
+		pmx::StateIADecisionMaker::logger().debug() << "==> on va deposer" << utils::end;
+		ts = robot.base().movexyteta(0, 600, 550, 179);
+		if (ts != TRAJ_OK)
+		{
+			robot.base().stop();
+			robot.base().assistedHandling();
+			sleep(2);
+		}
+	} while (ts != TRAJ_OK);
+	robot.base().printPosition();
+
+	//release R1
+	if (robot.myColor() == pmx::PMXGREEN)
+	{
+		//robot.clamp().readyToTakeLeftElement();
+		robot.clamp().pushLeft();
+		robot.clamp().pushRight();
+	}
+	else
+	{
+		//robot.clamp().readyToTakeRightElement();
+		robot.clamp().pushRight();
+		robot.clamp().pushLeft();
+	}
+
+	//on recule
+	do
+	{
+		ts = robot.base().move(-100);
+
+	} while (ts != TRAJ_OK);
+	robot.base().printPosition();
+
+	/*
+	 do
+	 {
+	 pmx::StateIADecisionMaker::logger().debug() << "==> on va à R2" << utils::end;
+	 ts = robot.base().movexyteta(0, 195, 450, -90);
+	 if (ts != TRAJ_OK)
+	 {
+	 robot.base().stop();
+	 robot.base().assistedHandling();
+	 sleep(2);
+	 }
+	 } while (ts != TRAJ_OK);
+	 robot.base().printPosition();
+
+	 do
+	 {
+	 pmx::StateIADecisionMaker::logger().debug() << "==> on prend R2" << utils::end;
+	 ts = robot.base().movexyteta(0, 195, 390, -90);
+	 if (ts != TRAJ_OK)
+	 {
+	 robot.base().stop();
+	 robot.base().assistedHandling();
+	 sleep(2);
+	 }
+	 } while (ts != TRAJ_OK);
+	 robot.base().printPosition();
+	 */
+	return true;
+
 }
 
 void pmx::StateIADecisionMaker::IASetupHomologation()
 {
 	logger().debug() << "IASetupHomologation" << utils::end;
-
-	ia_createZone("depart", 0, 800, 400, 400, 0, 1000, 180);
+	ia_createZone("depart", 0, 800, 400, 400, 700, 1000, 180);
 	ia_createZone("zoneL1", 850, 600, 100, 100, 790, 858, -90);
-	ia_createZone("zoneR1R2", 0, 0, 400, 400, 280, 550, -90);
+	//ia_createZone("zonedropL1", 850, 600, 100, 100, 790, 858, -90);
 
 	ia_setPath("depart", "zoneL1", 790, 860);
-	ia_setPath("depart", "zoneR1R2", 600, 600);
-
-	ia_setPath("zoneL1", "zoneR1R2", 600, 550);
 
 	ia_addAction("takeL1", &takeL1);
-	ia_addAction("takeR1R2", &takeR1R2);
+	ia_addAction("dropL1", &dropL1);
 
 }
 
@@ -422,7 +670,7 @@ void pmx::StateIADecisionMaker::IASetupTableTest()
 	ia_createZone("depart", 0, 800, 400, 400, 0, 1000, 180);
 	ia_createZone("zoneL1", 850, 600, 100, 100, 760, 860, -90);
 	//ia_createZone("zoneR1R2", 0, 0, 400, 400, 400, 550, -120);
-	ia_createZone("zoneR1R2", 0, 0, 400, 400, 370, 400, -135);
+	ia_createZone("zoneR1R2", 0, 0, 400, 400, 400, 400, -135);
 
 	ia_setPath("depart", "zoneL1", 770, 860);
 	ia_setPath("depart", "zoneR1R2", 600, 600);
@@ -437,6 +685,16 @@ void pmx::StateIADecisionMaker::IASetupTableTest()
 void pmx::StateIADecisionMaker::IASetupMatches()
 {
 	logger().debug() << "IASetupMatches" << utils::end;
+
+	logger().debug() << "IASetupHomologation" << utils::end;
+	ia_createZone("depart", 0, 800, 400, 400, 700, 1000, 180);
+	ia_createZone("zoneL1", 850, 600, 100, 100, 790, 858, -90);
+
+	ia_setPath("depart", "zoneL1", 790, 860);
+
+	ia_addAction("takeL1", &takeL1);
+	ia_addAction("takeL1L2AndDrop", &takeL1L2AndDrop);
+
 	/*
 	 ia_createZone("depart", 0, 0, 400, 690, 400, 520, 0);
 	 ia_createZone("zoneT2", 200, 1000, 400, 400, 400, 850, 90);

@@ -13,6 +13,7 @@
 #include <sys/time.h>
 #include "robot.h"
 #include "motion.h"
+#include "robot_trajectory.h"
 #include "../cpp/Robot.hpp"
 
 /**
@@ -163,15 +164,17 @@ void robot_initPID()
 {
 	if (!useExternalEncoders) //INTERNAL ENCODERS
 	{
-
+printf("\n!!!! robot_initPID\n");
 		//Pid RCVA
-		motion_configureAlphaPID(2.0f, 0.0f, 0.0f);
-		motion_configureDeltaPID(2.0f, 0.0f, 0.0f);
+		//motion_configureAlphaPID(760.0f, 0.0f, 0.002f);
+		motion_configureAlphaPID(130.0f, 0.0f, 0.0002f);
 
-		motion_configureLeftPID(0.0006, 0.0, 0.0);
-		motion_configureRightPID(0.0006, 0.0, 0.0);
+		motion_configureDeltaPID(160.0f, 0.0f, 0.03f);
 
-		/*//pid standard
+		motion_configureLeftPID(0.0006f, 0.0f, 0.0f);
+		motion_configureRightPID(0.0006f, 0.0f, 0.0f);
+
+		/*//pid standardf
 		 motion_configureAlphaPID(0.0009f, 0.00003f, 0.0f);
 		 motion_configureDeltaPID(0.0005f, 0.0002f, 0.00000004f);
 		 //motion_configureAlphaPID(0.0009f, 0.00003f, 0.0f); //0.0015f, 0.0002f, 0.000002f
@@ -195,9 +198,12 @@ void robot_initPID()
 		 motion_configureRightPID(0.00003, 0.00004, 0.0000002);*/
 	}
 
+	//printf("\n debug pid values %f %f %f", motion_GetDefaultSpeed(), motion_GetDefaultAccel(), motion_GetDefaultDecel());
+
 }
 void robot_initPID_AD(float Ap, float Ai, float Ad, float Dp, float Di, float Dd)
 {
+	printf("\n!!!! robot_initPID_AD\n");
 	motion_configureAlphaPID(Ap, Ai, Ad);
 	motion_configureDeltaPID(Dp, Di, Dd);
 }
