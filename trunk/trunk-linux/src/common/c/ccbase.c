@@ -138,6 +138,13 @@ TRAJ_STATE cc_rotateAbs(float degrees, float VMax, float Accel, float Decel) {
 	ignoreFrontCollision = TRUE;
 	ignoreRearCollision = TRUE;
 
+	//patch ferté 2015
+	if(degrees>0)
+		degrees = degrees + (10.0 * degrees/180.0) ;
+	else
+		degrees = degrees - (10.0 * degrees/180.0) ;
+
+	//fin patch
 
 	if (cc_getMatchColor() != 0) {
 		degrees = -degrees;
@@ -176,14 +183,23 @@ TRAJ_STATE cc_rotateRight(float degrees) {
 TRAJ_STATE cc_rotateTo(float thetaInDegree, float VMax, float Accel, float Decel) {
 
 	float currentThetaInDegree = cc_getThetaInDegree();
-	//printf("ccbase.c cc_rotateTo %f deg   current=%f \n", thetaInDegree, currentThetaInDegree);
+
 	float delta = cc_getRelativeAngle(thetaInDegree) - currentThetaInDegree;
 
 	float turn = ((int) (delta * 1000.0f) % 360000) / 1000.0f;
+	//printf("\nccbase.c cc_rotateTo %f deg   current=%f   delta=%f   turn=%f\n", thetaInDegree, currentThetaInDegree, delta, turn);
 
-	//printf("\ncc_rotateTo old degrees=%f  patch ferte 2015\n", turn);
-	turn = turn + (5.0 * turn/90.0) ;
-//printf("\ncc_rotateTo new degrees=%f patch ferte 2015\n", turn);
+
+//printf("\ncc_rotateTo old degrees=%f  patch ferte 2015\n", turn);
+
+	//if (turn>=0)
+	//if(turn <=130)
+		//turn = turn + (10.0 * turn/180.0) ;
+
+	//else
+		//turn = turn + (5.0 * turn/180.0) ;
+//printf("cc_rotateTo new degrees=%f patch ferte 2015\n", turn);
+
 
 	//printf("ccbase.c cc_rotateAbs %f deg   delta=%f deg\n ", turn, delta);
 	if (cc_getMatchColor() != 0) {
