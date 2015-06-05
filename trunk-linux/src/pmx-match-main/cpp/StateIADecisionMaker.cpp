@@ -582,11 +582,49 @@ int takeL1L2AndDrop()
 		robot.clamp().takeRightElement();
 	}
 
-	//on depose R1
+	/*
+	 //on depose R1
+	 do
+	 {
+	 pmx::StateIADecisionMaker::logger().debug() << "==> on va deposer" << utils::end;
+	 ts = robot.base().movexyteta(0, 600, 550, 179);
+	 if (ts != TRAJ_OK)
+	 {
+	 robot.base().stop();
+	 robot.base().assistedHandling();
+	 sleep(2);
+	 }
+	 } while (ts != TRAJ_OK);
+	 robot.base().printPosition();
+
+	 //release R1
+	 if (robot.myColor() == pmx::PMXGREEN)
+	 {
+	 //robot.clamp().readyToTakeLeftElement();
+	 robot.clamp().pushLeft();
+	 robot.clamp().pushRight();
+	 }
+	 else
+	 {
+	 //robot.clamp().readyToTakeRightElement();
+	 robot.clamp().pushRight();
+	 robot.clamp().pushLeft();
+	 }
+
+	 //on recule
+	 do
+	 {
+	 ts = robot.base().move(-100);
+
+	 } while (ts != TRAJ_OK);
+	 robot.base().printPosition();
+	 */
+
+	//point tempo
 	do
 	{
-		pmx::StateIADecisionMaker::logger().debug() << "==> on va deposer" << utils::end;
-		ts = robot.base().movexyteta(0, 600, 550, 179);
+		pmx::StateIADecisionMaker::logger().debug() << "==> point tempo" << utils::end;
+		ts = robot.base().movexyteta(0, 600, 580, 180);
 		if (ts != TRAJ_OK)
 		{
 			robot.base().stop();
@@ -596,21 +634,143 @@ int takeL1L2AndDrop()
 	} while (ts != TRAJ_OK);
 	robot.base().printPosition();
 
-	//release R1
+	do
+	{
+		pmx::StateIADecisionMaker::logger().debug() << "==> on va à R2" << utils::end;
+		ts = robot.base().movexyteta(0, 210, 580, -110);
+
+	} while (ts != TRAJ_OK);
+	robot.base().printPosition();
+
+	do
+	{
+		pmx::StateIADecisionMaker::logger().debug() << "==> on prend R2" << utils::end;
+		ts = robot.base().movexyteta(0, 190, 280, -90);
+
+	} while (ts != TRAJ_OK);
+	robot.base().printPosition();
+
+	//takeR2
 	if (robot.myColor() == pmx::PMXGREEN)
 	{
-		//robot.clamp().readyToTakeLeftElement();
-		robot.clamp().pushLeft();
-		robot.clamp().pushRight();
+		robot.clamp().takeLeftElement();
 	}
 	else
 	{
-		//robot.clamp().readyToTakeRightElement();
+		robot.clamp().takeRightElement();
+	}
+
+	do
+	{
+		pmx::StateIADecisionMaker::logger().debug() << "==> point tempo intermediaire"
+				<< utils::end;
+		ts = robot.base().movexyteta(0, 600, 580, 90);
+		if (ts != TRAJ_OK)
+		{
+			robot.base().stop();
+			//robot.base().assistedHandling();
+			sleep(2);
+		}
+	} while (ts != TRAJ_OK);
+	robot.base().printPosition();
+
+//drop
+
+	do
+	{
+		pmx::StateIADecisionMaker::logger().debug() << "==> goToZone(zoneL1)" << utils::end;
+		ts = cc_goToZone("depart");
+		if (ts != TRAJ_OK)
+		{
+			robot.base().stop();
+			//robot.base().assistedHandling();
+			sleep(2);
+		}
+	} while (ts != TRAJ_OK);
+	robot.base().printPosition();
+
+	//avance de 10cm
+	do
+	{
+		ts = robot.base().move(150);
+
+	} while (ts != TRAJ_OK);
+	robot.base().printPosition();
+
+	//depose
+	if (robot.myColor() == pmx::PMXGREEN)
+	{
+		robot.clamp().pushRight();
+		robot.clamp().pushLeft();
+	}
+	else
+	{
 		robot.clamp().pushRight();
 		robot.clamp().pushLeft();
 	}
 
-	//on recule
+	do
+	{
+		ts = robot.base().move(-150);
+
+	} while (ts != TRAJ_OK);
+	robot.base().printPosition();
+
+	//on va chercher un dernier
+	do
+	{
+		pmx::StateIADecisionMaker::logger().debug() << "==> point tempo intermediaire"
+				<< utils::end;
+		ts = robot.base().movexyteta(0, 750, 1800, 90); // 1800
+		if (ts != TRAJ_OK)
+		{
+			robot.base().stop();
+			//robot.base().assistedHandling();
+			sleep(2);
+		}
+	} while (ts != TRAJ_OK);
+	robot.base().printPosition();
+
+	//take
+
+	robot.clamp().takeLeftElement();
+	robot.clamp().takeRightElement();
+
+//redrop
+
+	do
+	{
+		pmx::StateIADecisionMaker::logger().debug() << "==> goToZone(zoneL1)" << utils::end;
+		ts = cc_goToZone("depart");
+		if (ts != TRAJ_OK)
+		{
+			robot.base().stop();
+			//robot.base().assistedHandling();
+			sleep(2);
+		}
+	} while (ts != TRAJ_OK);
+	robot.base().printPosition();
+
+	//avance de 10cm
+	do
+	{
+		ts = robot.base().move(100);
+
+	} while (ts != TRAJ_OK);
+	robot.base().printPosition();
+
+	//depose
+	if (robot.myColor() == pmx::PMXGREEN)
+	{
+		robot.clamp().pushRight();
+		robot.clamp().pushLeft();
+	}
+	else
+	{
+		robot.clamp().pushRight();
+		robot.clamp().pushLeft();
+	}
+
 	do
 	{
 		ts = robot.base().move(-100);
@@ -618,33 +778,6 @@ int takeL1L2AndDrop()
 	} while (ts != TRAJ_OK);
 	robot.base().printPosition();
 
-	/*
-	 do
-	 {
-	 pmx::StateIADecisionMaker::logger().debug() << "==> on va à R2" << utils::end;
-	 ts = robot.base().movexyteta(0, 195, 450, -90);
-	 if (ts != TRAJ_OK)
-	 {
-	 robot.base().stop();
-	 robot.base().assistedHandling();
-	 sleep(2);
-	 }
-	 } while (ts != TRAJ_OK);
-	 robot.base().printPosition();
-
-	 do
-	 {
-	 pmx::StateIADecisionMaker::logger().debug() << "==> on prend R2" << utils::end;
-	 ts = robot.base().movexyteta(0, 195, 390, -90);
-	 if (ts != TRAJ_OK)
-	 {
-	 robot.base().stop();
-	 robot.base().assistedHandling();
-	 sleep(2);
-	 }
-	 } while (ts != TRAJ_OK);
-	 robot.base().printPosition();
-	 */
 	return true;
 
 }
