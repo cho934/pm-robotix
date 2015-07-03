@@ -16,6 +16,8 @@ $ sudo apt-get install tftpd xinetd
 $ sudo apt-get install lrzsz
 
 $ sudo apt-get install expect
+
+$ sudo apt-get install default-jre
 }}}
 
 == Virtualbox shared folder ==
